@@ -20,8 +20,9 @@ REM Datenbankmigration mit Seeding
 echo Starte Datenbankmigration...
 call php artisan migrate:refresh --seed || echo Fehler ignoriert
 
-REM Laravel Sprachdateien veröffentlichen
+REM Laravel parts veröffentlichen
 call php artisan lang:publish || echo Fehler ignoriert
+php artisan livewire:publish || echo Fehler ignoriert
 
 REM Assets kompilieren
 call npm run build || echo Fehler ignoriert

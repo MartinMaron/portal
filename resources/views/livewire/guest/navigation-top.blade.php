@@ -1,6 +1,3 @@
-
-
-
 <nav class="rounded-md shadow-md bg-sky-100 border-sky-300">
     <div class="justify-between hidden sm:flex">
 

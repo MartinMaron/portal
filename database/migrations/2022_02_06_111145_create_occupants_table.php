@@ -45,8 +45,8 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('telephone_number')->nullable();
             $table->string('eigentumer')->nullable();
-            $table->boolean('leerstand')->boolean()->default(0);
-            $table->boolean('umlage_nutzerwechsel')->boolean()->default(1);
+            $table->boolean('leerstand')->default(0);
+            $table->boolean('umlage_nutzerwechsel')->default(1);
             $table->integer('OptimisticLockField')->default(0);
             $table->timestamps();
         });
