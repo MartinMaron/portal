@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Actions\Jetstream\DeleteUser;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Jetstream\Jetstream;
@@ -16,7 +17,14 @@ class JetstreamServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        foreach (glob(resource_path('views/vendor/jetstream/components/*.blade.php')) as $file) {
+            $component = basename($file, '.blade.php');
+            $this->registerComponent($component);
+        }
+    }
+
+    protected function registerComponent(string $component) {
+        Blade::component('vendor/jetstream/components/'.$component, 'jet-'.$component);
     }
 
     /**
