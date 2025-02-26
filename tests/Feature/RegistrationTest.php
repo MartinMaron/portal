@@ -49,6 +49,6 @@ class RegistrationTest extends TestCase
         ]);
 
         $this->assertAuthenticated();
-        $response->assertRedirect(route(RouteServiceProvider::HOME, absolute: false));
+        $response->assertRedirect(route('user.dashboard', absolute: false));
     }
 }
