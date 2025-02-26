@@ -1,13 +1,12 @@
 <?php
 
-namespace app\Http\Livewire\User\Occupant;
+namespace App\Livewire\User\Occupant;
 use App\Models\Occupant;
 use Livewire\Component;
-use Livewire\HydrationMiddleware\AddAttributesToRootTagOfHtml;
 use Spatie\LaravelIgnition\FlareMiddleware\AddJobs;
 use Symfony\Component\HttpKernel\DependencyInjection\AddAnnotatedClassesToCachePass;
 
-namespace App\Livewire\User\Occupant extends Component
+class OccupantHeader extends Component
 {
 
     public $occupant;

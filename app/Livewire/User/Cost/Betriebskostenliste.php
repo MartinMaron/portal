@@ -13,7 +13,7 @@ use App\Models\Occupant;
 use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Database\Eloquent\Builder;
 use Usernotnull\Toast\Concerns\WireToast;
-use Illuminate\Support\Carbon\Carbon;
+use Illuminate\Support\Carbon;
 
 use function Termwind\render;
 
@@ -96,7 +96,7 @@ class Betriebskostenliste extends Component
         if ($cost->costtype->costinvoicingtype_id == 'HZ')
         {
              $this->dispatch('showCostDetailModal', $this->current, false, false);
-        }else 
+        }else
         {
             $this->dispatch('showBetriebskostenCostDetailModal', $this->current);
         }

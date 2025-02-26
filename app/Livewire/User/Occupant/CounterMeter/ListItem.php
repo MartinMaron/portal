@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Http\Livewire\User\Occupant\CounterMeter;
+namespace App\Livewire\User\Occupant\CounterMeter;
 use App\Models\VerbrauchsinfoCounterMeter;
 use App\Models\Occupant;
 use Livewire\Component;
@@ -16,7 +16,7 @@ class Listitem extends Component
         $this->singleCounterMeter = $singleCounterMeter;
         $this->occupant = $singleCounterMeter->occupant;
     }
-    
+
     public function render()
     {
         return view('livewire.user.occupant.counter-meter.listitem');

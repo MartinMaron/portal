@@ -1,10 +1,10 @@
 <?php
 
-namespace app\Http\Livewire\User\Occupant\CounterMeter;
+namespace App\Livewire\User\Occupant\CounterMeter;
 use App\Models\VerbrauchsinfoCounterMeter;
 use Livewire\Component;
 
-namespace App\Livewire\User\Occupant\CounterMeter extends Component
+class Header extends Component
 {
 
 

@@ -1,12 +1,12 @@
 <?php
 
-namespace app\Http\Livewire\User\Occupant\CounterMeterReading;
+namespace App\Livewire\User\Occupant\CounterMeterReading;
 use Carbon\Carbon;
 use Livewire\Component;
 use Barryvdh\Debugbar\Facades\Debugbar;
 use App\Livewire\DataTable\WithSorting;
 
-namespace App\Livewire\User\Occupant\CounterMeterReading extends Component
+class Header extends Component
 {
 
     public $sorts = [];

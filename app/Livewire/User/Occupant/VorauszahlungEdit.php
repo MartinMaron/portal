@@ -1,12 +1,12 @@
 <?php
 
-namespace app\Http\Livewire\User\Occupant;
+namespace App\Livewire\User\Occupant;
 
 use Livewire\Component;
 use App\Models\Occupant;
 use Barryvdh\Debugbar\Facades\Debugbar;
 
-namespace App\Livewire\User\Occupant extends Component
+class VorauszahlungEdit extends Component
 {
 
     public Occupant $occupant;

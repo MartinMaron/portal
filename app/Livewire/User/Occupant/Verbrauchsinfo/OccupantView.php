@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Http\Livewire\User\Occupant\Verbrauchsinfo;
+namespace App\Livewire\User\Occupant\Verbrauchsinfo;
 
 use Livewire\Component;
 use Barryvdh\Debugbar\Facades\Debugbar;
@@ -8,7 +8,7 @@ use App\Livewire\DataTable\WithCachedRows;
 use App\Models\Occupant;
 use App\Models\Verbrauchsinfo;
 
-namespace App\Livewire\User\Occupant\Verbrauchsinfo extends Component
+class OccupantView extends Component
 {
     use WithCachedRows;
     public $occupant;
