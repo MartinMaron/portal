@@ -1,0 +1,1 @@
+<x-button class="border-gray-300 dark:border-gray-700 text-gray-700 dark:bg-slate-800 dark:hover:bg-slate-600 dark:text-slate-100 active:bg-gray-50 active:text-gray-800 hover:text-gray-500 dark:hover:text-slate-200" {{ $attributes }}>{{ $slot }}</x-button>

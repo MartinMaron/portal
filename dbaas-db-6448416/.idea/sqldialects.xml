@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/production/data/abrechnungssettings.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/production/data/cost_amounts.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/production/data/costinvoicingtypes.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/production/data/costkeys.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/production/data/costs.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/production/data/costtypes.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/production/data/einheits.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/production/data/failed_jobs.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/production/data/fueltypes.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/production/data/invoices.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/production/data/lages.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/production/data/livingareas.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/production/data/migrations.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/production/data/occupants.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/production/data/password_resets.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/production/data/personal_access_tokens.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/production/data/personcounts.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/production/data/prepaids.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/production/data/realestates.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/production/data/salutations.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/production/data/sessions.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/production/data/unit_usage_types.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/production/data/user_verbrauchsinfo_access_controls.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/production/data/users.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/production/data/verbrauchsinfo_counter_meters.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/production/data/verbrauchsinfo_user_emails.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/production/data/verbrauchsinfos.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/production/data/zaehler_arten.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/production/ddl/create.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/production/foreign_keys/disable.sql" dialect="MySQL" />
+    <file url="PROJECT" dialect="MySQL" />
+  </component>
+</project>

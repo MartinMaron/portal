@@ -1,0 +1,45 @@
+/*the container must be positioned relative:*/
+.autocomplete {
+    position: relative;
+    display: inline-block;
+}
+
+.input-autocomplete-active {
+    @apply font-bold text-sm text-sky-50 bg-sky-700 #{!important}
+}
+
+/*when hovering an item:*/
+.input-autocomplete-items div:hover {
+    @apply font-normal text-sm text-sky-50 bg-sky-700 #{!important}
+}
+
+.input-autocomplete-filtered-string{
+    @apply font-normal sm:text-sm
+}
+
+.input-autocomplete-normal-string{
+    @apply font-normal sm:text-sm
+}
+
+.autocomplete-input {
+    @apply w-full mt-1 py-1 bg-sky-50 rounded border-0 ;
+}
+
+.input-autocomplete-items {
+    @apply font-normal sm:text-sm border bg-sky-50 ;
+
+    position: absolute;
+    z-index: 99;
+    top: 100%;
+    left: 0;
+    right: 0;
+}
+
+.input-autocomplete-items div {
+    @apply py-1 border-b;
+    cursor: pointer;
+}
+
+
+
+

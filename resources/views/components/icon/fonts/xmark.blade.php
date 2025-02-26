@@ -1,0 +1,1 @@
+<i class="text-red-500 dark:text-red-700 fa-solid fa-xmark"></i>

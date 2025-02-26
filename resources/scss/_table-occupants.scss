@@ -1,0 +1,94 @@
+/* default styling. Nothing to do with freexing first row and column */
+
+.occu-table {
+    @apply max-w-7xl border-2 border-sky-200 dark:border-slate-900;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+
+.occu-td{
+    @apply border bg-sky-50 dark:bg-slate-500 border-sky-500 dark:border-slate-900 p-1 text-sky-800 dark:text-slate-950;
+    max-width: 500px;
+    box-sizing: border-box;
+    overflow: hidden ;
+    white-space: nowrap;
+}
+
+.occu-v{
+    display: inline;
+    visibility: visible ;
+}
+
+.occu-th {
+    @apply border bg-sky-50 dark:bg-slate-500 border-sky-500 dark:border-slate-900 p-1 text-sky-800 dark:text-slate-950;
+    max-width: 500px;
+    box-sizing: border-box;
+    text-align: left;
+    overflow: hidden ;
+    white-space: nowrap;
+}
+.occu-tbl-container {
+    @apply max-w-7xl;
+    height: 200px;
+    position: relative;
+    overflow: auto;
+}
+
+.occu-thead-th {
+    @apply border bg-sky-600 dark:bg-slate-800 border-sky-50 dark:border-slate-950 p-2 text-sky-50 dark:text-slate-300;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+
+}
+
+.occu-thead-th:first-child {
+  left: 0;
+  z-index: 3;
+
+}
+
+.occu-tfoot {
+  position: -webkit-sticky;
+  bottom: 0;
+  z-index: 2;
+}
+
+.occu-tfoot-td {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  background: hsl(20, 50%, 70%);
+}
+
+.occu-tfoot-td:first-child {
+  z-index: 3;
+}
+
+.occu-tbody {
+    @apply min-h-full;
+    overflow: auto;
+
+}
+
+/* MAKE LEFT COLUMN FIXEZ */
+.occu-tr-fixed > :first-child {
+  position: -webkit-sticky;
+  position: sticky;
+  background: hsl(180, 50%, 70%);
+  left: 0;
+  overflow-x: hidden;
+}
+/* don't do this */
+.occu-tr-nofix> :first-child {
+  box-shadow: inset 0px 1px black;
+}
+
+.grid-cols-24{
+  grid-template-columns: repeat(24, minmax(0, 1fr));
+
+}
+
+

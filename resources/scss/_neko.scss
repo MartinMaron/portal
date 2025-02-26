@@ -1,0 +1,150 @@
+/* Tooltip container */
+.tooltip {
+    position: relative;
+    display: inline-block;
+  }
+  
+  /* Tooltip text */
+  .tooltip .tooltiptext {
+    @apply flex-row text-sm bg-sky-400 text-sky-950 font-semibold dark:bg-slate-800 dark:text-sky-50;
+    visibility: hidden;
+    padding: 5px 5px;
+    border-radius: 6px;
+    
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+  
+    /* Fade in tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  /* Tooltip arrow */
+  .tooltip .tooltiptext::after {
+    content: "";
+    @apply flex-row text-sm;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent transparent;
+  }
+  
+  /* Show the tooltip text when you mouse over the tooltip container */
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .page-title {
+    @apply text-3xl pt-3 font-bold text-sky-800 dark:text-slate-950 text-center w-full;
+  }
+
+  .error-box {
+    @apply text-sm bg-red-100 dark:bg-red-900 border border-red-400 dark:border-red-950 text-red-700 dark:text-red-100 px-1 py-1 rounded mb-2;
+  }
+  
+  .detailinput {
+    @apply dark:border-slate-950 dark:bg-slate-700 dark:text-gray-200 dark:focus:border-slate-700 focus:border-indigo-500 border-0 text-center sm:text-sm p-1 m-0 w-full rounded-md font-thin ;
+  }
+
+  .detailinput .inputDisplay {
+    @apply border-gray-300 dark:border-slate-950 dark:bg-slate-700 dark:text-gray-200 dark:focus:border-slate-700 focus:border-indigo-500 border text-center sm:text-sm p-1 px-2 m-0 w-full rounded-sm font-normal  ;
+  }
+
+  .detailinput .inputDisplayHK {
+    @apply dark:border-slate-950 dark:bg-slate-600 dark:text-gray-200 dark:focus:border-slate-600 focus:border-indigo-500 border text-center sm:text-sm p-1 px-2 m-0 w-full rounded-md font-thin ;
+  }
+
+  .detailinputBK {
+    @apply dark:bg-slate-700 dark:text-gray-200 dark:focus:border-slate-700 focus:border-indigo-500 border-0 text-center sm:text-sm m-0 w-full rounded-md font-thin ;
+  }
+
+  .detailinputBK .inputDisplayBK {
+    @apply dark:border-slate-950 dark:bg-slate-600 dark:text-gray-200 dark:focus:border-slate-600 focus:border-indigo-500 border text-center sm:text-sm p-1 px-2 m-0 w-full rounded-md font-thin ;
+  }
+
+  .detailinputBK .inputDisplayBK-ro {
+    @apply dark:border-slate-950 dark:bg-slate-700 dark:text-gray-400 dark:focus:border-slate-600 focus:border-indigo-500 border text-center sm:text-sm p-1 px-2 m-0 w-full rounded-md font-thin ;
+  }
+
+  .detailinput .inputDisplayHK-ro {
+    @apply  dark:bg-slate-700 dark:text-gray-400 border-0 text-center sm:text-sm p-1 px-2 m-0 w-full rounded-sm font-thin ;
+  }
+
+  .detailinput .inputErrorDisplay {
+    @apply bg-red-50 focus:border-red-900 border-red-900 ;
+  }
+
+  .toginput {
+    width: 0;
+    height: 0;
+    visibility: hidden;
+  }
+
+  .tog {
+    content: "";
+    display: block;
+    width: 180px;
+    height: 34px;
+    background-color: #551759;
+    border-radius: 20px;
+    position: relative;
+    cursor: pointer;
+    transition: 0.5s;
+  }
+
+  .tog::after {
+    content: "";
+    width: 24px;
+    height: 24px;
+    background-color: #cca5cf;
+    position: absolute;
+    border-radius: 14px;
+    top: 5px;
+    left: 5px;
+    transition: 0.5s;
+}
+
+.toginput:checked + .tog:after {
+  left: calc(100% - 3px);
+  transform: translateX(-100%);
+}
+
+.toginput:checked + .togoption {
+ content: "SSS";
+}
+
+.kostenliste {
+
+}
+.kostenliste .columnheader {
+  @apply bg-sky-50 font-extrabold text-sky-900 dark:text-slate-200 dark:bg-slate-800 rounded-sm
+}
+
+.verbrauchsUserEmailliste {
+  
+}
+
+.verbrauchsUserEmailliste ._hinweisheader {
+  @apply border border-b-2 border-gray-300 dark:border-slate-950 dark:bg-slate-900 rounded-lg shadow-sm;
+}
+
+.verbrauchsUserEmailliste ._icon {
+  @apply text-sky-700 dark:text-slate-400;
+}
+
+.verbrauchsUserEmailliste ._text {
+  @apply text-xs text-gray-500 line-clamp-4 dark:text-slate-400 md:line-clamp-2;
+}
+
+.verbrauchsUserEmailliste ._title {
+  @apply font-semibold text-gray-900 dark:text-slate-300;
+}
+
