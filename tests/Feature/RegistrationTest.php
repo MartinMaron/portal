@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Fortify\Features;
 use Laravel\Jetstream\Jetstream;
@@ -11,10 +12,10 @@ class RegistrationTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_registration_screen_can_be_rendered(): void
+    public function test_registration_screen_can_be_rendered()
     {
         if (! Features::enabled(Features::registration())) {
-            $this->markTestSkipped('Registration support is not enabled.');
+            return $this->markTestSkipped('Registration support is not enabled.');
         }
 
         $response = $this->get('/register');
@@ -22,10 +23,10 @@ class RegistrationTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_registration_screen_cannot_be_rendered_if_support_is_disabled(): void
+    public function test_registration_screen_cannot_be_rendered_if_support_is_disabled()
     {
         if (Features::enabled(Features::registration())) {
-            $this->markTestSkipped('Registration support is enabled.');
+            return $this->markTestSkipped('Registration support is enabled.');
         }
 
         $response = $this->get('/register');
@@ -33,10 +34,10 @@ class RegistrationTest extends TestCase
         $response->assertStatus(404);
     }
 
-    public function test_new_users_can_register(): void
+    public function test_new_users_can_register()
     {
         if (! Features::enabled(Features::registration())) {
-            $this->markTestSkipped('Registration support is not enabled.');
+            return $this->markTestSkipped('Registration support is not enabled.');
         }
 
         $response = $this->post('/register', [
@@ -48,6 +49,6 @@ class RegistrationTest extends TestCase
         ]);
 
         $this->assertAuthenticated();
-        $response->assertRedirect(route('dashboard', absolute: false));
+        $response->assertRedirect(RouteServiceProvider::HOME);
     }
 }
