@@ -28,7 +28,7 @@
     </div>
 
     <div class="flex">
-        <x-input.search wire:model.debounce.600ms="filter.search"></x-input.search>
+        <x-input.search wire:model.live.debounce.600ms="filter.search"></x-input.search>
     </div>
 
     @if ($nutzergruppen->count()!=0)

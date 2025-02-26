@@ -2,7 +2,7 @@
     <div
             x-data="select({
                 data: { au: 'Australia', be: 'Belgium', cn: 'China', fr: 'France', de: 'Germany', it: 'Italy', mx: 'Mexico', es: 'Spain', tr: 'Turkey', gb: 'United Kingdom', 'us': 'United States' },
-                name: 'lokalart', placeholder: 'Auswahlbox', value: @entangle($attributes->wire('model')) })"
+                name: 'lokalart', placeholder: 'Auswahlbox', value: @entangle($attributes->wire('model')).live })"
             x-init="init()"
             @click.away="closeListbox()"
             @keydown.escape="closeListbox()"

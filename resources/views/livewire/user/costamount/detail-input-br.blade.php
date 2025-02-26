@@ -14,7 +14,7 @@
             <!-- Datum -->            
             <div class="basis-1/6" >   
                 <x-input.date
-                    wire:model.lazy="current.datum"
+                    wire:model.blur="current.datum"
                     id="user-costamount-detailinput-datum{{ $cost->id }}"
                     type="text"
                     :error="$errors->first('current.datum')"
@@ -31,7 +31,7 @@
                     id="user-costamount-detailinput-consumption{{ $cost->id }}"
                     inputmode="numeric"  
                     placeholder="0"
-                    wire:model.lazy="current.consumption_editing"
+                    wire:model.blur="current.consumption_editing"
                     style="-moz-appearance: textfield; margin: 0;"
                     class="{{ $cost->consumption ? 'block' : 'hidden' }} 
                     inputDisplay 
@@ -43,7 +43,7 @@
             <!-- CO2-Abgabe -->            
             <div class="basis-1/6" >   
                 <input
-                        wire:model.lazy="current.coconsupmtion"
+                        wire:model.blur="current.coconsupmtion"
                         id="user-costamount-detailinput-coconsupmtion{{ $cost->id }}"
                         type="text"
                         inputmode="numeric" 
@@ -58,7 +58,7 @@
                 <input type="text"    
                     id="user-costamount-detailinput-co2betrag{{ $cost->id }}"
                     inputmode="numeric"  
-                    wire:model.lazy= {{ $netto ? 'current.conetto' : 'current.cobrutto' }}
+                    wire:model.blur= {{ $netto ? 'current.conetto' : 'current.cobrutto' }}
                     style="-moz-appearance: textfield; margin: 0;"
                     class="{{ $cost->co2Tax ? 'block' : 'hidden' }} 
                     inputDisplay 
@@ -71,7 +71,7 @@
                     id="user-costamount-detailinput-betrag-{{ $cost->id }}"
                     wire:keyup.enter="save()"
                     inputmode="numeric"  
-                    wire:model.lazy= {{ $netto ? 'current.netto' : 'current.brutto' }}
+                    wire:model.blur= {{ $netto ? 'current.netto' : 'current.brutto' }}
                     style="-moz-appearance: textfield; margin: 0;"
                     class="inputDisplay"   
                 >

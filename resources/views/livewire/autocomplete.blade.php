@@ -1,9 +1,9 @@
 <div >
     <div
       x-data="{
-        open: @entangle('showDropdown'),
-        search: @entangle('search'),
-        selected: @entangle('selected'),
+        open: @entangle('showDropdown').live,
+        search: @entangle('search').live,
+        selected: @entangle('selected').live,
         highlightedIndex: 0,
         highlightPrevious() {
           if (this.highlightedIndex > 0) {
@@ -37,7 +37,7 @@
         <div >
           <x-input.text
             class="py-1"
-            wire:model.debounce.300ms="search"
+            wire:model.live.debounce.300ms="search"
             x-on:keydown.arrow-down.stop.prevent="highlightNext()"
             x-on:keydown.arrow-up.stop.prevent="highlightPrevious()"
             x-on:keydown.enter.stop.prevent="$dispatch('value-selected', {

@@ -75,7 +75,7 @@
     <div class="xs:block sm:hidden">
         <div class="mt-3 text-left ">
             <x-input.select
-            class="text-left h-10 border-b bg-sky-50 sm:h-8 focus:border-0 w-full" wire:model="realestate.abrechnungssetting_id" id="realestate-header-address-abrechnungssetting-id" value="">
+            class="text-left h-10 border-b bg-sky-50 sm:h-8 focus:border-0 w-full" wire:model.live="realestate.abrechnungssetting_id" id="realestate-header-address-abrechnungssetting-id" value="">
                 @foreach ($this->realestate->abrechnungssettings as $label)
                     <option class="h-10 text-left" value="{{ $label->id }}">
                         <span class="">{{ $label->period_from_editing. ' - '. $label->period_to_editing   }}</span>

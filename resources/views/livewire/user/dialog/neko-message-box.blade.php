@@ -1,6 +1,6 @@
 <div class="{{ $showNekoMessageMutex ? 'visible' : 'invisible' }}">
-    <form wire:submit.prevent="confirm()">
-        <x-modal.dialog class="bg-sky-50" minWidth="640px" maxWidth="800px" wire:model.defer="showNekoMessageMutex">
+    <form wire:submit="confirm()">
+        <x-modal.dialog class="bg-sky-50" minWidth="640px" maxWidth="800px" wire:model="showNekoMessageMutex">
             <!-- Dialog Title -->
             <x-slot name="title">
                 <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100">

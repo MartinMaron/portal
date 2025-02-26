@@ -1,6 +1,6 @@
  
-<form wire:submit.prevent="closeModal(true)">
- <x-modal.dialog class="bg-sky-50" minWidth="340px" maxWidth="2xl" wire:model.defer="showEditModal">
+<form wire:submit="closeModal(true)">
+ <x-modal.dialog class="bg-sky-50" minWidth="340px" maxWidth="2xl" wire:model="showEditModal">
         <!-- Dialog Title -->
         <x-slot name="title">
             <div class="flex">
@@ -21,7 +21,7 @@
                         class="my-1" paddingLabel="" hoheLabel="h-6 sm:h-8 sm:pt-1" hohe="h-20 sm:h-10"
                         for="cost.caption" label="Bezeichnung" :error="$errors->first('cost.caption')"
                         >
-                            <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.lazy="cost.caption" id="cost-detail-cost.caption" placeholder="Bitte Kostenbezeichnung eintragen" />
+                            <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.blur="cost.caption" id="cost-detail-cost.caption" placeholder="Bitte Kostenbezeichnung eintragen" />
                         </x-input.group> 
                     </div>
                 @endif
@@ -34,7 +34,7 @@
                         for="cost.costtype_id" label="Kostenart" :error="$errors->first('cost.costtype_id')"
                         >
                         <x-input.select
-                            class="h-10 border-b bg-sky-50 sm:h-8 focus:border-0 w-full" wire:model="cost.costtype_id" id="cost-detail-cost.costtype_id" placeholder="Bitte auswählen" value="">
+                            class="h-10 border-b bg-sky-50 sm:h-8 focus:border-0 w-full" wire:model.live="cost.costtype_id" id="cost-detail-cost.costtype_id" placeholder="Bitte auswählen" value="">
                             @foreach ($this->costtypes as $label)
                                 <option class="h-10" value="{{ $label->id }}">
                                         {{ $label->caption }}
@@ -53,7 +53,7 @@
                             for="fueltype_id" label="Brennstoff" :error="$errors->first('cost.fueltype_id')"
                             >
                             <x-input.select
-                            class="h-10 border-b bg-sky-50 sm:h-8 focus:border-0 w-full" wire:model="cost.fueltype_id" id="cost-detail-cost.fueltype_id" placeholder="Bitte auswählen" value="">
+                            class="h-10 border-b bg-sky-50 sm:h-8 focus:border-0 w-full" wire:model.live="cost.fueltype_id" id="cost-detail-cost.fueltype_id" placeholder="Bitte auswählen" value="">
                                 @foreach ($this->fueltypes as $label)
                                 <option class="flex h-10" value="{{ $label->id }}">
                                     {{ $label->caption. ' ('. $label->einheit->shortname. ')'   }}
@@ -72,7 +72,7 @@
                             class="my-1" paddingLabel="" hoheLabel="h-6 sm:h-8 sm:pt-1" hohe="h-20 sm:h-10"
                             for="cost.start_value_editing" label="Anfangsstand" :error="$errors->first('cost.start_value_editing')"
                             >
-                                <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.lazy="cost.start_value_editing" id="cost-detail-cost.start_value_editing" placeholder="0" />
+                                <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.blur="cost.start_value_editing" id="cost-detail-cost.start_value_editing" placeholder="0" />
                             </x-input.group>
                         </div>
                         <!-- Anfangsstand Betrag-->  
@@ -81,7 +81,7 @@
                             class="my-1" paddingLabel="" hoheLabel="h-6 sm:h-8 sm:pt-1" hohe="h-20 sm:h-10"
                             for="cost.start_value_amount_gros_editing" label="Anfangsstand Betrag" :error="$errors->first('cost.start_value_amount_gros_editing')"
                             >
-                                <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.lazy="{{ $netAmountInput ? 'cost.start_value_amount_net_editing' : 'cost.start_value_amount_gros_editing'}}" id="cost-detail-cost.start_value_amount_editing" placeholder="0" />
+                                <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.blur="{{ $netAmountInput ? 'cost.start_value_amount_net_editing' : 'cost.start_value_amount_gros_editing'}}" id="cost-detail-cost.start_value_amount_editing" placeholder="0" />
                             </x-input.group>  
                         </div>
                     @endif
@@ -91,7 +91,7 @@
                         class="my-1" paddingLabel="" hoheLabel="h-6 sm:h-8 sm:pt-1" hohe="h-20 sm:h-10"
                         for="cost.end_value_editing" label="Endstand" :error="$errors->first('cost.end_value_editing')"
                         >
-                            <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.lazy="cost.end_value_editing" id="cost-detail-cost.end_value_editing" placeholder="0" />
+                            <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.blur="cost.end_value_editing" id="cost-detail-cost.end_value_editing" placeholder="0" />
                         </x-input.group>  
                     </div>
                 @endif
@@ -104,7 +104,7 @@
                         for="cost.haushaltsnah" label="Haushaltsnah" :error="$errors->first('cost.haushaltsnah')">
                             <div class="flex items-center justify-between h-10 sm:h-8">
                                 <div class="pl-1">
-                                    <x-input.checkbox wire:model="cost.haushaltsnah"></x-input.checkbox>
+                                    <x-input.checkbox wire:model.live="cost.haushaltsnah"></x-input.checkbox>
                                 </div>
                             </div>
                         </x-input.group>
@@ -122,7 +122,7 @@
                         >
                         <x-input.select
                         x-ref="inputcostkey"
-                        class="h-10 border-b bg-sky-50 sm:h-8 focus:border-0 w-full" wire:model="cost.costkey_id" id="cost-detail-cost.costkey_id" placeholder="Bitte auswählen" value="">
+                        class="h-10 border-b bg-sky-50 sm:h-8 focus:border-0 w-full" wire:model.live="cost.costkey_id" id="cost-detail-cost.costkey_id" placeholder="Bitte auswählen" value="">
                         @foreach ($this->costkeys as $label)
                         <option class="flex h-10" value="{{ $label->id }}">
                             <span class="">
@@ -142,7 +142,7 @@
                     hohe="h-30"
                     hoheLabel="h-30 sm:h-full sm:pt-3"
                     bottom=false for="noticeForNeko" label="Hinweis für Abrechner" :error="$errors->first('cost.noticeForNeko')">
-                        <x-input.textarea  wire:model="cost.noticeForNeko" id="cost-detail-cost.noticeForNeko" placeholder="..." />
+                        <x-input.textarea  wire:model.live="cost.noticeForNeko" id="cost-detail-cost.noticeForNeko" placeholder="..." />
                     </x-input.group>
                 </div>
                 @endif

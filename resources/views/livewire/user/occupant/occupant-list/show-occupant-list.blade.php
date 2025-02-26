@@ -20,12 +20,12 @@
         </div>
         <div class="">
             <!-- Suchfeld -->
-            <x-input.search wire:model.debounce.600ms="filters.search"></x-input.search>
+            <x-input.search wire:model.live.debounce.600ms="filters.search"></x-input.search>
         </div>
         <div class="flex w-full px-5 sm:px-0 gap-2 mb-2 justify-between sm:justify-between">
             @if ($hasAnyCustomEinheitNo)
                 <x-input.radio-bool
-                    wire:model="realestate.occupant_number_mode" wire:click="toggle('nummer')"
+                    wire:model.live="realestate.occupant_number_mode" wire:click="toggle('nummer')"
                     id="user.occupant.occupant-list.show-occupant-list.occupant_nummber_mode"
                     aria_label="RadioNummer"
                     title="Nummer anzeigen" text_value0="eneko" text_value1="Verwalter"
@@ -34,14 +34,14 @@
             @endif
             @if ($hasAnyEigentumer)
                 <x-input.radio-bool
-                        wire:model="realestate.occupant_name_mode" wire:click="toggle('eigentumer')"
+                        wire:model.live="realestate.occupant_name_mode" wire:click="toggle('eigentumer')"
                         id="user.occupant.occupant-list.show-occupant-list.occupant_name_mode"
                         aria_label="RadioName"
                         title="Nutzer anzeigen" text_value0="Mieter" text_value1="Eigentümer"
                         >
                 </x-input.radio-bool>    
                 {{-- <div wire:click="toggle('eigentumer')" class="relative inline-block w-40 pt-1 pb-2 mt-1 align-middle transition duration-200 ease-in select-none">
-                    <input wire:model="showEigentumer" type="checkbox" name="" id="" class="absolute block w-6 h-6 my-1 rounded-full appearance-none cursor-pointer toggle-checkbox bg-sky-100 border-1"/>
+                    <input wire:model.live="showEigentumer" type="checkbox" name="" id="" class="absolute block w-6 h-6 my-1 rounded-full appearance-none cursor-pointer toggle-checkbox bg-sky-100 border-1"/>
                     <label for="toggle" class="block h-8 pl-8 overflow-hidden rounded-full cursor-pointer toggle-label">
                         @if ($showEigentumer)
                         <span class="font-medium text-gray-900 text-md">Eigentümer</span>
@@ -53,7 +53,7 @@
             @endif
             @if ($this->realestate->betriebskosten)
                 <x-input.radio-bool
-                        wire:model="realestate.prepaidtype" wire:click="toggle('prepaidtype')"
+                        wire:model.live="realestate.prepaidtype" wire:click="toggle('prepaidtype')"
                         id="user.occupant.occupant-list.show-occupant-list.vorauszahlungen_mode"
                         aria_label="RadioPrepaids"
                         :width='80'
@@ -65,7 +65,7 @@
             @if ($hasVat)
             
                 <x-input.radio-bool
-                        wire:model="realestate.eingabeCostNetto" wire:click="toggle('prepaidnet')"
+                        wire:model.live="realestate.eingabeCostNetto" wire:click="toggle('prepaidnet')"
                         id="user.occupant.occupant-list.show-occupant-list.vat_mode"
                         aria_label="RadioVat"
                         title="Vorauszahlungen bei MwSt. Pflicht" text_value0="brutto" text_value1="netto"

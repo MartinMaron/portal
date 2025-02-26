@@ -24,7 +24,7 @@
                     id="user-costamount-detailinput-consumption{{ $cost->id }}"
                     inputmode="numeric"  
                     placeholder="0,0"
-                    wire:model.lazy="current.consumption_editing"
+                    wire:model.blur="current.consumption_editing"
                     style="-moz-appearance: textfield; margin: 0;"
                     class="{{ $cost->consumption ? 'block' : 'hidden' }} 
                     inputDisplayBK
@@ -38,7 +38,7 @@
                     id="user-costamount_bk-detailinput-haushaltsnah{{ $cost->id }}"
                     inputmode="numeric"  
                     placeholder="1"
-                    wire:model.lazy="current.haushaltsnah"
+                    wire:model.blur="current.haushaltsnah"
                     style="-moz-appearance: textfield; margin: 0;"
                     class="{{ $cost->haushaltsnah ? 'block' : 'hidden' }} 
                     inputDisplayBK
@@ -51,7 +51,7 @@
                     id="user-costamount-bk-detailinput-betrag{{ $cost->id }}"
                     inputmode="numeric"  
                     wire:focusout="save()"                    
-                    wire:model.lazy= {{ $netto ? 'current.netto' : 'current.brutto' }}
+                    wire:model.blur= {{ $netto ? 'current.netto' : 'current.brutto' }}
                     style="-moz-appearance: textfield; margin: 0;"
                     class="border inputDisplayBK"   
                     >

@@ -11,12 +11,12 @@
     {{ $attributes->merge(['class' => 'autocomplete placeholder-gray-300 flex-1 block w-full transition duration-150 ease-in-out focus:outline-none focus:border focus:border-blue-900 sm:rounded sm:text-sm sm:leading-5' . ($leadingAddOn ? ' rounded-none rounded-r-md' : '')]) }}
 >
     <input
-    {{ $attributes->whereDoesntStartWith('wire:model') }}
+    {{ $attributes->whereDoesntStartWith('wire:model.live') }}
     x-data="
         {
             data:'',
             currentFocus: -1,
-            value: @entangle($attributes->wire('model')),
+            value: @entangle($attributes->wire('model')).live,
 
             closeAllLists(elmnt) {
                 /*close all autocomplete lists in the document,

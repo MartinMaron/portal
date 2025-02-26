@@ -41,7 +41,7 @@
             </div>
         </div>
         <div class="flex mt-4">
-            <x-input.search wire:model.debounce.600ms="filter.search"></x-input.search>
+            <x-input.search wire:model.live.debounce.600ms="filter.search"></x-input.search>
         </div>
         @if ($occupants->count()!=0)
             <div class="dark:bg-slate-900 rounded-md pt-1">

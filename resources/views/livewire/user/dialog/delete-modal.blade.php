@@ -1,6 +1,6 @@
 <div class="{{ $showDeleteDialog ? 'visible' : 'invisible' }}">
-    <form wire:submit.prevent="delete()">
-        <x-modal.dialog class="bg-sky-50" minWidth="640px" maxWidth="800px" wire:model.defer="showDeleteDialog">
+    <form wire:submit="delete()">
+        <x-modal.dialog class="bg-sky-50" minWidth="640px" maxWidth="800px" wire:model="showDeleteDialog">
             <!-- Dialog Title -->
             <x-slot name="title">
                 <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100">

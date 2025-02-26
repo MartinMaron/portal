@@ -1,6 +1,6 @@
-<form wire:submit.prevent="closeModal(true)">
+<form wire:submit="closeModal(true)">
     <x-modal.dialog class="bg-sky-50"
-           wire:model="showEditModal">
+           wire:model.live="showEditModal">
         <!-- Dialog Title -->
         <x-slot name="title">
             <div class="flex flex-row justify-between">
@@ -17,19 +17,19 @@
                 <x-input.group
                     class="border-0" for="userEmail.firstinitUsername" label="Username für Webaccount" :error="$errors->first('userEmail.firstinitUsername')"
                     hoheLabel="h-6 sm:h-8 sm:pt-1" hohe="h-20 sm:h-10">
-                    <x-input.text class="bg-sky-50 sm:h-8" wire:model.lazy="userEmail.firstinitUsername" id="userEmail.firstinitUsername" />
+                    <x-input.text class="bg-sky-50 sm:h-8" wire:model.blur="userEmail.firstinitUsername" id="userEmail.firstinitUsername" />
                 </x-input.group>
                 <x-input.group
                     class="border-0" for="userEmail.email" label="Email" :error="$errors->first('userEmail.email')"
                     hoheLabel="h-6 sm:h-8 sm:pt-1" hohe="h-20 sm:h-10">
-                    <x-input.text class="bg-sky-50 sm:h-8" wire:model.lazy="userEmail.email" id="userEmail.email" />
+                    <x-input.text class="bg-sky-50 sm:h-8" wire:model.blur="userEmail.email" id="userEmail.email" />
                 </x-input.group>
                 <x-input.group
                 class="border-0" for="userEmail.infoPerPortal" label="Per Portal" :error="$errors->first('userEmail.infoPerPortal')"
                 hoheLabel="h-6 sm:h-8 sm:pt-1" hohe="h-20 sm:h-10">
                     <div class="flex items-center justify-between h-10 sm:h-8">
                         <div class="pl-1">
-                            <x-input.checkbox wire:model="userEmail.infoPerPortal"></x-input.checkbox>
+                            <x-input.checkbox wire:model.live="userEmail.infoPerPortal"></x-input.checkbox>
                         </div>
                     </div>
                 </x-input.group>
@@ -38,7 +38,7 @@
                 hoheLabel="h-6 sm:h-8 sm:pt-1" hohe="h-20 sm:h-10">
                     <div class="flex items-center justify-between h-10 sm:h-8">
                         <div class="pl-1">
-                            <x-input.checkbox wire:model="userEmail.infoPerEmail"></x-input.checkbox>
+                            <x-input.checkbox wire:model.live="userEmail.infoPerEmail"></x-input.checkbox>
                         </div>
                     </div>
                 </x-input.group>
@@ -47,7 +47,7 @@
                 hoheLabel="h-6 sm:h-8 sm:pt-1" hohe="h-20 sm:h-10">
                     <div class="flex items-center justify-between h-10 sm:h-8">
                         <div class="pl-1">
-                            <x-input.checkbox wire:model="userEmail.infoPerPost"></x-input.checkbox>
+                            <x-input.checkbox wire:model.live="userEmail.infoPerPost"></x-input.checkbox>
                         </div>
                     </div>
                 </x-input.group>

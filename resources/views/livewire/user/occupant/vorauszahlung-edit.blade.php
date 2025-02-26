@@ -3,7 +3,7 @@
 <input     
     type="text"
     inputmode="numeric" 
-    wire:model.lazy="vorauszahlung"
+    wire:model.blur="vorauszahlung"
     wire:focusout ="confirmPrePaid()"
     style="-moz-appearance: textfield; margin: 0;"
     class="text-center border md:text-md focus:ring-black p-1 px-2 m-0 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"   
@@ -14,7 +14,7 @@
                     id="user-costamount_bk-detailinput-haushaltsnah"
                     inputmode="numeric"  
                     placeholder="1"
-                    wire:model.lazy="current.haushaltsnah"
+                    wire:model.blur="current.haushaltsnah"
                     style="-moz-appearance: textfield; margin: 0;"
                     class="text-center border md:text-md focus:ring-black p-1 px-2 m-0 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"   
                     > 

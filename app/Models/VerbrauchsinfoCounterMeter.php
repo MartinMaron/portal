@@ -5,7 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
-use App\Http\Livewire\DataTable\WithSorting;
+use App\Livewire\DataTable\WithSorting;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class VerbrauchsinfoCounterMeter extends Model

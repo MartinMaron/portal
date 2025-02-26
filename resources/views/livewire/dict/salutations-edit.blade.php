@@ -8,7 +8,7 @@
     class="relative"
 >
     <input id="combobox"
-        wire:model.debounce.600ms="filters.search"
+        wire:model.live.debounce.600ms="filters.search"
         x-on:click="open = ! open"
         x-on:focusIn="open = true"
         x-on:focusOut="open = false"

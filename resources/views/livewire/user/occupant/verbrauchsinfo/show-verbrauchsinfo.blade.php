@@ -1,7 +1,7 @@
 <div>
     <div class="w-full px-4 py-1 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div>
-            <x-input.search wire:model.debounce.600ms="filter"></x-input.search>
+            <x-input.search wire:model.live.debounce.600ms="filter"></x-input.search>
         </div>
         <div class="grid w-full grid-cols-1 gap-4 mt-6 sm:grid-cols-2 lg:grid-cols-3">
             @if ($rows->count()!=0)

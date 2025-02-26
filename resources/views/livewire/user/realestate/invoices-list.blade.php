@@ -38,7 +38,7 @@
     </div>
 
     <div class="py-5">
-        <x-input.search wire:model.debounce.600ms="filters.search"></x-input.search>
+        <x-input.search wire:model.live.debounce.600ms="filters.search"></x-input.search>
     </div>
 
     
