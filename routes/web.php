@@ -10,7 +10,7 @@ use App\Http\Controllers\DownloadFileController;
 use App\Http\Controllers\DownloadFileSpacesController;
 use App\Http\Controllers\ImgShow;
 use App\Http\Controllers\Web\RealestateController;
-use App\Http\Livewire\Guest\Kontakt;
+use App\Livewire\Guest\Kontakt;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Middleware\EnsureIsUser;
 

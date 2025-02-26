@@ -8,7 +8,6 @@
     "devDependencies": {
         "@tailwindcss/forms": "^0.5.7",
         "@tailwindcss/typography": "^0.5.10",
-        "alpinejs": "^3.14.8",
         "autoprefixer": "^10.4.16",
         "axios": "^1.7.4",
         "concurrently": "^9.0.1",
@@ -26,6 +25,7 @@
         "@alpinejs/mask": "^3.14.8",
         "@themesberg/tailwind-datepicker": "^1.1.0",
         "bootstrap": "^5.3.3",
+        "livewire": "^0.6.1",
         "pikaday": "^1.8.2"
     }
 }
