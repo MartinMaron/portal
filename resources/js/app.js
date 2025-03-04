@@ -1,13 +1,11 @@
 require('./bootstrap');
 
-import Alpine from 'alpinejs';
+import { Livewire, Alpine } from '../../vendor/livewire/livewire/dist/livewire.esm';
 import mask from '@alpinejs/mask'
-import * as ToastComponent from '../../vendor/usernotnull/tall-toasts/dist/js/tall-toasts'
+import ToastComponent from '../../vendor/usernotnull/tall-toasts/dist/js/tall-toasts'
 
 Alpine.data('ToastComponent', ToastComponent)
-
+Alpine.plugin(ToastComponent)
 Alpine.plugin(mask)
 
-window.Alpine = Alpine;
-
-Alpine.start();
+Livewire.start()

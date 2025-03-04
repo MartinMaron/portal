@@ -19,14 +19,14 @@
         @toastScripts
         <script src="{{ mix('js/app.js') }}" defer></script>
         <script src="https://kit.fontawesome.com/fec4df1c10.js" crossorigin="anonymous"></script>
-        
+
     </head>
     <body class="font-sans antialiased">
         {{-- <x-jet-banner /> --}}
         <livewire:toasts />
 
         <div class="bg-white">
-            
+
             <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                 <livewire:guest.navigation-top />
             </div>
@@ -52,11 +52,11 @@
                     <div class="pl-10 opacity-100"><div class=""><span class="text-sky-600">eneko GmbH</span><br>Ansprechpartner: Christof Jaskula<br>Hans-Willy-Mertens Str. 2<br>50858 Köln<br>Tel.: +49 (0)2234 9444320<br>Fax: +49 (0)2234 9444321<br>info@e-neko.de</div></div>
                 </div>
             </div>
-            
+
         </div>
 
         @stack('modals')
 
-        @livewireScripts
+        @livewireScriptConfig
     </body>
 </html>
