@@ -8,4 +8,11 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    server: {
+        host: 'webportal.test',
+        https: true,
+        hmr: {
+            host: 'webportal.test',
+        },
+    },
 });
