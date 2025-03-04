@@ -1,0 +1,36 @@
+@echo off
+echo **********************
+echo Lösche alle build Dateien...
+echo **********************
+
+if exist vendor (
+    echo Lösche Ordner 'vendor'...
+    rmdir /s /q vendor
+)
+
+if exist node_modules (
+    echo Lösche Ordner 'node_modules'...
+    rmdir /s /q node_modules
+)
+
+if exist storage\debugbar (
+    echo Lösche Debugbar-Ordner 'storage/debugbar'...
+    rmdir /s /q storage\debugbar
+)
+
+if exist storage\logs\laravel.log (
+    echo Lösche Logdatei 'storage/logs/laravel.log'...
+    del /q storage\logs\laravel.log
+)
+
+if exist composer.lock (
+    echo Lösche 'composer.lock'...
+    del /q composer.lock
+)
+
+if exist package-lock.json (
+    echo Lösche 'package-lock.json'...
+    del /q package-lock.json
+)
+
+pause
