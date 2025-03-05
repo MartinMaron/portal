@@ -12,14 +12,10 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
-
     @livewireStyles
-
-    <!-- Scripts -->
-    <script src="{{ mix('js/app.js') }}" defer></script>
-    <script src="https://kit.fontawesome.com/fec4df1c10.js" crossorigin="anonymous"></script>
+    @toastScripts
+    @livewireStyles
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
@@ -52,5 +48,6 @@
 
 @stack('modals')
 @livewireScriptConfig
+@livewireScripts
 </body>
 </html>

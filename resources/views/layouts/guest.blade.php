@@ -12,13 +12,10 @@
         <link rel="dns-prefetch" href="//fonts.gstatic.com">
 
         <!-- Styles -->
-        <link rel="stylesheet" href="{{ mix('css/app.css') }}">
         @livewireStyles
-
-        <!-- Scripts -->
         @toastScripts
-        <script src="{{ mix('js/app.js') }}" defer></script>
-        <script src="https://kit.fontawesome.com/fec4df1c10.js" crossorigin="anonymous"></script>
+        @livewireStyles
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     </head>
     <body class="font-sans antialiased">
@@ -56,7 +53,7 @@
         </div>
 
         @stack('modals')
-
         @livewireScriptConfig
+        @livewireScripts
     </body>
 </html>
