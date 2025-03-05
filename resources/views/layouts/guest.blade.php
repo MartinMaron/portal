@@ -12,7 +12,6 @@
         <link rel="dns-prefetch" href="//fonts.gstatic.com">
 
         <!-- Styles -->
-        @livewireStyles
         @toastScripts
         @livewireStyles
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -54,6 +53,5 @@
 
         @stack('modals')
         @livewireScriptConfig
-        @livewireScripts
     </body>
 </html>

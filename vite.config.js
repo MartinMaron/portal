@@ -8,13 +8,4 @@ export default defineConfig({
             refresh: true,
         }),
     ],
-    server: {
-        host: 'webportal.test',
-        https: false,
-        port: 5173,
-        hmr: {
-            host: 'webportal.test',
-            protocol: 'ws'
-        },
-    },
 });

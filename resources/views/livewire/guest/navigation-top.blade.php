@@ -1,7 +1,7 @@
 <nav class="rounded-md shadow-md bg-sky-100 border-sky-300">
     <div class="justify-between hidden sm:flex">
 
-        <a class="m-1 ml-4" href="{{ route('guest.home')}}" :active="request()->routeIs('login')">
+        <a class="m-1 ml-4" href="{{ route('guest.home')}}" :active="{{ request()->routeIs('login') ? 'true' : 'false' }}">
             <x-jet-application-mark class="block w-auto h-9" />
         </a>
         <!-- Primary Navigation Menu -->

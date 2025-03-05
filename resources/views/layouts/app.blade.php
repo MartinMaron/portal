@@ -13,7 +13,6 @@
 
     <!-- Styles -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
-    @livewireStyles
     @toastScripts
     @livewireStyles
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -48,6 +47,5 @@
 
 @stack('modals')
 @livewireScriptConfig
-@livewireScripts
 </body>
 </html>
