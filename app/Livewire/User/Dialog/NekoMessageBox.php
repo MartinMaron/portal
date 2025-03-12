@@ -9,14 +9,19 @@ class NekoMessageBox extends Component
     use \App\Http\Traits\Helpers;
 
     public $showNekoMessageMutex = false;
+
     public $title = 'Title';
+
     public $message = 'Message?';
+
     public $boxType = 'info';
+
     public $submitText = 'OK';
+
     public $cancelText = 'Abbrechen';
 
     protected $listeners = [
-        'showNekoMessageModal' => 'showNekoMessage', 
+        'showNekoMessageModal' => 'showNekoMessage',
     ];
 
     public function showNekoMessage($params = null)
@@ -27,8 +32,6 @@ class NekoMessageBox extends Component
         $this->boxType = $this->getParam('type', $this->boxType);
         $this->showNekoMessageMutex = true;
     }
-    
-    
 
     public function confirm()
     {

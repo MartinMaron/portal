@@ -24,9 +24,9 @@ class UserMobileRessource extends JsonResource
             'isAdmin' => $this->isAdmin,
             'isMieter' => $this->isMieter,
             'kundennummer' => $this->kundennummer,
-            'occupants'=> $this->getOccupants(),
-            'einheiten'=> $this->getEinheiten(),
-            'zaehlerarten'=> $this->getZaehlerarten(),
+            'occupants' => $this->getOccupants(),
+            'einheiten' => $this->getEinheiten(),
+            'zaehlerarten' => $this->getZaehlerarten(),
         ];
     }
 
@@ -43,12 +43,10 @@ class UserMobileRessource extends JsonResource
     public function getOccupants()
     {
         $user = auth()->user();
-        $result =  $user->userVerbrauchsinfoAccessControls->map(function (UserVerbrauchsinfoAccessControl $userControl) {
+        $result = $user->userVerbrauchsinfoAccessControls->map(function (UserVerbrauchsinfoAccessControl $userControl) {
             return new OccupantMobileResource($userControl->occupant);
         })->unique();
+
         return $result;
     }
-
 }
-
-     

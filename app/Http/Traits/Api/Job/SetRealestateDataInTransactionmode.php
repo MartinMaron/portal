@@ -1,17 +1,16 @@
 <?php
+
 namespace App\Http\Traits\Api\Job;
 
 use App\Models\Realestate;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 trait SetRealestateDataInTransactionmode
 {
-    public function setRealestateDataInTransactionmode(Array $data)
+    public function setRealestateDataInTransactionmode(array $data)
     {
 
-    
         $validator = Validator::make($data, [
             'value' => 'required|boolean',
             'realestate_neko_id' => 'required|string|max:40',
@@ -25,12 +24,11 @@ trait SetRealestateDataInTransactionmode
                 'errors' => $validator->errors(),
                 'data' => $data,
                 'id' => 0,
-                ]);
+            ]);
         }
 
         $realestate_id = Realestate::where('nekoId', $data['realestate_neko_id'])->first()->id;
         DB::table($data['dataTable'])->where('realestate_id', $realestate_id)->update(['sync' => $data['value']]);
-      
 
         $tableResult = DB::table($data['dataTable'])->where('realestate_id', $realestate_id)->get();
 

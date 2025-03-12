@@ -3,17 +3,19 @@
 namespace App\Livewire;
 
 use Livewire\Component;
-use Barryvdh\Debugbar\Facades\Debugbar;
-
-use function JmesPath\search;
 
 abstract class Autocomplete extends Component
 {
     public $results;
+
     public $search;
+
     public $selected;
+
     public $showDropdown;
+
     public $displaycolumn;
+
     public int $characterCount = 3;
 
     abstract public function query();
@@ -30,15 +32,14 @@ abstract class Autocomplete extends Component
         $this->dispatch('autocomplete_valueSelected', $this->selected)->self();
     }
 
-    public function updated($propertyName)
-    {
-    }
+    public function updated($propertyName) {}
 
     public function updatedSearch()
     {
         if (strlen($this->search) <= $this->characterCount) {
             $this->results = collect();
             $this->showDropdown = false;
+
             return;
         }
 
@@ -56,5 +57,4 @@ abstract class Autocomplete extends Component
     {
         return view('livewire.autocomplete');
     }
-
 }

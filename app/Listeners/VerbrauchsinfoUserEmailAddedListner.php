@@ -3,8 +3,6 @@
 namespace App\Listeners;
 
 use App\Events\VerbrauchsinfoUserEmailAdded;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 
 class VerbrauchsinfoUserEmailAddedListner
 {
@@ -21,11 +19,10 @@ class VerbrauchsinfoUserEmailAddedListner
     /**
      * Handle the event.
      *
-     * @param  \App\Events\VerbrauchsinfoUserEmailAdded  $event
      * @return void
      */
     public function handle(VerbrauchsinfoUserEmailAdded $event)
     {
-        $event->verbrauchsinfoUserEmail->save();   
+        $event->verbrauchsinfoUserEmail->save();
     }
 }

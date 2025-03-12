@@ -2,13 +2,13 @@
 
 namespace App\Livewire\User\Realestate;
 
-use Livewire\Component;
 use App\Models\Realestate;
+use Livewire\Component;
 
 class HeaderAddress extends Component
 {
-
     public Realestate $realestate;
+
     public $editablePeriod = false;
 
     public function mount($baseobject)
@@ -19,13 +19,14 @@ class HeaderAddress extends Component
     public function rules()
     {
         return [
-            'realestate.abrechnungssetting_id' => 'required',      
+            'realestate.abrechnungssetting_id' => 'required',
         ];
     }
 
     public function updated($propertyName)
     {
         $this->realestate->save();
+
         return redirect(request()->header('Referer'));
 
         // $calcRules = null;
@@ -35,15 +36,13 @@ class HeaderAddress extends Component
         // {
         //     $calcRules = $this->validationRulesEdit;
         // }
-        
+
         // $myRules = $calcRules[$this->currentPage];
         // $myRules['current.date_from_editing']=['required', 'date', new OccupantDateFromLessDateToRule];
         // $myRules['dateFromNewOccupant']=['required', 'date', new OcccupantDateFromGreaterPreviousRule];
 
         // $this->validateOnly($propertyName, $myRules, $this->messages);
     }
-
-
 
     public function render()
     {

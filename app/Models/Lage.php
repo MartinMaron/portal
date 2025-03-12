@@ -10,7 +10,6 @@ class Lage extends Model
     use HasFactory;
 
     protected $fillable = [
-        'id', 'caption'
+        'id', 'caption',
     ];
-
 }

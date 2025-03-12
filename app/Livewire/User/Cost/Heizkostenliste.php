@@ -3,23 +3,31 @@
 namespace App\Livewire\User\Cost;
 
 use App\Models\Cost;
-use Livewire\Component;
-use App\Models\Realestate;
 use App\Models\Costtype;
+use App\Models\Realestate;
 use Illuminate\Database\Eloquent\Builder;
+use Livewire\Component;
 use Usernotnull\Toast\Concerns\WireToast;
 
 class Heizkostenliste extends Component
 {
-    use WireToast; use \App\Http\Traits\Helpers;
+    use \App\Http\Traits\Helpers;
+    use WireToast;
 
     public $showEditModal = false;
+
     public $showEditFields = true;
+
     public $showFilters = false;
+
     public $nettoInputMode = false;
+
     public $dateInputMode = true;
+
     public $dateFrom = null;
+
     public Cost $current;
+
     public Realestate $realestate;
 
     public function rules()
@@ -34,17 +42,17 @@ class Heizkostenliste extends Component
     /* initialization */
     public function mount($realestate)
     {
-        
+
         $this->realestate = $realestate;
         $this->current = $this->makeBlankObject();
         $this->nettoInputMode = $realestate->eingabeCostNetto;
         $this->dateInputMode = $realestate->eingabeCostDatum;
-        $this->showEditFields = !$realestate->heizkostenlisteDone;
+        $this->showEditFields = ! $realestate->heizkostenlisteDone;
     }
 
     public function setDone()
     {
-        $this->dispatch('showNekoMessageModal',['title'=>'Kostenliste absenden?','message'=>'Dannach können keine Änderungen mehr vorgenommen werden.','type'=>'warning','action'=>'confirmEditDone']);
+        $this->dispatch('showNekoMessageModal', ['title' => 'Kostenliste absenden?', 'message' => 'Dannach können keine Änderungen mehr vorgenommen werden.', 'type' => 'warning', 'action' => 'confirmEditDone']);
     }
 
     public function confirmNekoMessage($params)
@@ -53,7 +61,8 @@ class Heizkostenliste extends Component
         if ($this->params['action'] == 'confirmEditDone') {
             $this->realestate->abrechnungssetting->heizkostenlisteDone = 1;
             $this->realestate->abrechnungssetting->save();
-            $this->showEditFields = !$this->realestate->abrechnungssetting->heizkostenlisteDone;
+            $this->showEditFields = ! $this->realestate->abrechnungssetting->heizkostenlisteDone;
+
             return redirect(request()->header('Referer'));
         }
     }
@@ -71,10 +80,10 @@ class Heizkostenliste extends Component
     }
 
     protected $listeners = [
-                            'changeProperty' => 'changeValue',
-                            'refreshComponents' => '$refresh',
-                            'confirmNekoMessage' => 'confirmNekoMessage',
-                        ];
+        'changeProperty' => 'changeValue',
+        'refreshComponents' => '$refresh',
+        'confirmNekoMessage' => 'confirmNekoMessage',
+    ];
 
     public function setCurrent(Cost $cost)
     {
@@ -95,40 +104,53 @@ class Heizkostenliste extends Component
         $this->dispatch('showCostDetailModal', $this->current, true, false);
     }
 
-    public function hasConsumptionByType($costtypeId){
-        $ret = Cost::where('realestate_id','=',$this->realestate->id)
-        ->where(function (Builder $query) {$query->IsHeizkosten();})
-        ->where('costtype_id','=',$costtypeId)
-        ->where('consumption','=', 1)
-        ->count();
-        return (bool)($ret > 0);
-    }
-    public function hasHaushaltsnahByType($costtypeId){
-        $ret = Cost::where('realestate_id','=',$this->realestate->id)
-        ->where(function (Builder $query) {$query->IsHeizkosten();})
-        ->where('costtype_id','=',$costtypeId)
-        ->where('haushaltsnah','=', 1)
-        ->count();
-        return (bool)($ret > 0);
+    public function hasConsumptionByType($costtypeId)
+    {
+        $ret = Cost::where('realestate_id', '=', $this->realestate->id)
+            ->where(function (Builder $query) {
+                $query->IsHeizkosten();
+            })
+            ->where('costtype_id', '=', $costtypeId)
+            ->where('consumption', '=', 1)
+            ->count();
+
+        return (bool) ($ret > 0);
     }
 
-    public function getCostByType($costtypeId){
-        return Cost::where('realestate_id','=',$this->realestate->id)
-        ->where(function (Builder $query) {$query->IsHeizkosten();})
-        ->where('costtype_id','=',$costtypeId)
-        ->get();
+    public function hasHaushaltsnahByType($costtypeId)
+    {
+        $ret = Cost::where('realestate_id', '=', $this->realestate->id)
+            ->where(function (Builder $query) {
+                $query->IsHeizkosten();
+            })
+            ->where('costtype_id', '=', $costtypeId)
+            ->where('haushaltsnah', '=', 1)
+            ->count();
+
+        return (bool) ($ret > 0);
+    }
+
+    public function getCostByType($costtypeId)
+    {
+        return Cost::where('realestate_id', '=', $this->realestate->id)
+            ->where(function (Builder $query) {
+                $query->IsHeizkosten();
+            })
+            ->where('costtype_id', '=', $costtypeId)
+            ->get();
     }
 
     public function render()
     {
-        $costtypes = Cost::where('realestate_id','=',$this->realestate->id)
-        ->where(function (Builder $query) {$query->IsHeizkosten();})
-        ->get()->unique('costtype_id')
-        ->sortBy('CostTypeSort');
+        $costtypes = Cost::where('realestate_id', '=', $this->realestate->id)
+            ->where(function (Builder $query) {
+                $query->IsHeizkosten();
+            })
+            ->get()->unique('costtype_id')
+            ->sortBy('CostTypeSort');
 
         return view('livewire.user.cost.heizkostenliste', [
-            'costtypes' => $costtypes
+            'costtypes' => $costtypes,
         ]);
     }
 }
-

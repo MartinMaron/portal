@@ -25,8 +25,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::table('abrechnungssettings', function($table)
-        {
+        Schema::table('abrechnungssettings', function ($table) {
             $table->boolean('brennstofflisteDone')->default(0);
         });
     }

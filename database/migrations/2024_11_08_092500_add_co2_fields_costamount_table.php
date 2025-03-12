@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -13,8 +12,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('cost_amounts', function($table)
-        {
+        Schema::table('cost_amounts', function ($table) {
             $table->double('co2TaxAmount_gros')->nullable();
             $table->double('co2TaxAmount_net')->nullable();
         });

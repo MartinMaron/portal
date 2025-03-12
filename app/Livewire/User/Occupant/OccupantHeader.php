@@ -1,25 +1,25 @@
 <?php
 
 namespace App\Livewire\User\Occupant;
+
 use App\Models\Occupant;
 use Livewire\Component;
-use Spatie\LaravelIgnition\FlareMiddleware\AddJobs;
-use Symfony\Component\HttpKernel\DependencyInjection\AddAnnotatedClassesToCachePass;
 
 class OccupantHeader extends Component
 {
-
     public $occupant;
+
     public $showStandardIcon = true;
+
     public $addAction = null;
+
     public $hasRealestateOccupantsDifferentAdresses = false;
 
     public function mount(Occupant $occupant)
     {
         $this->occupant = $occupant;
         $this->hasRealestateOccupantsDifferentAdresses = $this->occupant->realestate->has_occupants_different_adresses;
-        if ($this->addAction != null)
-        {
+        if ($this->addAction != null) {
             /* $this->addAction = $addAction; */
             $this->showStandardIcon = false;
         }

@@ -1,14 +1,15 @@
 <?php
 
 namespace App\Livewire\User\Occupant\CounterMeter;
-use App\Models\VerbrauchsinfoCounterMeter;
+
 use App\Models\Occupant;
+use App\Models\VerbrauchsinfoCounterMeter;
 use Livewire\Component;
 
 class Listitem extends Component
 {
-
     public VerbrauchsinfoCounterMeter $singleCounterMeter;
+
     public Occupant $occupant;
 
     public function mount($singleCounterMeter)

@@ -2,22 +2,17 @@
 
 namespace App\Livewire\User\Realestate;
 
-use Livewire\Component;
-use App\Models\Realestate;
-use Illuminate\Database\Eloquent\Builder;
-use App\Models\Invoice;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use App\Livewire\DataTable\WithSorting;
-
-
+use App\Models\Invoice;
+use Illuminate\Database\Eloquent\Builder;
+use Livewire\Component;
 
 class InvoicesList extends Component
 {
-
-    use  WithSorting;
+    use WithSorting;
 
     public $realestate;
+
     public $filters = [
         'search' => '',
     ];
@@ -27,12 +22,10 @@ class InvoicesList extends Component
         $this->realestate->$realestate;
         $this->sorts = [
             'createDate' => 'desc',
-            'caption' => 'asc'
-            ];
+            'caption' => 'asc',
+        ];
     }
 
-
-    
     public function resetFilters()
     {
         $this->reset('filters');
@@ -44,30 +37,30 @@ class InvoicesList extends Component
             $result = Invoice::query()
                 ->where('realestate_id', '=', $this->realestate->id)
                 ->where(function (Builder $query) {
-                    $query->where('caption', 'LIKE', '%' . $this->filters['search'] . '%')
-                        ->orWhere('fileName', 'LIKE', '%' . $this->filters['search'] . '%')
-                        ->orWhere('createDate', 'LIKE', '%' . $this->filters['search'] . '%')
-                        ->orWhere('description', 'LIKE', '%' . $this->filters['search'] . '%');
+                    $query->where('caption', 'LIKE', '%'.$this->filters['search'].'%')
+                        ->orWhere('fileName', 'LIKE', '%'.$this->filters['search'].'%')
+                        ->orWhere('createDate', 'LIKE', '%'.$this->filters['search'].'%')
+                        ->orWhere('description', 'LIKE', '%'.$this->filters['search'].'%');
                 });
         } else {
             $result = Invoice::query()
                 ->where('realestate_id', '=', $this->realestate->id);
-        };
+        }
 
         $this->applySorting($result);
+
         return $result;
     }
-
 
     public function getRowsProperty()
     {
         // return $this->cache(function () {
-            return $this->rowsQuery->get();
-            // });
-        }
+        return $this->rowsQuery->get();
+        // });
+    }
 
-        public function render()
-        {
+    public function render()
+    {
         return view('livewire.user.realestate.invoices-list', ['invoices' => $this->rows]);
     }
 }

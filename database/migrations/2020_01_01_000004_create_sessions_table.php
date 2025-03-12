@@ -1,39 +1,22 @@
 <?php
 
-
-
-use Illuminate\Support\Facades;
-
-use Illuminate\Support\Facades\App;
-
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-use Illuminate\Validation\Rules\Unique;
-
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Database\Migrations\Migration;
-
-
-
 return new class extends Migration
-
 {
-
     /**
-
      * Run the migrations.
 
      *
 
      * @return void
-
      */
-
     public function up()
-
     {
 
-        if (env('DB_HOST')!='127.0.0.1') {
+        if (env('DB_HOST') != '127.0.0.1') {
             \Illuminate\Support\Facades\DB::statement('SET SESSION sql_require_primary_key=0');
         }
 
@@ -55,25 +38,17 @@ return new class extends Migration
 
     }
 
-
-
     /**
-
      * Reverse the migrations.
 
      *
 
      * @return void
-
      */
-
     public function down()
-
     {
 
         Schema::dropIfExists('sessions');
 
     }
-
 };
-

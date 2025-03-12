@@ -2,21 +2,20 @@
 
 namespace App\Livewire\User\Occupant;
 
-use Livewire\Component;
 use App\Models\Occupant;
-use Barryvdh\Debugbar\Facades\Debugbar;
+use Livewire\Component;
 
 class VorauszahlungEdit extends Component
 {
-
     public Occupant $occupant;
+
     public $countvalue;
 
-
-    public function mount(Occupant $occupant){
+    public function mount(Occupant $occupant)
+    {
         $this->occupant = $occupant;
         $this->countvalue = $occupant->vorauszahlung_editing;
-      }
+    }
 
     public function confirm()
     {
@@ -24,10 +23,14 @@ class VorauszahlungEdit extends Component
         $this->occupant->save();
     }
 
-    public function rules() { return [
-         'occupant.vorauszahlung_editing' => 'nullable',
-         'countvalue' => 'nullable',
-    ]; }
+    public function rules()
+    {
+        return [
+            'occupant.vorauszahlung_editing' => 'nullable',
+            'countvalue' => 'nullable',
+        ];
+    }
+
     public function render()
     {
         return view('livewire.user.occupant.countvalue-edit');

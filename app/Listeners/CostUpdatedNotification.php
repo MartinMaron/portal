@@ -3,13 +3,11 @@
 namespace App\Listeners;
 
 use App\Events\CostUpdated;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use Usernotnull\Toast\Concerns\WireToast;
 
 class CostUpdatedNotification
 {
-    Use WireToast;
+    use WireToast;
 
     /**
      * Create the event listener.
@@ -24,11 +22,10 @@ class CostUpdatedNotification
     /**
      * Handle the event.
      *
-     * @param  \App\Events\CostUpdated  $event
      * @return void
      */
     public function handle(CostUpdated $event)
     {
-        toast()->success('Speichervorgang erfolgreich','Achtung')->push();       
+        toast()->success('Speichervorgang erfolgreich', 'Achtung')->push();
     }
 }

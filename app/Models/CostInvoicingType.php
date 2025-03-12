@@ -8,11 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Costinvoicingtype extends Model
 {
     use HasFactory;
+
     protected $primaryKey = 'id';
+
     protected $keyType = 'string';
 
     protected $fillable = [
-        'id'
+        'id',
     ];
 
     public function costtypes()
@@ -20,4 +22,3 @@ class Costinvoicingtype extends Model
         return $this->hasMany(Costtype::class);
     }
 }
-

@@ -2,52 +2,53 @@
 
 namespace App\Livewire\User\Occupant\Detail;
 
-use App\Http\Traits\Helpers;
-use DateTime;
-use Carbon\Carbon;
-use App\Models\Lage;
-use Livewire\Component;
+use App\Http\Traits\Api\Job\Realestate\OccupantAdapter;
 use App\Models\Occupant;
 use App\Models\Realestate;
 use App\Models\Salutation;
 use App\Models\UnitUsageType;
-use Illuminate\Support\Facades\Route;
-use Barryvdh\Debugbar\Facades\Debugbar;
-use PhpParser\Node\Expr\BinaryOp\BooleanOr;
-use App\Rules\OccupantDateFromLessDateToRule;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use App\Rules\OcccupantDateFromGreaterPreviousRule;
-use App\Http\Traits\Api\Job\Realestate\OccupantAdapter;
+use App\Rules\OccupantDateFromLessDateToRule;
+use Barryvdh\Debugbar\Facades\Debugbar;
+use Carbon\Carbon;
+use Livewire\Component;
 
 class Dialog extends Component
 {
     use OccupantAdapter;
 
     public $salutations = null;
+
     public $unitUsageTypes = null;
 
     public Realestate $realestate;
+
     public Occupant $current;
+
     public Occupant $initOccupant;
+
     // Form properties
     public $dateFromNewOccupant = null;
+
     public $hasLeerstand = false;
+
     public $mlage = '';
 
+    public string $qmkc = '';
 
-    public string $qmkc = "";
-    public string $pe  = "";
-    public string $vorauszahlung = "";
+    public string $pe = '';
 
+    public string $vorauszahlung = '';
 
     // Dialog properties
     public string $dialogMode = '';
+
     public bool $showEditModal;
 
     // MultiViewForm properties
     public $currentPage = 1;
-    public $success;
 
+    public $success;
 
     public $pages = [
         1 => [
@@ -88,7 +89,7 @@ class Dialog extends Component
             'current.postcode' => 'nullable',
             'current.email' => 'nullable|string|email|max:255',
             'current.telephone_number' => 'nullable',
-            'current.date_from_editing'=> 'required|date',
+            'current.date_from_editing' => 'required|date',
             'current.date_to_editing' => 'nullable',
         ],
         2 => [
@@ -117,7 +118,6 @@ class Dialog extends Component
         'current.nachname' => 'bitte geben Sie einen Nachnamen ein',
     ];
 
-
     private $validationRulesEdit = [
         1 => [
             'dateFromNewOccupant' => 'nullable|date',
@@ -127,8 +127,8 @@ class Dialog extends Component
             'current.anrede' => 'nullable',
             'current.email' => 'nullable|string|email|max:255',
             'current.telephone_number' => 'nullable',
-            'current.date_from_editing'=> 'required|string',
-            'current.date_to_editing'=> 'nullable|string',
+            'current.date_from_editing' => 'required|string',
+            'current.date_to_editing' => 'nullable|string',
         ],
         2 => [
             'current.address' => 'nullable',
@@ -153,29 +153,27 @@ class Dialog extends Component
         ],
     ];
 
-
     public function ValidationRules()
     {
-        if ($this->dialogMode == 'edit'){
+        if ($this->dialogMode == 'edit') {
             return $this->validationRulesEdit;
         }
-        if ($this->dialogMode == 'change'){
-           return $this->validationRulesChange;
+        if ($this->dialogMode == 'change') {
+            return $this->validationRulesChange;
         }
     }
 
     protected $listeners = [
         'showOccupantModal' => 'showModal',
         'changeOccupantModal' => 'changeModal',
-        'LageAutocompleteDisplaychanged' => 'lageModalChanged'
+        'LageAutocompleteDisplaychanged' => 'lageModalChanged',
     ];
 
     public function rules()
     {
-        if ($this->dialogMode == 'change'){
+        if ($this->dialogMode == 'change') {
             return collect($this->validationRulesChange)->collapse()->toArray();
-        }else
-        {
+        } else {
             return collect($this->validationRulesEdit)->collapse()->toArray();
         }
     }
@@ -193,34 +191,32 @@ class Dialog extends Component
         $this->unitUsageTypes = UnitUsageType::all();
     }
 
-    public function lageModalChanged($value){
-        Debugbar::info('lageModalChanged:'. $value);
+    public function lageModalChanged($value)
+    {
+        Debugbar::info('lageModalChanged:'.$value);
         $this->current->lage = $value;
         $this->updated('current.lage');
     }
 
-
     public function updated($propertyName)
     {
-        Debugbar::info('occupant.detail.dialog-updated:'. $propertyName);
+        Debugbar::info('occupant.detail.dialog-updated:'.$propertyName);
         $calcRules = null;
-        if ($this->dialogMode == 'change'){
+        if ($this->dialogMode == 'change') {
             $calcRules = $this->validationRulesChange;
-        }else
-        {
+        } else {
             $calcRules = $this->validationRulesEdit;
         }
 
         $myRules = $calcRules[$this->currentPage];
-        $myRules['current.date_from_editing']=['required', 'date', new OccupantDateFromLessDateToRule];
-        $myRules['dateFromNewOccupant']=['required', 'date', new OcccupantDateFromGreaterPreviousRule];
-
-
+        $myRules['current.date_from_editing'] = ['required', 'date', new OccupantDateFromLessDateToRule];
+        $myRules['dateFromNewOccupant'] = ['required', 'date', new OcccupantDateFromGreaterPreviousRule];
 
         $this->validateOnly($propertyName, $myRules, $this->messages);
     }
 
-    public function changeModal(Occupant $current){
+    public function changeModal(Occupant $current)
+    {
         $this->currentPage = 1;
         $this->resetValidation();
         $this->dialogMode = 'change';
@@ -231,7 +227,8 @@ class Dialog extends Component
         $this->showEditModal = true;
     }
 
-    public function showModal(Occupant $current){
+    public function showModal(Occupant $current)
+    {
         $this->currentPage = 1;
         $this->resetValidation();
         $this->dialogMode = 'edit';
@@ -241,78 +238,74 @@ class Dialog extends Component
         $this->showEditModal = true;
     }
 
-
-
-    public function closeModal($save){
-        if ($save && $this->current){
-            if ($this->validate($this->rules(),$this->messages))
-            {
-                if($this->dialogMode == 'change')
-                {
-                    $save = $this->changeOccupant($this->initOccupant, $this->current ,$this->hasLeerstand,$this->dateFromNewOccupant);
+    public function closeModal($save)
+    {
+        if ($save && $this->current) {
+            if ($this->validate($this->rules(), $this->messages)) {
+                if ($this->dialogMode == 'change') {
+                    $save = $this->changeOccupant($this->initOccupant, $this->current, $this->hasLeerstand, $this->dateFromNewOccupant);
                 }
 
-                if($this->dialogMode == 'edit')
-                {
+                if ($this->dialogMode == 'edit') {
                     $save = $this->editOccupant($this->current);
 
                 }
-                if(!$save->wasRecentlyCreated && $save->wasChanged()){
+                if (! $save->wasRecentlyCreated && $save->wasChanged()) {
                     // updateOrCreate performed an update
-                    toast()->success('Die Details des Nutzers wurden geändert.','Achtung')->push();
+                    toast()->success('Die Details des Nutzers wurden geändert.', 'Achtung')->push();
+
                     return redirect(request()->header('Referer'));
                 }
 
-                if(!$save->wasRecentlyCreated && !$save->wasChanged()){
+                if (! $save->wasRecentlyCreated && ! $save->wasChanged()) {
                     // updateOrCreate performed nothing, row did not change
                     $this->showEditModal = false;
                 }
 
-                if($save->wasRecentlyCreated){
+                if ($save->wasRecentlyCreated) {
                     // updateOrCreate performed create
-                    toast()->success('Nutzerwechsel durchgeführt.','Achtung')->push();
+                    toast()->success('Nutzerwechsel durchgeführt.', 'Achtung')->push();
+
                     return redirect(request()->header('Referer'));
                 }
 
-            }else{
+            } else {
                 /* validierung war nicht erfolgreich */
                 $this->showEditModal = true;
-            };
-        }else{
+            }
+        } else {
             $this->showEditModal = false;
         }
 
     }
 
-
     public function goToNextPage()
     {
         $calcRules = null;
-        if ($this->dialogMode == 'change'){
+        if ($this->dialogMode == 'change') {
             $calcRules = $this->validationRulesChange;
-        }else
-        {
+        } else {
             $calcRules = $this->validationRulesEdit;
         }
 
         $myRules = $calcRules[$this->currentPage];
 
-        //custom validation
-        if ($this->currentPage == 1 && $this->dialogMode == 'change')
-        {
-            $myRules['dateFromNewOccupant']=['required', 'date', new OcccupantDateFromGreaterPreviousRule];
+        // custom validation
+        if ($this->currentPage == 1 && $this->dialogMode == 'change') {
+            $myRules['dateFromNewOccupant'] = ['required', 'date', new OcccupantDateFromGreaterPreviousRule];
         }
 
-        if ($this->currentPage == 1 && $this->dialogMode == 'edit')
-        {
-            $myRules['current.date_from_editing']=['required', 'date', new OccupantDateFromLessDateToRule];
+        if ($this->currentPage == 1 && $this->dialogMode == 'edit') {
+            $myRules['current.date_from_editing'] = ['required', 'date', new OccupantDateFromLessDateToRule];
         }
 
         $this->validate($myRules);
 
-        if ($this->hasLeerstand){
-            if ($this->currentPage == 1) {$this->currentPage = 4;}
-        }else{
+        if ($this->hasLeerstand) {
+            if ($this->currentPage == 1) {
+                $this->currentPage = 4;
+            }
+        } else {
             $this->currentPage++;
         }
 
@@ -320,9 +313,11 @@ class Dialog extends Component
 
     public function goToPreviousPage()
     {
-        if ($this->hasLeerstand){
-            if ($this->currentPage == 4) {$this->currentPage = 1;}
-        }else{
+        if ($this->hasLeerstand) {
+            if ($this->currentPage == 4) {
+                $this->currentPage = 1;
+            }
+        } else {
             $this->currentPage--;
         }
     }
@@ -343,7 +338,7 @@ class Dialog extends Component
 
     public function render()
     {
-        return view('livewire.user.occupant.detail.dialog',[
+        return view('livewire.user.occupant.detail.dialog', [
             'current' => $this->current,
             'unitUsageTypes' => $this->unitUsageTypes,
         ]);

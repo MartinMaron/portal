@@ -2,15 +2,14 @@
 
 namespace App\Livewire\User\Occupant\Verbrauchsinfo;
 
-use Livewire\Component;
-use Barryvdh\Debugbar\Facades\Debugbar;
 use App\Livewire\DataTable\WithCachedRows;
 use App\Models\Occupant;
-use App\Models\Verbrauchsinfo;
+use Livewire\Component;
 
 class OccupantView extends Component
 {
     use WithCachedRows;
+
     public $occupant;
 
     /* initialization */
@@ -22,10 +21,10 @@ class OccupantView extends Component
     public function render()
     {
         $res = $this->occupant->userVerbrauchsinfoAccessControls
-        ->where('user_id', '=', auth()->user()->id)
-        ->sortBy('datum')->last();
+            ->where('user_id', '=', auth()->user()->id)
+            ->sortBy('datum')->last();
 
-        $result = $this->occupant->verbrauchsinfos->where('jahr_monat', '=', $res['jahr_monat']) ;
+        $result = $this->occupant->verbrauchsinfos->where('jahr_monat', '=', $res['jahr_monat']);
 
         return view('class OccupantView', [
             'rows' => $result,

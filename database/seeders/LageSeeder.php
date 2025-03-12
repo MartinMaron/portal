@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\lage;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class LageSeeder extends Seeder

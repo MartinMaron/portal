@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -13,8 +12,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('realestates', function($table)
-        {
+        Schema::table('realestates', function ($table) {
             $table->boolean('betriebskosten')->default(0);
             $table->boolean('kosteneingabe')->default(0);
         });

@@ -2,12 +2,9 @@
 
 namespace App\Models;
 
-use App\Http\neko\Helpers;
-use Barryvdh\Debugbar\Facades\Debugbar;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Carbon\Carbon;
 
 class Verbrauchsinfo extends Model
 {
@@ -15,9 +12,9 @@ class Verbrauchsinfo extends Model
 
     protected $fillable = [
         'nekoOccupant_id', 'occupant_id', 'art', 'einheit_id', 'nutzergrup_id', 'nutzergrup_name', 'nekoId', 'jahr_monat', 'datum', 'durchschnitt',
-        'zeitraum_akt', 'zeitraum_mon', 'zeitraum_vorj', 'verbrauch_akt', 'verbrauch_mon', 'verbrauch_vorj','hk','ww', 'mess_einheit'
+        'zeitraum_akt', 'zeitraum_mon', 'zeitraum_vorj', 'verbrauch_akt', 'verbrauch_mon', 'verbrauch_vorj', 'hk', 'ww', 'mess_einheit',
     ];
-    
+
     public function occupant()
     {
         return $this->belongsTo(Occupant::class);
@@ -28,7 +25,8 @@ class Verbrauchsinfo extends Model
         return $this->belongsTo(Einheit::class);
     }
 
-    public static function validateImportData($data) {
+    public static function validateImportData($data)
+    {
         return Validator::make($data, [
             'nekoId' => 'required|numeric',
             'nekoOccupant_id' => 'required|string|max:40',
@@ -40,20 +38,23 @@ class Verbrauchsinfo extends Model
         ]);
     }
 
-    public function getVerbrauchAktDisplayAttribute(){
-         return number_format($this->verbrauch_akt, 2, ',', '.');
+    public function getVerbrauchAktDisplayAttribute()
+    {
+        return number_format($this->verbrauch_akt, 2, ',', '.');
     }
-    public function getVerbrauchMonDisplayAttribute(){
+
+    public function getVerbrauchMonDisplayAttribute()
+    {
         return number_format($this->verbrauch_mon, 2, ',', '.');
     }
-    public function getVerbrauchVorjDisplayAttribute(){
+
+    public function getVerbrauchVorjDisplayAttribute()
+    {
         return number_format($this->verbrauch_vorj, 2, ',', '.');
     }
-    
-    public function getDurchschnittDisplayAttribute(){
+
+    public function getDurchschnittDisplayAttribute()
+    {
         return number_format($this->durchschnitt, 2, ',', '.');
     }
-
- 
-
 }

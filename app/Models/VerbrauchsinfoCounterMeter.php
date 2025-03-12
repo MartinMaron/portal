@@ -2,11 +2,10 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Validator;
 use App\Livewire\DataTable\WithSorting;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Validator;
 
 class VerbrauchsinfoCounterMeter extends Model
 {
@@ -17,17 +16,17 @@ class VerbrauchsinfoCounterMeter extends Model
 
     public function scopeHasDifferentNumbers($query)
     {
-        $query->where('nr','funkNr');
+        $query->where('nr', 'funkNr');
     }
 
     public function hasEqualsNumbers()
     {
-      return $this->nr == $this->funkNr;
+        return $this->nr == $this->funkNr;
     }
 
     protected $fillable = [
         'nekoOccupant_id', 'occupant_id', 'occupant_id', 'nekoId', 'nr', 'funkNr', 'art', 'einheit', 'einheit_id', 'nutzergrup_id', 'nutzergrup_name',
-        'hk','ww','jahr_monat', 'datum','zeitraum_akt', 'zeitraum_mon', 'zeitraum_vorj', 'verbrauch_akt', 'verbrauch_mon', 'verbrauch_vorj', 'stand_anfang','stand_ende', 'faktor'
+        'hk', 'ww', 'jahr_monat', 'datum', 'zeitraum_akt', 'zeitraum_mon', 'zeitraum_vorj', 'verbrauch_akt', 'verbrauch_mon', 'verbrauch_vorj', 'stand_anfang', 'stand_ende', 'faktor',
     ];
 
     public function occupant()
@@ -35,8 +34,8 @@ class VerbrauchsinfoCounterMeter extends Model
         return $this->belongsTo(Occupant::class);
     }
 
-    public static function validateImportData($data) {
-
+    public static function validateImportData($data)
+    {
 
         return Validator::make($data, [
             'nekoId' => 'required|string|max:40',
@@ -50,7 +49,6 @@ class VerbrauchsinfoCounterMeter extends Model
             'nutzergrup_name' => 'required|string|max:255',
         ]);
 
-
     }
 
     public function einheit()
@@ -58,12 +56,13 @@ class VerbrauchsinfoCounterMeter extends Model
         return $this->belongsTo(Einheit::class);
     }
 
-    public function getStandDisplayAttribute(){
+    public function getStandDisplayAttribute()
+    {
         return number_format($this->stand_ende, 2, ',', '.');
     }
 
-    public function getVerbrauchAktDisplayAttribute(){
+    public function getVerbrauchAktDisplayAttribute()
+    {
         return number_format($this->verbrauch_akt, 2, ',', '.');
     }
-
 }

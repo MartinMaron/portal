@@ -2,12 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Costinvoicingiype;
-use App\Models\Costtype;
-use App\Models\Fueltype;
-use App\Models\Salutation;
-use App\Models\ZaehlerArt;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -30,7 +24,6 @@ class DatabaseSeeder extends Seeder
             FueltypeSeeder::class,
             LageSeeder::class,
         ]);
-
 
     }
 }

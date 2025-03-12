@@ -2,19 +2,20 @@
 
 namespace App\Livewire\User\Occupant\Verbrauchsinfo;
 
-use App\Models\User;
-use Livewire\Component;
-use App\Models\Occupant;
-use Barryvdh\Debugbar\Facades\Debugbar;
-use Illuminate\Database\Eloquent\Builder;
 use App\Livewire\DataTable\WithCachedRows;
+use App\Models\User;
 use App\Models\UserVerbrauchsinfoAccessControl;
+use Illuminate\Database\Eloquent\Builder;
+use Livewire\Component;
 
 class ShowVerbrauchsinfo extends Component
 {
     use WithCachedRows;
+
     public User $user;
+
     public $occupants;
+
     public $filter;
 
     /* initialization */
@@ -22,6 +23,7 @@ class ShowVerbrauchsinfo extends Component
     {
         $this->user = User::query()->where('email', '=', Auth()->User()->email)->get()->first();
     }
+
     public function resetFilters()
     {
         $this->reset('filter');
@@ -29,25 +31,26 @@ class ShowVerbrauchsinfo extends Component
 
     public function getRowsQueryProperty()
     {
-        $result =  $this->user->userVerbrauchsinfoAccessControls->map(function (UserVerbrauchsinfoAccessControl $userControl) {
-            return $userControl->occupant ;
+        $result = $this->user->userVerbrauchsinfoAccessControls->map(function (UserVerbrauchsinfoAccessControl $userControl) {
+            return $userControl->occupant;
         })->unique()->toquery();
-      
+
         if ($this->filter) {
             $result = $result
                 ->where(function (Builder $query) {
-                    $query->where('address', 'LIKE', '%' . $this->filter . '%')
-                        ->orWhere('lage', 'LIKE', '%' . $this->filter . '%')
-                        ->orWhere('unvid', 'LIKE', '%' . $this->filter . '%');
+                    $query->where('address', 'LIKE', '%'.$this->filter.'%')
+                        ->orWhere('lage', 'LIKE', '%'.$this->filter.'%')
+                        ->orWhere('unvid', 'LIKE', '%'.$this->filter.'%');
                 });
 
-        };
+        }
+
         return $result;
     }
 
     public function getRowsProperty()
     {
-         // return $this->cache(function () {
+        // return $this->cache(function () {
         return $this->rowsQuery->get();
         // });
     }

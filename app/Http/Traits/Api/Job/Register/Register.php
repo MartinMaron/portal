@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Traits\Api\Job\Register;
 
 use App\Models\User;
@@ -7,7 +8,7 @@ use Illuminate\Support\Facades\Validator;
 
 trait Register
 {
-    public function register(Array $data)
+    public function register(array $data)
     {
 
         $validator = Validator::make($data, [
@@ -23,31 +24,30 @@ trait Register
                 'errors' => $validator->errors(),
                 'data' => $data,
                 'id' => 0,
-                ]);
+            ]);
         }
 
-        if ($data['email'] != 'info@e-neko.de')
-        {
-            if(User::where('email', $data['email'])->exists()) {
+        if ($data['email'] != 'info@e-neko.de') {
+            if (User::where('email', $data['email'])->exists()) {
                 $user = User::updateOrcreate(
                     ['email' => $data['email']],
                     ['name' => $data['name']]
-                    );
-            }else{
+                );
+            } else {
                 $user = User::updateOrcreate(
                     ['email' => $data['email']],
                     ['name' => $data['name'],
-                    'password' => Hash::make($data['password'])]
-                    );
-            }  
+                        'password' => Hash::make($data['password'])]
+                );
+            }
             $user->isMieter = $data['isMieter'];
             $user->isUser = $data['isUser'];
             $user->isAdmin = false;
             $user->save();
-        }else{
+        } else {
             $user = User::where('email', $data['email'])->first();
         }
-        
+
         return response()->json([
             'function' => 'JobController.register',
             'result' => 'success',

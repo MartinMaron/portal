@@ -3,31 +3,31 @@
 namespace App\Livewire\User\Cost;
 
 use App\Models\Cost;
-use Livewire\Component;
-use App\Models\CostAmount;
-use App\Models\Realestate;
-use App\Events\CostAmountDeleted;
-use App\Models\Costinvoicingtype;
 use App\Models\Costtype;
-use App\Models\Occupant;
-use Barryvdh\Debugbar\Facades\Debugbar;
+use App\Models\Realestate;
 use Illuminate\Database\Eloquent\Builder;
+use Livewire\Component;
 use Usernotnull\Toast\Concerns\WireToast;
-use Illuminate\Support\Carbon;
-
-use function Termwind\render;
 
 class Betriebskostenliste extends Component
 {
-    use WireToast; use \App\Http\Traits\Helpers;
+    use \App\Http\Traits\Helpers;
+    use WireToast;
 
     public $showEditModal = false;
+
     public $showEditFields = true;
+
     public $showFilters = false;
+
     public $nettoInputMode = false;
+
     public $dateInputMode = true;
+
     public $dateFrom = null;
+
     public Cost $current;
+
     public Realestate $realestate;
 
     public function rules()
@@ -62,20 +62,22 @@ class Betriebskostenliste extends Component
     }
 
     protected $listeners = [
-                            'changeProperty' => 'changeValue',
-                            'refreshComponents' => '$refresh',
-                            'confirmNekoMessage' => 'confirmNekoMessage',
-                        ];
+        'changeProperty' => 'changeValue',
+        'refreshComponents' => '$refresh',
+        'confirmNekoMessage' => 'confirmNekoMessage',
+    ];
 
     public function create()
     {
-        if ($this->current->getKey()) $this->current = $this->makeBlankTransaction();
+        if ($this->current->getKey()) {
+            $this->current = $this->makeBlankTransaction();
+        }
         $this->showEditModal = true;
     }
 
     public function setDone()
     {
-        $this->dispatch('showNekoMessageModal',['title'=>'Kostenliste absenden?','message'=>'Dannach können keine Änderungen mehr vorgenommen werden.','type'=>'warning','action'=>'confirmEditDone']);
+        $this->dispatch('showNekoMessageModal', ['title' => 'Kostenliste absenden?', 'message' => 'Dannach können keine Änderungen mehr vorgenommen werden.', 'type' => 'warning', 'action' => 'confirmEditDone']);
     }
 
     public function confirmNekoMessage($params)
@@ -84,20 +86,18 @@ class Betriebskostenliste extends Component
         if ($this->params['action'] == 'confirmEditDone') {
             $this->realestate->abrechnungssetting->betreibskostenDone = 1;
             $this->realestate->abrechnungssetting->save();
-            $this->showEditFields = !$this->realestate->abrechnungssetting->betreibskostenDone;
+            $this->showEditFields = ! $this->realestate->abrechnungssetting->betreibskostenDone;
+
             return redirect(request()->header('Referer'));
         }
     }
 
-
     public function raise_EditCostModal(Cost $cost)
     {
         $this->setCurrent($cost);
-        if ($cost->costtype->costinvoicingtype_id == 'HZ')
-        {
-             $this->dispatch('showCostDetailModal', $this->current, false, false);
-        }else
-        {
+        if ($cost->costtype->costinvoicingtype_id == 'HZ') {
+            $this->dispatch('showCostDetailModal', $this->current, false, false);
+        } else {
             $this->dispatch('showBetriebskostenCostDetailModal', $this->current);
         }
     }
@@ -107,35 +107,45 @@ class Betriebskostenliste extends Component
         $this->dispatch('addBetriebskostenCostDetailModal', $this->realestate);
     }
 
-    public function hasConsumptionByType($costtypeId){
-        $ret = Cost::where('realestate_id','=',$this->realestate->id)
-        ->where(function (Builder $query) {$query->IsBetriebskosten();})
-        ->where('costtype_id','=',$costtypeId)
-        ->where('consumption','=', 1)
-        ->count();
-        return (bool)($ret > 0);
+    public function hasConsumptionByType($costtypeId)
+    {
+        $ret = Cost::where('realestate_id', '=', $this->realestate->id)
+            ->where(function (Builder $query) {
+                $query->IsBetriebskosten();
+            })
+            ->where('costtype_id', '=', $costtypeId)
+            ->where('consumption', '=', 1)
+            ->count();
+
+        return (bool) ($ret > 0);
         // return $ret;
     }
-    public function hasHaushaltsnahByType($costtypeId){
-        $ret = Cost::where('realestate_id','=',$this->realestate->id)
-        ->where(function (Builder $query) {$query->IsBetriebskosten();})
-        ->where('costtype_id','=',$costtypeId)
-        ->where('haushaltsnah','=', 1)
-        ->count();
-        return (bool)($ret > 0);
+
+    public function hasHaushaltsnahByType($costtypeId)
+    {
+        $ret = Cost::where('realestate_id', '=', $this->realestate->id)
+            ->where(function (Builder $query) {
+                $query->IsBetriebskosten();
+            })
+            ->where('costtype_id', '=', $costtypeId)
+            ->where('haushaltsnah', '=', 1)
+            ->count();
+
+        return (bool) ($ret > 0);
     }
 
     public function render()
     {
-        $filtered = Cost::where('realestate_id','=',$this->realestate->id)
-        ->where(function (Builder $query) {
-            $query->IsBetriebskosten();})
+        $filtered = Cost::where('realestate_id', '=', $this->realestate->id)
+            ->where(function (Builder $query) {
+                $query->IsBetriebskosten();
+            })
             ->get()->sortBy('caption');
 
         $filtered->fresh('costAmounts');
 
         return view('livewire.user.cost.betriebskostenliste', [
-            'filtered' => $filtered
+            'filtered' => $filtered,
         ]);
     }
 }

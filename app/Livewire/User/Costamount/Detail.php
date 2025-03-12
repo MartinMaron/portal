@@ -2,52 +2,59 @@
 
 namespace App\Livewire\User\Costamount;
 
-use Livewire\Component;
 use App\Models\CostAmount;
-use Usernotnull\Toast\Concerns\WireToast;
+use Livewire\Component;
 
 class Detail extends Component
 {
-  
     public CostAmount $costAmount;
+
     public $showCostAmountEditModal;
+
     public bool $showDatumField = true;
+
     public bool $readonlyDatumField = false;
+
     public bool $showConsumptionField = true;
+
     public bool $readonlyConsumptionField = true;
+
     public bool $showNetto = true;
+
     public bool $readonlyBetragField = false;
+
     public bool $showHaushaltsnahField = true;
+
     public bool $readonlyHaushaltsnahField = true;
+
     public bool $co2Tax = false;
 
     public function makeBlankObject()
     {
         return CostAmount::make([
-            'bemerkung' =>'', 
+            'bemerkung' => '',
             'description' => '',
-            'netAmount' => 0, 
+            'netAmount' => 0,
             'grosAmount' => 0,
-            'grosAmount_HH'=> 0,  
+            'grosAmount_HH' => 0,
         ]);
-    }     
-  
+    }
+
     protected $listeners = [
         'saveCostAmountDetail' => 'save',
         'showCostAmountDetailModal' => 'showCostAmountDetailModal',
         'closeCostAmountDetailModal' => 'closeCostAmountDetailModal',
     ];
 
-  
     public function rules()
     {
         return [
-            'costAmount.bemerkung' => 'nullable',      
+            'costAmount.bemerkung' => 'nullable',
             'costAmount.description' => 'nullable',
             'costAmount.consumption_editing' => 'required_if:costAmount.cost.consumption,==,1|nullable',
-            'costAmount.netto' => 'nullable', 
-            'costAmount.haushaltsnah' => 'nullable', 
-            'costAmount.brutto' => 'required', 
+            'costAmount.netto' => 'nullable',
+            'costAmount.haushaltsnah' => 'nullable',
+            'costAmount.brutto' => 'required',
             'costAmount.grosAmount_HH' => 'nullable',
             'costAmount.cobrutto' => 'nullable',
             'costAmount.conetto' => 'nullable',
@@ -60,7 +67,7 @@ class Detail extends Component
     {
         return [
             'costAmount.datum' => ':attribute muss angegeben werden',
-            'costAmount.consumption_editing' => ':attribute muss angegeben werden' ,
+            'costAmount.consumption_editing' => ':attribute muss angegeben werden',
         ];
     }
 
@@ -71,9 +78,9 @@ class Detail extends Component
             'costAmount.consumption_editing' => 'Verbrauch',
         ];
     }
-   
-   
-    public function showCostAmountDetailModal (CostAmount $costAmount){
+
+    public function showCostAmountDetailModal(CostAmount $costAmount)
+    {
         $this->costAmount = $costAmount;
         $this->showCostAmountEditModal = true;
         $this->showConsumptionField = $costAmount->cost->consumption;
@@ -82,23 +89,21 @@ class Detail extends Component
         $this->co2Tax = $costAmount->cost->co2Tax;
     }
 
-    public function closeCostAmountDetailModal($save){
-        if ($save && $this->costAmount){  
-            if ($this->validate($this->rules(),$this->messages(),$this->attributes()))
-            {
+    public function closeCostAmountDetailModal($save)
+    {
+        if ($save && $this->costAmount) {
+            if ($this->validate($this->rules(), $this->messages(), $this->attributes())) {
                 $this->costAmount->save();
-                $this->showCostAmountEditModal = false ;
-                $this->dispatch('refreshComponents');    
-            }else{
-                $this->showCostAmountEditModal = false;              
-            };
-        }else{
+                $this->showCostAmountEditModal = false;
+                $this->dispatch('refreshComponents');
+            } else {
+                $this->showCostAmountEditModal = false;
+            }
+        } else {
             $this->showCostAmountEditModal = false;
-        }             
-   }
-   
+        }
+    }
 
-    
     public function render()
     {
         return view('livewire.user.costamount.detail');

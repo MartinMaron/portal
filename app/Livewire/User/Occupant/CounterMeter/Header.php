@@ -1,21 +1,20 @@
 <?php
 
 namespace App\Livewire\User\Occupant\CounterMeter;
+
 use App\Models\VerbrauchsinfoCounterMeter;
 use Livewire\Component;
 
 class Header extends Component
 {
-
-
     public $counterMeter;
-    public $sorts = [];
 
+    public $sorts = [];
 
     public function mount(VerbrauchsinfoCounterMeter $counterMeter, $sorts)
     {
         $this->counterMeter = $counterMeter;
-        $this->sorts  = $sorts;
+        $this->sorts = $sorts;
 
     }
 

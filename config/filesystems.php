@@ -70,7 +70,7 @@ return [
             'endpoint' => env('SPACES_ENDPOINT'),
             'bucket_endpoint' => true,
             'visibility' => 'private',
-          ],
+        ],
 
     ],
 
@@ -88,6 +88,5 @@ return [
     'links' => [
         public_path('public') => storage_path('app/public'),
     ],
-
 
 ];

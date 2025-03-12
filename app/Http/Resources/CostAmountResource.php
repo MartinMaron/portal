@@ -15,14 +15,14 @@ class CostAmountResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'bemerkung'=> $this['bemerkung'],
-            'tryWebDelete'=> $this['tryWebDelete'],
-            'description'=> $this['description'],
-            'netAmount'=> $this['netAmount'],
-            'grosAmount'=> $this['grosAmount'],
-            'dateCostAmount'=> $this['dateCostAmount'],
-            'consumption'=> $this['consumption'],
-            'grosAmount_HH'=> $this['grosAmount_HH']
+            'bemerkung' => $this['bemerkung'],
+            'tryWebDelete' => $this['tryWebDelete'],
+            'description' => $this['description'],
+            'netAmount' => $this['netAmount'],
+            'grosAmount' => $this['grosAmount'],
+            'dateCostAmount' => $this['dateCostAmount'],
+            'consumption' => $this['consumption'],
+            'grosAmount_HH' => $this['grosAmount_HH'],
         ];
     }
 }

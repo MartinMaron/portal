@@ -1,25 +1,23 @@
 <?php
 
 namespace App\Models;
-use Carbon\Carbon;
+
 use App\Http\Traits\Helpers;
 use Barryvdh\Debugbar\Facades\Debugbar;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
-use App\Models\VerbrauchsinfoCounterMeter;
-use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Occupant extends Model
 {
     use HasFactory;
     use Helpers;
-  
-   
+
     protected $fillable = [
-        'id','nekoId', 'realestate_id', 'unvid', 'budguid','nutzeinheitNo', 'dateFrom', 'dateTo', 'anrede', 'title', 'nachname', 'vorname', 'address',
+        'id', 'nekoId', 'realestate_id', 'unvid', 'budguid', 'nutzeinheitNo', 'dateFrom', 'dateTo', 'anrede', 'title', 'nachname', 'vorname', 'address',
         'street', 'postcode', 'houseNr', 'city', 'vat', 'uaw', 'qmkc', 'qmww', 'pe', 'bemerkung', 'vorauszahlung', 'lokalart', 'customEinheitNo', 'lage', 'email',
-        'telephone_number', 'eigentumer', 'date_from_editing', 'qmkc_editing', 'vorauszahlung_editing', 'vorauszahlung_editing', 'personen_zahl', 'OptimisticLockField'
+        'telephone_number', 'eigentumer', 'date_from_editing', 'qmkc_editing', 'vorauszahlung_editing', 'vorauszahlung_editing', 'personen_zahl', 'OptimisticLockField',
     ];
 
     public function user()
@@ -44,7 +42,7 @@ class Occupant extends Model
 
     public static function validateImportData($data)
     {
-        return  Validator::make($data, [
+        return Validator::make($data, [
             'nekoId' => 'required|string|max:40',
             'budguid' => 'required|string|max:40',
             'unvid' => 'required|string|max:255',
@@ -66,44 +64,41 @@ class Occupant extends Model
     }
 
     protected $casts = ['dateFrom' => 'date:d.m.Y',
-                    'dateTo' => 'date:d.m.Y',
-                    'qmkc' => 'decimal:2',
-                    'qmww' => 'decimal:2',
-                    'vorauszahlung_editing' => 'decimal:2' ];
+        'dateTo' => 'date:d.m.Y',
+        'qmkc' => 'decimal:2',
+        'qmww' => 'decimal:2',
+        'vorauszahlung_editing' => 'decimal:2'];
 
     protected $appends = ['date_from_editing',
-                        'date_to_editing',
-                        'vorauszahlung_editing',
-                        'personen_zahl',
-                        'display_einheit',
-                        'display_eigentumer_name',
-                        'can_delete',
-                        'qmkc_editing'];
+        'date_to_editing',
+        'vorauszahlung_editing',
+        'personen_zahl',
+        'display_einheit',
+        'display_eigentumer_name',
+        'can_delete',
+        'qmkc_editing'];
 
+    protected function getDisplayConditionalWithAdressAttribute() {}
 
-   protected function getDisplayConditionalWithAdressAttribute(){
-        
-
-   }
-
-    
-    protected function setPersonenZahlAttribute($value){
+    protected function setPersonenZahlAttribute($value)
+    {
         $q = $this->personcounts
-        ->where('abrechnungssetting_id','=', $this->realestate->abrechnungssetting_id);
+            ->where('abrechnungssetting_id', '=', $this->realestate->abrechnungssetting_id);
 
         $personcount = Personcount::updateOrCreate(
-            ['occupant_id' => $this->id,'abrechnungssetting_id' => $this->realestate->abrechnungssetting_id],
+            ['occupant_id' => $this->id, 'abrechnungssetting_id' => $this->realestate->abrechnungssetting_id],
             [
-            'countvalue' => $this->castStringToDouble($value), 
-        ]);
+                'countvalue' => $this->castStringToDouble($value),
+            ]);
     }
 
-   protected function getPersonenZahlAttribute(){
+    protected function getPersonenZahlAttribute()
+    {
         $q = $this->personcounts
-        ->where('abrechnungssetting_id','=', $this->realestate->abrechnungssetting_id);
-        if ($q->count() == 0 ) {
+            ->where('abrechnungssetting_id', '=', $this->realestate->abrechnungssetting_id);
+        if ($q->count() == 0) {
             return '0,00';
-        }else{
+        } else {
             return number_format($q->first()->countvalue, 2, ',', '.');
         }
     }
@@ -124,127 +119,137 @@ class Occupant extends Model
 
     protected function getDateToEditingAttribute()
     {
-        if($this->dateTo){
+        if ($this->dateTo) {
             return Carbon::parse($this->dateTo)->format('d.m.Y');
         }
+
         return '';
     }
 
     protected function setDateToEditingAttribute($value)
     {
-        Debugbar::info('Occupant-setDateToEditingAttribute:'. $value);
-        if($value)
-        {
+        Debugbar::info('Occupant-setDateToEditingAttribute:'.$value);
+        if ($value) {
             $this->dateTo = Carbon::parse($value);
         }
     }
 
-
-    protected function setQmkcEditingAttribute($value){
-         $this->qmkc = $this->castStringToDouble($value);
+    protected function setQmkcEditingAttribute($value)
+    {
+        $this->qmkc = $this->castStringToDouble($value);
     }
 
-    protected function getQmkcEditingAttribute(){
+    protected function getQmkcEditingAttribute()
+    {
         return number_format($this->qmkc, 2, ',', '.');
     }
 
-    protected function setVorauszahlungEditingAttribute($value){
-            $field = null;
-            $q = $this->preapaids
-            ->where('abrechnungssetting_id','=', $this->realestate->abrechnungssetting_id)
-            ->where('prepaidtype','=', $this->realestate->prepaidtype);
-            
-            if($this->realestate->eingabeCostNetto == 1){
-                $field ='netAmount';
-            }else{
-                $field = 'grosAmount';
-            }
+    protected function setVorauszahlungEditingAttribute($value)
+    {
+        $field = null;
+        $q = $this->preapaids
+            ->where('abrechnungssetting_id', '=', $this->realestate->abrechnungssetting_id)
+            ->where('prepaidtype', '=', $this->realestate->prepaidtype);
 
-            $prepaid = Prepaid::updateOrCreate(
-                ['occupant_id' => $this->id, 'prepaidtype' => $this->realestate->prepaidtype,'abrechnungssetting_id' => $this->realestate->abrechnungssetting_id],
-                [
-                $field => $this->castStringToDouble($value), 
-            ]);
+        if ($this->realestate->eingabeCostNetto == 1) {
+            $field = 'netAmount';
+        } else {
+            $field = 'grosAmount';
         }
 
-    protected function getVorauszahlungEditingAttribute(){
-        $q = $this->preapaids
-        ->where('abrechnungssetting_id','=', $this->realestate->abrechnungssetting_id)
-        ->where('prepaidtype','=', $this->realestate->prepaidtype);
+        $prepaid = Prepaid::updateOrCreate(
+            ['occupant_id' => $this->id, 'prepaidtype' => $this->realestate->prepaidtype, 'abrechnungssetting_id' => $this->realestate->abrechnungssetting_id],
+            [
+                $field => $this->castStringToDouble($value),
+            ]);
+    }
 
-        if ($q->count() == 0 ) {
+    protected function getVorauszahlungEditingAttribute()
+    {
+        $q = $this->preapaids
+            ->where('abrechnungssetting_id', '=', $this->realestate->abrechnungssetting_id)
+            ->where('prepaidtype', '=', $this->realestate->prepaidtype);
+
+        if ($q->count() == 0) {
             return '0,00';
-        }else{
-            if($this->realestate->eingabeCostNetto == 1){
+        } else {
+            if ($this->realestate->eingabeCostNetto == 1) {
                 return number_format($q->first()->netAmount, 2, ',', '.');
-            }else{
+            } else {
                 return number_format($q->first()->grosAmount, 2, ',', '.');
             }
         }
     }
 
-    protected function getZeitraumAttribute(){
-        if ($this->dateTo){
-            return Carbon::parse($this->dateFrom)->format('d.m.Y') . ' - '. Carbon::parse($this->dateTo)->format('d.m.Y');
-        }else{
-            return Carbon::parse($this->dateFrom)->format('d.m.Y') . ' - __.__.____';
+    protected function getZeitraumAttribute()
+    {
+        if ($this->dateTo) {
+            return Carbon::parse($this->dateFrom)->format('d.m.Y').' - '.Carbon::parse($this->dateTo)->format('d.m.Y');
+        } else {
+            return Carbon::parse($this->dateFrom)->format('d.m.Y').' - __.__.____';
         }
     }
 
-    protected function getZeitraumTextAttribute(){
+    protected function getZeitraumTextAttribute()
+    {
 
-        if ($this->dateTo){
-            return 'vom '. Carbon::parse($this->dateFrom)->format('d.m.Y') . ' bis '. Carbon::parse($this->dateTo)->format('d.m.Y');
-        }else{
-            return 'seit '. Carbon::parse($this->dateFrom)->format('d.m.Y') ;
+        if ($this->dateTo) {
+            return 'vom '.Carbon::parse($this->dateFrom)->format('d.m.Y').' bis '.Carbon::parse($this->dateTo)->format('d.m.Y');
+        } else {
+            return 'seit '.Carbon::parse($this->dateFrom)->format('d.m.Y');
         }
 
     }
 
     protected function getNutzerKennnummerAttribute()
     {
-        return substr($this->unvid,12,3). '-'. substr($this->unvid,15,3);
+        return substr($this->unvid, 12, 3).'-'.substr($this->unvid, 15, 3);
     }
 
-    protected function getNutzerMitLageAttribute(){
-        if ($this->lage){
-            return $this->getNutzerKennnummerAttribute() . " ". $this->lage ;
-        }
-        else {
-            return $this->getNutzerKennnummerAttribute() ;
+    protected function getNutzerMitLageAttribute()
+    {
+        if ($this->lage) {
+            return $this->getNutzerKennnummerAttribute().' '.$this->lage;
+        } else {
+            return $this->getNutzerKennnummerAttribute();
         }
     }
 
-    protected function getCustomEinheitNoMitLageAttribute(){
-        if ($this->lage){
+    protected function getCustomEinheitNoMitLageAttribute()
+    {
+        if ($this->lage) {
 
             return $this->DisplayEinheit.' '.$this->lage;
-        }
-        else {
-            return $this->DisplayEinheit ;
+        } else {
+            return $this->DisplayEinheit;
         }
     }
 
-    protected function getDisplayEinheitAttribute(){
-        if ($this->customEinheitNo){
+    protected function getDisplayEinheitAttribute()
+    {
+        if ($this->customEinheitNo) {
             return $this->customEinheitNo;
-        }
-        else {
-            return $this->NutzerKennnummer ;
+        } else {
+            return $this->NutzerKennnummer;
         }
     }
-   
-    protected function getDisplayEigentumerNameAttribute(){
-        if ($this->eigentumer){
+
+    protected function getDisplayEigentumerNameAttribute()
+    {
+        if ($this->eigentumer) {
             return $this->eigentumer;
-        }
-        else {
-            return $this->nachname ;
+        } else {
+            return $this->nachname;
         }
     }
-    protected function getCanDeleteAttribute(){
+
+    protected function getCanDeleteAttribute()
+    {
         $ret_val = false;
-        if ($this->nekoId == 'new'){ $ret_val = true;} 
+        if ($this->nekoId == 'new') {
+            $ret_val = true;
+        }
+
         return $ret_val;
     }
 
@@ -253,9 +258,8 @@ class Occupant extends Model
         $q = $this->userVerbrauchsinfoAccessControls
             ->where('user_id', '=', auth()->user()->id)
             ->map(function (UserVerbrauchsinfoAccessControl $userControl) {
-                return $userControl->jahr_monat ;
+                return $userControl->jahr_monat;
             });
-
 
         $result = $this->verbrauchsinfos
             ->whereIn('jahr_monat', $q)->toquery();
@@ -272,7 +276,7 @@ class Occupant extends Model
     {
         return $this->hasMany(VerbrauchsinfoUserEmail::class);
     }
-    
+
     public function users()
     {
         return $this->hasMany(User::class);
@@ -292,5 +296,4 @@ class Occupant extends Model
     {
         return $this->hasMany(Livingarea::class);
     }
-
 }

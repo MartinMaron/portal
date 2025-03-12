@@ -119,7 +119,7 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        'Carbon'		  => 'Carbon/Carbon',
+        'Carbon' => 'Carbon/Carbon',
     ])->toArray(),
 
     /*

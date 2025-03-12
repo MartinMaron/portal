@@ -12,8 +12,6 @@ class JetstreamServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
-     *
-     * @return void
      */
     public function register(): void
     {
@@ -23,14 +21,13 @@ class JetstreamServiceProvider extends ServiceProvider
         }
     }
 
-    protected function registerComponent(string $component) {
+    protected function registerComponent(string $component)
+    {
         Blade::component('vendor/jetstream/components/'.$component, 'jet-'.$component);
     }
 
     /**
      * Bootstrap any application services.
-     *
-     * @return void
      */
     public function boot(): void
     {
@@ -43,8 +40,6 @@ class JetstreamServiceProvider extends ServiceProvider
 
     /**
      * Configure the permissions that are available within the application.
-     *
-     * @return void
      */
     protected function configurePermissions(): void
     {

@@ -22,8 +22,6 @@ class UserResource extends JsonResource
             'isMieter' => $this->isMieter,
             'password' => $this->password,
             'kundennummer' => $this->kundennummer,
-          ];
+        ];
     }
 }
-
-     

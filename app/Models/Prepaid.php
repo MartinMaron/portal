@@ -10,10 +10,9 @@ class Prepaid extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nekoId', 'occupant_id', 'netAmount', 'grosAmount','prepaidtype', 'abrechnungssetting_id'
+        'nekoId', 'occupant_id', 'netAmount', 'grosAmount', 'prepaidtype', 'abrechnungssetting_id',
     ];
 
-    
     public function occupant()
     {
         return $this->belongsTo(Realestate::class);

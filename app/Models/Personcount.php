@@ -10,7 +10,7 @@ class Personcount extends Model
     use HasFactory;
 
     protected $fillable = [
-        'id','nekoId', 'occupant_id', 'countvalue','abrechnungssetting_id','OptimisticLockField'
+        'id', 'nekoId', 'occupant_id', 'countvalue', 'abrechnungssetting_id', 'OptimisticLockField',
     ];
 
     public function occupant()

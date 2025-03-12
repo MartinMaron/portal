@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Web;
 
-use App\Models\Realestate;
 use App\Http\Controllers\Controller;
+use App\Models\Realestate;
 use Illuminate\Http\Request;
-use Termwind\Components\Dd;
 
 class RealestateController extends Controller
 {
@@ -43,7 +42,6 @@ class RealestateController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Realestate  $realestate
      * @return \Illuminate\Http\Response
      */
     public function show(Realestate $realestate)
@@ -54,7 +52,6 @@ class RealestateController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Realestate  $realestate
      * @return \Illuminate\Http\Response
      */
     public function edit(Realestate $realestate)
@@ -66,7 +63,6 @@ class RealestateController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\UpdateRealestateRequest  $request
-     * @param  \App\Models\Realestate  $realestate
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Realestate $realestate)
@@ -77,7 +73,6 @@ class RealestateController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Realestate  $realestate
      * @return \Illuminate\Http\Response
      */
     public function destroy(Realestate $realestate)

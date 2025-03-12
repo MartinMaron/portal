@@ -14,7 +14,7 @@ class RealestateResource extends JsonResource
      */
     public function toArray($request)
     {
-         return [
+        return [
             'nekoId' => $this['nekoId'],
             'email' => $this['email'],
             'address' => $this['address'],
@@ -28,13 +28,13 @@ class RealestateResource extends JsonResource
             'dateTo' => $this['dateTo'],
             'miete' => $this['miete'],
             'nekoToWebUpdate' => $this['nekoToWebUpdate'],
-            'occupants'=> $this['occupants'],
-            'costs'=> $this['costs'],
-            'costsKeys'=> $this['costsKeys'],
-            'abrechnungsettings'=> $this['abrechnungsettings'],
-            'verbrauchsinfoUserEmails'=> $this['verbrauchsinfoUserEmails'],
-            'verbrauchsinfoAccessControls'=> $this['verbrauchsinfoAccessControls'],
-            'invoices'=> $this['invoices'],
+            'occupants' => $this['occupants'],
+            'costs' => $this['costs'],
+            'costsKeys' => $this['costsKeys'],
+            'abrechnungsettings' => $this['abrechnungsettings'],
+            'verbrauchsinfoUserEmails' => $this['verbrauchsinfoUserEmails'],
+            'verbrauchsinfoAccessControls' => $this['verbrauchsinfoAccessControls'],
+            'invoices' => $this['invoices'],
         ];
     }
 }

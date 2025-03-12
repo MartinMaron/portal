@@ -2,9 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 use App\Models\unitUsageType;
+use Illuminate\Database\Seeder;
 
 class UnitUsageTypeSeeder extends Seeder
 {
@@ -37,6 +36,6 @@ class UnitUsageTypeSeeder extends Seeder
         UnitUsageType::create(['type_id' => 'TNH', 'caption' => 'Tennishalle']);
         UnitUsageType::create(['type_id' => 'WHG', 'caption' => 'Wohnung']);
         UnitUsageType::create(['type_id' => 'ZIM', 'caption' => 'Zimmer']);
-        
+
     }
 }

@@ -9,8 +9,7 @@ class UnitUsageType extends Model
 {
     use HasFactory;
 
-
     protected $primaryKey = 'type_id';
-    protected $keyType = 'string';
 
+    protected $keyType = 'string';
 }

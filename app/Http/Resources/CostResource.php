@@ -15,7 +15,7 @@ class CostResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'nekoId' => $this['nekoId'],        
+            'nekoId' => $this['nekoId'],
             'unvid' => $this['unvid'],
             'budguid' => $this['budguid'],
             'nazwa' => $this['nazwa'],

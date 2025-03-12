@@ -2,9 +2,9 @@
 
 namespace App\Livewire\User\Realestate\VerbrauchsinfoUserEmail;
 
+use App\Livewire\DataTable\WithCachedRows;
 use App\Models\VerbrauchsinfoUserEmail;
 use Livewire\Component;
-use App\Livewire\DataTable\WithCachedRows;
 
 class Listitem extends Component
 {
@@ -24,7 +24,7 @@ class Listitem extends Component
 
     public function emit_QuestionDeleteModal()
     {
-        $this->dispatch('showQuestionDeleteModal', 'VerbrauchsinfoUserEmail', $this->userEmail['id'], 'Löschen bestätigen', 'Wollen Sie die Benachrichtigung an '.  $this->userEmail['Display'].  ' wirklich entfernen?');
+        $this->dispatch('showQuestionDeleteModal', 'VerbrauchsinfoUserEmail', $this->userEmail['id'], 'Löschen bestätigen', 'Wollen Sie die Benachrichtigung an '.$this->userEmail['Display'].' wirklich entfernen?');
     }
 
     public function render()

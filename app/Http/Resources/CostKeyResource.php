@@ -15,15 +15,15 @@ class CostkeyResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'nekocostkey_id'=> $this['nekocostkeyId'],
-            'nekoKey_id'=> $this['nekoKeyId'],            
-            'bemerkung'=> $this['bemerkung'],
-            'tryWebDelete'=> $this['tryWebDelete'],
-            'description'=> $this['description'],
-            'zeitanteil'=> $this['zeitanteil'],
-            'einheit'=> $this['einheit'],
-            'shortKey'=> $this['shortKey'],
-            'viewText'=> $this['viewText'],  
+            'nekocostkey_id' => $this['nekocostkeyId'],
+            'nekoKey_id' => $this['nekoKeyId'],
+            'bemerkung' => $this['bemerkung'],
+            'tryWebDelete' => $this['tryWebDelete'],
+            'description' => $this['description'],
+            'zeitanteil' => $this['zeitanteil'],
+            'einheit' => $this['einheit'],
+            'shortKey' => $this['shortKey'],
+            'viewText' => $this['viewText'],
         ];
     }
 }

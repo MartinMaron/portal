@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Salutation;
-use Database\Factories\SalutationFactory;
 use Illuminate\Database\Seeder;
 
 class SalutationSeeder extends Seeder

@@ -3,13 +3,12 @@
 namespace App\Listeners;
 
 use App\Events\CostAmountDeleted;
-use Illuminate\Queue\InteractsWithQueue;
 use Usernotnull\Toast\Concerns\WireToast;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class CostAmountDeletedNotification
 {
-    use WireToast; 
+    use WireToast;
+
     /**
      * Create the event listener.
      *
@@ -23,11 +22,10 @@ class CostAmountDeletedNotification
     /**
      * Handle the event.
      *
-     * @param  \App\Events\CostAmountDeleted  $event
      * @return void
      */
     public function handle(CostAmountDeleted $event)
     {
-        toast()->success('Betrag '. $event->costAmount->brutto. ' € wurde gelöscht' ,'Achtung')->push();  
+        toast()->success('Betrag '.$event->costAmount->brutto.' € wurde gelöscht', 'Achtung')->push();
     }
 }

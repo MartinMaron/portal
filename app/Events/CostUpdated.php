@@ -3,19 +3,17 @@
 namespace App\Events;
 
 use App\Models\Cost;
-use Illuminate\Broadcasting\Channel;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Broadcasting\PrivateChannel;
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Queue\SerializesModels;
 
 class CostUpdated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public Cost $cost;
+
     /**
      * Create a new event instance.
      *

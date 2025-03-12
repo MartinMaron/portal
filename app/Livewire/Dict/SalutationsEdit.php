@@ -2,22 +2,21 @@
 
 namespace App\Livewire\Dict;
 
-use Livewire\Component;
+use App\Livewire\DataTable\WithCachedRows;
 use App\Models\Salutation;
 use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Database\Eloquent\Builder;
-use App\Livewire\DataTable\WithCachedRows;
+use Livewire\Component;
 
 class SalutationsEdit extends Component
 {
+    use WithCachedRows;
 
-    use  WithCachedRows;
     public $salutations = null;
 
     public $filters = [
         'search' => '',
     ];
-
 
     public function mount()
     {
@@ -27,15 +26,15 @@ class SalutationsEdit extends Component
 
     public function getRowsQueryProperty()
     {
-        if($this->filters['search'])
-        {
+        if ($this->filters['search']) {
             $result = Salutation::query()
-                ->where(function (Builder $query){
-                    $query->where('bezeichnung','LIKE','%'. $this->filters['search'].'%');
+                ->where(function (Builder $query) {
+                    $query->where('bezeichnung', 'LIKE', '%'.$this->filters['search'].'%');
                 });
         } else {
             $result = Salutation::query();
-        };
+        }
+
         return $result;
     }
 

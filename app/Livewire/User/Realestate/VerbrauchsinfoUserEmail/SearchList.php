@@ -2,20 +2,21 @@
 
 namespace App\Livewire\User\Realestate\VerbrauchsinfoUserEmail;
 
-use Carbon\Carbon;
-use Livewire\Component;
-use App\Models\Realestate;
-use App\Models\Occupant;
-use App\Models\VerbrauchsinfoUserEmail;
 use App\Livewire\DataTable\WithSorting;
+use App\Models\Occupant;
+use App\Models\Realestate;
+use App\Models\VerbrauchsinfoUserEmail;
+use Livewire\Component;
 use Usernotnull\Toast\Concerns\WireToast;
 
 class SearchList extends Component
 {
-    use WithSorting, WireToast;
+    use WireToast, WithSorting;
+
     public Realestate $realestate;
+
     public VerbrauchsinfoUserEmail $currentUserEmail;
-    
+
     public $filter = [
         'search' => null,
     ];
@@ -29,15 +30,17 @@ class SearchList extends Component
     protected $listeners = [
         'refreshParent' => '$refresh',
         'deleteConfirmed' => 'delete',
-        'createUserEmailModal' => 'createUserEmailModal'
+        'createUserEmailModal' => 'createUserEmailModal',
     ];
 
     public function delete($objectId, $objectType)
     {
-        if ($objectType != 'VerbrauchsinfoUserEmail') return;
+        if ($objectType != 'VerbrauchsinfoUserEmail') {
+            return;
+        }
         $object = VerbrauchsinfoUserEmail::find($objectId);
         $object->delete();
-        toast()->success('Emailadresse für Verbraucherinformationen gelöscht','Achtung')->push();
+        toast()->success('Emailadresse für Verbraucherinformationen gelöscht', 'Achtung')->push();
     }
 
     public function rules()
@@ -56,13 +59,15 @@ class SearchList extends Component
             'realestate_id' => $this->realestate->id,
             'occupant_id' => $occupant->id,
             'anonym' => false,
-            'nutzeinheitNo'=> $occupant->nutzeinheitNo,
+            'nutzeinheitNo' => $occupant->nutzeinheitNo,
             'email' => 'info@e-neko.de',
         ]);
+
         return $ret_val;
     }
 
-    public function createUserEmailModal($occupant){
+    public function createUserEmailModal($occupant)
+    {
         $this->currentUserEmail = $this->makeBlankObject($occupant);
         $this->dispatch('showCreateUserEmailModal', $this->currentUserEmail);
     }
@@ -75,6 +80,7 @@ class SearchList extends Component
     public function getRowsQueryProperty()
     {
         $result = $this->realestate->occupants();
+
         return $this->applySorting($result);
     }
 
@@ -86,8 +92,8 @@ class SearchList extends Component
     public function render()
     {
         $occupants = $this->rowsQuery
-        ->where('nachname','LIKE','%'. $this->filter['search'].'%')
-        ->get();
+            ->where('nachname', 'LIKE', '%'.$this->filter['search'].'%')
+            ->get();
 
         return view('livewire.user.realestate.verbrauchsinfo-user-email.search-list', [
             'rows' => $this->rows,
@@ -95,6 +101,3 @@ class SearchList extends Component
         ]);
     }
 }
-
-
-

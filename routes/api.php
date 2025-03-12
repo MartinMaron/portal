@@ -1,11 +1,10 @@
 <?php
 
-use App\Http\Resources\UserResource;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\JobController;
 use App\Http\Controllers\Api\OccupantController;
-
+use App\Http\Resources\UserResource;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,14 +17,9 @@ use App\Http\Controllers\Api\OccupantController;
 |
 */
 
+// Route::post('/register', [AuthController::class, 'register']);
 
-
-
-
-
-//Route::post('/register', [AuthController::class, 'register']);
-
-//Route::post('/login', [AuthController::class, 'login']);
+// Route::post('/login', [AuthController::class, 'login']);
 
 Route::post('/loginMobile', [AuthController::class, 'loginMobile']);
 
