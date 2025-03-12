@@ -33,4 +33,15 @@ if exist package-lock.json (
     del /q package-lock.json
 )
 
+if exist public\build (
+    echo Lösche Ordner 'public/build'...
+    rmdir /s /q public\build
+)
+
+if exist public\storage (
+    echo Lösche Ordner 'public/storage'...
+    rmdir /s /q public\storage
+)
+
+
 pause
