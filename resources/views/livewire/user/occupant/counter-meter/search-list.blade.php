@@ -2,7 +2,7 @@
     <div class="">
         <livewire:user.occupant.occupant-header :occupant='$occupant'/>
     </div>
-    
+
 
     <div
     x-data="{open:false}"
@@ -45,7 +45,7 @@
             </div>
 
             <div class="md:border md:rounded-b-lg md:border-sky-100 dark:md:border-slate-950">
-                @forelse ($this->getCounterMetersByNutzergrupe($counterMeter->nutzergrup_id) as $singleCounterMeter)
+                @foreach ($this->getCounterMetersByNutzergrupe($counterMeter->nutzergrup_id) as $singleCounterMeter)
                 <div class="{{ $singleCounterMeter->hk ? 'md:odd:bg-green-100 dark:md:odd:bg-green-950 dark:border-b dark:border-slate-950 md:even:bg-green-50 dark:md:even:bg-green-900' :'md:even:bg-red-50 dark:md:even:bg-red-900 md:odd:bg-red-100 dark:md:odd:bg-red-950'}}">
                     <livewire:user.occupant.counter-meter.listitem :singleCounterMeter='$singleCounterMeter' :wire:key="'counter-meter-listitem-'.$counterMeter->id"  key="{{ now() }}"/>
                 </div>

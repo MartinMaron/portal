@@ -15,7 +15,6 @@
                 <p class="py-3"><strong>Für jede Anforderung</strong></p>
                 <p class="pt-3">
                     Unser Vollsortiment umfasst Stand-alone Geräte, funkvernetzte Systeme und drahtgebundene 230V-Lösungen. Ei Electronics ist außerdem der einzige Hersteller, der sämtliche&nbsp;Inspektionsverfahren (A, B, C) gemäß DIN 14676-1&nbsp;abdeckt.</p>
-                </p>
                 <p>
                     <em>Übrigens: </em>Fachlich korrekt ist der Begriff „Rauchwarnmelder“ – im allgemeinen Sprachgebrauch hat sich aber die Bezeichnung „Rauchmelder“ etabliert.
                 </p>

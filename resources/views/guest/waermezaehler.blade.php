@@ -9,9 +9,9 @@
             <p class="pt-3">
                 Wärmezähler empfehlen sich für die präzise Messung des Wärmeverbrauchs von Wohnungen und Nutzergruppen innerhalb geschlossener Heiz- und Regelkreise. Platin-Widerstands-Temperaturfühler sorgen für exakte Messungen, hochwertige Werkstoffe für hohe Betriebssicherheit bei den Volumenmessteilen. Individuelle Messung des Wärmeverbrauchs für alle Heizungsanlagen inklusive Niedertemperaturanlagen, Fußboden- und Deckenheizungen, Lufterhitzer etc.
             </p>
-            <p class="pt-6">
-                <h2 class="text-xl font-semibold" >Supercal 739</h2>
-            </p>
+                <div class="pt-6">
+                    <h2 class="text-xl font-semibold" >Supercal 739</h2>
+                </div>
             <p class="pt-3">
                 <strong class="font-bold text-md" >Hauptmerkmale</strong>
             </p>

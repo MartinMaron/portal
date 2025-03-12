@@ -4,7 +4,7 @@
     <div class="block w-full mx-auto max-w-7xl mb-48" key="{{ now() }}">
         <div class="flex items-center">
             <div class="basis-1/4">
-                
+
             </div>
             <div class="basis-2/4 page-title">
                 <div>NUTZERLISTE</div>
@@ -30,7 +30,7 @@
                     aria_label="RadioNummer"
                     title="Nummer anzeigen" text_value0="eneko" text_value1="Verwalter"
                     >
-                </x-input.radio-bool>                   
+                </x-input.radio-bool>
             @endif
             @if ($hasAnyEigentumer)
                 <x-input.radio-bool
@@ -39,7 +39,7 @@
                         aria_label="RadioName"
                         title="Nutzer anzeigen" text_value0="Mieter" text_value1="Eigentümer"
                         >
-                </x-input.radio-bool>    
+                </x-input.radio-bool>
                 {{-- <div wire:click="toggle('eigentumer')" class="relative inline-block w-40 pt-1 pb-2 mt-1 align-middle transition duration-200 ease-in select-none">
                     <input wire:model.live="showEigentumer" type="checkbox" name="" id="" class="absolute block w-6 h-6 my-1 rounded-full appearance-none cursor-pointer toggle-checkbox bg-sky-100 border-1"/>
                     <label for="toggle" class="block h-8 pl-8 overflow-hidden rounded-full cursor-pointer toggle-label">
@@ -63,7 +63,7 @@
                 </x-input.radio-bool>
             @endif
             @if ($hasVat)
-            
+
                 <x-input.radio-bool
                         wire:model.live="realestate.eingabeCostNetto" wire:click="toggle('prepaidnet')"
                         id="user.occupant.occupant-list.show-occupant-list.vat_mode"
@@ -130,7 +130,7 @@
                                         {{ $occupant->vorname . ' '. $occupant->nachname }}
                                     @endif
                                 </button>
-                            </x-table.th>
+                            </x-table.td>
                             <x-table.td class="text-center occu-td" style="min-width: 14rem; max-width: 14rem">
                                 <div class="flex px-2">
                                     <span>{{ $occupant->date_from_editing }}</span>
@@ -143,7 +143,7 @@
                                                 tabindex="-1"
                                                 style="min-width: 3rem; max-width: 3rem"
                                                 wire:click='change({{$occupant}})'>
-                                                <x-icon.fonts.user-move 
+                                                <x-icon.fonts.user-move
                                                 class="text-sky-700 dark:text-slate-800 hover:text-sky-300 dark:hover:text-slate-950 fa-solid fa-house-person-leave">
                                                 </x-icon.fonts.user-move>
                                             </button>
@@ -158,7 +158,7 @@
                                                 </span>
                                                 </button>
                                             @endif
-                                        </div>    
+                                        </div>
                                     @endif
                                 </div>
                             </x-table.td>
@@ -198,11 +198,11 @@
         <!-- Small Screen Occupants List -->
         <div class="block sm:hidden" key="{{ now() }}">
             <div class="grid w-full grid-cols-1 gap-4 mt-6 sm:grid-cols-2 lg:grid-cols-3" key="{{ now() }}">
-                    
+
                 @foreach ($rows as $occupant)
-                    <div wire:key="row-{{ $occupant->id }}" 
+                    <div wire:key="row-{{ $occupant->id }}"
                         class="my-1 mx-3 block divide-gray-200 rounded-lg shadow-md bg-sky-50" key="{{ now() }}" >
-                            
+
                         <div class="flex my-1 justify-between gap-2 m-auto text-lg text-sky-700">
                             @if ($this->realestate->occupant_number_mode)
                             <span class="{{ $occupant->customEinheitNo ? 'font-bold' : 'font-thin text-opacity-50' }}">
@@ -230,15 +230,15 @@
                                         <button class="px-2 py-1 duration-150 rounded-lg bg-sky-100 border-sky-100 text-md text-sky-700 opacity-90 group-hover:opacity-100 ease">&ctdot;</button>
                                     </x-slot>
                                     <x-slot name="content" class="">
-                                        <x-jet-dropdown-link 
+                                        <x-jet-dropdown-link
                                             class="cursor-pointer"
                                             wire:click='edit({{$occupant}})'
                                             >
                                             <x-icon.fonts.editable-pencil class="text-sm cursor-pointer text-sky-700 hover:text-sky-300"></x-icon.fonts.editable-pencil>
                                             {{ __('Bearbeiten') }}
                                         </x-jet-dropdown-link>
-                                        
-                                        <x-jet-dropdown-link 
+
+                                        <x-jet-dropdown-link
                                             class="cursor-pointer"
                                             wire:click='change({{$occupant}})'
                                             >
@@ -247,7 +247,7 @@
                                         </x-jet-dropdown-link>
                                         @if ($occupant->canDelete)
 
-                                            <x-jet-dropdown-link 
+                                            <x-jet-dropdown-link
                                                 class="cursor-pointer"
                                                 wire:click='emit_QuestionDeleteModal({{$occupant}})'
                                                 >
@@ -268,7 +268,7 @@
                                 {{-- <span class="ml-3">Nutzerwechsel</span> --}}
                             </div>
                         </div>
-                            
+
                     </div>
                 @endforeach
             </div>

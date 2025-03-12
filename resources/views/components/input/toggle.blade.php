@@ -9,7 +9,7 @@
         type="checkbox"
         class="toggle-checkbox absolute my-1 block w-4 h-4 rounded-full bg-sky-100 border-1 appearance-none cursor-pointer"
     />
-   <label for={{ $id }} class="toggle-label pl-8 block overflow-hidden h-6 rounded-full cursor-pointer">                        
+   <label for="{{ $id }}" class="toggle-label pl-8 block overflow-hidden h-6 rounded-full cursor-pointer">
         <span class="text-md font-medium text-gray-900"> {{ $slot }}  </span>
     </label>
 </div>

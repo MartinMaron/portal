@@ -47,5 +47,6 @@
 
 @stack('modals')
 @livewireScriptConfig
+@include('cookie-consent::index')
 </body>
 </html>

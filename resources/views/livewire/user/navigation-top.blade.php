@@ -24,7 +24,7 @@
                             {{ __('Verbraucherinformationen') }}
                         </x-jet-dropdown-link>
                     @endif
-                    
+
                     <x-jet-dropdown-link href="{{ route('user.realestates') }}">
                         {{ __('Liegenschaften') }}
                     </x-jet-dropdown-link>
@@ -175,12 +175,4 @@
             </div>
         </div>
     </nav>
-</div>
-
-
-
-
-
-
-
 </div>

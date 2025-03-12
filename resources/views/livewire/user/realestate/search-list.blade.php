@@ -36,7 +36,7 @@
                                 <span class="flex-shrink-0 inline-block px-2 my-0.5 bg-sky-200 dark:bg-sky-950 rounded-full">Verbraucherinformationen</span>
                             @endif
                         </div>
-                        
+
                     </div>
                     <div>
                         <!-- <div class="flex -mt-px divide-x divide-gray-200"> -->
@@ -46,7 +46,6 @@
                                     <i class="text-lg fad fa-home "></i>
                                     <span class="ml-3">Bearbeiten</span>
                                 </a>
-                            </a>
                         </div>
                         {{-- <div class="flex flex-1 w-0 -ml-px">
                             <a href="{{route('user.realestate', $realestate)}}" class="relative inline-flex items-center justify-center flex-1 w-0 py-4 text-sm font-medium text-gray-700 border border-transparent rounded-br-lg hover:text-gray-500">

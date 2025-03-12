@@ -1,9 +1,9 @@
 
 <div>
-    
+
     <!-- Save Nutzer Bearbeiten -->
     <form wire:submit="closeModal(true)">
-        
+
         <x-modal.dialog class=" bg-sky-50" minWidth="680px" maxWidth="800px" wire:model.live="showEditModal">
             <x-slot name="title">
                 {{-- <div class="">
@@ -12,7 +12,7 @@
                 <div class="text-lg font-bold text-sky-800 dark:text-gray-300 ">
                     <div class="flex border-b-2 dark:border-slate-800">
                         @if ($this->hasLeerstand)
-                            <div class="text-lg ">Leerstand</div> 
+                            <div class="text-lg ">Leerstand</div>
                         @else
                             @if ($current->nachname)
                                 <div class="">{{$current->nachname.' '.$current->vorname}}</div> <x-icon.fonts.pen-line class="h-6 pl-10 mt-1 " ></x-icon.fonts.pen-line>
@@ -76,9 +76,9 @@
                                     </div>
                                 </x-input.group>
                             </div>
-                            
 
-                            
+
+
                            {{--  <div class="">
                                 <div class="">{{ $hasLeerstand ? 'Leerstand seit:' : 'neuer Nutzer seit:' }}</div>
                                 <x-input.date class="w-28"
@@ -104,11 +104,11 @@
                                 </x-input.date>
                             </div>
                         </x-input.group>
-                    
+
                     @endif
 
                     @if ($hasLeerstand != true)
-                  
+
                         <!-- Anrede -->
                         <x-input.group
                                 class="my-1" paddingLabel="" hoheLabel="h-6 sm:h-8 sm:pt-1" hohe="h-20 sm:h-10"
@@ -134,7 +134,7 @@
                         </x-input.group>
                         <!-- Nachname -->
                         <x-input.group
-                        class="my-1" paddingLabel="" hoheLabel="h-6 sm:h-8 sm:pt-1" hohe="h-20 sm:h-10" hoheOnError="h-26 sm:h-13" 
+                        class="my-1" paddingLabel="" hoheLabel="h-6 sm:h-8 sm:pt-1" hohe="h-20 sm:h-10" hoheOnError="h-26 sm:h-13"
                         for="nachname" label="Nachname" :error="$errors->first('current.nachname')">
                             <div class="w-full" x-data x-on:focus="$el.select()" >
                                 <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.blur="current.nachname" id="nachname" placeholder="..." />
@@ -152,8 +152,8 @@
                             for="telephone_number" label="Telefonnummer" :error="$errors->first('current.telephone_number')">
                             <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.blur="current.telephone_number" id="telephone_number" placeholder="..." />
                         </x-input.group>
-                    @endif 
-                            
+                    @endif
+
                 @elseif ($currentPage === 2)
                     <!-- Street Hnr-->
                     <x-input.group
@@ -187,7 +187,7 @@
                         hoheLabel="h-30 sm:h-full sm:pt-3"
                         bottom=true for="address" label="Adresse" :error="$errors->first('current.address')">
                         <x-input.textarea wire:model.blur="current.address" id="address" placeholder="Nur angeben falls abweichende Anschrift verwendet werden soll." />
-                    </x-input.group>                
+                    </x-input.group>
                 @elseif ($currentPage === 3)
                     <!-- Wohnungsdaten-->
                     <div class="mt-3">
@@ -231,13 +231,13 @@
                                     <x-input.select
                                     wire:model.blur="current.lokalart"
                                     placeholder="Lokalart"
-                                    :error="$errors->first('current.lokalart')" 
+                                    :error="$errors->first('current.lokalart')"
                                     >
                                     @if ($unitUsageTypes)
                                         @foreach ($unitUsageTypes as $dsi)
                                             <option class="" value="{{ $dsi->type_id }}">{{ $dsi['caption'] }}</option>
                                         @endforeach
-                                    @endif 
+                                    @endif
                                     </x-input.select>
                                 </div>
                             </div>
@@ -274,7 +274,7 @@
                     </div>
                 @endif
                 </div>
-                      
+
             </x-slot>
 
             <x-slot name="footer">
@@ -286,9 +286,9 @@
                     @endif
 
                     @if ($currentPage === count($pages))
-                        <x-button.primary type="submit">Speichern</x-button.primary> 
+                        <x-button.primary type="submit">Speichern</x-button.primary>
                     @else
-                        <x-button.primary wire:click="goToNextPage">weiter</x-button.secondary>
+                        <x-button.primary wire:click="goToNextPage">weiter</x-button.primary>
                     @endif
                 </div>
 

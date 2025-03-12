@@ -1,7 +1,7 @@
 <div class="w-full p-1 sm:px-0 lg:px-0 max-w-7xl verbrauchsUserEmailliste">
     <div class="font-bold text-lg sm:text-2xl my-8 text-center">
-       hier können Sie eintragen an welche Emails die unterjährige Informationen versendet werden sollen            
-    </div>    
+       hier können Sie eintragen an welche Emails die unterjährige Informationen versendet werden sollen
+    </div>
     <div
         x-data="{open:false}"
         x-init="open=true"
@@ -14,7 +14,7 @@
                 <div class="block my-1 sm:basis-1/3 _hinweisheader">
                     <div class="items-center block m-2">
                         <div class="flex justify-start gap-3">
-                            <x-icon.fonts.users-add class="fa-md sm:fa-2xl _icon"></x-icon.fonts.users>
+                            <x-icon.fonts.users-add class="fa-md sm:fa-2xl _icon"></x-icon.fonts.users-add>
                             <span class="_title">Neue Emailadresse hinzufügen</span>
                         </div>
                         <div class="_text">über diesen Button können Sie neue Email eintragen an welche die Verbraucherinformationen übermittelt werden</div>
@@ -23,7 +23,7 @@
                 <div class="block my-1 sm:basis-1/3 _hinweisheader">
                     <div class="items-center block m-2">
                         <div class="flex justify-start gap-3">
-                            <x-icon.fonts.pencil class="fa-md sm:fa-2xl _icon"></x-icon.fonts.users>
+                            <x-icon.fonts.pencil class="fa-md sm:fa-2xl _icon"></x-icon.fonts.pencil>
                             <span class="_title">Emailadresse bearbeiten</span>
                         </div>
                         <div class="_text">über diesen Button können Sie vorhandene Email bearbeiten</div>
@@ -52,19 +52,19 @@
                             <div class="text-md ml-1">
                                 <livewire:user.occupant.occupant-header :occupant='$occupant' key="{{ now() }}"/>
                             </div>
-                            <button 
+                            <button
                                 wire:click='raise_CreateVerbrauchsinfoUserEmailModal({{$occupant}})'
                                 class="">
                                 <i class="fa-regular fa-circle-plus text-xl sm:text-3xl m-1 sm:mr-3 text-sky-600" ></i>
                             </button>
                         </div>
 
-                        @forelse ($occupant->verbrauchsinfoUserEmails as $userEmail)
+                        @foreach ($occupant->verbrauchsinfoUserEmails as $userEmail)
                             @if (!$userEmail->anonym)
                             <div>
                                 <livewire:user.realestate.verbrauchsinfo-user-email.listitem  :userEmail='$userEmail' :wire:key="'verbrauchsinfo-user-email-listitem-'.$userEmail->id"  key="{{ now() }}"/>
                             </div>
-                            @endif   
+                            @endif
                         @endforeach
 
                     </div>

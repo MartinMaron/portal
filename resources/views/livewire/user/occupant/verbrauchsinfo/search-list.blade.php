@@ -14,7 +14,7 @@
             </div>
 
             <div class="md:border md:rounded-b-lg md:border-sky-100 dark:md:border-slate-950">
-                @forelse ($this->getVerbrauchsinfosByNutzergrupe($verbrauchsinfo->nutzergrup_id) as $singleVerbrauchsinfo)
+                @foreach ($this->getVerbrauchsinfosByNutzergrupe($verbrauchsinfo->nutzergrup_id) as $singleVerbrauchsinfo)
                 <livewire:user.occupant.verbrauchsinfo.listitem :singleVerbrauchsinfo='$singleVerbrauchsinfo' :wire:key="'verbrauchsinfo-listitem'.$verbrauchsinfo->id"  key="{{ now() }}"/>
 
                 @endforeach
