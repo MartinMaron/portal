@@ -1,5 +1,0 @@
-1. Website lädt, aber ohne styles
-2. in der js-console im browser sieht man das debugbar nicht funktioniert
-und app.js und app.css nicht geladen werden können,
-wobwohl die assets generiert werden (ohne fehlermeldung)
-3. vite und oder falsche ports als ursache?
