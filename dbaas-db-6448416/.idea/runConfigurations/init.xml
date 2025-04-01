@@ -29,7 +29,7 @@
     <script-file value="$PROJECT_DIR$/production/data/verbrauchsinfos.sql" />
     <script-file value="$PROJECT_DIR$/production/data/zaehler_arten.sql" />
     <script-mode>FILE</script-mode>
-    <data-source id="b642796a-97b4-4f58-bdfa-2e3456b80079" namespace="schema/&quot;production&quot;" />
+    <data-source id="b642796a-97b4-4f58-bdfa-2e3456b80079" namespace="schema/&quot;development&quot;" />
     <method v="2">
       <option name="RunConfigurationTask" enabled="true" run_configuration_name="create" run_configuration_type="DatabaseScript" />
     </method>
