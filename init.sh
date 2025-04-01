@@ -3,12 +3,11 @@ php artisan config:clear
 php artisan route:clear
 php artisan view:clear
 php artisan cache:clear
-cp .env.example .env
+if [ ! -f .env ]; then
+  cp .env.example .env
+fi
 npm install
 composer install
 php artisan key:generate
-php artisan migrate:fresh --seed
-php artisan lang:publish
-npm run dev
-npm run prod
-php artisan serve
+php artisan migrate
+npm run build

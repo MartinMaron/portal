@@ -15,11 +15,18 @@
       <jdbc-url>jdbc:mysql://dbaas-db-6448416-do-user-10523330-0.b.db.ondigitalocean.com:25060/Se5DbMC0hJb59NBKRQuplk5</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="laravel" uuid="b642796a-97b4-4f58-bdfa-2e3456b80079">
+    <data-source source="LOCAL" name="laravel-local" uuid="b642796a-97b4-4f58-bdfa-2e3456b80079">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://localhost:3306/development</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="dbaas-db-6448416-laravel11" uuid="ad4a8e47-3247-4b01-a5a3-184f76e3e5f5">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://dbaas-db-6448416-do-user-10523330-0.b.db.ondigitalocean.com:25060/laravel11</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>
