@@ -23,7 +23,7 @@ class User extends Authenticatable
      * @var string[]
      */
     protected $fillable = [
-        'name', 'email', 'password', 'isUser', 'isMieter', 'kundennummer', 'apiToken',
+        'name', 'email', 'password', 'isUser', 'isAdmin','isMieter', 'kundennummer', 'apiToken',
     ];
 
     /**

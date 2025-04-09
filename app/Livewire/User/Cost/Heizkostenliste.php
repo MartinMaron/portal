@@ -130,19 +130,38 @@ class Heizkostenliste extends Component
         return (bool) ($ret > 0);
     }
 
-    public function getCostByType($costtypeId)
-    {
-        return Cost::where('realestate_id', '=', $this->realestate->id)
+    public function getCostByType($costtypeId){
+        return Cost::where('realestate_id','=',$this->realestate->id)
             ->where(function (Builder $query) {
-                $query->IsHeizkosten();
+                if ($this->realestate->abrechnungssetting != null) {
+                    $query->where('periodTo', '=', null)
+                        ->orWhere('periodTo', '>=', $this->realestate->abrechnungssetting->periodFrom);
+                }
             })
-            ->where('costtype_id', '=', $costtypeId)
+            ->where(function (Builder $query) {
+                if ($this->realestate->abrechnungssetting != null) {
+                    $query->where('periodFrom', '<=', $this->realestate->abrechnungssetting->periodTo);
+                }
+            })
+            ->where(function (Builder $query) {$query->IsHeizkosten();})
+            ->where('costtype_id','=',$costtypeId)
             ->get();
     }
 
     public function render()
     {
         $costtypes = Cost::where('realestate_id', '=', $this->realestate->id)
+            ->where(function (Builder $query) {
+                if ($this->realestate->abrechnungssetting != null) {
+                    $query->where('periodTo', '=', null)
+                        ->orWhere('periodTo', '>=', $this->realestate->abrechnungssetting->periodFrom);
+                }
+            })
+            ->where(function (Builder $query) {
+                if ($this->realestate->abrechnungssetting != null) {
+                    $query->where('periodFrom', '<=', $this->realestate->abrechnungssetting->periodTo);
+                }
+            })
             ->where(function (Builder $query) {
                 $query->IsHeizkosten();
             })

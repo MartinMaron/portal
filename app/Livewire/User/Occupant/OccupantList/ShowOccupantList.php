@@ -9,6 +9,8 @@ use App\Livewire\DataTable\WithSorting;
 use App\Models\Occupant;
 use App\Models\Realestate;
 use App\Models\Salutation;
+use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 use App\Models\UserVerbrauchsinfoAccessControl;
 use Barryvdh\Debugbar\Facades\Debugbar;
@@ -21,6 +23,7 @@ class ShowOccupantList extends Component
 {
     use \App\Http\Traits\Helpers;
     use WithBulkActions, WithCachedRows, WithPagination, WithPerPagePagination, WithSorting;
+    use WithFileUploads;
 
     public $hasAnyCustomEinheitNo = false;
 
@@ -73,6 +76,7 @@ class ShowOccupantList extends Component
         'refreshParent' => '$refresh',
         'deleteConfirmed' => 'delete',
         'confirmNekoMessage' => 'confirmNekoMessage',
+        'uploadPhoto' => 'uploadPhoto'
     ];
 
     public function deleteOccupant($objectId)
@@ -245,6 +249,17 @@ class ShowOccupantList extends Component
             $result = Occupant::query()
                 ->where('realestate_id', '=', $this->realestate->id)
                 ->where(function (Builder $query) {
+                    if ($this->realestate->abrechnungssetting != null) {
+                        $query->where('dateFrom', '<=', $this->realestate->abrechnungssetting->periodTo);
+                    }
+                })
+                ->where(function (Builder $query) {
+                    if ($this->realestate->abrechnungssetting != null) {
+                        $query->where('dateTo', '=', null)
+                            ->orWhere('dateTo', '>=', $this->realestate->abrechnungssetting->periodFrom);
+                    }
+                })
+                ->where(function (Builder $query) {
                     $query->where('address', 'LIKE', '%'.$this->filters['search'].'%')
                         ->orWhere('lage', 'LIKE', '%'.$this->filters['search'].'%')
                         ->orWhere('customEinheitNo', 'LIKE', '%'.$this->filters['search'].'%')
@@ -254,7 +269,18 @@ class ShowOccupantList extends Component
                 });
         } else {
             $result = Occupant::query()
-                ->where('realestate_id', '=', $this->realestate->id);
+                ->where('realestate_id', '=', $this->realestate->id)
+                ->where(function (Builder $query) {
+                    if ($this->realestate->abrechnungssetting != null) {
+                        $query->where('dateFrom', '<=', $this->realestate->abrechnungssetting->periodTo);
+                    }
+                })
+                ->where(function (Builder $query) {
+                    if ($this->realestate->abrechnungssetting != null) {
+                        $query->where('dateTo', '=', null)
+                            ->orWhere('dateTo', '>=', $this->realestate->abrechnungssetting->periodFrom);
+                    }
+                });
         }
 
         $this->applySorting($result);
@@ -268,6 +294,51 @@ class ShowOccupantList extends Component
         return $this->rowsQuery->paginate(20);
         // });
     }
+
+    public $uploadedPhotoUrl;
+
+    public function uploadPhoto($imageData)
+    {
+        // Base64-Daten verarbeiten
+        $imageData = explode(',', $imageData)[1];
+        $image = base64_decode($imageData);
+
+        // Speichern in DigitalOcean Spaces
+        $filename = 'photo_' . time() . '.png';
+        $this->uploadedPhotoUrl = Storage::disk('spaces')->put('uploads/' . $filename, $image, 'public');
+
+
+        // URL speichern und anzeigen
+        $this->uploadedPhotoUrl = Storage::disk('spaces')->url('uploads/' . $filename);
+
+
+        Debugbar::info($this->uploadedPhotoUrl);
+
+    }
+
+
+
+    public $photo; // Hochgeladene Datei
+
+    public function uploadPhotoDisc()
+    {
+
+        // Überprüfe, ob eine Datei hochgeladen wurde
+        $this->validate([
+            'photo' => 'image|max:1024', // Maximalgröße: 1MB
+        ]);
+
+        // Speichern der Datei auf DigitalOcean Spaces
+        // $path = $this->photo->store('uploads', 'spaces');
+
+        $path = Storage::disk('spaces')->put('uploads_1', $this->photo, 'public');
+
+
+
+        // URL der hochgeladenen Datei speichern
+        //$this->uploadedPhotoUrl = Storage::disk('spaces')->url($path);
+    }
+
 
     public function render()
     {
