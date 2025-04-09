@@ -9,6 +9,8 @@ class CostType extends Model
 {
     use HasFactory;
 
+    protected $table = 'costtypes';
+
     protected $primaryKey = 'id';
 
     protected $keyType = 'string';

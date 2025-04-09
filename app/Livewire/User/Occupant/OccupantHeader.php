@@ -32,6 +32,6 @@ class OccupantHeader extends Component
 
     public function render()
     {
-        return view('class OccupantHeader');
+        return view('livewire.user.occupant.occupant-header');
     }
 }
