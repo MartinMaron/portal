@@ -195,7 +195,11 @@
                                                         @if ($singleCost->fueltype_id !=null && $singleCost->fueltype->hasTank)
                                                             {{ 'Zugang ' }}
                                                         @else
-                                                           <span class="">{{ 'Eintrag vom: '. $singleCostAmount->created_at->format('d.m.Y') }}</span>
+                                                            @if ($singleCostAmount->created_at)
+                                                                <span class="">{{ 'Eintrag vom: '. $singleCostAmount->created_at->format('d.m.Y') }}</span>
+                                                            @else
+                                                                <span class="">{{ $singleCostAmount->description }}</span>
+                                                            @endif
                                                         @endif
                                                     </div>
                                                 </div>

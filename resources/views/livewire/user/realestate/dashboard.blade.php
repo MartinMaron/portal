@@ -51,7 +51,7 @@
             </div>
             <div class="relative flex items-center px-6 py-5 space-x-3 _element">
                 <div class="flex-shrink-0">
-                    <i class="fa-duotone fa-solid fa-file-signature text-2xl sm:text-4xl _icon"></i>
+                    <i class="fa-duotone fa-solid fa-file-pen text-2xl sm:text-4xl _icon"></i>
                 </div>
                 <div class="flex-1 min-w-0">
                     <a href="{{route('user.heizkostenliste', $realestate)}}" class="focus:outline-none">

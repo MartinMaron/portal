@@ -13,8 +13,12 @@
             @if ($realestate->nutzerlisteactive)
             <div class="px-2 sm:px-4">
                 <a class="tooltip" href="{{route('user.realestateOccupantList', $realestate)}}">
-                    <x-icon.fonts.users class="_icon">
-                    </x-icon.fonts.users>
+                    @if ($realestate->abrechnungssetting->nutzerlisteDone)
+                        <i class="fa-kit fa-solid-users-circle-check text-green-500 dark:text-green-800"></i>
+                    @else
+                        <x-icon.fonts.users class="_icon">
+                        </x-icon.fonts.users>
+                    @endif
                     <span class="tooltiptext text-left">
                         <span style="white-space: nowrap">Nutzerliste:</span>
                         <span style="white-space: nowrap">Nutzerwechsel, </span>
@@ -23,11 +27,15 @@
                 </a>
             </div>
             @endif
-            @if ($realestate->nutzerlisteactive)
+            @if ($realestate->kosteneingabe)
                 <div class="px-2 sm:px-4">
                     <a class="tooltip" href="{{route('user.costs', $realestate)}}">
-                        <x-icon.fonts.file-signature class="_icon">
-                        </x-icon.fonts.file-signature>
+                        @if ($realestate->abrechnungssetting->brennstofflisteDone)
+                            <i class="fa-kit fa-solid-file-signature-circle-check text-green-500 dark:text-green-800"></i>
+                        @else
+                            <x-icon.fonts.file-signature class="_icon">
+                            </x-icon.fonts.file-signature>
+                        @endif
                         <span class="tooltiptext">
                             <span style="white-space: nowrap">Eingabe der Brennstoffkosten</span>
                         </span>
@@ -35,16 +43,24 @@
                 </div>
                 <div class="tooltip px-2 sm:px-4">
                     <a href="{{route('user.heizkostenliste', $realestate)}}">
-                        <i class="fa-duotone fa-solid fa-file-signature _icon"></i>
+                        @if ($realestate->abrechnungssetting->heizkostenlisteDone)
+                            <i class="fa-kit fa-solid-file-pen-circle-check text-green-500 dark:text-green-800"></i>
+                        @else
+                            <i class="fa-duotone fa-solid fa-file-pen _icon"></i>
+                        @endif
+                        <span class="tooltiptext">
+                            <span style="white-space: nowrap">Eingabe der weiteren Heizkosten</span>
+                        </span>
                     </a>
-                    <span class="tooltiptext">
-                        <span style="white-space: nowrap">Eingabe der weiteren Heizkosten</span>
-                    </span>
                 </div>
                 @if ($realestate->betriebskosten)
                     <div class="tooltip px-2 sm:px-4">
                         <a href="{{route('user.betriebskostenliste', $realestate)}}">
-                            <i class="fa-regular fa-file-signature _icon"></i>
+                            @if ($realestate->abrechnungssetting->betreibskostenDone)
+                                <i class="fa-kit fa-solid-file-pen-circle-check text-green-500 dark:text-green-800"></i>
+                            @else
+                                <i class="fa-regular fa-file-signature _icon"></i>
+                            @endif
                         </a>
                         <span class="tooltiptext">
                             <span style="white-space: nowrap">Eingabe der Betriebskosten</span>
