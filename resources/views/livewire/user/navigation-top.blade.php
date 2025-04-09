@@ -102,7 +102,7 @@
                     <!-- Nutzereinheiten -->
                     <div class="flex justify-end space-x-8 md:-my-px md:ml-10 md:flex">
                         <x-jet-nav-link href="{{ route('user.verbrauchsinfos') }}" :active="request()->routeIs('login')">
-                            <span class="sm:text-lg">
+                            <span class="sm:text-lg font-bold dark:text-slate-950">
                                 Verbraucherinformationen
                             </span>
                         </x-jet-nav-link>
