@@ -11,6 +11,7 @@ use App\Models\Realestate;
 use App\Models\Salutation;
 use App\Models\User;
 use App\Models\UserVerbrauchsinfoAccessControl;
+use Barryvdh\Debugbar\Facades\Debugbar;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
@@ -130,6 +131,8 @@ class ShowOccupantList extends Component
         $this->hasVat = (bool) $this->realestate->occupants->where('vat', '=', '1')->count();
         $this->salutations = Salutation::all();
         $this->prepaidnet = $this->realestate->eingabeCostNetto;
+        $this->prepaidtype = $this->realestate->prepaidtype;
+        Debugbar::info($this->realestate->prepaidtype);
         $this->sorts = [
             'unvid' => 'asc',
         ];
@@ -153,12 +156,13 @@ class ShowOccupantList extends Component
             $this->realestate->save();
         }
         if ($value == 'prepaidtype') {
-            $this->prepaidtype = ! $this->prepaidtype;
-            if ($this->prepaidtype) {
-                $this->realestate->prepaidtype = 'H';
-            } else {
-                $this->realestate->prepaidtype = 'B';
-            }
+            Debugbar::info($this->realestate->prepaidtype);
+            $this->prepaidtype = $this->realestate->prepaidtype;
+            /*      if($this->prepaidtype){
+                     $this->realestate->prepaidtype = 'B';
+                 }else{
+                     $this->realestate->prepaidtype = 'H';
+                 } */
             $this->realestate->save();
         }
         if ($value == 'prepaidnet') {

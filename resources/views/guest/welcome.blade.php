@@ -1,9 +1,6 @@
 <x-guest-layout>
     <x-slot name="slot">
         <div class="px-4 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <div class="text-red-600  text-xl font-bold pb-6 w-full text-center">
-                WICHTIG : WIR ZIEHEN UM!
-            </div>
             <div class="pb-3 text-red-600 font-bold w-full text-center">
                 Ab dem 01.01.2025 lautet unsere neue Adresse :
             </div>
@@ -12,6 +9,27 @@
             </div>
             <div class="pb-4 w-full text-red-600 font-bold text-center">
                 50858 Köln – Weiden
+            </div>
+            <div class="pb-4 w-full text-red-600 font-bold text-center">
+                Büro: 0221 43000772
+            </div>
+            <div class="block sm:flex sm:justify-between">
+                <div class="pb-4 w-full text-red-600 font-bold text-center">
+                    <br>Herr Jaskula
+                    <br>0221 43000773
+                </div>
+                <div class="pb-4 w-full text-red-600 font-bold text-center">
+                    <br>Frau Jaskula
+                    <br>0221 31087440
+                </div>
+                <div class="pb-4 w-full text-red-600 font-bold text-center">
+                    <br>Frau Maron
+                    <br>0221 31087441
+                </div>
+                <div class="pb-4 w-full text-red-600 font-bold text-center">
+                    <br>Herr Maron
+                    <br>0221 80005269
+                </div>
             </div>
             <div class="w-full">
                 <img class="rounded-md" src="/img/home/Slieder-Mitte.jpg" alt="">

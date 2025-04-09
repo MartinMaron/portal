@@ -59,15 +59,15 @@ class Occupant extends Model
             'qmkc' => 'required|numeric',
             'qmww' => 'required|numeric',
             'pe' => 'required|numeric',
-            'vorauszahlung' => 'required|numeric',
+            'vorauszahlung' => 'required',
         ]);
     }
 
     protected $casts = ['dateFrom' => 'date:d.m.Y',
         'dateTo' => 'date:d.m.Y',
         'qmkc' => 'decimal:2',
-        'qmww' => 'decimal:2',
-        'vorauszahlung_editing' => 'decimal:2'];
+        'qmww' => 'decimal:2'
+        ];
 
     protected $appends = ['date_from_editing',
         'date_to_editing',

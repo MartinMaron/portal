@@ -10,6 +10,7 @@
                     </span>
                 </a>
             </div>
+            @if ($realestate->nutzerlisteactive)
             <div class="px-2 sm:px-4">
                 <a class="tooltip" href="{{route('user.realestateOccupantList', $realestate)}}">
                     <x-icon.fonts.users class="_icon">
@@ -21,32 +22,35 @@
                     </span>
                 </a>
             </div>
-            <div class="px-2 sm:px-4">
-                <a class="tooltip" href="{{route('user.costs', $realestate)}}">
-                    <x-icon.fonts.file-signature class="_icon">
-                    </x-icon.fonts.file-signature>
-                    <span class="tooltiptext">
-                        <span style="white-space: nowrap">Eingabe der Brennstoffkosten</span>
-                    </span>
-                </a>
-            </div>
-            <div class="tooltip px-2 sm:px-4">
-                <a href="{{route('user.heizkostenliste', $realestate)}}">
-                    <i class="fa-duotone fa-solid fa-file-signature _icon"></i>
-                </a>
-                <span class="tooltiptext">
-                    <span style="white-space: nowrap">Eingabe der weiteren Heizkosten</span>
-                </span>
-            </div>
-            @if ($realestate->betriebskosten)
+            @endif
+            @if ($realestate->nutzerlisteactive)
+                <div class="px-2 sm:px-4">
+                    <a class="tooltip" href="{{route('user.costs', $realestate)}}">
+                        <x-icon.fonts.file-signature class="_icon">
+                        </x-icon.fonts.file-signature>
+                        <span class="tooltiptext">
+                            <span style="white-space: nowrap">Eingabe der Brennstoffkosten</span>
+                        </span>
+                    </a>
+                </div>
                 <div class="tooltip px-2 sm:px-4">
-                    <a href="{{route('user.betriebskostenliste', $realestate)}}">
-                        <i class="fa-regular fa-file-signature _icon"></i>
+                    <a href="{{route('user.heizkostenliste', $realestate)}}">
+                        <i class="fa-duotone fa-solid fa-file-signature _icon"></i>
                     </a>
                     <span class="tooltiptext">
-                        <span style="white-space: nowrap">Eingabe der Betriebskosten</span>
+                        <span style="white-space: nowrap">Eingabe der weiteren Heizkosten</span>
                     </span>
                 </div>
+                @if ($realestate->betriebskosten)
+                    <div class="tooltip px-2 sm:px-4">
+                        <a href="{{route('user.betriebskostenliste', $realestate)}}">
+                            <i class="fa-regular fa-file-signature _icon"></i>
+                        </a>
+                        <span class="tooltiptext">
+                            <span style="white-space: nowrap">Eingabe der Betriebskosten</span>
+                        </span>
+                    </div>
+               @endif
             @endif
             @if ($realestate->uviactive)
             <div class="tooltip px-2 sm:px-4">

@@ -19,7 +19,7 @@ class VorauszahlungEdit extends Component
 
     public function confirm()
     {
-        $this->occupant->vorauszahlung_editing = floatval($this->countvalue);
+        $this->occupant->vorauszahlung_editing = $this->countvalue;
         $this->occupant->save();
     }
 

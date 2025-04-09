@@ -170,14 +170,14 @@
                             </x-table.td>
                             <x-table.td class="text-center occu-td w-50 " style="min-width: 4rem;">
                                 @if ($editVorauszahlungen)
-                                    <livewire:user.occupant.personencount-edit :occupant='' :occupant='$occupant' :wire:key="'user.occupant.personencount-edit-'.$occupant->id"/>
+                                    <livewire:user.occupant.personencount-edit :occupant='$occupant' :wire:key="'user.occupant.personencount-edit-'.$occupant->id" key="{{ now() }}"/>
                                 @else
                                     <span class="text-center">{{$occupant->personen_zahl}}</span>
                                 @endif
                             </x-table.td>
                             <x-table.td class="w-40 p-0 text-right occu-td" style="min-width: 7rem; max-width: 7rem">
                                 @if ($editVorauszahlungen)
-                                    <livewire:user.occupant.vorauszahlung-edit :occupant='$occupant' :wire:key="'user.occupant.vorauszahlung-edit-'.$occupant->id"/>
+                                    <livewire:user.occupant.vorauszahlung-edit :occupant='$occupant' :wire:key="'user.occupant.vorauszahlung-edit-'.$occupant->id" key="{{ now() }}"/>
                                 @else
                                     <span class="pr-2 ">{{$occupant->vorauszahlung_editing }}</span>
                                 @endif

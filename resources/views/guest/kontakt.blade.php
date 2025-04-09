@@ -13,10 +13,10 @@
 
             <div class="et_pb_text_inner"><strong>Ansprechpartner:</strong><p></p>
               <p class="pt-3">Christof Jaskula<br>
-              Hans-Willy-Mertens Str. 2<br>
+              Marsdorfer Str. 76<br>
               50858 Köln
           </p>
-              <p class="pt-3" >Tel.: +49 (0)2234 9444320</p>
+              <p class="pt-3" >Tel.: +49 (0)221 43000773</p>
               <p class="pt-3"><a href="mailto:info@e-neko.de">info@e-neko.de</a></p>
               <p class="pt-3">oder benutzen Sie einfach unser Kontaktformular!</p></div>
           </div>
