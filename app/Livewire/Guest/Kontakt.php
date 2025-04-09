@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Guest;
 
-use App\Mail\kontaktanfrage;
+use App\Mail\Kontaktanfrage;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
@@ -34,7 +34,7 @@ class Kontakt extends Component
         $this->validate();
         toast()->success('Ihr Anliegen wurde gesendet', 'Achtung')->push();
         Mail::to('info@e-neko.de')
-            ->send(new kontaktanfrage($this->nachname, $this->email, $this->telefon, $this->adresse, $this->anliegen));
+            ->send(new Kontaktanfrage($this->nachname, $this->email, $this->telefon, $this->adresse, $this->anliegen));
         redirect()->route('guest.kontakt');
     }
 

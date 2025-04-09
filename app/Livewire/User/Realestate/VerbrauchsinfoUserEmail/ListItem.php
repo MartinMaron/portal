@@ -6,7 +6,7 @@ use App\Livewire\DataTable\WithCachedRows;
 use App\Models\VerbrauchsinfoUserEmail;
 use Livewire\Component;
 
-class Listitem extends Component
+class ListItem extends Component
 {
     use WithCachedRows;
 

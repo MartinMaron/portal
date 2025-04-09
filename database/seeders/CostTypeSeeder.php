@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Costtype;
+use App\Models\CostType;
 use Illuminate\Database\Seeder;
 
 class CosttypeSeeder extends Seeder
@@ -14,16 +14,16 @@ class CosttypeSeeder extends Seeder
      */
     public function run()
     {
-        Costtype::create(['id' => 'BEK', 'caption' => 'Betriebskosten', 'costinvoicingtype_id' => 'BE', 'sort' => 1001]);
-        Costtype::create(['id' => 'BRK', 'caption' => 'Brennstoffkosten', 'costinvoicingtype_id' => 'HZ', 'sort' => 1]);
-        Costtype::create(['id' => 'HNK', 'caption' => 'Heiznebenkosten', 'costinvoicingtype_id' => 'HZ', 'sort' => 2]);
-        Costtype::create(['id' => 'ZUK', 'caption' => 'Zusatzkosten Heizung', 'costinvoicingtype_id' => 'HZ', 'sort' => 3]);
-        Costtype::create(['id' => 'ZKW', 'caption' => 'Zusatzkosten Warmwasser', 'costinvoicingtype_id' => 'HZ', 'sort' => 4]);
-        Costtype::create(['id' => 'KWK', 'caption' => 'Kaltwasserkosten', 'costinvoicingtype_id' => 'HZ', 'sort' => 5]);
-        Costtype::create(['id' => 'ZWA', 'caption' => 'Zwischenablesung', 'costinvoicingtype_id' => 'HZ', 'sort' => 98]);
-        Costtype::create(['id' => 'DIR', 'caption' => 'Direkkosten Nutzer', 'costinvoicingtype_id' => 'HZ', 'sort' => 97]);
-        Costtype::create(['id' => 'BEE', 'caption' => 'Betriebskosten Nutzer', 'costinvoicingtype_id' => 'BE', 'sort' => 1002]);
-        Costtype::create(['id' => 'KWA', 'caption' => 'Abwasser', 'costinvoicingtype_id' => 'HZ', 'sort' => 6]);
-        Costtype::create(['id' => 'BEH', 'caption' => 'Betriebskosten (HZ)', 'costinvoicingtype_id' => 'HZ', 'sort' => 7]);
+        CostType::create(['id' => 'BEK', 'caption' => 'Betriebskosten', 'costinvoicingtype_id' => 'BE', 'sort' => 1001]);
+        CostType::create(['id' => 'BRK', 'caption' => 'Brennstoffkosten', 'costinvoicingtype_id' => 'HZ', 'sort' => 1]);
+        CostType::create(['id' => 'HNK', 'caption' => 'Heiznebenkosten', 'costinvoicingtype_id' => 'HZ', 'sort' => 2]);
+        CostType::create(['id' => 'ZUK', 'caption' => 'Zusatzkosten Heizung', 'costinvoicingtype_id' => 'HZ', 'sort' => 3]);
+        CostType::create(['id' => 'ZKW', 'caption' => 'Zusatzkosten Warmwasser', 'costinvoicingtype_id' => 'HZ', 'sort' => 4]);
+        CostType::create(['id' => 'KWK', 'caption' => 'Kaltwasserkosten', 'costinvoicingtype_id' => 'HZ', 'sort' => 5]);
+        CostType::create(['id' => 'ZWA', 'caption' => 'Zwischenablesung', 'costinvoicingtype_id' => 'HZ', 'sort' => 98]);
+        CostType::create(['id' => 'DIR', 'caption' => 'Direkkosten Nutzer', 'costinvoicingtype_id' => 'HZ', 'sort' => 97]);
+        CostType::create(['id' => 'BEE', 'caption' => 'Betriebskosten Nutzer', 'costinvoicingtype_id' => 'BE', 'sort' => 1002]);
+        CostType::create(['id' => 'KWA', 'caption' => 'Abwasser', 'costinvoicingtype_id' => 'HZ', 'sort' => 6]);
+        CostType::create(['id' => 'BEH', 'caption' => 'Betriebskosten (HZ)', 'costinvoicingtype_id' => 'HZ', 'sort' => 7]);
     }
 }

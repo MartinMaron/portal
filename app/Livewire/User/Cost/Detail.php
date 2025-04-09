@@ -3,8 +3,8 @@
 namespace App\Livewire\User\Cost;
 
 use App\Models\Cost;
-use App\Models\Costtype;
-use App\Models\Fueltype;
+use App\Models\CostType;
+use App\Models\FuelType;
 use App\Models\Realestate;
 use Livewire\Component;
 use Usernotnull\Toast\Concerns\WireToast;
@@ -31,9 +31,9 @@ class Detail extends Component
     public function mount(Cost $cost, bool $netAmountInput, string $costinvoicingtype)
     {
         $this->cost = $cost;
-        $this->fueltypes = Fueltype::all();
+        $this->fueltypes = FuelType::all();
         $this->costkeys = $cost->realestate->costsKeys;
-        $this->costtypes = Costtype::all();
+        $this->costtypes = CostType::all();
         $this->netAmountInput = $netAmountInput;
     }
 
@@ -96,7 +96,7 @@ class Detail extends Component
         } else {
             $this->cost = $cost;
         }
-        $this->costtypes = Costtype::where('costinvoicingtype_id', '=', 'HZ')->get()->sortBy('sort');
+        $this->costtypes = CostType::where('costinvoicingtype_id', '=', 'HZ')->get()->sortBy('sort');
         $this->onlyConsumptionEdit = $onlyConsumptionEdit;
         $this->showEditModal = true;
     }
@@ -104,7 +104,7 @@ class Detail extends Component
     public function showModalBetriebskosten(Cost $cost)
     {
         $this->cost = $cost;
-        $this->costtypes = Costtype::where('costinvoicingtype_id', '=', 'BE')->get()->sortBy('sort');
+        $this->costtypes = CostType::where('costinvoicingtype_id', '=', 'BE')->get()->sortBy('sort');
         $this->onlyConsumptionEdit = false;
         $this->showEditModal = true;
     }
@@ -112,7 +112,7 @@ class Detail extends Component
     public function addModalBetriebskosten(Realestate $realestate)
     {
         $this->cost = $this->makeBlankObjectBetriebskosten($realestate);
-        $this->costtypes = Costtype::where('Costinvoicingtype_id', '=', 'BE')->get()->sortBy('sort');
+        $this->costtypes = CostType::where('Costinvoicingtype_id', '=', 'BE')->get()->sortBy('sort');
         $this->onlyConsumptionEdit = false;
         $this->showEditModal = true;
     }

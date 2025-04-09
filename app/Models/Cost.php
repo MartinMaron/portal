@@ -386,17 +386,17 @@ class Cost extends Model
 
     public function costkey()
     {
-        return $this->belongsTo(Costkey::class);
+        return $this->belongsTo(CostKey::class);
     }
 
     public function costtype()
     {
-        return $this->belongsTo(Costtype::class);
+        return $this->belongsTo(CostType::class);
     }
 
     public function fueltype()
     {
-        return $this->belongsTo(Fueltype::class);
+        return $this->belongsTo(FuelType::class);
     }
 
     protected $dispatchesEvents = [

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Usernotnull\Toast\Concerns\WireToast;
 
-class Costkey extends Model
+class CostKey extends Model
 {
     use HasFactory;
     use WireToast;

@@ -3,7 +3,7 @@
 namespace App\Livewire\User\Cost;
 
 use App\Models\Cost;
-use App\Models\Costtype;
+use App\Models\CostType;
 use App\Models\Realestate;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
@@ -56,7 +56,7 @@ class Betriebskostenliste extends Component
             'realestate_id' => $this->realestate->id,
             'unvid' => $this->realestate->unvid,
             'budguid' => $this->realestate->nekoId,
-            'costtype' => Costtype::find('BEK'),
+            'costtype' => CostType::find('BEK'),
             'caption' => 'Neue Kostenposition',
         ]);
     }

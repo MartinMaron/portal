@@ -51,7 +51,7 @@ class Realestate extends Model
 
     public function costskeys()
     {
-        return $this->hasMany(Costkey::class);
+        return $this->hasMany(CostKey::class);
     }
 
     public function abrechnungssettings()

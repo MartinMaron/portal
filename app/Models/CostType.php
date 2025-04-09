@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Costtype extends Model
+class CostType extends Model
 {
     use HasFactory;
 
@@ -47,6 +47,6 @@ class Costtype extends Model
 
     public function costinvoicingtype()
     {
-        return $this->belongsTo(Costinvoicingtype::class);
+        return $this->belongsTo(CostInvoicingType::class);
     }
 }
