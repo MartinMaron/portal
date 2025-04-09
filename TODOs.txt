@@ -1,0 +1,7 @@
+-Fehler alle fixen
+-spaces settings in .example.env
+-scripte alle verbessern und auch ein restart/update script für den server
+-github action
+-cleanup wirklich auf alle datein ausweiten (z.B. .phpunit.result.cache, etc.)
+-prüfen ob dbaas-db-6448416 und views.zip entfernt werden können
+-
