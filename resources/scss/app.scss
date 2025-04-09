@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+[x-cloak] {
+    display: none;
+}
+
 @import "table-occupants";
 @import "user-costs-lista";
 @import "btn-magic";
