@@ -145,7 +145,7 @@ class Dialog extends Component
             'current.vat' => 'boolean',
             'current.lokalart' => 'nullable',
             'current.customEinheitNo' => 'nullable',
-            'current.lage' => 'required',
+            'current.lage' => 'nullable',
             'current.personen_zahl' => 'nullable',
         ],
         4 => [

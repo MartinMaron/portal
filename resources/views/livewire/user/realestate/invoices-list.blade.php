@@ -41,9 +41,9 @@
         <x-input.search wire:model.live.debounce.600ms="filters.search"></x-input.search>
     </div>
 
-    
+
     @if($invoices->count()!=0)
-    {{-- small Screen --}}    
+    {{-- small Screen --}}
     <div class="block mt-10 sm:hidden">
         @foreach ($invoices as $invoice)
             <div class="my-3 mx-1 divide-gray-200 rounded-lg shadow-md max-w-1/4 bg-sky-100 dark:bg-slate-900  text-sky-700 dark:text-slate-300">
@@ -76,7 +76,7 @@
                                         <x-icon.fonts.pdf-download class="  hover:text-sky-300"></x-icon.fonts.pdf-download>
                                     </a>
                                 </div>
-                                
+
                             </div>
                             <div>
                                 @if (str_contains($invoice->description,'Wärmedienst') || str_contains($invoice->description,'Miete'))
@@ -95,16 +95,16 @@
                                 <span class="flex-shrink-0 inline-block px-2 py-0.5 text-green-800 dark:text-slate-950 text-sm font-medium bg-green-100 dark:bg-slate-500 rounded-full">RWM Wartung</span>
                             @endif
                             </div>
-                            
+
                         </div>
                     </div>
                 </div>
             </div>
         @endforeach
     </div>
-        
-    
-     {{-- BIG Screen --}} 
+
+
+     {{-- BIG Screen --}}
     <div class="hidden rounded sm:block ">
             <div class="grid justify-around grid-cols-24 py-3 mt-1 md:text-lg font-bold text-center border rounded-t-lg sm:text-xs bg-sky-100 dark:bg-slate-800  border-sky-100 dark:border-slate-900">
                 <div class="col-span-2">
@@ -126,7 +126,7 @@
                     Betrag
                 </div>
                 <div class="col-span-2">
-                    
+
                 </div>
             </div>
 
@@ -152,10 +152,10 @@
                     </div>
                     <div class="col-span-2">
                         <div class="flex justify-between px-3">
-                            <a href="{{route('user.downloadspacesfile', 'i-'. $invoice->id )}}" class="">
+                            <a href="{{route('user.downloadspacesfile', 'i+'. $invoice->id )}}" class="">
                                 <x-icon.fonts.file-download class="text-2xl sm:text-xl  hover:text-sky-300"></x-icon.fonts.file-download>
                             </a>
-                            <a target="_blank" href="{{route('user.showspacesfile', 'i-'. $invoice->id )}}" class="">
+                            <a target="_blank" href="{{route('user.showspacesfile', 'i+'. $invoice->id )}}" class="">
                                 <x-icon.fonts.pdf-download class="text-2xl sm:text-xl hover:text-sky-300"></x-icon.fonts.pdf-download>
                             </a>
                         </div>

@@ -28,20 +28,6 @@ class HeaderAddress extends Component
         $this->realestate->save();
 
         return redirect(request()->header('Referer'));
-
-        // $calcRules = null;
-        // if ($this->dialogMode == 'change'){
-        //     $calcRules = $this->validationRulesChange;
-        // }else
-        // {
-        //     $calcRules = $this->validationRulesEdit;
-        // }
-
-        // $myRules = $calcRules[$this->currentPage];
-        // $myRules['current.date_from_editing']=['required', 'date', new OccupantDateFromLessDateToRule];
-        // $myRules['dateFromNewOccupant']=['required', 'date', new OcccupantDateFromGreaterPreviousRule];
-
-        // $this->validateOnly($propertyName, $myRules, $this->messages);
     }
 
     public function render()

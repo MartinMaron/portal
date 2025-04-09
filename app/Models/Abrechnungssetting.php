@@ -15,7 +15,7 @@ class Abrechnungssetting extends Model
         'neko_id', 'realestate_id', 'bemerkung', 'tryWebDelete', 'description', 'nabi_inhaber', 'nabi_nr',
         'stromkosten', 'brenwert_gasabrechnug', 'eigen_energielieferung', 'aktiv',
         'co2_kennzeichen_WEG', 'co2_wohngeb', 'co2_kennzeichen_1_9', 'co2_kennzeichen_2_9', 'co2_anschluss_nach_2022',
-        'periodFrom', 'periodTo',
+        'periodFrom', 'periodTo', 'hk_id', 'bk_id'
     ];
 
     protected $appends = [

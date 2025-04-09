@@ -41,12 +41,12 @@
                     <div>
                         <!-- <div class="flex -mt-px divide-x divide-gray-200"> -->
                         <div class="flex h-8 m-2 justify-start items-center">
-                            <a href="{{route('user.realestate', $realestate)}}" class="inline-flex mr-8 px-1 py-2 text-sm font-medium text-gray-700 dark:text-slate-900 border border-transparent rounded-br-lg hover:text-gray-500 dark:hover:text-sky-900">
+                            <a href="{{route('user.realestate', $realestate)}}" class="inline-flex mr-6 px-1 py-2 text-sm font-medium text-gray-700 dark:text-slate-900 border border-transparent rounded-br-lg hover:text-gray-500 dark:hover:text-sky-900">
                                 <i class="text-lg fad fa-home dark:text-slate-100 "></i>
                                 <span class="ml-3 dark:text-slate-100">Bearbeiten</span>
                             </a>
                             @if ($realestate->nutzerlisteactive)
-                                <a href="{{route('user.realestateOccupantList', $realestate)}}" class="py-4 mx-6 text-sm font-medium text-gray-700 border border-transparent rounded-br-lg hover:text-gray-500">
+                                <a href="{{route('user.realestateOccupantList', $realestate)}}" class="py-4 px-6 text-sm font-medium text-gray-700 border border-transparent rounded-br-lg hover:text-gray-500">
                                     @if ($realestate->abrechnungssetting !=null && $realestate->abrechnungssetting->nutzerlisteDone)
                                         <i class="fa-kit fa-solid-users-circle-check text-green-500 dark:text-green-800 text-lg sm:text-xl"></i>
                                     @else
@@ -56,7 +56,7 @@
                                 </a>
                             @endif
                             @if ($realestate->kosteneingabe)
-                                <a href="{{route('user.costs', $realestate)}}" class="py-4 mx-6 text-sm font-medium text-gray-700 border border-transparent rounded-br-lg hover:text-gray-500">
+                                <a href="{{route('user.costs', $realestate)}}" class="py-4 px-6 text-sm font-medium text-gray-700 border border-transparent rounded-br-lg hover:text-gray-500">
                                     @if ($realestate->abrechnungssetting !=null && $realestate->abrechnungssetting->brennstofflisteDone)
                                         <i class="fa-kit fa-solid-file-signature-circle-check text-green-500 dark:text-green-800 text-lg sm:text-xl"></i>
                                     @else
@@ -64,7 +64,7 @@
                                         </x-icon.fonts.file-signature>
                                     @endif
                                 </a>
-                                <a href="{{route('user.heizkostenliste', $realestate)}}" class="py-4 mx-6 text-sm font-medium text-gray-700 border border-transparent rounded-br-lg hover:text-gray-500">
+                                <a href="{{route('user.heizkostenliste', $realestate)}}" class="py-4 px-6 text-sm font-medium text-gray-700 border border-transparent rounded-br-lg hover:text-gray-500">
                                     @if ($realestate->abrechnungssetting !=null && $realestate->abrechnungssetting->heizkostenlisteDone)
                                         <i class="_icon fa-kit fa-solid-file-pen-circle-check text-green-500 dark:text-green-800 text-lg sm:text-xl"></i>
                                     @else
@@ -72,7 +72,7 @@
                                     @endif
                                 </a>
                                 @if ($realestate->betriebskosten)
-                                    <a href="{{route('user.betriebskostenliste', $realestate)}}" class="py-4 mx-6 text-sm font-medium text-gray-700 border border-transparent rounded-br-lg hover:text-gray-500">
+                                    <a href="{{route('user.betriebskostenliste', $realestate)}}" class="py-4 px-6 text-sm font-medium text-gray-700 border border-transparent rounded-br-lg hover:text-gray-500">
                                         @if ($realestate->abrechnungssetting !=null && $realestate->abrechnungssetting->betreibskostenDone)
                                             <i class="_icon fa-kit fa-regular-file-signature-circle-check text-green-500 dark:text-green-800 text-lg sm:text-xl"></i>
                                         @else

@@ -97,7 +97,50 @@
                 </a>
             </div>
         </div>
-
     </div>
+    {{-- falls es eine Abrechnung gibt wird diese angezeigt --}}
+    @if ($this->getAbrechnungForDownload() != null )
 
+        <div class="relative flex items-center px-6 py-5 space-x-3 realestateheader">
+            <div class="flex-1 min-w-0 px-6 py-5 space-x-3 bg-white dark:bg-slate-500 border-2 dark:border-slate-900 border-gray-300 rounded-lg shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 ">
+                <div class="">
+                    <div class="block sm:flex sm:justify-center">
+                        <div class="_header line-clamp-4 md:line-clamp-2 text-center sm:mb-4 px-2 sm:pr-2 sm:pl-0">
+                            {{ 'ABRECHNUNG' }}
+                        </div>
+                        @if ($this->getLastDoneAbrechnung() != null && $this->getLastDoneAbrechnung()->id != $realestate->abrechnungssetting_id)
+                            <div class="_header line-clamp-4 text-center md:line-clamp-2 px-2 sm:pr-2 sm:pl-0">
+                                {{ $this->getAbrechnungForDownload()->period_from_editing. '-'. $this->getAbrechnungForDownload()->period_from_editing }}
+                            </div>
+                        @endif
+                        <div class="_header line-clamp-4 md:line-clamp-2 text-center sm:mb-4 px-2 mb-2 sm:pr-2 sm:pl-0">
+                            {{ 'herunterladen' }}
+                        </div>
+                    </div>
+
+
+                    <div class="block sm:flex sm:justify-between sm:gap-14 sm:mb-6">
+                        <a href="{{route('user.downloadspacesfile', 'abrhk_nutzer+'. $this->getAbrechnungForDownload()->id )}}" class="flex justify-start mb-2 items-center">
+                            <x-icon.fonts.pdf-download class="text-xl sm:text-xl _icon "></x-icon.fonts.pdf-download>
+                            <div class="ml-1">Nutzerabrechnung</div>
+                        </a>
+                        <a href="{{route('user.downloadspacesfile', 'abrhk_gesamt+'. $this->getAbrechnungForDownload()->id )}}" class="flex justify-start mb-2">
+                            <x-icon.fonts.pdf-download class="text-xl sm:text-xl _icon"></x-icon.fonts.pdf-download>
+                            <div class="ml-1">Gesamtabrechnung</div>
+                        </a>
+                        <a href="{{route('user.downloadspacesfile', 'abrhk_kosten+'. $this->getAbrechnungForDownload()->id )}}" class="flex justify-start mb-2">
+                            <x-icon.fonts.pdf-download class="text-xl sm:text-xl _icon"></x-icon.fonts.pdf-download>
+                            <div class="ml-1">Kostenübersicht</div>
+                        </a>
+                        <a href="{{route('user.downloadspacesfile', 'abrbk+'. $this->getAbrechnungForDownload()->id )}}" class="flex justify-start mb-2">
+                            <x-icon.fonts.pdf-download class="text-xl sm:text-xl _icon"></x-icon.fonts.pdf-download>
+                            <div class="ml-1">Betriebskostenabrechnung</div>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    @endif
 </div>
