@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\lage;
+use App\Models\Lage;
 use Illuminate\Database\Seeder;
 
 class LageSeeder extends Seeder
