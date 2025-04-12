@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\User\CostAmount;
+namespace App\Livewire\User\Costamount;
 
 use App\Models\CostAmount;
 use Livewire\Component;

@@ -375,7 +375,7 @@
         <div>
             <livewire:user.cost.detail :cost='$current' :netAmountInput='$nettoInputMode' :costinvoicingtype="'HZ'" :wire:key="'modal-realestate-cost-detail'"/>
         </div>
-        <!-- CreateOrEdit CostAmount Modal -->
+        <!-- CreateOrEdit Costamount Modal -->
         <div>
             <livewire:user.costamount.detail :wire:key="'modal-realestate-costamount-detail'"/>
         </div>
