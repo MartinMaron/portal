@@ -28,6 +28,7 @@
         "@fortawesome/fontawesome-free": "^6.7.2",
         "@themesberg/tailwind-datepicker": "^1.1.0",
         "bootstrap": "^5.3.3",
+        "flowbite": "^3.1.2",
         "livewire": "^0.6.1",
         "pikaday": "^1.8.2"
     }

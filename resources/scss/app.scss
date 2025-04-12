@@ -8,6 +8,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@plugin "flowbite/plugin";
+
 [x-cloak] {
     display: none;
 }

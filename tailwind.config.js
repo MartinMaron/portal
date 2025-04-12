@@ -11,6 +11,7 @@ export default {
         './resources/views/**/*.blade.php',
         './vendor/usernotnull/tall-toasts/config/**/*.php',
         './vendor/usernotnull/tall-toasts/resources/views/**/*.blade.php',
+        "./node_modules/flowbite/**/*.js",
     ],
 
     theme: {
