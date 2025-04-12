@@ -11,6 +11,8 @@ class CostKey extends Model
     use HasFactory;
     use WireToast;
 
+    protected $table = 'costkeys';
+
     protected $fillable = [
         'nekoKey_id', 'realestate_id', 'bemerkung', 'description', 'zeitanteil', 'einheit', 'shortKey', 'viewText',
     ];
