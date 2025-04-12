@@ -1,4 +1,0 @@
--Fehler alle fixen
--spaces settings in .example.env?
--cleanup wirklich auf alle datein ausweiten (z.B. .phpunit.result.cache, etc.)
--
