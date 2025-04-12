@@ -2,6 +2,7 @@
 
 namespace App\Livewire\User\Occupant\OccupantList;
 
+use App\Http\Traits\Helpers;
 use App\Livewire\DataTable\WithBulkActions;
 use App\Livewire\DataTable\WithCachedRows;
 use App\Livewire\DataTable\WithPerPagePagination;
@@ -21,7 +22,7 @@ use Livewire\WithPagination;
 
 class ShowOccupantList extends Component
 {
-    use \App\Http\Traits\Helpers;
+    use Helpers;
     use WithBulkActions, WithCachedRows, WithPagination, WithPerPagePagination, WithSorting;
     use WithFileUploads;
 

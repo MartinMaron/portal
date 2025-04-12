@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\Models\FuelType;
 use Illuminate\Database\Seeder;
 
-class FueltypeSeeder extends Seeder
+class FuelTypeSeeder extends Seeder
 {
     /**
      * Run the database seeds.

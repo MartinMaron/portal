@@ -2,6 +2,7 @@
 
 namespace App\Livewire\User\Cost;
 
+use App\Http\Traits\Helpers;
 use App\Models\Cost;
 use App\Models\CostType;
 use App\Models\Realestate;
@@ -11,7 +12,7 @@ use Usernotnull\Toast\Concerns\WireToast;
 
 class Heizkostenliste extends Component
 {
-    use \App\Http\Traits\Helpers;
+    use Helpers;
     use WireToast;
 
     public $showEditModal = false;

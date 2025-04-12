@@ -4,9 +4,11 @@ namespace App\Rules;
 
 use App\Http\Traits\Api\Job\Realestate\OccupantAdapter;
 use App\Models\Occupant;
+use Closure;
 use Illuminate\Contracts\Validation\DataAwareRule;
 use Illuminate\Contracts\Validation\InvokableRule;
 use Illuminate\Support\Carbon;
+use Illuminate\Translation\PotentiallyTranslatedString;
 
 class OccupantDateFromLessDateToRule implements DataAwareRule, InvokableRule
 {
@@ -24,7 +26,7 @@ class OccupantDateFromLessDateToRule implements DataAwareRule, InvokableRule
      *
      * @param  string  $attribute
      * @param  mixed  $value
-     * @param  \Closure(string): \Illuminate\Translation\PotentiallyTranslatedString  $fail
+     * @param  Closure(string): PotentiallyTranslatedString  $fail
      * @return void
      */
     public function __invoke($attribute, $value, $fail)

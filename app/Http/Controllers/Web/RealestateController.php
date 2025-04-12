@@ -3,15 +3,18 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreRealestateRequest;
+use App\Http\Requests\UpdateRealestateRequest;
 use App\Models\Realestate;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class RealestateController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -21,7 +24,7 @@ class RealestateController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -31,8 +34,8 @@ class RealestateController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreRealestateRequest  $request
-     * @return \Illuminate\Http\Response
+     * @param  StoreRealestateRequest  $request
+     * @return Response
      */
     public function store(Realestate $realestate)
     {
@@ -42,7 +45,7 @@ class RealestateController extends Controller
     /**
      * Display the specified resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show(Realestate $realestate)
     {
@@ -52,7 +55,7 @@ class RealestateController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function edit(Realestate $realestate)
     {
@@ -62,8 +65,8 @@ class RealestateController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateRealestateRequest  $request
-     * @return \Illuminate\Http\Response
+     * @param  UpdateRealestateRequest  $request
+     * @return Response
      */
     public function update(Request $request, Realestate $realestate)
     {
@@ -73,7 +76,7 @@ class RealestateController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy(Realestate $realestate)
     {

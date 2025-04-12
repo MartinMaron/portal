@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Http\Traits\Helpers;
 use Barryvdh\Debugbar\Facades\Debugbar;
 use Carbon\Carbon;
+use Carbon\Exceptions\InvalidFormatException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
@@ -112,7 +113,7 @@ class Occupant extends Model
     {
         try {
             $this->dateFrom = Carbon::parse($value);
-        } catch (\Carbon\Exceptions\InvalidFormatException $e) {
+        } catch (InvalidFormatException $e) {
 
         }
     }

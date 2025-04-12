@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Carbon\Exceptions\InvalidFormatException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
@@ -82,7 +83,7 @@ class Abrechnungssetting extends Model
     {
         try {
             $this->periodFrom = Carbon::parse($value);
-        } catch (\Carbon\Exceptions\InvalidFormatException $e) {
+        } catch (InvalidFormatException $e) {
 
         }
     }

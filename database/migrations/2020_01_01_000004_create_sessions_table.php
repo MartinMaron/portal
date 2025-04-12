@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -17,7 +18,7 @@ return new class extends Migration
     {
 
         if (env('DB_HOST') != '127.0.0.1') {
-            \Illuminate\Support\Facades\DB::statement('SET SESSION sql_require_primary_key=0');
+            DB::statement('SET SESSION sql_require_primary_key=0');
         }
 
         Schema::create('sessions', function (Blueprint $table) {

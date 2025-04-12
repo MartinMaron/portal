@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\Order;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -23,7 +24,7 @@ class Kontaktanfrage extends Mailable
     /**
      * Create a new message instance.
      *
-     * @param  \App\Models\Order  $order
+     * @param  Order  $order
      * @return void
      */
     public function __construct(string $nachname, string $email, string $telefon, string $adresse, string $anliegen)

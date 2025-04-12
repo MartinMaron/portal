@@ -2,11 +2,12 @@
 
 namespace App\Livewire\User\Dialog;
 
+use App\Http\Traits\Helpers;
 use Livewire\Component;
 
 class NekoMessageBox extends Component
 {
-    use \App\Http\Traits\Helpers;
+    use Helpers;
 
     public $showNekoMessageMutex = false;
 

@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\Models\CostType;
 use Illuminate\Database\Seeder;
 
-class CosttypeSeeder extends Seeder
+class CostTypeSeeder extends Seeder
 {
     /**
      * Run the database seeds.

@@ -19,9 +19,9 @@ class DatabaseSeeder extends Seeder
             EinheitSeeder::class,
             ZaehlerArtSeeder::class,
             UnitUsageTypeSeeder::class,
-            CostinvoicingtypeSeeder::class,
-            CosttypeSeeder::class,
-            FueltypeSeeder::class,
+            CostInvoicingTypeSeeder::class,
+            CostTypeSeeder::class,
+            FuelTypeSeeder::class,
             LageSeeder::class,
         ]);
 
