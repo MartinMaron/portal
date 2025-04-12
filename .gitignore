@@ -25,3 +25,7 @@ yarn-error.log
 composer.lock
 package-lock.json
 /.nvmrc
+/dbaas-db-6448416/.idea/dataSources.local.xml
+/dbaas-db-6448416/.idea/dataSources.xml
+/dbaas-db-6448416/.idea/sqldialects.xml
+/dbaas-db-6448416/.idea/workspace.xml
