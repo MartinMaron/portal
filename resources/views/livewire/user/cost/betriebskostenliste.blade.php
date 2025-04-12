@@ -22,7 +22,7 @@
         <!-- Überschrift -->
         <div class="flex flex-row columnheader items-center justify-start border-b-2 border-slate-400">
             <div class="basis-2/3 flex text-center items-center">
-                <div 
+                <div
                     class="basis-1/3 text-left px-2 flex rounded-md "
                     tabindex="-1">
                     <span class="py-1 text-right line-clamp-1">Kostenbezeichnung</span>
@@ -61,7 +61,7 @@
         <div class="border-0 bg-slate-700">
             @forelse ($filtered as $cost)
             <div class="">
-                <livewire:user.costamount.detail-input :cost='$cost' :netto='false' :inputWithDatum='false' :wire:key="'list-cost-costamountinput-'.$singleCost->id" key="{{ now() }}"/>
+                <livewire:user.cost-amount.detail-input :cost='$cost' :netto='false' :inputWithDatum='false' :wire:key="'list-cost-costamountinput-'.$singleCost->id" key="{{ now() }}"/>
             </div>
             @empty
                 <div class="flex justify-center items-center space-x-2 bg-sky-100">
@@ -69,7 +69,7 @@
                 </div>
             @endforelse
         </div>
-    
+
     </div>
     <div class="xs:max-w-xs xs:w-xs">
         <!-- Save Cost Modal -->
@@ -77,7 +77,7 @@
             <livewire:user.cost.detail :cost='$current' :netAmountInput='$nettoInputMode' :costinvoicingtype="'HZ'" :wire:key="'modal-realestate-cost-detail'"/>
         </div>
         <div>
-            <livewire:user.costamount.detail :wire:key="'modal-realestate-costamount-detail'"/>
+            <livewire:user.cost-amount.detail :wire:key="'modal-realestate-costamount-detail'"/>
         </div>
          <!-- for Delete or Confirm -->
          <div>

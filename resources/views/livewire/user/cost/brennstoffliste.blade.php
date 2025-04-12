@@ -169,7 +169,7 @@
                                 @endif
                                 @if (!$realestate->abrechnungssetting->brennstofflisteDone)
                                     <div class="basis-2/3 py-1">
-                                        <livewire:user.costamount.detail-input :cost='$singleCost' :netto='$nettoInputMode' :inputWithDatum='$dateInputMode' :wire:key="'list-cost-costamountinput-'.$singleCost->id" key="{{ now() }}"/>
+                                        <livewire:user.cost-amount.detail-input :cost='$singleCost' :netto='$nettoInputMode' :inputWithDatum='$dateInputMode' :wire:key="'list-cost-costamountinput-'.$singleCost->id" key="{{ now() }}"/>
                                     </div>
                                 @else
                                     <!-- Kosten-Ansicht -->
@@ -375,9 +375,9 @@
         <div>
             <livewire:user.cost.detail :cost='$current' :netAmountInput='$nettoInputMode' :costinvoicingtype="'HZ'" :wire:key="'modal-realestate-cost-detail'"/>
         </div>
-        <!-- CreateOrEdit Costamount Modal -->
+        <!-- CreateOrEdit CostAmount Modal -->
         <div>
-            <livewire:user.costamount.detail :wire:key="'modal-realestate-costamount-detail'"/>
+            <livewire:user.cost-amount.detail :wire:key="'modal-realestate-costamount-detail'"/>
         </div>
         <!-- for Delete or Confirm -->
         <div>

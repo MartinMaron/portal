@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\User\Costamount;
+namespace App\Livewire\User\CostAmount;
 
 use App\Models\CostAmount;
 use Livewire\Component;
@@ -106,6 +106,6 @@ class Detail extends Component
 
     public function render()
     {
-        return view('livewire.user.costamount.detail');
+        return view('livewire.user.cost-amount.detail');
     }
 }

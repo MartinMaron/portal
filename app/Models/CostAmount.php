@@ -120,7 +120,7 @@ class CostAmount extends Model
 
     public function setDatumAttribute($value)
     {
-        Debugbar::info('Costamount-setDatumAttribute:'.$value);
+        Debugbar::info('CostAmount-setDatumAttribute:'.$value);
         try {
             if ($value) {
                 $this->dateCostAmount = Carbon::parse($value);

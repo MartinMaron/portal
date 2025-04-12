@@ -19,7 +19,7 @@
             <!-- Überschrift -->
             <div class="flex flex-row items-center">
                 <div class="basis-2/3 flex text-center items-center">
-                    <div 
+                    <div
                         class="basis-2/3 text-left px-2 flex rounded-md "
                         tabindex="-1">
                         <span class="py-1 text-right line-clamp-1">Kostenbezeichnung</span>
@@ -56,7 +56,7 @@
             <div class="flex justify-between columnheader">
                 <div class="flex justify-start items-center">
                     <button wire:click="raise_AddCostModal({{ $costtype }})"
-                        tabindex="-1" 
+                        tabindex="-1"
                         class="fa-regular fa-circle-plus text-3xl m-3 mr-5" >
                     </button>
                     <div class="text-xl pr-1 font-extrabold tracking-widest items-end">
@@ -66,7 +66,7 @@
             </div>
                 @forelse ($this->getCostByType($costtype->costtype_id) as $cost)
                     <div class="px-1">
-                        <livewire:user.costamount.detail-input :cost='$cost' :netto='false' :inputWithDatum='false' :wire:key="'list-cost-costamountinput-'.$cost->id" key="{{ now() }}"/>
+                        <livewire:user.cost-amount.detail-input :cost='$cost' :netto='false' :inputWithDatum='false' :wire:key="'list-cost-costamountinput-'.$cost->id" key="{{ now() }}"/>
                     </div>
                 @empty
                     <div class="flex justify-center items-center space-x-2 bg-sky-100">
@@ -86,7 +86,7 @@
             <livewire:user.cost.detail :cost='$current' :netAmountInput='$nettoInputMode' :costinvoicingtype="'HZ'" :wire:key="'modal-realestate-cost-detail'"/>
         </div>
         <div>
-            <livewire:user.costamount.detail :wire:key="'modal-realestate-costamount-detail'"/>
+            <livewire:user.cost-amount.detail :wire:key="'modal-realestate-costamount-detail'"/>
         </div>
         <div>
             <livewire:user.dialog.neko-message-box :wire:key="'neko-message-box'"/>

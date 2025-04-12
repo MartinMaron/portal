@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Livewire\User\Costamount;
+namespace App\Livewire\User\CostAmount;
 
 use App\Models\Cost;
 use App\Models\CostAmount;
 use Livewire\Component;
 
-class Listitem extends Component
+class ListItem extends Component
 {
     public CostAmount $current;
 

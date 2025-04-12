@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\User\Costamount;
+namespace App\Livewire\User\CostAmount;
 
 use App\Models\Cost;
 use App\Models\CostAmount;
@@ -16,7 +16,7 @@ class DetailInput extends Component
 
     public $datum;
 
-    public Double $comsumption;
+    public Double $consumption;
 
     public Double $amount;
 
@@ -58,7 +58,7 @@ class DetailInput extends Component
             }
         }
         // nur für Brennstoffkosten können mehrere Beträge eingegeben werden
-        // für alle anderen existiert nuer ein Costamount als Singelton für Abrechnungszeitraum
+        // für alle anderen existiert nuer ein CostAmount als Singelton für Abrechnungszeitraum
         if ($this->cost->costtype_id == 'BRK') {
             $this->current = $this->makeBlankObject();
         } else {
