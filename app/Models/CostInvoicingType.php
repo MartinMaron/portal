@@ -9,7 +9,7 @@ class CostInvoicingType extends Model
 {
     use HasFactory;
 
-    protected $table = 'cost_invoicing_types';
+    protected $table = 'costinvoicingtypes';
 
     protected $primaryKey = 'id';
 
