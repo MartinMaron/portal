@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-[x-cloak] {
-    display: none;
-}
-
 @import "table-occupants";
 @import "user-costs-lista";
 @import "btn-magic";
@@ -13,3 +9,7 @@
 @import "dialog-occupant";
 @import "neko";
 @import "realestate-dashboard";
+
+[x-cloak] {
+    display: none;
+}
