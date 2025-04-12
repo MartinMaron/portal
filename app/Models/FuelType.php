@@ -9,6 +9,8 @@ class FuelType extends Model
 {
     use HasFactory;
 
+    protected $table = 'fueltypes';
+
     protected $primaryKey = 'id';
 
     protected $keyType = 'string';
