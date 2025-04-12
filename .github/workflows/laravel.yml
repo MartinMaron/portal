@@ -54,9 +54,11 @@ jobs:
             echo "Waiting for database connection..."
             sleep 5
           done
-      - name: Run migrations
-        run: php artisan migrate:fresh --seed --force
       - name: Directory Permissions
         run: chmod -R 777 storage bootstrap/cache
+      - name: Run migrations
+        run: php artisan migrate:fresh --seed --force
+      - name: Build Assets
+        run: npm run build
       - name: Execute tests (Unit and Feature tests) via PHPUnit/Pest
         run: php artisan test
