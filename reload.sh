@@ -1,12 +1,13 @@
-brew services restart php@8.3
+systemctl stop nginx
+systemctl stop php8.3-fpm
+git fetch
+git pull
 php artisan config:clear
 php artisan route:clear
 php artisan view:clear
 php artisan cache:clear
-if [ ! -f .env ]; then
-  cp .env.example .env
-fi
 npm install
 composer install
-php artisan key:generate
 npm run build
+systemctl start php8.3-fpm
+systemctl start nginx
