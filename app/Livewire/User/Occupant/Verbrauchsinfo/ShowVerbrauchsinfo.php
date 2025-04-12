@@ -3,6 +3,7 @@
 namespace App\Livewire\User\Occupant\Verbrauchsinfo;
 
 use App\Livewire\DataTable\WithCachedRows;
+use App\Models\Occupant;
 use App\Models\User;
 use App\Models\UserVerbrauchsinfoAccessControl;
 use Illuminate\Database\Eloquent\Builder;
@@ -31,9 +32,15 @@ class ShowVerbrauchsinfo extends Component
 
     public function getRowsQueryProperty()
     {
-        $result = $this->user->userVerbrauchsinfoAccessControls->map(function (UserVerbrauchsinfoAccessControl $userControl) {
+        $collection = $this->user->userVerbrauchsinfoAccessControls->map(function (UserVerbrauchsinfoAccessControl $userControl) {
             return $userControl->occupant;
-        })->unique()->toquery();
+        })->unique();
+
+        if ($collection->isEmpty()) {
+            return Occupant::query()->whereRaw('1 = 0');
+        }
+
+        $result = $collection->toQuery();
 
         if ($this->filter) {
             $result = $result
@@ -42,11 +49,11 @@ class ShowVerbrauchsinfo extends Component
                         ->orWhere('lage', 'LIKE', '%'.$this->filter.'%')
                         ->orWhere('unvid', 'LIKE', '%'.$this->filter.'%');
                 });
-
         }
 
         return $result;
     }
+
 
     public function getRowsProperty()
     {
