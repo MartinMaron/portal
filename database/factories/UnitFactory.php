@@ -2,11 +2,10 @@
 
 namespace Database\Factories;
 
-use App\Models\unit;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<unit>
+ * @extends Factory
  */
 class UnitFactory extends Factory
 {
@@ -15,7 +14,7 @@ class UnitFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             //
