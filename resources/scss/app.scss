@@ -1,18 +1,15 @@
-@use 'table-occupants';
-@use 'user-costs-lista';
-@use 'btn-magic';
-@use 'input-autocomplete';
-@use 'dialog-occupant';
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@plugin "flowbite/plugin";
 
 [x-cloak] {
     display: none;
 }
 
-
-
+@import "table-occupants";
+@import "user-costs-lista";
+@import "btn-magic";
+@import "input-autocomplete";
+@import "dialog-occupant";
+@import "neko";
+@import "realestate-dashboard";
