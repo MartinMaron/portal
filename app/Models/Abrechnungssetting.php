@@ -52,15 +52,13 @@ class Abrechnungssetting extends Model
 
     }
 
-    protected function getGebartAttribute()
+    protected function getGebartAttribute(): string
     {
         if ($this->co2_wohngeb) {
             return 'Wohngebäude';
         } else {
             return 'Nichtwohngeb.';
         }
-
-        return '';
     }
 
     public function scopeAktiv($query)

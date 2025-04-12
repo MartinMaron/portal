@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreRealestateRequest;
-use App\Http\Requests\UpdateRealestateRequest;
 use App\Models\Realestate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
