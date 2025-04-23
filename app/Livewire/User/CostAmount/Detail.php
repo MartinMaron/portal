@@ -106,6 +106,6 @@ class Detail extends Component
 
     public function render()
     {
-        return view('livewire.user.cost-amount.detail');
+        return view('livewire.user.costamount.detail');
     }
 }
