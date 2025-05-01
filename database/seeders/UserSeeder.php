@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
                 $user = User::create([
                     'name' => $value->name,
                     'email' => $value->email,
-                    'password' => Hash::make($value->password),
+                    'password' => $value->password,
                     'current_team_id' => $value->current_team_id,
                     'isAdmin' => 1,
                     'isMieter' => 1,
