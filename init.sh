@@ -4,7 +4,7 @@ php artisan route:clear
 php artisan view:clear
 php artisan cache:clear
 if [ ! -f .env ]; then
-  cp .env.example .env
+  cp .env.production .env
 fi
 npm install
 composer install
