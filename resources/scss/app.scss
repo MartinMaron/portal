@@ -1,14 +1,15 @@
+@use "sass:meta";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import "table-occupants";
-@import "user-costs-lista";
-@import "btn-magic";
-@import "input-autocomplete";
-@import "dialog-occupant";
-@import "neko";
-@import "realestate-dashboard";
+@include meta.load-css("table-occupants");
+@include meta.load-css("user-costs-lista");
+@include meta.load-css("btn-magic");
+@include meta.load-css("input-autocomplete");
+@include meta.load-css("dialog-occupant");
+@include meta.load-css("neko");
+@include meta.load-css("realestate-dashboard");
 
 [x-cloak] {
     display: none;
