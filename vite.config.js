@@ -8,4 +8,9 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    resolve: {
+        alias: {
+            '@fortawesome/fontawesome-free': '/node_modules/@fortawesome/fontawesome-free',
+        },
+    },
 });

@@ -1,5 +1,4 @@
 import "./bootstrap";
-import '@fortawesome/fontawesome-free/css/all.css';
 
 import { Livewire, Alpine } from '../../vendor/livewire/livewire/dist/livewire.esm';
 import mask from '@alpinejs/mask'

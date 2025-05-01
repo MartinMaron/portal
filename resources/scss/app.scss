@@ -11,6 +11,8 @@
 @include meta.load-css("neko");
 @include meta.load-css("realestate-dashboard");
 
+@import '@fortawesome/fontawesome-free/css/all.min.css';
+
 [x-cloak] {
     display: none;
 }
