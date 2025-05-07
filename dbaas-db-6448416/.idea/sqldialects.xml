@@ -8,14 +8,10 @@
     <file url="file://$PROJECT_DIR$/production/data/costs.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/production/data/costtypes.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/production/data/einheits.sql" dialect="MySQL" />
-    <file url="file://$PROJECT_DIR$/production/data/failed_jobs.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/production/data/fueltypes.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/production/data/invoices.sql" dialect="MySQL" />
-    <file url="file://$PROJECT_DIR$/production/data/lages.sql" dialect="MySQL" />
-    <file url="file://$PROJECT_DIR$/production/data/livingareas.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/production/data/migrations.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/production/data/occupants.sql" dialect="MySQL" />
-    <file url="file://$PROJECT_DIR$/production/data/password_resets.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/production/data/personal_access_tokens.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/production/data/personcounts.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/production/data/prepaids.sql" dialect="MySQL" />

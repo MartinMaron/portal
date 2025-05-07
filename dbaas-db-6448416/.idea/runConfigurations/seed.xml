@@ -31,7 +31,7 @@
     <script-file value="$PROJECT_DIR$/production/data/zaehler_arten.sql" />
     <script-file value="$PROJECT_DIR$/production/foreign_keys/enable.sql" />
     <script-mode>FILE</script-mode>
-    <data-source id="b642796a-97b4-4f58-bdfa-2e3456b80079" namespace="schema/&quot;development&quot;" />
+    <data-source id="ad4a8e47-3247-4b01-a5a3-184f76e3e5f5" namespace="schema/&quot;laravel11&quot;" />
     <method v="2" />
   </configuration>
 </component>
