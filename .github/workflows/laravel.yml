@@ -16,7 +16,7 @@ jobs:
         image: mysql:8.0
         env:
           MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: laravel
+          MYSQL_DATABASE: testing
           MYSQL_USER: laravel
           MYSQL_PASSWORD: secret
         ports:
