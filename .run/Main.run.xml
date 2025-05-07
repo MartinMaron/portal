@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Main" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+    <option name="envFilePaths">
+      <list>
+        <option value="$PROJECT_DIR$/.env.testing" />
+      </list>
+    </option>
+    <TestRunner configuration_file="$PROJECT_DIR$/phpunit.xml" coverage_engine="PHPDBG" directory="$PROJECT_DIR$/tests" use_alternative_configuration_file="true" />
+    <method v="2" />
+  </configuration>
+</component>
