@@ -56,15 +56,6 @@ jobs:
           done
       - name: Directory Permissions
         run: chmod -R 777 storage bootstrap/cache
-      - name: Debug Environment
-        run: |
-          echo "=== Environment Configuration ==="
-          cat .env
-          echo "=== Database Configuration ==="
-          php artisan config:show database.default
-          php artisan config:show database.connections.mysql
-          echo "=== Current Environment ==="
-          php artisan env
       - name: Run migrations
         run: php artisan migrate:fresh --seed --force
       - name: Build Assets
