@@ -42,6 +42,16 @@ jobs:
           sed -i 's/^DB_DATABASE=.*/DB_DATABASE=laravel/' .env || echo "DB_DATABASE=laravel" >> .env
           sed -i 's/^DB_USERNAME=.*/DB_USERNAME=laravel/' .env || echo "DB_USERNAME=laravel" >> .env
           sed -i 's/^DB_PASSWORD=.*/DB_PASSWORD=secret/' .env || echo "DB_PASSWORD=secret" >> .env
+      - name: Debug Environment
+        run: |
+          echo "=== Environment Configuration ==="
+          cat .env
+          echo "=== Database Configuration ==="
+          php artisan config:show database.default
+          php artisan config:show database.connections.mysql
+          echo "=== Current Environment ==="
+          php artisan env
+
       - name: Install Packages
         run: npm install
       - name: Install Dependencies
