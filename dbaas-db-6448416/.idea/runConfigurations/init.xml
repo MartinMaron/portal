@@ -7,14 +7,10 @@
     <script-file value="$PROJECT_DIR$/production/data/costs.sql" />
     <script-file value="$PROJECT_DIR$/production/data/costtypes.sql" />
     <script-file value="$PROJECT_DIR$/production/data/einheits.sql" />
-    <script-file value="$PROJECT_DIR$/production/data/failed_jobs.sql" />
     <script-file value="$PROJECT_DIR$/production/data/fueltypes.sql" />
     <script-file value="$PROJECT_DIR$/production/data/invoices.sql" />
-    <script-file value="$PROJECT_DIR$/production/data/lages.sql" />
-    <script-file value="$PROJECT_DIR$/production/data/livingareas.sql" />
     <script-file value="$PROJECT_DIR$/production/data/migrations.sql" />
     <script-file value="$PROJECT_DIR$/production/data/occupants.sql" />
-    <script-file value="$PROJECT_DIR$/production/data/password_resets.sql" />
     <script-file value="$PROJECT_DIR$/production/data/personal_access_tokens.sql" />
     <script-file value="$PROJECT_DIR$/production/data/personcounts.sql" />
     <script-file value="$PROJECT_DIR$/production/data/prepaids.sql" />
