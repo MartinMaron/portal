@@ -1,0 +1,8 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="create" type="DatabaseScript">
+    <script-file value="$PROJECT_DIR$/production/ddl/create.sql" />
+    <script-mode>FILE</script-mode>
+    <data-source id="b642796a-97b4-4f58-bdfa-2e3456b80079" namespace="schema/&quot;production&quot;" />
+    <method v="2" />
+  </configuration>
+</component>
