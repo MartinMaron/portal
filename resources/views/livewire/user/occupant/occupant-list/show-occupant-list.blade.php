@@ -192,7 +192,7 @@
                     @empty
                     <x-table.tr>
                         <div class="flex items-center justify-center space-x-2 bg-sky-100">
-                            <span class="py-8 text-xl font-medium text-cool-gray-400">nichts gefunden...</span>
+                            <span class="font-medium py-8 text-cool-gray-400 text-xl">nichts gefunden...</span>
                         </div>
                     </x-table.tr>
                     @endforelse

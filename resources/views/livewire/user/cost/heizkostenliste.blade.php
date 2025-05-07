@@ -70,7 +70,7 @@
                     </div>
                 @empty
                     <div class="flex justify-center items-center space-x-2 bg-sky-100">
-                        <span class="font-medium py-8 text-xl">nichts gefunden...</span>
+                        <span class="font-medium py-8 text-cool-gray-400 text-xl">nichts gefunden...</span>
                     </div>
                 @endforelse
             @empty
