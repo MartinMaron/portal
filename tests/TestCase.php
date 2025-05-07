@@ -14,7 +14,13 @@ abstract class TestCase extends BaseTestCase
         config(['database.connections.mysql.database' => 'testing']);
 
         if ($this->app->environment() !== 'testing') {
-            $this->markTestSkipped('This Test must be run in testing environment, please run with --env=testing');
+            echo "\nThis test is not running in testing environment. Do you want to continue anyway? (y/n): ";
+            $handle = fopen('php://stdin', 'r');
+            $answer = fgets($handle);
+            fclose($handle);
+            if (strtolower(trim($answer)) !== 'y') {
+                $this->markTestSkipped('Test skipped - not running in testing environment');
+            }
         }
     }
 }
