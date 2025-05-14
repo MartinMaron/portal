@@ -3,9 +3,21 @@
     "type": "module",
     "scripts": {
         "build": "vite build",
-        "vite": "vite",
-        "serve": "php artisan serve",
-        "dev": "concurrently \"npm run serve\" \"npm run vite\""
+        "frontend": "vite",
+        "backend": "php artisan serve",
+        "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
+
+        "test:db:up": "docker-compose -f docker/local-test-database/docker-compose.test-db.yml up -d",
+        "test:db:down": "docker-compose -f docker/local-test-database/docker-compose.test-db.yml down",
+
+        "dev:reload": "cd scripts/development && reload.bat",
+        "dev:cleanup": "cd scripts/development && cleanup.bat",
+        "dev:test": "cd scripts/development && test.bat",
+
+        "prod:reload": "cd scripts/production && bash reload.sh",
+        "prod:cleanup": "cd scripts/production && bash cleanup.sh",
+        "prod:debugbar:enable": "cd scripts/production && bash enable_debugbar.sh",
+        "prod:debugbar:disable": "cd scripts/production && bash disable_debugbar.sh"
     },
     "devDependencies": {
         "@tailwindcss/forms": "^0.5.10",

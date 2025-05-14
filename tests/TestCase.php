@@ -14,7 +14,8 @@ abstract class TestCase extends BaseTestCase
         config(['database.connections.mysql.database' => 'testing']);
 
         if ($this->app->environment() !== 'testing') {
-            echo "\nThis test is not running in testing environment. Do you want to continue anyway? (y/n): ";
+            echo "\nThis test is not running in testing environment and may erase your production database!\n
+            Do you want to continue anyway? (y/n): ";
             $handle = fopen('php://stdin', 'r');
             $answer = fgets($handle);
             fclose($handle);

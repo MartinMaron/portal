@@ -6,9 +6,9 @@
  rem =============================
  set "PHP_BIN=C:\Users\lenni\.config\herd\bin\php84\php.exe"
  set "PHP_INI=C:\Users\lenni\.config\herd\bin\php84\php.ini"
- set "PHPUNIT_PATH=vendor\phpunit\phpunit\phpunit"
- set "PHPUNIT_CONFIG=phpunit.xml"
- set "TEST_DIR=tests"
+ set "PHPUNIT_PATH=../../vendor\phpunit\phpunit\phpunit"
+ set "PHPUNIT_CONFIG=../../phpunit.xml"
+ set "TEST_DIR=../../tests"
  set "TEAMCITY_FLAG=--teamcity"
 
  rem =============================
