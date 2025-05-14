@@ -48,7 +48,7 @@ jobs:
         run: php artisan key:generate
       - name: Wait for MySQL to be ready
         run: |
-          until mysqladmin ping -h 127.0.0.1 -u laravel -psecret --silent; do
+          until mysqladmin ping -h 127.0.0.1 -u root -ppassword --silent; do
             echo "Waiting for database connection..."
             sleep 5
           done
