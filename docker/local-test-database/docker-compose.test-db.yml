@@ -1,21 +1,19 @@
 services:
-    mysql-test:
-        build:
-            context: ../..
-            dockerfile: /LocalTestDatabase.Dockerfile
-        container_name: laravel-mysql-test
-        ports:
-            - "3306:3306"
-        environment:
-            MYSQL_ROOT_PASSWORD: password
-            MYSQL_DATABASE: testing
-        volumes:
-            - mysql-test-data:/var/lib/mysql
-        healthcheck:
-            test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-ppassword"]
-            interval: 3s
-            timeout: 3s
-            retries: 10
-
-volumes:
-    mysql-test-data:
+  mysql-test:
+    build:
+      context: .
+      dockerfile: LocalTestDatabase.Dockerfile
+    container_name: laravel-mysql-test
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: testing
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: secret
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-u", "laravel", "-psecret"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
