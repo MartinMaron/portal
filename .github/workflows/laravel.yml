@@ -34,12 +34,13 @@ jobs:
         run: php -r "file_exists('.env') || copy('.env.testing', '.env');"
       - name: Update .env for GitHub Action DB
         run: |
-          sed -i 's/^DB_CONNECTION=.*/DB_CONNECTION=mysql/' .env || echo "DB_CONNECTION=mysql" >> .env
-          sed -i 's/^DB_HOST=.*/DB_HOST=127.0.0.1/' .env || echo "DB_HOST=127.0.0.1" >> .env
-          sed -i 's/^DB_PORT=.*/DB_PORT=3306/' .env || echo "DB_PORT=3306" >> .env
-          sed -i 's/^DB_DATABASE=.*/DB_DATABASE=testing/' .env || echo "DB_DATABASE=testing" >> .env
-          sed -i 's/^DB_USERNAME=.*/DB_USERNAME=root/' .env || echo "DB_USERNAME=root" >> .env
-          sed -i 's/^DB_PASSWORD=.*/DB_PASSWORD=password/' .env || echo "DB_PASSWORD=password" >> .env
+          echo "DB_CONNECTION=mysql" >> .env
+          echo "DB_HOST=127.0.0.1" >> .env
+          echo "DB_PORT=3306" >> .env
+          echo "DB_DATABASE=testing" >> .env
+          echo "DB_USERNAME=root" >> .env
+          echo "DB_PASSWORD=password" >> .env
+          cat .env
       - name: Install Packages
         run: npm install
       - name: Install Dependencies
@@ -58,8 +59,5 @@ jobs:
         run: php artisan migrate:fresh --seed --force
       - name: Build Assets
         run: npm run build
-      - name: Debug database connection
-        run: |
-          php -r "try { new PDO('mysql:host=127.0.0.1;port=3306;dbname=testing', 'root', 'password'); echo 'Connection successful!'; } catch (PDOException \$e) { echo 'Connection failed: ' . \$e->getMessage(); }"
       - name: Execute tests (Unit and Feature tests) via PHPUnit/Pest
         run: php artisan test

@@ -11,7 +11,10 @@ abstract class TestCase extends BaseTestCase
     public function setUp(): void
     {
         parent::setUp();
-        config(['database.connections.mysql.database' => 'testing']);
+        config([
+            'database.connections.mysql.database' => 'testing',
+            'database.connections.mysql.host' => '127.0.0.1',
+        ]);
 
         if ($this->app->environment() !== 'testing') {
             echo "\nThis test is not running in testing environment and may erase your production database!\n
