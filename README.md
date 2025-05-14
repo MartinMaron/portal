@@ -1,42 +1,12 @@
 # WebPortal (Laravel 11)
 
 ## Inhaltsverzeichnis
-1. [Projektübersicht](#projektübersicht)
-2. [Tech Stack](#tech-stack)
-3. [Installation & Initialisierung](#installation--initialisierung)
-4. [Scripts & Commands](#scripts--commands)
-5. [Production Server Konfiguration](#nginx-konfiguration)
-6. [Weiterführende Links & Ressourcen](#weiterführende-links--ressourcen)
+1. [Installation & Testen](#installation--testen)
+2. [Scripts & Commands](#scripts--commands)
+3. [Environment Konfiguration](#environment-konfiguration)
+4. [Production Server Konfiguration](#production-server-konfiguration)
 
-## Projektübersicht
-- Modernes Frontend mit Vite und TailwindCSS
-- Queue-System für asynchrone Verarbeitung
-- Integriertes Caching-System
-- REST API mit Sanctum Authentication
-- DigitalOcean Spaces Integration für Dateiablage
-
-## Tech Stack
-
-### Backend
-- PHP 8.3
-- Laravel 11.44.2
-- MySQL als Hauptdatenbank
-- Queue-System via Database Driver
-- Cache-System via Database Driver
-
-### Frontend
-- TailwindCSS 3.4
-- Alpine.js 3.14
-- Bootstrap 5.3
-- Vite 6.2 als Build-Tool
-
-### Weiteres
-- DigitalOcean Spaces für Dateiablage
-- PHPUnit für Testing
-- Laravel Debugbar für Entwicklung
-- SMTP Mail-Versand
-
-## Installation & Initialisierung
+## Installation & Testen
 
 ### Voraussetzungen
 - PHP 8.3
@@ -83,7 +53,8 @@
 8. Baue die Assets:
     ```shell
     npm run build
-    ```9Starte den lokalen Web-Server:
+    ```
+9. Starte den lokalen Web-Server:
     ```shell
     npm run dev
     ```
@@ -100,7 +71,75 @@ Alternativ zu 5. kann auch direkt ein Image der Test-Datenbank gebaut und gestar
       test-mysql
 ```
 
+### Tests
 
+### Voraussetzungen für das Testen
+
+1. **Test-Datenbank**: Du benötigst eine MySQL-Datenbank namens `testing`. Diese wird automatisch über Docker eingerichtet, wenn du den entsprechenden NPM-Befehl ausführst.
+
+2. **Umgebungsvariablen**: Das Projekt verwendet die Datei `.env.testing` für alle Test-Konfigurationen. Diese enthält bereits die passenden Einstellungen für die lokale Testdatenbank.
+
+3. **Docker**: Für den einfachsten Testworkflow wird Docker und Docker Compose benötigt, um die Testdatenbank lokal zu starten.
+
+#### Lokales Testen über NPM Script (empfohlen)
+
+Die einfachste Methode, Tests auf deinem lokalen System auszuführen:
+
+1. **Starte die Test-Datenbank**:
+   ```shell
+   npm run test:db:up
+   ```
+   Dies startet einen Docker-Container mit einer MySQL-Instanz speziell für Tests.
+
+2. **Führe die Tests aus**:
+   ```shell
+   npm run dev:test
+   ```
+   Dieser Befehl führt alle Tests mit der richtigen Umgebungskonfiguration aus.
+
+3. **Stoppe die Test-Datenbank** nach dem Testen:
+   ```shell
+   npm run test:db:down
+   ```
+
+#### Manuelles Testen über die Kommandozeile
+
+Wenn du mehr Kontrolle über die Testausführung benötigst:
+
+1. **Starte die Testdatenbank**:
+   ```shell
+   docker-compose -f docker/local-test-database/docker-compose.test-db.yml up -d
+   ```
+
+2. **Führe die Tests aus**:
+   ```shell
+   php artisan test
+   ```
+   oder mit spezifischen Optionen:
+   ```shell
+   php artisan test --filter=ExampleTest
+   ```
+
+3. **Ausführen einzelner Tests**:
+   ```shell
+   php artisan test --filter=test_example tests/Feature/ExampleTest.php
+   ```
+
+#### Continuous Integration mit GitHub Actions
+
+Das Projekt ist mit GitHub Actions für kontinuierliche Integration eingerichtet. Bei jedem Push und Pull Request auf den `laravel11-migration`-Branch werden die Tests automatisch ausgeführt.
+
+Die GitHub Actions-Konfiguration:
+- Setzt eine MySQL-Testdatenbank auf
+- Installiert alle Abhängigkeiten
+- Führt Migrationen aus
+- Baut die Frontend-Assets
+- Führt alle Tests aus
+
+**Hinweis**: Die Github Action ist so konfiguriert,
+dass sie die Daten für die Testdatenbank aus der `.env.testing`-Datei liest.
+Sollte die `.env.testing`-Datei daher verändert worden sein, 
+muss gegebenenfalls auch die Action in `.github/workflows/laravel.yml` angepasst werden.
 
 ## Scripts & Commands
 
@@ -135,7 +174,13 @@ Folgende NPM-Befehle stehen zur Verfügung:
 
 ### Composer-Script
 
-- `composer dev` - Startet Laravel-Server, Queue-Worker und Vite-Server parallel mit farbiger Ausgabe
+- `composer dev` - Startet Laravel-Server, Queue-Worker und Vite-Server parallel
+
+### PHP-Skripte & Artisan Commands
+
+Zusätzlich zu den NPM-Scripts bietet das Projekt auch PHP-Skripte (erreichbar über `php artisan script`):
+
+- `php artisan script:hash` - Generiert einen Hash-Wert für ein gegebenes Passwort und zeigt das Ergebnis an
 
 Alle Skripte können unabhängig vom aktuellen Verzeichnis im Projekt ausgeführt werden.
 
@@ -143,8 +188,10 @@ Alle Skripte können unabhängig vom aktuellen Verzeichnis im Projekt ausgeführ
 werden aber am besten über die NPM-Scripts aufgerufen, um Pfadprobleme zu vermeiden.
 
 
+## Environment Konfiguration
+
+
 ## Production Server Konfiguration
 
-
-
+...
 
