@@ -58,5 +58,8 @@ jobs:
         run: php artisan migrate:fresh --seed --force
       - name: Build Assets
         run: npm run build
+      - name: Debug database connection
+        run: |
+          php -r "try { new PDO('mysql:host=127.0.0.1;port=3306;dbname=testing', 'root', 'password'); echo 'Connection successful!'; } catch (PDOException \$e) { echo 'Connection failed: ' . \$e->getMessage(); }"
       - name: Execute tests (Unit and Feature tests) via PHPUnit/Pest
         run: php artisan test
