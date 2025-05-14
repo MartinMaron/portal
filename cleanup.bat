@@ -18,6 +18,17 @@ if exist storage\debugbar (
     rmdir /s /q storage\debugbar
 )
 
+if exist .phpunit.result.cache (
+    echo Lösche PHPUnit Cache '.phpunit.result.cache'...
+    del /q .phpunit.result.cache
+)
+
+rem Lösche public/hot
+if exist public\hot (
+    echo Lösche Datei 'public/hot'...
+    del /q public\hot
+)
+
 if exist storage\logs\laravel.log (
     echo Lösche Logdatei 'storage/logs/laravel.log'...
     del /q storage\logs\laravel.log
@@ -42,6 +53,5 @@ if exist public\storage (
     echo Lösche Ordner 'public/storage'...
     rmdir /s /q public\storage
 )
-
 
 pause
