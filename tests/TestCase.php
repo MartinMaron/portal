@@ -13,8 +13,7 @@ abstract class TestCase extends BaseTestCase
     {
         parent::setUp();
         config([
-            'database.connections.mysql.database' => 'testing',
-            'database.connections.mysql.host' => '127.0.0.1',
+            'database.connections.mysql.database' => 'testing'
         ]);
 
         DB::purge();
