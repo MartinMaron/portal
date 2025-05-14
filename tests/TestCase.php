@@ -3,6 +3,7 @@
 namespace Tests;
 
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Illuminate\Support\Facades\DB;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -15,6 +16,9 @@ abstract class TestCase extends BaseTestCase
             'database.connections.mysql.database' => 'testing',
             'database.connections.mysql.host' => '127.0.0.1',
         ]);
+
+        DB::purge();
+        DB::reconnect('mysql');
 
         if ($this->app->environment() !== 'testing') {
             echo "\nThis test is not running in testing environment and may erase your production database!\n
