@@ -1,10 +1,14 @@
 # WebPortal (Laravel 11)
 
+
+
 ## Inhaltsverzeichnis
 1. [Installation & Testen](#installation--testen)
 2. [Scripts & Commands](#scripts--commands)
 3. [Environment Konfiguration](#environment-konfiguration)
 4. [Production Server Konfiguration](#production-server-konfiguration)
+
+
 
 ## Installation & Testen
 
@@ -141,6 +145,8 @@ dass sie die Daten für die Testdatenbank aus der `.env.testing`-Datei liest.
 Sollte die `.env.testing`-Datei daher verändert worden sein, 
 muss gegebenenfalls auch die Action in `.github/workflows/laravel.yml` angepasst werden.
 
+
+
 ## Scripts & Commands
 
 Das Projekt bietet verschiedene NPM-Scripts für Entwicklung, Testing und Produktionsumgebung.
@@ -188,10 +194,70 @@ Alle Skripte können unabhängig vom aktuellen Verzeichnis im Projekt ausgeführ
 werden aber am besten über die NPM-Scripts aufgerufen, um Pfadprobleme zu vermeiden.
 
 
+
 ## Environment Konfiguration
 
+Das Projekt verwendet verschiedene Umgebungskonfigurationen, welche über spezifische `.env`-Dateien gesteuert werden.
 
+### Übersicht der Umgebungsdateien
+
+- **`.env`**: Aktuelle lokale Konfiguration (nicht im Git-Repository enthalten)
+- **`.env.development`**: Vorlage für die lokale Entwicklungsumgebung
+- **`.env.testing`**: Spezifische Konfiguration für das Ausführen der Tests (manuell und per GitHub Actions)
+- **`.env.production`**: Konfiguration für den Produktionsserver
+- **`.env.example`**: Beispielvorlage alle Umgebungsvariablen, die im Projekt verwendet werden
+
+### Zweck der unterschiedlichen Konfigurationsdateien
+
+#### .env.development (für lokale Entwicklung)
+
+Diese Datei enthält Einstellungen, die optimal für die lokale Entwicklung angepasst sind:
+- Debug-Modus aktiviert
+- Lokale Datenbankkonfiguration
+- Laravel Debugbar aktiviert
+- E-Mail-Versand im log-Modus (keine echten E-Mails werden versandt)
+
+Beispiel für eine `.env.development` Datei:
+
+```dotenv
+APP_NAME="WebPortal (Development)"
+APP_ENV=local
+APP_DEBUG=true
+DEBUGBAR_ENABLED=true
+APP_URL=http://localhost:8000
+VITE_DEV_SERVER_URL=http://localhost:5173
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=webportal_dev
+DB_USERNAME=laravel
+DB_PASSWORD=secret
+
+MAIL_MAILER=
 ## Production Server Konfiguration
 
-...
+```
+
+#### .env.testing (für die Tests)
+
+Diese Datei ist speziell für die Ausführung von Tests optimiert:
+- Verwendet eine separate Test-Datenbank
+- Deaktiviert bestimmte Features, die Tests verlangsamen würden
+- Optimiert für Geschwindigkeit und Wiederholbarkeit
+- Sollte weitgehend unverändert bleiben
+
+**Hinweis**: Auch wenn diese nicht aktiv (daher in die .env kopiert) ist, 
+wird sie dennoch beim Ausführen der Tests verwendet.
+Die `.env.testing`-Datei wird auch von den GitHub Actions verwendet.
+Sollten hier Änderungen vorgenommen werden, muss gegebenenfalls auch die GitHub Action in `.github/workflows/laravel.yml` angepasst werden.
+
+#### .env.production (für den Produktionsserver)
+
+Diese Konfiguration ist für die Live-Umgebung optimiert:
+- Debug-Modus deaktiviert
+- Fehlerprotokollierung angepasst
+- Optimierte Performance-Einstellungen
+- Echte API-Schlüssel und Dienste
+- Tatsächliche Mail und Datenbank-Konfiguration
 
