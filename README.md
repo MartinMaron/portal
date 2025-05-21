@@ -18,13 +18,14 @@
 - Node.js 18.x
 - npm
 - MySQL 8.x
+- Docker und Docker Compose
 
 ### erst Installation
 1. Klone das Repository:
    ```shell
    git clone https://github.com/leartpro/WebPortal.git
     ```
-2. Wechsle in das Projektverzeichnis:
+2. Wechsel in das Projektverzeichnis:
     ```shell
     cd WebPortal
     ```
@@ -33,43 +34,50 @@
     composer install
     npm install
     ```
-4. Erstelle eine Kopie der `.env.development` Datei:
+4. Erstelle eine Kopie der `.env.development` Datei, oder alternativ der `.env.example`
+   (erfordert manuelle Anpassung):
     ```shell
     cp .env.development .env
     ```
-   Alternativ kann auch die `.env.example` verwendet werden,
-   welche dann manuell angepasst werden muss.
+   bez.
    ```shell
     cp .env.example .env
     ```
-5. Starte den lokalen Datenbank-Server:
-    ```shell
-    npm run test:db:up
-    ```
-6. Erstelle den Applikations-Schlüssel:
+   **Hinweis:** Wichtig ist, dass gultige Datenbank-Zugangsdaten in der `.env`-Datei eingetragen werden.
+5. Erstelle den Applikations-Schlüssel:
     ```shell
     php artisan key:generate
     ```
-7. Führe die Migrationen aus:
-    ```shell
-    php artisan migrate:fresh
-    ```
-8. Baue die Assets:
+6. Baue die Assets:
     ```shell
     npm run build
     ```
-9. Starte den lokalen Web-Server:
+7. Starte den lokalen Datenbank-Server:
+    ```shell
+    npm run test:db:up
+    ```
+8. Führe die Tests aus:
+    ```shell
+    npm run dev:test
+    ```
+9. Stoppe die Test-Datenbank:
+    ```shell
+    npm run test:db:down
+    ```
+10. Führe die Migration auf der Datenbank aus:
+    ```shell
+    php artisan migrate:fresh --seed
+    ```
+11. Starte den Laravel-Developments-Server:
     ```shell
     npm run dev
     ```
 
-Alternativ zu 5. kann auch direkt ein Image der Test-Datenbank gebaut und gestartet werden:
+Alternativ zu 7. kann auch direkt ein Image der Test-Datenbank gebaut und gestartet werden:
 ```shell
-  # Build the Docker image
   docker build -t test-mysql -f docker/local-test-database/LocalTestDatabase.Dockerfile docker/local-test-database
     
-    # Run the container
-    docker run -d -p 3306:3306 --name test-mysql-container \
+  docker run -d -p 3306:3306 --name test-mysql-container \
       -e MYSQL_ROOT_PASSWORD=password \
       -e MYSQL_DATABASE=testing \
       test-mysql
@@ -105,6 +113,7 @@ Die einfachste Methode, Tests auf deinem lokalen System auszuführen:
    ```shell
    npm run test:db:down
    ```
+    Dies stoppt den Docker-Container, der die Testdatenbank bereitstellt.
 
 #### Manuelles Testen über die Kommandozeile
 
@@ -114,6 +123,7 @@ Wenn du mehr Kontrolle über die Testausführung benötigst:
    ```shell
    docker-compose -f docker/local-test-database/docker-compose.test-db.yml up -d
    ```
+   Dieser Befehl muss im root-Verzeichnis des Projekts ausgeführt werden.
 
 2. **Führe die Tests aus**:
    ```shell
@@ -131,7 +141,8 @@ Wenn du mehr Kontrolle über die Testausführung benötigst:
 
 #### Continuous Integration mit GitHub Actions
 
-Das Projekt ist mit GitHub Actions für kontinuierliche Integration eingerichtet. Bei jedem Push und Pull Request auf den `laravel11-migration`-Branch werden die Tests automatisch ausgeführt.
+Das Projekt ist mit GitHub Actions für kontinuierliche Integration eingerichtet. 
+Bei jedem Push und Pull Request auf den `laravel11-migration`-Branch werden die Tests automatisch ausgeführt.
 
 Die GitHub Actions-Konfiguration:
 - Setzt eine MySQL-Testdatenbank auf
@@ -145,11 +156,9 @@ dass sie die Daten für die Testdatenbank aus der `.env.testing`-Datei liest.
 Sollte die `.env.testing`-Datei daher verändert worden sein, 
 muss gegebenenfalls auch die Action in `.github/workflows/laravel.yml` angepasst werden.
 
-
-
 ## Scripts & Commands
 
-Das Projekt bietet verschiedene NPM-Scripts für Entwicklung, Testing und Produktionsumgebung.
+Das Projekt bietet verschiedene NPM-Scripts für Entwicklung, Testen und Produktionsumgebung.
 
 ### NPM Scripts für die Entwicklung
 
@@ -167,7 +176,7 @@ Folgende NPM-Befehle stehen zur Verfügung:
 
 ### NPM Scripts für Entwicklungswerkzeuge (Windows)
 
-- `npm run dev:reload` - Führt eine komplette Aktualisierung der Anwendung durch (Cache leeren, Migrationen neu ausführen)
+- `npm run dev:rebuild` - Führt eine komplette Aktualisierung der Anwendung durch (Cache leeren, Assets neu bauen, etc.)
 - `npm run dev:cleanup` - Bereinigt temporäre Dateien und Cache-Einträge
 - `npm run dev:test` - Führt die automatisierten Tests aus, greift dabei auf die Test-Datenbank und die `.env.testing`-Konfiguration zurück
 

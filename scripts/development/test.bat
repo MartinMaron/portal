@@ -1,9 +1,6 @@
  @echo off
  setlocal enabledelayedexpansion
 
- rem =============================
- rem Konfiguration
- rem =============================
 if exist "%LOCALAPPDATA%\Programs\php\php.exe" (
     set "PHP_BIN=%LOCALAPPDATA%\Programs\php\php.exe"
     set "PHP_INI=%LOCALAPPDATA%\Programs\php\php.ini"
@@ -25,9 +22,6 @@ if exist "%LOCALAPPDATA%\Programs\php\php.exe" (
  set "TEST_DIR=tests"
  set "TEAMCITY_FLAG=--teamcity"
 
- rem =============================
- rem Prüfung: PHP vorhanden?
- rem =============================
 if "%PHP_BIN%"=="php" (
     where php >nul 2>nul
     if errorlevel 1 (
@@ -39,19 +33,12 @@ if "%PHP_BIN%"=="php" (
     exit /b 1
 )
 
-rem =============================
-rem Prüfung: PHPUnit vorhanden?
-rem =============================
 if not exist "%PHPUNIT_PATH%" (
     echo PHPUnit nicht gefunden in: %PHPUNIT_PATH%
     echo Stelle sicher, dass Composer-Abhängigkeiten installiert wurden.
     exit /b 1
 )
 
-
- rem =============================
- rem PHPUnit ausführen
- rem =============================
  echo Starte PHPUnit mit:
  echo - PHP: %PHP_BIN%
  if not "%PHP_INI%"=="" echo - php.ini: %PHP_INI%
@@ -63,7 +50,6 @@ if "%PHP_INI%"=="" (
 ) else (
     "%PHP_BIN%" -c "%PHP_INI%" "%PHPUNIT_PATH%" --configuration "%PHPUNIT_CONFIG%" "%TEST_DIR%" %TEAMCITY_FLAG%
 )
-
 
  if errorlevel 1 (
      echo Tests fehlgeschlagen.

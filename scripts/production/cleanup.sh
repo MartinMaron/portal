@@ -1,68 +1,84 @@
 #!/usr/bin/env bash
-set -e
+set +e
 
 echo "****************************"
-echo "Lösche alle build Dateien..."
+echo "Stopping Server..."
 echo "****************************"
 
-# Lösche vendor
+systemctl stop nginx
+systemctl stop php8.3-fpm
+
+echo "Loesche Caches"
+php artisan config:clear || echo "Config-Cache konnte nicht gelöscht werden."
+php artisan route:clear || echo "Route-Cache konnte nicht gelöscht werden."
+php artisan view:clear || echo "View-Cache konnte nicht gelöscht werden."
+php artisan cache:clear || echo "Anwendungs-Cache konnte nicht gelöscht werden."
+
 if [[ -d vendor ]]; then
-  echo "Lösche Ordner 'vendor'..."
-  rm -rf vendor
+  echo "Loesche Ordner 'vendor'..."
+  rm -rf vendor || echo "Konnte 'vendor' nicht vollständig löschen."
 fi
 
-# Lösche node_modules
 if [[ -d node_modules ]]; then
-  echo "Lösche Ordner 'node_modules'..."
-  rm -rf node_modules
+  echo "Loesche Ordner 'node_modules'..."
+  rm -rf node_modules || echo "Konnte 'node_modules' nicht vollständig löschen."
 fi
 
-# Lösche Debugbar
 if [[ -d storage/debugbar ]]; then
-  echo "Lösche Debugbar-Ordner 'storage/debugbar'..."
-  rm -rf storage/debugbar
+  echo "Loesche Debugbar-Ordner 'storage/debugbar'..."
+  rm -rf storage/debugbar || echo "Konnte 'storage/debugbar' nicht vollständig löschen."
 fi
 
-# Lösche PHPUnit Cache
 if [[ -f .phpunit.result.cache ]]; then
-  echo "Lösche PHPUnit Cache '.phpunit.result.cache'..."
-  rm -f .phpunit.result.cache
+  echo "Loesche PHPUnit Cache '.phpunit.result.cache'..."
+  rm -f .phpunit.result.cache || echo "Konnte '.phpunit.result.cache' nicht löschen."
 fi
 
-# Lösche public/hot
 if [[ -f public/hot ]]; then
-  echo "Lösche Datei 'public/hot'..."
-  rm -f public/hot
+  echo "Loesche Datei 'public/hot'..."
+  rm -f public/hot || echo "Konnte 'public/hot' nicht löschen."
 fi
 
-# Lösche laravel.log
 if [[ -f storage/logs/laravel.log ]]; then
-  echo "Lösche Logdatei 'storage/logs/laravel.log'..."
-  rm -f storage/logs/laravel.log
+  echo "Loesche Logdatei 'storage/logs/laravel.log'..."
+  rm -f storage/logs/laravel.log || echo "Konnte 'storage/logs/laravel.log' nicht löschen."
 fi
 
-# Lösche composer.lock
 if [[ -f composer.lock ]]; then
-  echo "Lösche 'composer.lock'..."
-  rm -f composer.lock
+  echo "Loesche 'composer.lock'..."
+  rm -f composer.lock || echo "Konnte 'composer.lock' nicht löschen."
 fi
 
-# Lösche package-lock.json
 if [[ -f package-lock.json ]]; then
-  echo "Lösche 'package-lock.json'..."
-  rm -f package-lock.json
+  echo "Loesche 'package-lock.json'..."
+  rm -f package-lock.json || echo "Konnte 'package-lock.json' nicht löschen."
 fi
 
-# Lösche public/build
 if [[ -d public/build ]]; then
-  echo "Lösche Ordner 'public/build'..."
-  rm -rf public/build
+  echo "Loesche Ordner 'public/build'..."
+  rm -rf public/build || echo "Konnte 'public/build' nicht vollständig löschen."
 fi
 
-# Lösche public/storage
 if [[ -d public/storage ]]; then
-  echo "Lösche Ordner 'public/storage'..."
-  rm -rf public/storage
+  echo "Loesche Ordner 'public/storage'..."
+  rm -rf public/storage || echo "Konnte 'public/storage' nicht vollständig löschen."
 fi
 
-echo "Cleanup fertig."
+echo "****************************"
+echo "Cleanup completed"
+echo "****************************"
+
+npm install
+composer install
+npm run build
+
+echo "****************************"
+echo "Starting Server..."
+echo "****************************"
+
+systemctl start php8.3-fpm
+systemctl start nginx
+
+echo "****************************"
+echo "Cleanup completed"
+echo "****************************"
