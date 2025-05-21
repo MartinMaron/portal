@@ -10,14 +10,14 @@
         "test:db:up": "docker-compose -f docker/local-test-database/docker-compose.test-db.yml up -d",
         "test:db:down": "docker-compose -f docker/local-test-database/docker-compose.test-db.yml down",
 
-        "dev:reload": "cd scripts/development && reload.bat",
-        "dev:cleanup": "cd scripts/development && cleanup.bat",
-        "dev:test": "cd scripts/development && test.bat",
+        "dev:rebuild": "scripts\\run.bat development rebuild",
+        "dev:cleanup": "scripts\\run.bat development cleanup",
+        "dev:test": "scripts\\run.bat development test",
 
-        "prod:reload": "cd scripts/production && bash reload.sh",
-        "prod:cleanup": "cd scripts/production && bash cleanup.sh",
-        "prod:debugbar:enable": "cd scripts/production && bash enable_debugbar.sh",
-        "prod:debugbar:disable": "cd scripts/production && bash disable_debugbar.sh"
+        "prod:reload": "bash scripts/run.sh production reload",
+        "prod:cleanup": "bash scripts/run.sh production cleanup",
+        "prod:debugbar:enable": "bash scripts/run.sh production enable_debugbar",
+        "prod:debugbar:disable": "bash scripts/run.sh production disable_debugbar"
     },
     "devDependencies": {
         "@tailwindcss/forms": "^0.5.10",

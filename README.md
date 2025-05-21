@@ -190,9 +190,9 @@ Zusätzlich zu den NPM-Scripts bietet das Projekt auch PHP-Skripte (erreichbar �
 
 Alle Skripte können unabhängig vom aktuellen Verzeichnis im Projekt ausgeführt werden.
 
-**Hinweis:** Die Implementierungen der Skripte befinden sich in den Verzeichnissen `/scripts/development` (Windows) und `/scripts/production` (Linux), 
+**Hinweis:** Die Implementierungen der .bat/.sh Skripte befinden sich in den Verzeichnissen `/scripts/development` (Windows) und `/scripts/production` (Linux), 
 werden aber am besten über die NPM-Scripts aufgerufen, um Pfadprobleme zu vermeiden.
-
+Die php Scripte befinden sich im Verzeichnis `/app/Console/Commands`.
 
 
 ## Environment Konfiguration
