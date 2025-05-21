@@ -2,15 +2,10 @@
 set -e
 export COMPOSER_ALLOW_SUPERUSER=1
 export NODE_OPTIONS="--max-old-space-size=512"
-
 systemctl stop nginx
 systemctl stop php8.3-fpm
-
-# Aktuelle RAM-Nutzung anzeigen
 echo "Verfügbarer Speicher vor dem Build:"
 free -h
-
-# Temporäre Swap-Datei erstellen
 SWAP_FILE=/swapfile
 if [ ! -f "$SWAP_FILE" ]; then
     echo "Erstelle neue Swap-Datei..."
@@ -21,8 +16,6 @@ fi
 swapon $SWAP_FILE || echo "Swap konnte nicht aktiviert werden, möglicherweise bereits aktiv"
 echo "Swap aktiviert:"
 swapon --show
-
-
 git fetch
 git pull
 php artisan config:clear

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set +e
-
+export COMPOSER_ALLOW_SUPERUSER=1
 echo "****************************"
 echo "Stopping Server..."
 echo "****************************"
@@ -65,11 +65,11 @@ if [[ -d public/storage ]]; then
 fi
 
 echo "****************************"
-echo "Cleanup completed"
+echo "Reinstalling Assets..."
 echo "****************************"
 
 npm install
-composer install
+composer install --no-interaction
 npm run build
 
 echo "****************************"

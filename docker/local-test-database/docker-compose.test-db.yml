@@ -4,7 +4,7 @@ services:
       context: .
       dockerfile: LocalTestDatabase.Dockerfile
     container_name: laravel-mysql-test
-    restart: no
+    restart: "no"
     ports:
       - "3306:3306"
     environment:

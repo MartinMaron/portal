@@ -1,5 +1,0 @@
-Reload und andere scripte werfen fehler, weil composer und node folder nicht im gleichen verzeichnis
-.env.development schreiben und .env.example auf laravel default setzten
-alle scripts min. einmal testen
-readme verbessern
-

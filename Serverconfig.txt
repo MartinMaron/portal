@@ -1,0 +1,731 @@
+root@laravel11:/var/www/WebPortal/app# dpkg -l | grep -E '(php|mysql|nginx|apache|redis|node|npm)'
+ii  libnode-dev                                      18.19.1+dfsg-6ubuntu5                     amd64        evented I/O for V8 javascript (development files)
+ii  libnode109:amd64                                 18.19.1+dfsg-6ubuntu5                     amd64        evented I/O for V8 javascript - runtime library
+ii  mysql-client                                     8.0.42-0ubuntu0.24.04.1                   all          MySQL database client (metapackage depending on the latest version)
+ii  mysql-client-8.0                                 8.0.42-0ubuntu0.24.04.1                   amd64        MySQL database client binaries
+ii  mysql-client-core-8.0                            8.0.42-0ubuntu0.24.04.1                   amd64        MySQL database core client binaries
+ii  mysql-common                                     5.8+1.1.0build1                           all          MySQL database common files, e.g. /etc/mysql/my.cnf
+ii  nginx                                            1.24.0-2ubuntu7.3                         amd64        small, powerful, scalable web/proxy server
+ii  nginx-common                                     1.24.0-2ubuntu7.3                         all          small, powerful, scalable web/proxy server - common files
+ii  node-abbrev                                      1.1.1+~1.1.2-1                            all          Get unique abbreviations for a set of strings - Node.js module
+ii  node-acorn                                       8.8.1+ds+~cs25.17.7-2                     all          ECMAScript parser for Node.js
+ii  node-agent-base                                  7.1.0~0~2023071921-5                      all          Node.js wrapper around http.Agent class
+ii  node-ajv                                         8.12.0~ds+~2.1.1-4                        all          another JSON Schema Validator
+ii  node-ajv-keywords                                5.1.0-4                                   all          Custom JSON-Schema keywords for Ajv validator
+ii  node-ampproject-remapping                        2.2.0+~cs5.15.37-1                        all          Nodejs module to remap sequential sourcemaps through transformations
+ii  node-ansi-escapes                                5.0.0+really.4.3.1-1                      all          ANSI escape codes for manipulating the terminal
+ii  node-ansi-regex                                  5.0.1-1                                   all          regular expression for matching ANSI escape codes
+ii  node-ansi-styles                                 6.2.1-2                                   all          ANSI escape codes for styling strings in the terminal with Node.js
+ii  node-anymatch                                    3.1.3+~cs4.6.1-2                          all          Matches strings against configurable strings
+ii  node-aproba                                      2.0.0-3                                   all          light-weight argument validator
+ii  node-archy                                       1.0.0-6                                   all          Pretty-print nested hierarchies module for Node.js
+ii  node-are-we-there-yet                            3.0.1+~1.1.0-1                            all          Keep track of the overall completion of many disparate processes
+ii  node-argparse                                    2.0.1-2                                   all          CLI arguments parser for node.js
+ii  node-arrify                                      2.0.1-3                                   all          Convert a value to an array
+ii  node-assert                                      2.0.0+~cs3.9.8-2                          all          simple assertion library for javascript
+ii  node-async                                       0.8.0-6                                   all          functions and patterns for asynchronous code - Node.js
+ii  node-async-each                                  1.0.3-3                                   all          async parallel forEach / map function for JavaScript
+ii  node-auto-bind                                   4.0.0-2                                   all          Automatically bind methods to their class instance
+ii  node-babel-helper-define-polyfill-provider       0.3.3~0~20220913+ds1-1                    all          node-babel helper for polyfills
+ii  node-babel-plugin-add-module-exports             1.0.4+dfsg1~cs5.8.0-4                     all          Babel plugin for default module.exports like babel version 5
+ii  node-babel-plugin-lodash                         3.3.4+~cs2.0.1-7                          all          Modular Lodash builds without the hassle
+ii  node-babel-plugin-polyfill-corejs2               0.3.3~0~20220913+ds1-1                    all          node-babel plugin to inject corejs2 polyfill
+ii  node-babel-plugin-polyfill-corejs3               0.6.0~0~20220913+ds1-1                    all          node-babel plugin to inject corejs3 polyfill
+ii  node-babel-plugin-polyfill-regenerator           0.4.1~0~20220913+ds1-1                    all          node-babel plugin to regenerate polyfills
+ii  node-babel7                                      7.20.15+ds1+~cs214.269.168-6build1        all          Babel compiler for writing next generation JavaScript
+ii  node-babel7-runtime                              7.20.15+ds1+~cs214.269.168-6build1        all          Babel modular runtime helpers
+ii  node-balanced-match                              2.0.0-1                                   all          Match balanced character pairs in Node.js
+ii  node-base                                        3.0.0-3                                   all          foundation for creating modular, unit testable node.js application
+ii  node-base64-js                                   1.5.1+dfsg+~1.3.0-2                       all          Base64 encoding/decoding in pure JS
+ii  node-binary-extensions                           2.2.0-2                                   all          List of binary file extensions
+ii  node-brace-expansion                             2.0.1+~1.1.0-1                            all          Brace expansion as known from sh/bash for Node.js
+ii  node-braces                                      3.0.2+~3.0.1-1                            all          Fast, comprehensive, bash-like brace expansion implemented in JS
+ii  node-browserslist                                4.22.1+~cs6.1.28-1                        all          Share browsers list between different front-end tools
+ii  node-builtins                                    5.0.1-1                                   all          lists nodjs builtin modules
+ii  node-busboy                                      1.6.0+~cs2.6.0-2                          all          Node.js module for parsing incoming HTML form data
+ii  node-cacache                                     17.0.3+~cs10.3.7-1                        all          fast, fault-tolerant, disk-based, data-agnostic, content-addressable cache
+ii  node-cache-base                                  4.0.2-1                                   all          Basic object cache for node.js/javascript projects
+ii  node-camelcase                                   7.0.0-3                                   all          Convert a string to camelCase
+ii  node-caniuse-lite                                1.0.30001571+dfsg+~1.0.5-1                all          smaller version of caniuse-db, with only the essentials
+ii  node-chalk                                       5.3.0-1build1                             all          Terminal string styling for Node.js
+ii  node-chokidar                                    3.6.0-2                                   all          wrapper around watch / watchFile / fsevents
+ii  node-chownr                                      2.0.0-2                                   all          like chown -R
+ii  node-chrome-trace-event                          1.0.3-2                                   all          create a trace of your node app per Google's Trace Event format
+ii  node-ci-info                                     4.0.0+~cs1.1.0-1build2                    all          Get details about the current Continuous Integration environment
+ii  node-cjs-module-lexer                            1.2.3+dfsg-1                              all          Fast lexer to extract named exports from CommonJS modules
+ii  node-cli-boxes                                   3.0.0-1build2                             all          Boxes for use in the terminal
+ii  node-cli-cursor                                  4.0.0-3                                   all          Toggle the CLI cursor
+ii  node-cli-table                                   0.3.11+~cs0.13.4-3                        all          Pretty unicode tables for the CLI
+ii  node-cli-truncate                                2.1.0-5                                   all          Truncate a string to a specific width in the terminal
+ii  node-cliui                                       7.0.4+repack+~cs3.1.0-4                   all          easily create complex multi-column CLIs
+ii  node-clone                                       2.1.2+~2.1.2-1                            all          deep cloning of objects and arrays
+ii  node-clone-deep                                  4.0.1+~cs7.0.2-1                          all          Recursively (deep) clone JavaScript native types
+ii  node-collection-visit                            1.0.0-4                                   all          Visit a method over items in object, or map visit over the objects
+ii  node-color-convert                               2.0.1+~cs2.0.0-2                          all          Plain color conversion functions
+ii  node-color-name                                  1.1.4+~1.1.1-2                            all          list of color names and its values
+ii  node-colors                                      1.4.0-4                                   all          Get color and style in your node.js console
+ii  node-columnify                                   1.6.0+~1.5.1-1                            all          Render data in text columns with in-column text-wrap
+ii  node-commander                                   9.4.1-1                                   all          Complete solution for Node.js command-line interfaces
+ii  node-commondir                                   1.0.1+~1.0.0-1                            all          compute the closest common parent for file paths
+ii  node-concat-stream                               2.0.0+~2.0.0-2                            all          writable stream that concatenates strings
+ii  node-console-control-strings                     1.1.0-3                                   all          cross-platform tested terminal/console command strings
+ii  node-convert-source-map                          1.9.0+~1.5.2-1                            all          Converts a source-map from/to between formats
+ii  node-copy-concurrently                           1.0.5-9                                   all          Copy files, directories and symlinks concurrently
+ii  node-core-js                                     3.33.2-1build2                            all          Modular standard library for JavaScript
+ii  node-core-js-compat                              3.33.2-1build2                            all          data about the necessity of core-js
+ii  node-core-js-pure                                3.33.2-1build2                            all          Modular standard library for JavaScript without global namespace pollution
+ii  node-core-util-is                                1.0.3-1                                   all          util.is* functions introduced in Node v0.12 for older versions
+ii  node-coveralls                                   3.1.1-2build1                             all          input json-cov output and posts to coveralls.io
+ii  node-css-loader                                  6.8.1+~cs14.0.17-1                        all          css loader module for webpack
+ii  node-css-selector-tokenizer                      0.8.0+~cs4.8.3-1                          all          Parses and stringifies CSS selectors
+ii  node-data-uri-to-buffer                          5.0.1~0~2023071921-5                      all          Node.js module that generate a Buffer instance from a Data URI string
+ii  node-debbundle-es-to-primitive                   1.2.1+~cs9.7.25-2                         all          Pure javascript implementation of ToPrimitive algorithm
+ii  node-debug                                       4.3.4+~cs4.1.7-1                          all          small debugging utility for Node.js
+ii  node-decamelize                                  4.0.0-2                                   all          convert a camelized string into a lowercased one with a custom separator
+ii  node-decompress-response                         6.0.0-2                                   all          Decompress a HTTP response if needed
+ii  node-deep-equal                                  2.2.3+~cs43.15.94-1                       all          node's assert.deepEqual algorithm
+ii  node-deep-is                                     0.1.4-1                                   all          node's assert.deepEqual algorithm except for NaN being equal to NaN
+ii  node-defaults                                    1.0.4+~1.0.3-1                            all          merge single level defaults over a config object
+ii  node-define-properties                           1.2.1+~cs2.2.3-1                          all          Define multiple non-enumerable properties at once
+ii  node-define-property                             2.0.2+really+2.0.2-3                      all          Define property on an object
+ii  node-defined                                     1.0.1+~1.0.0-1                            all          return the first argument that is `!== undefined`
+ii  node-del                                         7.0.0-5                                   all          Delete files and folders
+ii  node-delegates                                   1.0.0-3                                   all          delegate methods and accessors to another property
+ii  node-depd                                        2.0.0-2                                   all          mark a function or property as deprecated - Node.js module
+ii  node-diff                                        5.0.0~dfsg+~5.0.1-4                       all          javascript text differencing implementation
+ii  node-doctrine                                    3.0.0-4                                   all          JSDoc parser
+ii  node-electron-to-chromium                        1.4.616-1                                 all          Provides a list of electron-to-chromium version mappings
+ii  node-encoding                                    0.1.13-2                                  all          Convert encodings, uses iconv by default and fallbacks to iconv-lite if needed
+ii  node-end-of-stream                               1.4.4+~1.4.1-1                            all          Invoke a callback when a stream has completed or failed
+ii  node-enhanced-resolve                            5.15.0-1                                  all          Offers a async require.resolve function
+ii  node-err-code                                    2.0.3+dfsg-3                              all          Create an error with a code
+ii  node-errno                                       1.0.0-3                                   all          libuv errno details exposed - Node.js module
+ii  node-error-ex                                    1.3.2-4                                   all          easy error subclassing and stack customization
+ii  node-es-abstract                                 1.20.4+~cs26.27.47-1                      all          ECMAScript spec abstract operations
+ii  node-es-module-lexer                             1.1.0+dfsg-3                              all          Fast lexer to extract named exports from EcmaScript modules
+ii  node-es6-error                                   4.1.1-5                                   all          Easily-extendable error for use with ES6 classes
+ii  node-escape-string-regexp                        4.0.0-2                                   all          Escape RegExp special characters in Node.js
+ii  node-escodegen                                   2.1.0+dfsg+~0.0.8-1                       all          ECMAScript code generator
+ii  node-eslint-scope                                7.1.1+~3.7.4-1                            all          ECMAScript scope analyzer for ESLint
+ii  node-eslint-utils                                3.0.0-3                                   all          utilities for ESLint plugins
+ii  node-eslint-visitor-keys                         3.3.0+~1.0.0-1                            all          Constants and utilities about visitor keys to traverse AST
+ii  node-espree                                      9.4.1~dfsg-2                              all          Esprima-compatible JavaScript parser built on Acorn
+ii  node-esprima                                     4.0.1+ds+~4.0.3-2                         all          ECMAScript parsing infrastructure for multipurpose analysis
+ii  node-esquery                                     1.4.2~ds-1                                all          query library for ECMAScript AST using CSS-like queries
+ii  node-esrecurse                                   4.3.0-2                                   all          ECMAScript AST recursive visitor
+ii  node-estraverse                                  5.3.0+ds+~5.1.1-1                         all          ECMAScript JS AST traversal functions
+ii  node-esutils                                     2.0.3+~2.0.0-1                            all          utility box for ECMAScript language tools
+ii  node-events                                      3.3.0+~3.0.0-3                            all          Node.js events module to embed by web packers
+ii  node-fancy-log                                   1.3.3+~cs1.3.1-2                          all          Log things, prefixed with a timestamp
+ii  node-fast-deep-equal                             3.1.3-3                                   all          Fast Deep Equal
+ii  node-fast-levenshtein                            2.0.6+ds-3                                all          efficient implementation of Levenshtein algorithm
+ii  node-fetch                                       3.3.2+~cs11.4.11-1                        all          light-weight module that brings window.fetch to node.js
+ii  node-file-entry-cache                            6.0.1+~3.0.4+~2.0.0+~1.0.0+~2.0.1-1       all          Node.js library implementing a simple cache for file metadata
+ii  node-fill-range                                  7.0.1+~7.0.0-1                            all          node module to fill in a range of numbers or letters
+ii  node-find-cache-dir                              3.3.2+~3.2.1-1                            all          finds the common standard cache directory
+ii  node-find-up                                     6.3.0-7                                   all          Find a file by walking up parent directories
+ii  node-flat-cache                                  3.0.4~6.0.1+~3.0.4+~2.0.0+~1.0.0+~2.0.1-1 all          Node.js library implementing a simple persistent key/value storage
+ii  node-flatted                                     3.2.7~ds-1                                all          super light and fast circular JSON parser - Node library
+ii  node-for-in                                      1.0.2-4                                   all          iterate over object
+ii  node-for-own                                     1.0.0-3                                   all          Iterate over the own enumerable properties of an object
+ii  node-foreground-child                            3.1.1-2                                   all          helper running a child process as a foreground process
+ii  node-fs-readdir-recursive                        1.1.0+~1.1.0-1                            all          Recursively read a directory
+ii  node-fs-write-stream-atomic                      1.0.10-6                                  all          Like fs.createWriteStream(...), but atomic
+ii  node-fs.realpath                                 1.0.0-3                                   all          Use node's fs.realpath
+ii  node-function-bind                               1.1.2+~cs2.1.14-1                         all          Implementation of Function.prototype.bind
+ii  node-functional-red-black-tree                   1.0.1+20181105-7                          all          fully persistent balanced binary search tree - Node.js library
+ii  node-gauge                                       4.0.4-2                                   all          terminal based horizontal progress bar
+ii  node-get-caller-file                             2.0.5+~cs1.1.1-4                          all          inspects the v8 stack trace
+ii  node-get-stream                                  6.0.1-1                                   all          Get a stream as a string, buffer, or array
+ii  node-get-value                                   1:3.0.1-4                                 all          Use property paths to get a nested value from an object
+ii  node-glob                                        8.1.0+~cs8.5.15-1                         all          glob functionality for Node.js
+ii  node-glob-parent                                 6.0.2+~5.1.1-2                            all          Extract the non-magic parent path from a glob string
+ii  node-globals                                     13.23.0-1                                 all          Global identifiers from different JavaScript environments
+ii  node-globby                                      13.1.3+~cs16.25.40-2                      all          Extends glob with promise API
+ii  node-got                                         11.8.5+~cs58.13.36-3                      all          Simplified HTTP requests
+ii  node-graceful-fs                                 4.2.10-1                                  all          drop-in replacement improving the Node.js fs module
+ii  node-growl                                       1.10.5-4                                  all          unobtrusive notification system for nodejs
+ii  node-gyp                                         9.3.0-3                                   all          Native addon build tool for Node.js
+ii  node-has-flag                                    4.0.0-3                                   all          check if argv has a specific flag
+ii  node-has-unicode                                 2.0.1-5                                   all          Try to guess if your terminal supports unicode
+ii  node-has-value                                   2.0.2-4                                   all          node library that returns true if a value exists
+ii  node-has-values                                  2.0.1-4                                   all          node library that returns true if any values exist
+ii  node-hosted-git-info                             6.1.1-2                                   all          Provides metadata from Github, Bitbucket and Gitlab
+ii  node-http-proxy-agent                            7.0.0~0~2023071921-5                      all          HTTP(s) proxy http.Agent implementation for HTTP
+ii  node-https-proxy-agent                           7.0.1~0~2023071921-5                      all          HTTP(s) proxy http.Agent implementation for HTTPS
+ii  node-iconv-lite                                  0.6.3-3                                   all          Pure JS character encoding conversion
+ii  node-icss-utils                                  5.1.0+~5.1.0-1                            all          ICSS utils for postcss ast
+ii  node-ieee754                                     1.2.1-3                                   all          Node.js module to read or write IEEE754 floating point numbers
+ii  node-iferr                                       1.0.2+~1.0.2-1                            all          Higher-order functions for easier error handling
+ii  node-ignore                                      5.2.1-1                                   all          manager and filter for .gitignore rules - Node.js library
+ii  node-imurmurhash                                 0.1.4+dfsg+~0.1.1-2                       all          incremental implementation of MurmurHash3 hashing algorithm
+ii  node-indent-string                               4.0.0-2                                   all          Indent each line in a string
+ii  node-inflight                                    1.0.6-2                                   all          add callbacks to requests in flight to avoid async duplication
+ii  node-inherits                                    2.0.4-6                                   all          Node.js module that exposes inherits function
+ii  node-ini                                         3.0.1-2                                   all          ini format parser and serializer for Node.js
+ii  node-interpret                                   2.2.0-3                                   all          dictionary of file extensions and associated module loaders
+ii  node-ip                                          2.0.0+~1.1.0-1ubuntu1                     all          IP address utilities for node.js
+ii  node-ip-regex                                    4.3.0+~4.1.1-1                            all          Regular expression for matching IP addresses
+ii  node-is-arrayish                                 0.3.2-3                                   all          Determines if an object can be used as an array
+ii  node-is-binary-path                              2.1.0-5                                   all          check if a filepath is a binary file
+ii  node-is-buffer                                   2.0.5-2                                   all          Determine if an object is a Buffer
+ii  node-is-descriptor                               3.0.0-2                                   all          Returns true if value has characteristics of a valid JS descriptor
+ii  node-is-extendable                               1.0.1-3                                   all          determine if a value can be extended
+ii  node-is-extglob                                  2.1.1-5                                   all          Node module to return true if a string is an extglob
+ii  node-is-glob                                     4.0.3-2                                   all          Node module to return true if a string is a glob or extglob
+ii  node-is-number                                   7.0.0-4                                   all          returns true if the value is a number
+ii  node-is-path-cwd                                 2.2.0-2                                   all          Check if a path is CWD
+ii  node-is-path-inside                              3.0.3-2                                   all          Check if a path is inside another path
+ii  node-is-plain-obj                                3.0.0-2                                   all          Check if a value is a plain object
+ii  node-is-plain-object                             5.0.0-7                                   all          Returns true if object was created by `Object` constructor
+ii  node-is-primitive                                3.0.1-3                                   all          Returns `true` if the value is a primitive
+ii  node-is-stream                                   3.0.0-4                                   all          Check if something is a Node.js stream
+ii  node-is-typedarray                               1.0.0-4                                   all          Nodejs library checking if object is TypedArray
+ii  node-is-windows                                  1.0.2+~cs1.0.0-1                          all          True if the platform is windows
+ii  node-isarray                                     2.0.5-4                                   all          JavaScript Array#isArray for older browsers
+ii  node-isexe                                       2.0.0+~2.0.1-5                            all          minimal module to check if a file is executable
+ii  node-isobject                                    4.0.0-2                                   all          Checks if the value is an object and not an array or null
+ii  node-istanbul                                    0.4.5+repack10+~cs98.25.59-2              all          JavaScript code coverage tool
+ii  node-jest-debbundle                              29.6.2~ds1+~cs73.45.28-5                  all          various ittle Node.js modules needed by jest
+ii  node-jest-worker                                 29.6.2~ds1+~cs73.45.28-5                  all          Nodejs module for executing heavy tasks under forked processes in parallel
+ii  node-js-tokens                                   8.0.0-2                                   all          Regex that tokenizes JavaScript
+ii  node-js-yaml                                     4.1.0+dfsg+~4.0.5-7                       all          YAML 1.2 parser and serializer
+ii  node-jsesc                                       3.0.2+~3.0.1-1                            all          Escape JavaScript strings, with short output (Node.js module)
+ii  node-json-buffer                                 3.0.1+~3.0.0-1                            all          JSON functions that can convert buffers.
+ii  node-json-parse-better-errors                    1.0.2+~cs3.3.1-2                          all          JSON.parse() with context information on error
+ii  node-json-schema                                 0.4.0+~7.0.11-1                           all          JSON Schema validation and specifications
+ii  node-json-schema-traverse                        1.0.0-3                                   all          Json schema traversal package
+ii  node-json-stable-stringify                       1.0.2+repack1+~cs1.0.34-2                 all          deterministic JSON.stringify()
+ii  node-json5                                       2.2.3+dfsg-1build1                        all          JSON for the ES5 era
+ii  node-jsonify                                     0.0.1-1                                   all          JSON without touching any globals
+ii  node-jsonparse                                   1.3.1-10                                  all          Pure javascript JSON streaming parser for node.js
+ii  node-kind-of                                     6.0.3+dfsg-2                              all          Get the native type of a value
+ii  node-lcov-parse                                  1.0.0+20170612git80d039574ed9-6           all          Parse lcov results files and return JSON
+ii  node-levn                                        0.4.1+dfsg-2                              all          Light ECMAScript (JavaScript) Value Notation
+ii  node-loader-runner                               4.3.0-1                                   all          Runs (webpack) loaders
+ii  node-locate-path                                 7.1.1-2                                   all          Get the first path that exists on disk of multiple paths
+ii  node-lodash                                      4.17.21+dfsg+~cs8.31.198.20210220-9       all          Lo-dash is a Node.js utility library
+ii  node-lodash-packages                             4.17.21+dfsg+~cs8.31.198.20210220-9       all          Lo-dash is a Node.js utility library (per method packages)
+ii  node-log-driver                                  1.2.7+git+20180219+bba1761737-7           all          simple logging framework in pure javascript
+ii  node-lowercase-keys                              2.0.0-2                                   all          Lowercase the keys of an object
+ii  node-lru-cache                                   7.14.1-1                                  all          least-recently-used cache object for Node.js
+ii  node-make-dir                                    3.1.0-3                                   all          Make a directory and its parents if needed - Think mkdir -p
+ii  node-map-visit                                   1.0.0-4                                   all          Map `visit` over an array of objects
+ii  node-memfs                                       3.4.12+~cs1.0.3-1                         all          In-memory filesystem with Node's API
+ii  node-memory-fs                                   0.5.0+~0.3.3-2                            all          simple in-memory filesystem
+ii  node-merge-stream                                2.0.0+~1.1.2-2                            all          Create a stream that emits events from multiple other streams
+ii  node-micromatch                                  4.0.5+~4.0.2-1                            all          Glob matching for javascript/node.js
+ii  node-mime                                        3.0.0+dfsg+~cs6.97.2-1                    all          library for mime-type mapping for Node.js
+ii  node-mime-types                                  2.1.35-2                                  all          ultimate JavaScript content-type utility - Node.js module
+ii  node-mimic-response                              3.1.0-8                                   all          Mimic a Node.js HTTP response stream
+ii  node-minimatch                                   9.0.3-4build5                             all          Convert glob expressions into RegExp objects for Node.js
+ii  node-minimist                                    1.2.8+~cs5.3.5-1                          all          Argument options parsing for Node.js
+ii  node-minipass                                    3.3.6+~cs9.4.19-1                         all          Minimal implementation of a PassThrough for Node.js
+ii  node-mixin-deep                                  2.0.1-3                                   all          Deeply mix the properties of objects into the first object
+ii  node-mkdirp                                      1.0.4+~1.0.2-4                            all          Recursively create directories - Node.js module
+ii  node-move-concurrently                           1.0.1-5                                   all          Move files and directories concurrently
+ii  node-ms                                          2.1.3+~cs0.7.31-3                         all          milliseconds conversion utility - Node.js module
+ii  node-mute-stream                                 0.0.8+~0.0.1-3                            all          Pass-through stream that can be muted module for Node.js
+ii  node-n3                                          1.16.3+~1.2.3+~1.10.4-1                   all          fast asynchronous streaming RDF for JavaScript - Node library
+ii  node-negotiator                                  0.6.3+~0.6.1-1                            all          HTTP content negotiator for Node.js
+ii  node-neo-async                                   2.6.2+~cs3.0.0-3                          all          faster replacement for Async
+ii  node-nopt                                        5.0.0-4                                   all          Command-line option parser for Node.js
+ii  node-normalize-package-data                      4.0.1+~2.4.1-1                            all          Normalizes package metadata - Node.js module
+ii  node-normalize-path                              3.0.0+~3.0.0-1                            all          Normalize file path slashes to be unix-like forward slashes
+ii  node-npm-bundled                                 2.0.1-2                                   all          Parses info on bundled dependencies
+ii  node-npm-package-arg                             10.0.0+~3.0.0-2                           all          Parse the things that can be arguments to npm install
+ii  node-npm-run-path                                5.1.0+~4.0.0-8                            all          Get your PATH prepended with locally installed binaries
+ii  node-npmlog                                      7.0.1+~4.1.4-1                            all          Logger with custom levels and colored output for Node.js
+ii  node-object-assign                               4.1.1-7                                   all          ES2015 Object.assign() ponyfill
+ii  node-object-inspect                              1.12.2+~cs1.8.1-1                         all          string representations of objects in node and the browser
+ii  node-object-visit                                1.0.1-5                                   all          Call a specified method on each value in the given object
+ii  node-once                                        1.4.1-1                                   all          Run a function only once with this module for Node.js
+ii  node-opener                                      1.5.2+~1.4.0-1                            all          Opens stuff, like webpages and files and executables
+ii  node-optimist                                    0.6.1+~0.0.30-2                           all          light-weight option parsing library for NodeJS
+ii  node-optionator                                  0.9.1+dfsg+~cs1.2.3-1                     all          option parsing and help generation
+ii  node-osenv                                       0.1.5+~0.1.1-1                            all          Environment settings lookup module for Node.js
+ii  node-p-cancelable                                2.1.1-1                                   all          Create a promise that can be canceled
+ii  node-p-limit                                     4.0.0+~cs4.0.0-5                          all          run multiple promise-returning & async functions
+ii  node-p-locate                                    6.0.0-12                                  all          async version of Array
+ii  node-p-map                                       4.0.0+~3.1.0+~3.0.1-1                     all          Map over promises concurrently
+ii  node-parse-json                                  5.2.0+~cs5.1.7-1                          all          parse JSON with more helpful errors
+ii  node-pascalcase                                  1.0.0-1                                   all          Convert a string to pascal-case
+ii  node-path-dirname                                1.0.2-2                                   all          Node.js library for function path.dirname ponyfill
+ii  node-path-exists                                 5.0.0-8                                   all          Check if a path exists
+ii  node-path-is-absolute                            2.0.0-2                                   all          Node.js 0.12 path.isAbsolute() ponyfill
+ii  node-path-is-inside                              1.0.2+~1.0.0-1                            all          Tests whether one path is inside another path
+ii  node-path-type                                   4.0.0-3                                   all          check if a path is a file, directory, or symlink
+ii  node-picocolors                                  1.0.0-4                                   all          library for terminal output formatting with colors (Node.js module)
+ii  node-pify                                        5.0.0+~cs5.0.1-1                          all          promisify a callback-style function
+ii  node-pkg-dir                                     5.0.0-2                                   all          find the root directory of a npm package
+ii  node-postcss                                     8.4.31+~cs8.0.26-1                        all          Tool for transforming styles with JS plugins
+ii  node-postcss-modules-extract-imports             3.0.0-2                                   all          CSS Modules transform to extract local aliases for inline imports
+ii  node-postcss-modules-values                      4.0.0+~4.0.0-1                            all          pass arbitrary values between your module files
+ii  node-postcss-value-parser                        4.2.0-1                                   all          Transforms css values and at-rule params into the tree
+ii  node-prelude-ls                                  1.2.1+dfsg-3                              all          functionally oriented utility library for Livescript
+ii  node-process-nextick-args                        2.0.1-3                                   all          process.nextTick but always with args
+ii  node-progress                                    2.0.3-2                                   all          Flexible ascii progress bar
+ii  node-promise-inflight                            1.0.1+~1.0.0-1                            all          one promise for multiple requests in flight to avoid async duplication
+ii  node-promise-retry                               2.0.1-4                                   all          Retries a function that returns a promise
+ii  node-promzard                                    0.3.0-2                                   all          Promzard provides a prompting json wizard
+ii  node-prr                                         1.0.1-3                                   all          Object.defineProperty() with common defaults - Node.js module
+ii  node-pump                                        3.0.0-5                                   all          small nod module that pipes streams together
+ii  node-punycode                                    2.2.3-2                                   all          Nodejs robust Punycode converter fully RFC compliant
+ii  node-quick-lru                                   6.1.1-4                                   all          Simple "Least Recently Used" (LRU) cache
+ii  node-randombytes                                 2.1.0+~2.0.0-2                            all          random bytes from browserify stand alone
+ii  node-re2:amd64                                   1.20.10+~cs2.13.13-1                      amd64        Node.js bindings for RE2, a fast and safe regular expression engine
+ii  node-read                                        1.0.7-5                                   all          Read user input from stdin module for Node.js
+ii  node-read-package-json                           5.0.2+~2.0.0-1                            all          Read package.json for npm module for Node.js
+ii  node-read-pkg                                    5.2.0-2                                   all          Read a package.json file
+ii  node-readable-stream                             3.6.0+~cs3.0.0-4build1                    all          stream compatibility library for Node.js and browser
+ii  node-readdirp                                    3.6.0-1                                   all          Recursive version of Node.js's fs.readdir
+ii  node-rechoir                                     0.8.0+~0.6.1-2                            all          Node module to require any supported file as a node module
+ii  node-regenerate                                  1.4.2-3                                   all          Unicode-aware regular expression generator (Node.js module)
+ii  node-regenerate-unicode-properties               10.1.0+ds-1                               all          Unicode properties and values as Regenerate sets for Node.js
+ii  node-regenerator-runtime                         0.15.2+~0.10.8-1                          all          Nodejs runtime for regenerator-compiled generator and async functions
+ii  node-regenerator-transform                       0.15.2+~0.10.8-1                          all          Explode async and generator functions into a state machine
+ii  node-regexpp                                     3.2.0-5                                   all          regular expression parser for ECMAScript - Node.js library
+ii  node-regexpu-core                                5.2.2-3                                   all          Core functionality for regexpu's functionality in Node.js
+ii  node-regjsgen                                    0.7.1+ds-1                                all          Regular expression from abstract syntax trees in Node.js
+ii  node-regjsparser                                 0.9.1+ds-2                                all          Parser for JavaScript's RegExp for Node.js
+ii  node-repeat-string                               1.6.1+repack-1                            all          repeat the given string n times
+ii  node-require-directory                           2.1.1+~2.1.2-1                            all          require all files in a directory
+ii  node-require-from-string                         2.0.2+~1.2.1-1                            all          Require module from string
+ii  node-resolve                                     1.22.8+~cs5.34.15-2                       all          Synchronous/Asynchronous require.resolve() algorithm
+ii  node-resolve-cwd                                 3.0.0-2                                   all          Resolve the path of a module from current directory
+ii  node-resolve-from                                5.0.0+~3.1.0+~3.3.0+~2.0.0-1              all          Resolve the path of a module from a given path
+ii  node-restore-cursor                              4.0.0-4                                   all          Gracefully restore the CLI cursor on exit
+ii  node-resumer                                     0.0.0-6                                   all          through stream that starts paused and resumes on the next tick
+ii  node-retry                                       0.13.1+~0.12.1-1                          all          Retry strategies for failed operations module for Node.js
+ii  node-rimraf                                      3.0.2-2                                   all          Deep deletion (like rm -rf) module for Node.js
+ii  node-run-queue                                   2.0.0-3                                   all          promise based dynamic priority queue runner
+ii  node-safe-buffer                                 5.2.1+~cs2.1.2-3                          all          Safer Node.js Buffer API
+ii  node-schema-utils                                4.2.0~ds-3build3                          all          Webpack Schema Validation Utilities
+ii  node-sellside-emitter                            1.2.1-3                                   all          Event emitter for node.js projects
+ii  node-semver                                      7.5.4+~7.5.0-2                            all          Semantic Versioning for Node.js
+ii  node-serialize-javascript                        6.0.1-1                                   all          serialize JavaScript to a superset of JSON
+ii  node-set-blocking                                2.0.0-2                                   all          set blocking stdio and stderr
+ii  node-set-immediate-shim                          2.0.0-2                                   all          Simple setImmediate shim
+ii  node-set-value                                   4.1.0+~4.0.1-2                            all          create nested values and any intermediaries using dot notation
+ii  node-shebang-command                             2.0.0-1                                   all          Get the command from a shebang
+ii  node-shebang-regex                               3.0.0-2                                   all          Regular expression for matching a shebang line
+ii  node-shell-quote                                 1.7.4+~1.7.1-1                            all          quote and parse shell commands
+ii  node-signal-exit                                 4.1.0-6                                   all          Fire an event no matter how a process exits
+ii  node-slash                                       4.0.0-3                                   all          Node.js library to convert Windows backslash paths to slash paths
+ii  node-slice-ansi                                  5.0.0+~cs9.0.0-5                          all          Slice a string with ANSI escape codes
+ii  node-source-list-map                             2.0.1+dfsg+~0.1.2-1                       all          Fast line to line SourceMap generator
+ii  node-source-map                                  0.7.0++dfsg2+really.0.6.1-15              all          Mozilla source map generator and consumer - Node.js module
+ii  node-source-map-support                          0.5.21+ds+~0.5.4-1                        all          Fixes stack traces for files with source maps
+ii  node-spdx-correct                                3.1.1-2                                   all          correct invalid SPDX identifiers
+ii  node-spdx-exceptions                             2.3.0-2                                   all          list of SPDX standard license exceptions
+ii  node-spdx-expression-parse                       3.0.1+~3.0.1-1                            all          parse SPDX license expressions
+ii  node-spdx-license-ids                            3.0.12-1                                  all          List of SPDX license identifiers
+ii  node-sprintf-js                                  1.1.2+ds1+~1.1.2-1                        all          Node.js Pure JavaScript sprintf implementation
+ii  node-ssri                                        9.0.1-2                                   all          Utility for parsing, serializing, generating and verifying  ssri metadata
+ii  node-stack-utils                                 2.0.6+~2.0.1-1                            all          Captures and cleans stack traces
+ii  node-string-decoder                              1.3.0-6                                   all          string_decoder module from Node core for browsers
+ii  node-string-width                                4.2.3+~cs13.2.3-1                         all          Get the visual width of a string
+ii  node-strip-ansi                                  6.0.1-2                                   all          Strip ANSI escape codes
+ii  node-strip-bom                                   4.0.0-2                                   all          Strip UTF-8 byte order mark (BOM) from a string
+ii  node-strip-json-comments                         4.0.0-4                                   all          Node.js module to strip comments from JSON
+ii  node-supports-color                              8.1.1+~8.1.1-1                            all          Detect whether a terminal supports color in Node.js
+ii  node-tap                                         16.3.7+ds1+~cs50.9.19-4                   all          Test-Anything-Protocol module for Node.js
+ii  node-tap-mocha-reporter                          5.0.3+~2.0.2-2                            all          Format a TAP stream using Mocha's set of reporters
+ii  node-tap-parser                                  11.0.2+~cs2.1.4-1                         all          Test anything protocol stream parser - Node.js module
+ii  node-tapable                                     2.2.1-3                                   all          just a little module for plugins
+ii  node-tape                                        5.6.1+~cs8.20.19-1                        all          tap-producing test harness for node and browsers
+ii  node-tar                                         6.1.13+~cs7.0.5-3                         all          read and write portable tar archives module for Node.js
+ii  node-terser                                      5.19.2-1                                  all          parser/mangler/compressor for ES6+ - Node.js library
+ii  node-text-table                                  0.2.0-4                                   all          borderless text tables with alignment
+ii  node-through                                     2.3.8+~cs0.0.30-1                         all          simplified stream construction
+ii  node-time-stamp                                  2.2.0-2                                   all          get a formatted timestamp
+ii  node-to-fast-properties                          3.0.1-3                                   all          Force V8 to use fast properties for an object
+ii  node-to-regex-range                              5.0.1-4                                   all          returns a regex-compatible range from two numbers, min and max
+ii  node-tslib                                       2.4.1-1                                   all          Implementation of tslib for javascript
+ii  node-type-check                                  0.4.0+dfsg-3                              all          Check the types of JavaScript values at runtime
+ii  node-typedarray                                  0.0.7-1                                   all          TypedArray polyfill for old browsers
+ii  node-typedarray-to-buffer                        4.0.0-2                                   all          JavaScript utility converting TypedArray to buffer without copy
+ii  node-undici                                      5.26.3+dfsg1+~cs23.10.12-2                all          Node.js HTTP/1.1 client
+ii  node-unicode-canonical-property-names-ecmascript 2.0.0-2                                   all          Unicode property names supported in ES RegExp in Node.js
+ii  node-unicode-match-property-ecmascript           2.0.0-2                                   all          Match a Unicode property to its canonical name for Node.js
+ii  node-unicode-match-property-value-ecmascript     2.1.0+ds-1                                all          Match a Unicode property value to its canonical version in Node.js
+ii  node-unicode-property-aliases-ecmascript         2.1.0+ds-1                                all          Unicode property aliases mapping for property names in Node.js
+ii  node-union-value                                 2.0.1-4                                   all          set an array of unique values as the property of an object
+ii  node-unique-filename                             1.1.1+ds-2                                all          unique filename for use in temporary directories or caches
+ii  node-unset-value                                 2.0.1-1                                   all          Delete nested properties from an object using dot notation
+ii  node-uri-js                                      4.4.0+dfsg-8                              all          URI/IRI parsing/validating/resolving library
+ii  node-util                                        0.12.5+~1.0.10-1                          all          NodeJS util module
+ii  node-util-deprecate                              1.0.2-3                                   all          Node.js's `util.deprecate()` function with browser support
+ii  node-uuid                                        8.3.2+~8.3.3-4                            all          simple and fast RFC4122 UUID generation - Node.js module
+ii  node-v8-compile-cache                            2.4.0-2                                   all          Leverage v8 compile cache to speedup loading of Node.js modules
+ii  node-v8flags                                     3.2.0+~3.1.1-1                            all          Get available V8 JavaScript engine flags
+ii  node-validate-npm-package-license                3.0.4-2                                   all          Tells if a string is a valid npm package license string
+ii  node-validate-npm-package-name                   5.0.0+~4.0.0-1                            all          Checks if a string is a valid npm package name
+ii  node-watchpack                                   2.4.0+~cs2.8.1-1                          all          Wrapper library for directory and file watching
+ii  node-wcwidth.js                                  1.0.2-2                                   all          wcwidth.js is a javascript porting of C's wcwidth()
+ii  node-webassemblyjs                               1.11.4+dfsg+~cs10.11.17-2                 all          Toolchain for WebAssembly
+ii  node-webpack-sources                             3.2.3+~3.2.0-2                            all          Source code handling classes for webpack
+ii  node-which                                       2.0.2+~cs1.3.2-3                          all          Cross-platform 'which' module for Node.js
+ii  node-wide-align                                  1.1.3-4                                   all          Wide-character aware text alignment function
+ii  node-widest-line                                 3.1.0-2                                   all          Get the visual width of the widest line in a string -
+ii  node-wordwrap                                    1.0.0-4                                   all          word wrapping library for NodeJS
+ii  node-wrap-ansi                                   8.0.1+~8.0.1-3                            all          Wordwrap a string with ANSI escape codes
+ii  node-wrappy                                      1.0.2-3                                   all          Callback wrapping utility
+ii  node-write                                       2.0.0~6.0.1+~3.0.4+~2.0.0+~1.0.0+~2.0.1-1 all          convenience wrapper for Node.js fs methods
+ii  node-write-file-atomic                           4.0.2+~4.0.0-2                            all          Write files in an atomic fashion w/configurable ownership
+ii  node-ws                                          8.11.0+~cs13.7.3-2                        all          RFC-6455 WebSocket implementation module for Node.js
+ii  node-xtend                                       4.0.2-3                                   all          Node.js library to easily extend an object
+ii  node-y18n                                        5.0.8+~5.0.0-3                            all          bare-bones internationalization library used by yargs
+ii  node-yallist                                     4.0.0+~4.0.1-1                            all          Double linked list implementation for Node.js
+ii  node-yaml                                        2.3.4-1build1                             all          Nodejs parser and stringifier for YAML standard
+ii  node-yargs                                       16.2.0+~16.0.4-7                          all          command line parser for nodejs
+ii  node-yargs-parser                                21.1.1+~21.0.0-4                          all          mighty option parser used by yargs
+ii  nodejs                                           18.19.1+dfsg-6ubuntu5                     amd64        evented I/O for V8 javascript - runtime executable
+ii  nodejs-doc                                       18.19.1+dfsg-6ubuntu5                     all          API documentation for Node.js, the javascript platform
+ii  npm                                              9.2.0~ds1-2                               all          package manager for Node.js
+ii  php-cli                                          2:8.3+93ubuntu2                           all          command-line interpreter for the PHP scripting language (default)
+ii  php-common                                       2:93ubuntu2                               all          Common files for PHP packages
+ii  php-curl                                         2:8.3+93ubuntu2                           all          CURL module for PHP [default]
+ii  php-mbstring                                     2:8.3+93ubuntu2                           all          MBSTRING module for PHP [default]
+ii  php-mysql                                        2:8.3+93ubuntu2                           all          MySQL module for PHP [default]
+ii  php-xml                                          2:8.3+93ubuntu2                           all          DOM, SimpleXML, WDDX, XML, and XSL module for PHP [default]
+ii  php-zip                                          2:8.3+93ubuntu2                           all          Zip module for PHP [default]
+ii  php8.3-cli                                       8.3.6-0ubuntu0.24.04.4                    amd64        command-line interpreter for the PHP scripting language
+ii  php8.3-common                                    8.3.6-0ubuntu0.24.04.4                    amd64        documentation, examples and common module for PHP
+ii  php8.3-curl                                      8.3.6-0ubuntu0.24.04.4                    amd64        CURL module for PHP
+ii  php8.3-fpm                                       8.3.6-0ubuntu0.24.04.4                    amd64        server-side, HTML-embedded scripting language (FPM-CGI binary)
+ii  php8.3-mbstring                                  8.3.6-0ubuntu0.24.04.4                    amd64        MBSTRING module for PHP
+ii  php8.3-mysql                                     8.3.6-0ubuntu0.24.04.4                    amd64        MySQL module for PHP
+ii  php8.3-opcache                                   8.3.6-0ubuntu0.24.04.4                    amd64        Zend OpCache module for PHP
+ii  php8.3-readline                                  8.3.6-0ubuntu0.24.04.4                    amd64        readline module for PHP
+ii  php8.3-xml                                       8.3.6-0ubuntu0.24.04.4                    amd64        DOM, SimpleXML, XML, and XSL module for PHP
+ii  php8.3-zip                                       8.3.6-0ubuntu0.24.04.4                    amd64        Zip module for PHP
+root@laravel11:/var/www/WebPortal/app# php -v
+php -m
+PHP 8.3.6 (cli) (built: Mar 19 2025 10:08:38) (NTS)
+Copyright (c) The PHP Group
+Zend Engine v4.3.6, Copyright (c) Zend Technologies
+    with Zend OPcache v8.3.6, Copyright (c), by Zend Technologies
+[PHP Modules]
+calendar
+Core
+ctype
+curl
+date
+dom
+exif
+FFI
+fileinfo
+filter
+ftp
+gettext
+hash
+iconv
+json
+libxml
+mbstring
+mysqli
+mysqlnd
+openssl
+pcntl
+pcre
+PDO
+pdo_mysql
+Phar
+posix
+random
+readline
+Reflection
+session
+shmop
+SimpleXML
+sockets
+sodium
+SPL
+standard
+sysvmsg
+sysvsem
+sysvshm
+tokenizer
+xml
+xmlreader
+xmlwriter
+xsl
+Zend OPcache
+zip
+zlib
+
+[Zend Modules]
+Zend OPcache
+
+root@laravel11:/var/www/WebPortal/app# mysql --version
+mysql  Ver 8.0.42-0ubuntu0.24.04.1 for Linux on x86_64 ((Ubuntu))
+root@laravel11:/var/www/WebPortal/app# nginx -v
+nginx version: nginx/1.24.0 (Ubuntu)
+root@laravel11:/var/www/WebPortal/app# node -v
+npm -v
+v18.19.1
+9.2.0
+root@laravel11:/var/www/WebPortal/app# composer -V
+Do not run Composer as root/super user! See https://getcomposer.org/root for details
+Continue as root/super user [yes]? yes
+Composer version 2.8.6 2025-02-25 13:03:50
+PHP version 8.3.6 (/usr/bin/php8.3)
+Run the "diagnose" command to get more detailed diagnostics output.
+root@laravel11:/var/www/WebPortal/app# php -m | grep -E '(mbstring|openssl|pdo|tokenizer|xml|ctype|json|bcmath)'
+
+# Aktuelle PHP-Konfiguration für Laravel
+php -i | grep -E 'memory_limit|upload_max_filesize|post_max_size'
+ctype
+json
+libxml
+mbstring
+openssl
+pdo_mysql
+tokenizer
+xml
+xmlreader
+xmlwriter
+memory_limit => -1 => -1
+post_max_size => 8M => 8M
+upload_max_filesize => 2M => 2M
+root@laravel11:/var/www/WebPortal/app# ls -la /etc/nginx/sites-available/
+total 16
+drwxr-xr-x 2 root root 4096 May 14 07:34 .
+drwxr-xr-x 8 root root 4096 Apr  2 06:10 ..
+-rw-r--r-- 1 root root 1078 May 14 07:34 WebPortal
+-rw-r--r-- 1 root root 2412 Nov 30  2023 default
+root@laravel11:/var/www/WebPortal/app# ls -la /etc/nginx/sites-enabled/
+total 8
+drwxr-xr-x 2 root root 4096 Apr  1 14:59 .
+drwxr-xr-x 8 root root 4096 Apr  2 06:10 ..
+lrwxrwxrwx 1 root root   36 Apr  1 14:58 WebPortal -> /etc/nginx/sites-available/WebPortal
+lrwxrwxrwx 1 root root   34 Apr  1 13:22 default -> /etc/nginx/sites-available/default
+root@laravel11:/var/www/WebPortal/app# ls -la /etc/php/*/fpm/php.ini
+ls -la /etc/php/*/cli/php.ini
+ls -la /etc/php/*/fpm/pool.d/
+-rw-r--r-- 1 root root 73718 Mar 19 10:08 /etc/php/8.3/fpm/php.ini
+-rw-r--r-- 1 root root 73714 Mar 19 10:08 /etc/php/8.3/cli/php.ini
+total 32
+drwxr-xr-x 2 root root  4096 Apr  1 14:18 .
+drwxr-xr-x 4 root root  4096 Apr  1 14:18 ..
+-rw-r--r-- 1 root root 22096 Mar 19 10:08 www.conf
+root@laravel11:/var/www/WebPortal/app# ls -la /etc/mysql/my.cnf
+ls -la /etc/mysql/mysql.conf.d/
+lrwxrwxrwx 1 root root 24 Oct 20  2020 /etc/mysql/my.cnf -> /etc/alternatives/my.cnf
+ls: cannot access '/etc/mysql/mysql.conf.d/': No such file or directory
+root@laravel11:/var/www/WebPortal/app# ls -la /etc/systemd/system/laravel-*.service
+ls: cannot access '/etc/systemd/system/laravel-*.service': No such file or directory
+root@laravel11:/var/www/WebPortal/app# systemctl list-units --type=service --state=running
+  UNIT                        LOAD   ACTIVE SUB     DESCRIPTION
+  cron.service                loaded active running Regular background program processing daemon
+  dbus.service                loaded active running D-Bus System Message Bus
+  do-agent.service            loaded active running The DigitalOcean Monitoring Agent
+  droplet-agent.service       loaded active running The DigitalOcean Droplet Agent
+  getty@tty1.service          loaded active running Getty on tty1
+  ModemManager.service        loaded active running Modem Manager
+  multipathd.service          loaded active running Device-Mapper Multipath Device Controller
+  nginx.service               loaded active running A high performance web server and a reverse proxy server
+  php8.3-fpm.service          loaded active running The PHP 8.3 FastCGI Process Manager
+  polkit.service              loaded active running Authorization Manager
+  rsyslog.service             loaded active running System Logging Service
+  serial-getty@ttyS0.service  loaded active running Serial Getty on ttyS0
+  ssh.service                 loaded active running OpenBSD Secure Shell server
+  systemd-journald.service    loaded active running Journal Service
+  systemd-logind.service      loaded active running User Login Management
+  systemd-networkd.service    loaded active running Network Configuration
+  systemd-resolved.service    loaded active running Network Name Resolution
+  systemd-timesyncd.service   loaded active running Network Time Synchronization
+  systemd-udevd.service       loaded active running Rule-based Manager for Device Events and Files
+  udisks2.service             loaded active running Disk Manager
+  unattended-upgrades.service loaded active running Unattended Upgrades Shutdown
+  user@0.service              loaded active running User Manager for UID 0
+
+Legend: LOAD   → Reflects whether the unit definition was properly loaded.
+        ACTIVE → The high-level unit activation state, i.e. generalization of SUB.
+        SUB    → The low-level unit activation state, values depend on unit type.
+
+22 loaded units listed.
+root@laravel11:/var/www/WebPortal/app# crontab -l
+no crontab for root
+root@laravel11:/var/www/WebPortal/app# cat /etc/nginx/sites-available/WebPortal
+server {
+    listen 80;
+    server_name 164.92.137.114;
+    root /var/www/WebPortal/public;
+
+    add_header X-Frame-Options "SAMEORIGIN";
+    add_header X-XSS-Protection "1; mode=block";
+    add_header X-Content-Type-Options "nosniff";
+
+    index index.html index.php;
+
+    error_page 404 /index.php;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location /build/ {
+        alias /var/www/WebPortal/public/build/;
+        add_header Cache-Control "public";
+        expires max;
+        access_log off;
+    }
+
+    location ~* \.(js|css|png|jpg|jpeg|gif|svg|ico|woff2|woff|ttf)$ {
+        root /var/www/WebPortal/public;
+        try_files $uri $uri/ =404;
+        access_log off;
+        expires max;
+        add_header Cache-Control "public";
+    }
+
+    location ~ \.php$ {
+        fastcgi_pass unix:/var/run/php/php8.3-fpm.sock;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+
+    location ~ /\.(?!well-known).* {
+        deny all;
+    }
+}
+root@laravel11:/var/www/WebPortal/app# sudo cp /etc/nginx/sites-available/default /tmp/nginx-default.conf
+root@laravel11:/var/www/WebPortal/app# sudo diff -u /tmp/nginx-default.conf /etc/nginx/sites-available/WebPortal
+--- /tmp/nginx-default.conf     2025-05-21 15:09:03.856709473 +0000
++++ /etc/nginx/sites-available/WebPortal        2025-05-14 07:34:41.804723558 +0000
+@@ -1,91 +1,43 @@
+-##
+-# You should look at the following URL's in order to grasp a solid understanding
+-# of Nginx configuration files in order to fully unleash the power of Nginx.
+-# https://www.nginx.com/resources/wiki/start/
+-# https://www.nginx.com/resources/wiki/start/topics/tutorials/config_pitfalls/
+-# https://wiki.debian.org/Nginx/DirectoryStructure
+-#
+-# In most cases, administrators will remove this file from sites-enabled/ and
+-# leave it as reference inside of sites-available where it will continue to be
+-# updated by the nginx packaging team.
+-#
+-# This file will automatically load configuration files provided by other
+-# applications, such as Drupal or Wordpress. These applications will be made
+-# available underneath a path with that package name, such as /drupal8.
+-#
+-# Please see /usr/share/doc/nginx-doc/examples/ for more detailed examples.
+-##
+-
+-# Default server configuration
+-#
+ server {
+-       listen 80 default_server;
+-       listen [::]:80 default_server;
+-
+-       # SSL configuration
+-       #
+-       # listen 443 ssl default_server;
+-       # listen [::]:443 ssl default_server;
+-       #
+-       # Note: You should disable gzip for SSL traffic.
+-       # See: https://bugs.debian.org/773332
+-       #
+-       # Read up on ssl_ciphers to ensure a secure configuration.
+-       # See: https://bugs.debian.org/765782
+-       #
+-       # Self signed certs generated by the ssl-cert package
+-       # Don't use them in a production server!
+-       #
+-       # include snippets/snakeoil.conf;
+-
+-       root /var/www/html;
+-
+-       # Add index.php to the list if you are using PHP
+-       index index.html index.htm index.nginx-debian.html;
+-
+-       server_name _;
+-
+-       location / {
+-               # First attempt to serve request as file, then
+-               # as directory, then fall back to displaying a 404.
+-               try_files $uri $uri/ =404;
+-       }
+-
+-       # pass PHP scripts to FastCGI server
+-       #
+-       #location ~ \.php$ {
+-       #       include snippets/fastcgi-php.conf;
+-       #
+-       #       # With php-fpm (or other unix sockets):
+-       #       fastcgi_pass unix:/run/php/php7.4-fpm.sock;
+-       #       # With php-cgi (or other tcp sockets):
+-       #       fastcgi_pass 127.0.0.1:9000;
+-       #}
+-
+-       # deny access to .htaccess files, if Apache's document root
+-       # concurs with nginx's one
+-       #
+-       #location ~ /\.ht {
+-       #       deny all;
+-       #}
++    listen 80;
++    server_name 164.92.137.114;
++    root /var/www/WebPortal/public;
++
++    add_header X-Frame-Options "SAMEORIGIN";
++    add_header X-XSS-Protection "1; mode=block";
++    add_header X-Content-Type-Options "nosniff";
++
++    index index.html index.php;
++
++    error_page 404 /index.php;
++
++    location / {
++        try_files $uri $uri/ /index.php?$query_string;
++    }
++
++    location /build/ {
++        alias /var/www/WebPortal/public/build/;
++        add_header Cache-Control "public";
++        expires max;
++        access_log off;
++    }
++
++    location ~* \.(js|css|png|jpg|jpeg|gif|svg|ico|woff2|woff|ttf)$ {
++        root /var/www/WebPortal/public;
++        try_files $uri $uri/ =404;
++        access_log off;
++        expires max;
++        add_header Cache-Control "public";
++    }
++
++    location ~ \.php$ {
++        fastcgi_pass unix:/var/run/php/php8.3-fpm.sock;
++        fastcgi_index index.php;
++        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
++        include fastcgi_params;
++    }
++
++    location ~ /\.(?!well-known).* {
++        deny all;
++    }
+ }
+-
+-
+-# Virtual Host configuration for example.com
+-#
+-# You can move that to a different file under sites-available/ and symlink that
+-# to sites-enabled/ to enable it.
+-#
+-#server {
+-#      listen 80;
+-#      listen [::]:80;
+-#
+-#      server_name example.com;
+-#
+-#      root /var/www/example.com;
+-#      index index.html;
+-#
+-#      location / {
+-#              try_files $uri $uri/ =404;
+-#      }
+-#}

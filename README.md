@@ -251,4 +251,110 @@ Diese Konfiguration ist für die Live-Umgebung optimiert:
 
 ## Production Server Konfiguration
 
+### System- und Laufzeitumgebung
+
+| Komponente | Version | Hinweise       |
+|------------|---------|----------------|
+| PHP        | 8.3.6   | CLI, FPM       |
+| MySQL      | 8.0.42  |                |
+| Nginx      | 1.24.0  |                |
+| Node.js    | 18.19.1 |                |
+| npm        | 9.2.0   |                |
+| Composer   | 2.8.6   | Vom 25.02.2025 |
+
+### PHP-Konfiguration
+
+#### Installierte PHP-Module
+- mbstring
+- openssl
+- pdo_mysql
+- tokenizer
+- xml
+- ctype
+- json
+- curl
+- dom
+- fileinfo
+- filter
+- hash
+- pcre
+- session
+- SPL
+- zip
+- zlib
+- Zend OPcache
+
+#### PHP-Konfigurationsparameter
+```
+memory_limit = -1        # Unbegrenzt (geeignet für CLI)
+post_max_size = 8M       # Standard
+upload_max_filesize = 2M # Standard (Beachte: könnte erhöht werden)
+```
+
+### Webserver-Konfiguration
+
+#### Nginx Virtual Host für WebPortal
+```nginx
+server {
+    listen 80;
+    server_name 164.92.137.114;
+    root /var/www/WebPortal/public;
+
+    add_header X-Frame-Options "SAMEORIGIN";
+    add_header X-XSS-Protection "1; mode=block";
+    add_header X-Content-Type-Options "nosniff";
+
+    index index.html index.php;
+
+    error_page 404 /index.php;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+ 
+    location /build/ {
+        alias /var/www/WebPortal/public/build/;
+        add_header Cache-Control "public";
+        expires max;
+        access_log off;
+    }
+
+    location ~* \.(js|css|png|jpg|jpeg|gif|svg|ico|woff2|woff|ttf)$ {
+        root /var/www/WebPortal/public;
+        try_files $uri $uri/ =404;
+        access_log off;
+        expires max;
+        add_header Cache-Control "public";
+    }
+
+    location ~ \.php$ {
+        fastcgi_pass unix:/var/run/php/php8.3-fpm.sock;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+
+    location ~ /\.(?!well-known).* {
+        deny all;
+    }
+}
+```
+
+### Laufende Dienste
+
+Die folgenden relevanten Dienste sind aktiv und laufen:
+- nginx.service
+- php8.3-fpm.service
+- mysql (implizit, da mysql funktioniert)
+- cron.service
+- ssh.service
+
+### Pfade zu Konfigurationsdateien
+
+- Nginx Konfiguration: `/etc/nginx/sites-available/WebPortal`
+- PHP FPM Konfiguration: `/etc/php/8.3/fpm/php.ini`
+- PHP CLI Konfiguration: `/etc/php/8.3/cli/php.ini`
+- PHP-FPM Pool Konfiguration: `/etc/php/8.3/fpm/pool.d/www.conf`
+
+
 
