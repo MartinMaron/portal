@@ -151,7 +151,7 @@ Die GitHub Actions-Konfiguration:
 - Baut die Frontend-Assets
 - Führt alle Tests aus
 
-**Hinweis**: Die Github Action ist so konfiguriert,
+**Hinweis:** Die Github Action ist so konfiguriert,
 dass sie die Daten für die Testdatenbank aus der `.env.testing`-Datei liest.
 Sollte die `.env.testing`-Datei daher verändert worden sein, 
 muss gegebenenfalls auch die Action in `.github/workflows/laravel.yml` angepasst werden.
@@ -160,7 +160,7 @@ muss gegebenenfalls auch die Action in `.github/workflows/laravel.yml` angepasst
 
 Das Projekt bietet verschiedene NPM-Scripts für Entwicklung, Testen und Produktionsumgebung.
 
-### NPM Scripts für die Entwicklung
+### NPM Scripts für die Entwicklung (Windows)
 
 Folgende NPM-Befehle stehen zur Verfügung:
 
@@ -169,29 +169,22 @@ Folgende NPM-Befehle stehen zur Verfügung:
 - `npm run backend` - Startet den Laravel-Entwicklungsserver
 - `npm run dev` - Startet sowohl den Laravel-Server als auch Vite parallel (empfohlen für die Entwicklung)
 
-### NPM Scripts für Datenbank-Testing
+#### NPM Scripts fürs Testen
 
 - `npm run test:db:up` - Startet den Docker-Container der Test-Datenbank (wird für `npm run dev:test` benötigt)
 - `npm run test:db:down` - Stoppt den Docker-Container der Test-Datenbank
 
-### NPM Scripts für Entwicklungswerkzeuge (Windows)
+#### NPM Scripts für Entwicklungswerkzeuge
 
 - `npm run dev:rebuild` - Führt eine komplette Aktualisierung der Anwendung durch (Cache leeren, Assets neu bauen, etc.)
 - `npm run dev:cleanup` - Bereinigt temporäre Dateien und Cache-Einträge
 - `npm run dev:test` - Führt die automatisierten Tests aus, greift dabei auf die Test-Datenbank und die `.env.testing`-Konfiguration zurück
 
-### NPM Scripts für Produktionsserver (Linux)
-
-- `npm run prod:reload` - Aktualisiert die Anwendung auf dem Produktionsserver auf den aktuellsten Stand im Github-Repository
-- `npm run prod:cleanup` - Bereinigt temporäre Dateien und optimiert den Speicherplatz auf dem Server
-- `npm run prod:debugbar:enable` - Aktiviert die Laravel Debugbar für Fehlersuche im Produktionssystem
-- `npm run prod:debugbar:disable` - Deaktiviert die Laravel Debugbar (sollte im Normalbetrieb deaktiviert sein)
-
-### Composer-Script
+#### Composer-Script
 
 - `composer dev` - Startet Laravel-Server, Queue-Worker und Vite-Server parallel
 
-### PHP-Skripte & Artisan Commands
+#### PHP-Skripte & Artisan Commands
 
 Zusätzlich zu den NPM-Scripts bietet das Projekt auch PHP-Skripte (erreichbar über `php artisan script`):
 
@@ -199,10 +192,18 @@ Zusätzlich zu den NPM-Scripts bietet das Projekt auch PHP-Skripte (erreichbar �
 
 Alle Skripte können unabhängig vom aktuellen Verzeichnis im Projekt ausgeführt werden.
 
-**Hinweis:** Die Implementierungen der .bat/.sh Skripte befinden sich in den Verzeichnissen `/scripts/development` (Windows) und `/scripts/production` (Linux), 
+**Hinweis:** Die Implementierungen der .bat/.sh Skripte befinden sich in den Verzeichnissen `/scripts/development` (Windows) und `/scripts/production` (Linux),
 werden aber am besten über die NPM-Scripts aufgerufen, um Pfadprobleme zu vermeiden.
 Die php Scripte befinden sich im Verzeichnis `/app/Console/Commands`.
 
+### NPM Scripts für die Produktion (Linux)
+
+- `npm run prod:reload` - Aktualisiert die Anwendung auf dem Produktionsserver auf den aktuellsten Stand im Github-Repository
+- `npm run prod:cleanup` - Bereinigt temporäre Dateien und optimiert den Speicherplatz auf dem Server
+- `npm run prod:debugbar:enable` - Aktiviert die Laravel Debugbar für Fehlersuche im Produktionssystem
+- `npm run prod:debugbar:disable` - Deaktiviert die Laravel Debugbar (sollte im Normalbetrieb deaktiviert sein)
+
+**Hinweis:** Alle Produktions-Scripts stoppen während ihrer Ausführung den Laravel-Server und starten ihn danach wieder neu.
 
 ## Environment Konfiguration
 
@@ -214,7 +215,7 @@ Das Projekt verwendet verschiedene Umgebungskonfigurationen, welche über spezif
 - **`.env.development`**: Vorlage für die lokale Entwicklungsumgebung
 - **`.env.testing`**: Spezifische Konfiguration für das Ausführen der Tests (manuell und per GitHub Actions)
 - **`.env.production`**: Konfiguration für den Produktionsserver
-- **`.env.example`**: Beispielvorlage alle Umgebungsvariablen, die im Projekt verwendet werden
+- **`.env.example`**: Beispielvorlage aller Umgebungsvariablen, die im Projekt verwendet werden können
 
 ### Zweck der unterschiedlichen Konfigurationsdateien
 
@@ -226,28 +227,6 @@ Diese Datei enthält Einstellungen, die optimal für die lokale Entwicklung ange
 - Laravel Debugbar aktiviert
 - E-Mail-Versand im log-Modus (keine echten E-Mails werden versandt)
 
-Beispiel für eine `.env.development` Datei:
-
-```dotenv
-APP_NAME="WebPortal (Development)"
-APP_ENV=local
-APP_DEBUG=true
-DEBUGBAR_ENABLED=true
-APP_URL=http://localhost:8000
-VITE_DEV_SERVER_URL=http://localhost:5173
-
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=webportal_dev
-DB_USERNAME=laravel
-DB_PASSWORD=secret
-
-MAIL_MAILER=
-## Production Server Konfiguration
-
-```
-
 #### .env.testing (für die Tests)
 
 Diese Datei ist speziell für die Ausführung von Tests optimiert:
@@ -257,9 +236,9 @@ Diese Datei ist speziell für die Ausführung von Tests optimiert:
 - Sollte weitgehend unverändert bleiben
 
 **Hinweis**: Auch wenn diese nicht aktiv (daher in die .env kopiert) ist, 
-wird sie dennoch beim Ausführen der Tests verwendet.
-Die `.env.testing`-Datei wird auch von den GitHub Actions verwendet.
+wird sie dennoch beim Ausführen der Tests verwendet und auch von der GitHub Actions verwendet.
 Sollten hier Änderungen vorgenommen werden, muss gegebenenfalls auch die GitHub Action in `.github/workflows/laravel.yml` angepasst werden.
+Es wird empfohlen, die `.env.testing`-Datei nicht zu verändern,
 
 #### .env.production (für den Produktionsserver)
 
@@ -268,5 +247,8 @@ Diese Konfiguration ist für die Live-Umgebung optimiert:
 - Fehlerprotokollierung angepasst
 - Optimierte Performance-Einstellungen
 - Echte API-Schlüssel und Dienste
-- Tatsächliche Mail und Datenbank-Konfiguration
+- Tatsächliche Mail, Spaces und Datenbank-Konfiguration
+
+## Production Server Konfiguration
+
 
