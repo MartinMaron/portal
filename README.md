@@ -58,7 +58,7 @@
     ```
 8. Führe die Tests aus:
     ```shell
-    npm run dev:test
+    npm run test
     ```
 9. Stoppe die Test-Datenbank:
     ```shell
@@ -105,9 +105,14 @@ Die einfachste Methode, Tests auf deinem lokalen System auszuführen:
 
 2. **Führe die Tests aus**:
    ```shell
-   npm run dev:test
+   npm run test
    ```
-   Dieser Befehl führt alle Tests mit der richtigen Umgebungskonfiguration aus.
+    oder alternativ
+    ```shell
+    npm run dev:test
+    ```
+   Diese Befehle führen alle Tests mit der richtigen Umgebungskonfiguration aus.
+   Der Unterschied zwischen diesen beiden Befehlen wird in [#Scripts & Commands](#scripts--commands) erklärt.
 
 3. **Stoppe die Test-Datenbank** nach dem Testen:
    ```shell
@@ -173,6 +178,11 @@ Folgende NPM-Befehle stehen zur Verfügung:
 
 - `npm run test:db:up` - Startet den Docker-Container der Test-Datenbank (wird für `npm run dev:test` benötigt)
 - `npm run test:db:down` - Stoppt den Docker-Container der Test-Datenbank
+- `npm run test` - Führt alle Tests aus (greift auf die Test-Datenbank und die `.env.testing`-Konfiguration zurück)
+
+Der Unterschied zwischen `npm run test` und `npm run dev:test` ist, 
+dass zweiteres zusätzlich ausgibt,
+welche konkreten Bedingungen erfüllt oder auch nicht erfüllt wurden.
 
 #### NPM Scripts für Entwicklungswerkzeuge
 

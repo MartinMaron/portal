@@ -6,6 +6,7 @@
         "frontend": "vite",
         "backend": "php artisan serve",
         "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
+        "test": "php artisan test",
 
         "test:db:up": "docker-compose -f docker/local-test-database/docker-compose.test-db.yml up -d",
         "test:db:down": "docker-compose -f docker/local-test-database/docker-compose.test-db.yml down",
