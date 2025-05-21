@@ -1,3 +1,8 @@
+#!/bin/bash
+set -e
+export COMPOSER_ALLOW_SUPERUSER=1
+export NODE_OPTIONS="--max-old-space-size=512"
+
 systemctl stop nginx
 systemctl stop php8.3-fpm
 
@@ -25,8 +30,7 @@ php artisan route:clear
 php artisan view:clear
 php artisan cache:clear
 npm install
-yes yes | composer install
-export NODE_OPTIONS="--max-old-space-size=512"
+composer install --no-interaction
 npm run build
 systemctl start php8.3-fpm
 systemctl start nginx
