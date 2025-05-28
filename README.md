@@ -1,18 +1,16 @@
 # WebPortal (Laravel 11)
 
-
-
 ## Inhaltsverzeichnis
+
 1. [Installation & Testen](#installation--testen)
 2. [Scripts & Commands](#scripts--commands)
 3. [Environment Konfiguration](#environment-konfiguration)
 4. [Production Server Konfiguration](#production-server-konfiguration)
 
-
-
 ## Installation & Testen
 
 ### Voraussetzungen
+
 - PHP 8.3
 - Composer
 - Node.js 18.x
@@ -21,6 +19,7 @@
 - Docker und Docker Compose
 
 ### erst Installation
+
 1. Klone das Repository:
    ```shell
    git clone https://github.com/leartpro/WebPortal.git
@@ -74,6 +73,7 @@
     ```
 
 Alternativ zu 7. kann auch direkt ein Image der Test-Datenbank gebaut und gestartet werden:
+
 ```shell
   docker build -t test-mysql -f docker/local-test-database/LocalTestDatabase.Dockerfile docker/local-test-database
     
@@ -87,11 +87,14 @@ Alternativ zu 7. kann auch direkt ein Image der Test-Datenbank gebaut und gestar
 
 ### Voraussetzungen für das Testen
 
-1. **Test-Datenbank**: Du benötigst eine MySQL-Datenbank namens `testing`. Diese wird automatisch über Docker eingerichtet, wenn du den entsprechenden NPM-Befehl ausführst.
+1. **Test-Datenbank**: Du benötigst eine MySQL-Datenbank namens `testing`. Diese wird automatisch über Docker
+   eingerichtet, wenn du den entsprechenden NPM-Befehl ausführst.
 
-2. **Umgebungsvariablen**: Das Projekt verwendet die Datei `.env.testing` für alle Test-Konfigurationen. Diese enthält bereits die passenden Einstellungen für die lokale Testdatenbank.
+2. **Umgebungsvariablen**: Das Projekt verwendet die Datei `.env.testing` für alle Test-Konfigurationen. Diese enthält
+   bereits die passenden Einstellungen für die lokale Testdatenbank.
 
-3. **Docker**: Für den einfachsten Testworkflow wird Docker und Docker Compose benötigt, um die Testdatenbank lokal zu starten.
+3. **Docker**: Für den einfachsten Testworkflow wird Docker und Docker Compose benötigt, um die Testdatenbank lokal zu
+   starten.
 
 #### Lokales Testen über NPM Script (empfohlen)
 
@@ -107,7 +110,7 @@ Die einfachste Methode, Tests auf deinem lokalen System auszuführen:
    ```shell
    npm run test
    ```
-    oder alternativ
+   oder alternativ
     ```shell
     npm run dev:test
     ```
@@ -118,7 +121,7 @@ Die einfachste Methode, Tests auf deinem lokalen System auszuführen:
    ```shell
    npm run test:db:down
    ```
-    Dies stoppt den Docker-Container, der die Testdatenbank bereitstellt.
+   Dies stoppt den Docker-Container, der die Testdatenbank bereitstellt.
 
 #### Manuelles Testen über die Kommandozeile
 
@@ -146,10 +149,11 @@ Wenn du mehr Kontrolle über die Testausführung benötigst:
 
 #### Continuous Integration mit GitHub Actions
 
-Das Projekt ist mit GitHub Actions für kontinuierliche Integration eingerichtet. 
+Das Projekt ist mit GitHub Actions für kontinuierliche Integration eingerichtet.
 Bei jedem Push und Pull Request auf den `laravel11-migration`-Branch werden die Tests automatisch ausgeführt.
 
 Die GitHub Actions-Konfiguration:
+
 - Setzt eine MySQL-Testdatenbank auf
 - Installiert alle Abhängigkeiten
 - Führt Migrationen aus
@@ -158,7 +162,7 @@ Die GitHub Actions-Konfiguration:
 
 **Hinweis:** Die Github Action ist so konfiguriert,
 dass sie die Daten für die Testdatenbank aus der `.env.testing`-Datei liest.
-Sollte die `.env.testing`-Datei daher verändert worden sein, 
+Sollte die `.env.testing`-Datei daher verändert worden sein,
 muss gegebenenfalls auch die Action in `.github/workflows/laravel.yml` angepasst werden.
 
 ## Scripts & Commands
@@ -180,14 +184,15 @@ Folgende NPM-Befehle stehen zur Verfügung:
 - `npm run test:db:down` - Stoppt den Docker-Container der Test-Datenbank
 - `npm run test` - Führt alle Tests aus (greift auf die Test-Datenbank und die `.env.testing`-Konfiguration zurück)
 
-Der Unterschied zwischen `npm run test` und `npm run dev:test` ist, 
+Der Unterschied zwischen `npm run test` und `npm run dev:test` ist,
 dass zweiteres zusätzliche Performance Daten ermittelt.
 
 #### NPM Scripts für Entwicklungswerkzeuge
 
 - `npm run dev:rebuild` - Führt eine komplette Aktualisierung der Anwendung durch (Cache leeren, Assets neu bauen, etc.)
 - `npm run dev:cleanup` - Bereinigt temporäre Dateien und Cache-Einträge
-- `npm run dev:test` - Führt die automatisierten Tests aus, greift dabei auf die Test-Datenbank und die `.env.testing`-Konfiguration zurück
+- `npm run dev:test` - Führt die automatisierten Tests aus, greift dabei auf die Test-Datenbank und die `.env.testing`
+  -Konfiguration zurück
 
 #### Composer-Script
 
@@ -201,18 +206,21 @@ Zusätzlich zu den NPM-Scripts bietet das Projekt auch PHP-Skripte (erreichbar �
 
 Alle Skripte können unabhängig vom aktuellen Verzeichnis im Projekt ausgeführt werden.
 
-**Hinweis:** Die Implementierungen der .bat/.sh Skripte befinden sich in den Verzeichnissen `/scripts/development` (Windows) und `/scripts/production` (Linux),
+**Hinweis:** Die Implementierungen der .bat/.sh Skripte befinden sich in den Verzeichnissen `/scripts/development` (
+Windows) und `/scripts/production` (Linux),
 werden aber am besten über die NPM-Scripts aufgerufen, um Pfadprobleme zu vermeiden.
 Die php Scripte befinden sich im Verzeichnis `/app/Console/Commands`.
 
 ### NPM Scripts für die Produktion (Linux)
 
-- `npm run prod:reload` - Aktualisiert die Anwendung auf dem Produktionsserver auf den aktuellsten Stand im Github-Repository
+- `npm run prod:reload` - Aktualisiert die Anwendung auf dem Produktionsserver auf den aktuellsten Stand im
+  Github-Repository
 - `npm run prod:cleanup` - Bereinigt temporäre Dateien und optimiert den Speicherplatz auf dem Server
 - `npm run prod:debugbar:enable` - Aktiviert die Laravel Debugbar für Fehlersuche im Produktionssystem
 - `npm run prod:debugbar:disable` - Deaktiviert die Laravel Debugbar (sollte im Normalbetrieb deaktiviert sein)
 
-**Hinweis:** Alle Produktions-Scripts stoppen während ihrer Ausführung den Laravel-Server und starten ihn danach wieder neu.
+**Hinweis:** Alle Produktions-Scripts stoppen während ihrer Ausführung den Laravel-Server und starten ihn danach wieder
+neu.
 
 ## Environment Konfiguration
 
@@ -231,6 +239,7 @@ Das Projekt verwendet verschiedene Umgebungskonfigurationen, welche über spezif
 #### .env.development (für lokale Entwicklung)
 
 Diese Datei enthält Einstellungen, die optimal für die lokale Entwicklung angepasst sind:
+
 - Debug-Modus aktiviert
 - Lokale Datenbankkonfiguration
 - Laravel Debugbar aktiviert
@@ -239,19 +248,22 @@ Diese Datei enthält Einstellungen, die optimal für die lokale Entwicklung ange
 #### .env.testing (für die Tests)
 
 Diese Datei ist speziell für die Ausführung von Tests optimiert:
+
 - Verwendet eine separate Test-Datenbank
 - Deaktiviert bestimmte Features, die Tests verlangsamen würden
 - Optimiert für Geschwindigkeit und Wiederholbarkeit
 - Sollte weitgehend unverändert bleiben
 
-**Hinweis**: Auch wenn diese nicht aktiv (daher in die .env kopiert) ist, 
+**Hinweis**: Auch wenn diese nicht aktiv (daher in die .env kopiert) ist,
 wird sie dennoch beim Ausführen der Tests verwendet und auch von der GitHub Actions verwendet.
-Sollten hier Änderungen vorgenommen werden, muss gegebenenfalls auch die GitHub Action in `.github/workflows/laravel.yml` angepasst werden.
+Sollten hier Änderungen vorgenommen werden, muss gegebenenfalls auch die GitHub Action in
+`.github/workflows/laravel.yml` angepasst werden.
 Es wird empfohlen, die `.env.testing`-Datei nicht zu verändern,
 
 #### .env.production (für den Produktionsserver)
 
 Diese Konfiguration ist für die Live-Umgebung optimiert:
+
 - Debug-Modus deaktiviert
 - Fehlerprotokollierung angepasst
 - Optimierte Performance-Einstellungen
@@ -275,6 +287,7 @@ Diese Konfiguration ist für die Live-Umgebung optimiert:
 ### PHP-Konfiguration
 
 #### Installierte PHP-Module
+
 - mbstring
 - openssl
 - pdo_mysql
@@ -295,6 +308,7 @@ Diese Konfiguration ist für die Live-Umgebung optimiert:
 - Zend OPcache
 
 #### PHP-Konfigurationsparameter
+
 ```
 memory_limit = -1        # Unbegrenzt (geeignet für CLI)
 post_max_size = 8M       # Standard
@@ -304,55 +318,116 @@ upload_max_filesize = 2M # Standard (Beachte: könnte erhöht werden)
 ### Webserver-Konfiguration
 
 #### Nginx Virtual Host für WebPortal
+
 ```nginx
-server {
-    listen 80;
-    server_name 164.92.137.114;
-    root /var/www/WebPortal/public;
-
-    add_header X-Frame-Options "SAMEORIGIN";
-    add_header X-XSS-Protection "1; mode=block";
-    add_header X-Content-Type-Options "nosniff";
-
-    index index.html index.php;
-
-    error_page 404 /index.php;
-
-    location / {
-        try_files $uri $uri/ /index.php?$query_string;
-    }
- 
-    location /build/ {
-        alias /var/www/WebPortal/public/build/;
-        add_header Cache-Control "public";
-        expires max;
-        access_log off;
-    }
-
-    location ~* \.(js|css|png|jpg|jpeg|gif|svg|ico|woff2|woff|ttf)$ {
+    server {
+        listen 80;
+        server_name 164.92.137.114;
         root /var/www/WebPortal/public;
-        try_files $uri $uri/ =404;
-        access_log off;
-        expires max;
-        add_header Cache-Control "public";
+    
+        add_header X-Frame-Options "SAMEORIGIN";
+        add_header X-XSS-Protection "1; mode=block";
+        add_header X-Content-Type-Options "nosniff";
+    
+        index index.html index.php;
+    
+        error_page 404 /index.php;
+    
+        location / {
+            try_files $uri $uri/ /index.php?$query_string;
+        }
+     
+        location /build/ {
+            alias /var/www/WebPortal/public/build/;
+            add_header Cache-Control "public";
+            expires max;
+            access_log off;
+        }
+    
+        location ~* \.(js|css|png|jpg|jpeg|gif|svg|ico|woff2|woff|ttf)$ {
+            root /var/www/WebPortal/public;
+            try_files $uri $uri/ =404;
+            access_log off;
+            expires max;
+            add_header Cache-Control "public";
+        }
+    
+        location ~ \.php$ {
+            fastcgi_pass unix:/var/run/php/php8.3-fpm.sock;
+            fastcgi_index index.php;
+            fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+            include fastcgi_params;
+        }
+    
+        location ~ /\.(?!well-known).* {
+            deny all;
+        }
     }
+```
 
-    location ~ \.php$ {
-        fastcgi_pass unix:/var/run/php/php8.3-fpm.sock;
-        fastcgi_index index.php;
-        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
-        include fastcgi_params;
-    }
+bez. für HTTPs:
 
-    location ~ /\.(?!well-known).* {
-        deny all;
+```nginx
+    server {
+        server_name web.e-neko.eu www.web.e-neko.eu;
+        root /var/www/WebPortal/public;
+    
+        add_header X-Frame-Options "SAMEORIGIN";
+        add_header X-XSS-Protection "1; mode=block";
+        add_header X-Content-Type-Options "nosniff";
+    
+        index index.php index.html;
+    
+        location / {
+            try_files $uri $uri/ /index.php?$query_string;
+        }
+     
+        location /build/ {
+            alias /var/www/WebPortal/public/build/;
+            add_header Cache-Control "public";
+            expires max;
+            access_log off;
+        }
+    
+        location ~* \.(js|css|png|jpg|jpeg|gif|svg|ico|woff2|woff|ttf)$ {
+            root /var/www/WebPortal/public;
+            try_files $uri $uri/ =404;
+            access_log off;
+            expires max;
+            add_header Cache-Control "public";
+        }
+    
+        location ~ \.php$ {
+            fastcgi_pass unix:/var/run/php/php8.3-fpm.sock;
+            fastcgi_index index.php;
+            fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+            include fastcgi_params;
+        }
+    
+        location ~ /\.(?!well-known).* {
+            deny all;
+        }
+    
+        listen 443 ssl; # managed by Certbot
+        ssl_certificate /etc/letsencrypt/live/web.e-neko.eu/fullchain.pem; # managed by Certbot
+        ssl_certificate_key /etc/letsencrypt/live/web.e-neko.eu/privkey.pem; # managed by Certbot
+        include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+        ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+    
+    
     }
-}
+    server {
+        listen 80;
+        server_name web.e-neko.eu www.web.e-neko.eu;
+        
+        return 301 https://$host$request_uri;
+    }
 ```
 
 ### Laufende Dienste
 
 Die folgenden relevanten Dienste sind aktiv und laufen:
+
 - nginx.service
 - php8.3-fpm.service
 - mysql (implizit, da mysql funktioniert)
