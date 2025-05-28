@@ -23,9 +23,14 @@ class Dashboard extends Component
     }
 
     public function getAbrechnungForDownload(){
-        if ($this->realestate->abrechnungssetting->hk_id !=null && $this->realestate->abrechnungssetting->hk_id != '00000000-0000-0000-0000-000000000000' ){
+        // Check if realestate and abrechnungssetting exist before trying to access hk_id
+        if ($this->realestate &&
+            $this->realestate->abrechnungssetting &&
+            $this->realestate->abrechnungssetting->hk_id != null &&
+            $this->realestate->abrechnungssetting->hk_id != '00000000-0000-0000-0000-000000000000') {
+
             return $this->realestate->abrechnungssetting;
-        }else{
+        } else {
             return $this->getLastDoneAbrechnung();
         }
     }
