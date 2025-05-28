@@ -1,0 +1,2 @@
+-Tests verbessern (SetUp läuft teilweise erst nach tests (gefährlich bei falscher config)
+-npm run config prüft ob die config von phpunit, TestCase.php, .env.testing, ./github/workflows/test.yml etc. übereinstimmt

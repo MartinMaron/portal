@@ -181,8 +181,7 @@ Folgende NPM-Befehle stehen zur Verfügung:
 - `npm run test` - Führt alle Tests aus (greift auf die Test-Datenbank und die `.env.testing`-Konfiguration zurück)
 
 Der Unterschied zwischen `npm run test` und `npm run dev:test` ist, 
-dass zweiteres zusätzlich ausgibt,
-welche konkreten Bedingungen erfüllt oder auch nicht erfüllt wurden.
+dass zweiteres zusätzliche Performance Daten ermittelt.
 
 #### NPM Scripts für Entwicklungswerkzeuge
 
