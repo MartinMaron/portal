@@ -6,6 +6,7 @@ use Barryvdh\Debugbar\Facades\Debugbar;
 use Carbon\Carbon;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -30,5 +31,8 @@ class AppServiceProvider extends ServiceProvider
     {
         Carbon::setLocale(LC_TIME, 'de_DE.utf8');
         Schema::defaultStringLength(191);
+        if (app()->environment('production')) {
+            URL::forceScheme('https');
+        }
     }
 }

@@ -257,6 +257,7 @@ Diese Konfiguration ist für die Live-Umgebung optimiert:
 - Optimierte Performance-Einstellungen
 - Echte API-Schlüssel und Dienste
 - Tatsächliche Mail, Spaces und Datenbank-Konfiguration
+- Forced HTTPS-Verbindungen
 
 ## Production Server Konfiguration
 
