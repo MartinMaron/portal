@@ -152,6 +152,12 @@
                             for="telephone_number" label="Telefonnummer" :error="$errors->first('current.telephone_number')">
                             <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.blur="current.telephone_number" id="telephone_number" placeholder="..." />
                         </x-input.group>
+                            <!-- Mobilfunknnummer -->
+                            <x-input.group
+                                class="my-1" paddingLabel="" hoheLabel="h-6 sm:h-8 sm:pt-1" hohe="h-20 sm:h-10"
+                                for="mobilnumber" label="Mobiltelefon" :error="$errors->first('current.mobilnumber')">
+                                <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.lazy="current.mobilnumber" id="mobilnumber" placeholder="..." />
+                            </x-input.group>
                     @endif
 
                 @elseif ($currentPage === 2)
@@ -183,8 +189,9 @@
                     </x-input.group>
                     <!-- Adresse -->
                     <x-input.group
-                        hohe="h-30"
-                        hoheLabel="h-30 sm:h-full sm:pt-3"
+                        hohe="h-40"
+                        hoheContent="h-40"
+                        hoheLabel="h-40 sm:h-full sm:pt-3"
                         bottom=true for="address" label="Adresse" :error="$errors->first('current.address')">
                         <x-input.textarea wire:model.blur="current.address" id="address" placeholder="Nur angeben falls abweichende Anschrift verwendet werden soll." />
                     </x-input.group>

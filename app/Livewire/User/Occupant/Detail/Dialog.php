@@ -127,6 +127,7 @@ class Dialog extends Component
             'current.anrede' => 'nullable',
             'current.email' => 'nullable|string|email|max:255',
             'current.telephone_number' => 'nullable',
+            'current.mobilnumber' => 'nullable',
             'current.date_from_editing' => 'required|string',
             'current.date_to_editing' => 'nullable|string',
         ],

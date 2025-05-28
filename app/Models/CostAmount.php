@@ -37,6 +37,7 @@ class CostAmount extends Model
         'conetto' => 'decimal:2',
         'coconsupmtion' => 'decimal:1',
         'grosAmount_HH' => 'decimal:2',
+        'haushaltsnah' => 'decimal:2',
         'netAmount' => 'decimal:2'];
 
     protected $appends = [

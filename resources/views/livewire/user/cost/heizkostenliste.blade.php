@@ -36,7 +36,13 @@
                         @endif
                     </div>
                     <div class="basis-1/3">
-                        @if ($this->hasHaushaltsnahByType('BEK'))
+                        @if ($this->hasHaushaltsnahByType('BEK') || $this->hasHaushaltsnahByType('HNK')
+                            || $this->hasHaushaltsnahByType('ZUK')
+                            || $this->hasHaushaltsnahByType('ZKW')
+                            || $this->hasHaushaltsnahByType('KWK')
+                            || $this->hasHaushaltsnahByType('BEH')
+                            || $this->hasHaushaltsnahByType('KWA')
+                            )
                             <div class="">
                             <span class="">§ 35c EStG</span>
                             </div>

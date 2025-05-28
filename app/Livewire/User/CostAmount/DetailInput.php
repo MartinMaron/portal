@@ -7,10 +7,12 @@ use App\Models\CostAmount;
 use Livewire\Component;
 use PhpParser\Node\Expr\Cast\Double;
 use Usernotnull\Toast\Concerns\WireToast;
+use App\Http\Traits\Helpers;
 
 class DetailInput extends Component
 {
     use WireToast;
+    use Helpers;
 
     public Cost $cost;
 
@@ -116,6 +118,7 @@ class DetailInput extends Component
             'current.brutto' => 'nullable',
             'current.netto' => 'nullable',
             'current.haushaltsnah' => 'nullable',
+            'current.grosAmount_HH' => 'nullable',
             'current.description' => 'nullable',
             'current.cobrutto' => 'nullable',
             'current.conetto' => 'nullable',
@@ -151,6 +154,7 @@ class DetailInput extends Component
                     $this->dispatch('refreshComponents');
                 }
             } else {
+                debugbar()->info($this->current);
                 CostAmount::updateOrcreate(
                     ['cost_id' => $this->cost->id,
                         'abrechnungssetting_id' => $this->cost->realestate->abrechnungssetting_id, ],
@@ -163,6 +167,7 @@ class DetailInput extends Component
                         'conetto' => $this->current->conetto,
                         'coconsupmtion' => $this->current->coconsupmtion,
                         'haushaltsnah' => $this->current->haushaltsnah,
+                        'grosAmount_HH'=>$this->castStringToDouble($this->current->haushaltsnah),
                     ]
                 );
             }

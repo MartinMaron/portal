@@ -38,23 +38,33 @@ class Verbrauchsinfo extends Model
         ]);
     }
 
-    public function getVerbrauchAktDisplayAttribute()
-    {
-        return number_format($this->verbrauch_akt, 2, ',', '.');
+    public function getVerbrauchAktDisplayAttribute(){
+        if($this->verbrauch_akt < 0){
+            return 'n.V.';
+        } else {
+            return number_format($this->verbrauch_akt, 2, ',', '.');
+        }
+    }
+    public function getVerbrauchMonDisplayAttribute(){
+        if ($this->verbrauch_mon < 0){
+            return 'n.V.';
+        } else {
+            return number_format($this->verbrauch_mon, 2, ',', '.');
+        }
+    }
+    public function getVerbrauchVorjDisplayAttribute(){
+        if ($this->verbrauch_vorj < 0){
+            return 'n.V.';
+        } else {
+            return number_format($this->verbrauch_vorj, 2, ',', '.');
+        }
     }
 
-    public function getVerbrauchMonDisplayAttribute()
-    {
-        return number_format($this->verbrauch_mon, 2, ',', '.');
-    }
-
-    public function getVerbrauchVorjDisplayAttribute()
-    {
-        return number_format($this->verbrauch_vorj, 2, ',', '.');
-    }
-
-    public function getDurchschnittDisplayAttribute()
-    {
-        return number_format($this->durchschnitt, 2, ',', '.');
+    public function getDurchschnittDisplayAttribute(){
+        if($this->durchschnitt < 0){
+            return 'n.V.';
+        } else {
+            $this->durchschnitt = $this->durchschnitt * $this->einheit->faktor;
+        }
     }
 }

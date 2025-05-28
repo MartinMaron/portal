@@ -18,7 +18,7 @@ class Occupant extends Model
     protected $fillable = [
         'id', 'nekoId', 'realestate_id', 'unvid', 'budguid', 'nutzeinheitNo', 'dateFrom', 'dateTo', 'anrede', 'title', 'nachname', 'vorname', 'address',
         'street', 'postcode', 'houseNr', 'city', 'vat', 'uaw', 'qmkc', 'qmww', 'pe', 'bemerkung', 'vorauszahlung', 'lokalart', 'customEinheitNo', 'lage', 'email',
-        'telephone_number', 'eigentumer', 'date_from_editing', 'qmkc_editing', 'vorauszahlung_editing', 'vorauszahlung_editing', 'personen_zahl', 'OptimisticLockField',
+        'telephone_number', 'eigentumer', 'date_from_editing', 'qmkc_editing', 'vorauszahlung_editing', 'vorauszahlung_editing', 'personen_zahl', 'OptimisticLockField','mobilnumber'
     ];
 
     public function user()

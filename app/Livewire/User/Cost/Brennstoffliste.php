@@ -97,10 +97,12 @@ class Brennstoffliste extends Component
     public function setDone()
     {
         $this->nekoerrors = [];
-        foreach ($this->realestate->costs->where('costtype_id', '=', 'BRK') as $item) {
+        foreach($this->getCostByType('BRK') as $item) {
 
             // für Kosten ohne Tank müssen irgendwelche Kosten eingetragen werden
-            if ($item->fueltype_id != null && ! $item->fueltype->hasTank) {
+            if ($item->fueltype_id !=null
+                && !$item->fueltype->hasTank
+            ) {
                 if ($item->netto == '0,00' && $item->brutto == '0,00') {
                     $this->nekoerrors[] = $item->caption.': keine Kosten angegeben.';
                 }
@@ -117,6 +119,22 @@ class Brennstoffliste extends Component
                     $this->nekoerrors[] = $item->caption.': kein Endstand angegeben.';
                 }
             }
+
+            if ($item->co2Tax){
+                $q = $item->costAmounts()->where('abrechnungssetting_id','=', $item->realestate->abrechnungssetting_id)
+                    ->where('endvalue','=', 0)
+                    ->where('startvalue','=', 0)
+                    ->get();
+
+                if ($q->sum('co2TaxValue') == 0) {
+                    $this->nekoerrors[]= $item->caption. ': keine CO2-Menge angegeben.';
+                }
+                if ($q->sum('co2TaxAmount_gros') == 0) {
+                    $this->nekoerrors[]= $item->caption. ': keine CO2-Kosten angegeben.';
+                }
+
+            }
+
         }
         if (! $this->nekoerrors) {
             $this->dispatch('showNekoMessageModal', ['title' => 'Brennstoffliste absenden?', 'message' => 'Dannach können keine Änderungen mehr vorgenommen werden.', 'type' => 'warning', 'action' => 'confirmEditDone']);
@@ -167,13 +185,21 @@ class Brennstoffliste extends Component
         $this->dispatch('showNekoMessageModal', ['title' => 'Löschen?', 'message' => 'Bitte das löschen bestätigen.', 'type' => 'delete', 'action' => 'deleteCostAmount']);
     }
 
-    public function getCostByType($costtypeId)
-    {
-        return Cost::where('realestate_id', '=', $this->realestate->id)
+    public function getCostByType($costtypeId){
+        return Cost::where('realestate_id','=',$this->realestate->id)
+            ->where(function (Builder $query) {$query->IsBrennstoffkosten();})
             ->where(function (Builder $query) {
-                $query->IsBrennstoffkosten();
+                if ($this->realestate->abrechnungssetting != null) {
+                    $query->where('periodFrom', '<=', $this->realestate->abrechnungssetting->periodTo);
+                }
             })
-            ->where('costtype_id', '=', $costtypeId)
+            ->where(function (Builder $query) {
+                if ($this->realestate->abrechnungssetting != null) {
+                    $query->where('periodTo', '=', null)
+                        ->orWhere('periodTo', '>=', $this->realestate->abrechnungssetting->periodFrom);
+                }
+            })
+            ->where('costtype_id','=',$costtypeId)
             ->get();
     }
 

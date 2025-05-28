@@ -251,7 +251,8 @@ class ShowOccupantList extends Component
                 ->where('realestate_id', '=', $this->realestate->id)
                 ->where(function (Builder $query) {
                     if ($this->realestate->abrechnungssetting != null) {
-                        $query->where('dateFrom', '<=', $this->realestate->abrechnungssetting->periodTo);
+                        $query->where('dateFrom', '<=', $this->realestate->abrechnungssetting->periodTo)
+                            ->orWhere('dateTo', '=', null);
                     }
                 })
                 ->where(function (Builder $query) {
@@ -273,7 +274,8 @@ class ShowOccupantList extends Component
                 ->where('realestate_id', '=', $this->realestate->id)
                 ->where(function (Builder $query) {
                     if ($this->realestate->abrechnungssetting != null) {
-                        $query->where('dateFrom', '<=', $this->realestate->abrechnungssetting->periodTo);
+                        $query->where('dateFrom', '<=', $this->realestate->abrechnungssetting->periodTo)
+                            ->orWhere('dateTo', '=', null);
                     }
                 })
                 ->where(function (Builder $query) {

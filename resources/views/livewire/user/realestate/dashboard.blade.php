@@ -132,10 +132,12 @@
                             <x-icon.fonts.pdf-download class="text-xl sm:text-xl _icon"></x-icon.fonts.pdf-download>
                             <div class="ml-1">Kostenübersicht</div>
                         </a>
-                        <a href="{{route('user.downloadspacesfile', 'abrbk+'. $this->getAbrechnungForDownload()->id )}}" class="flex justify-start mb-2">
-                            <x-icon.fonts.pdf-download class="text-xl sm:text-xl _icon"></x-icon.fonts.pdf-download>
-                            <div class="ml-1">Betriebskostenabrechnung</div>
-                        </a>
+                        @if ($this->getAbrechnungForDownload()->bk_id != '00000000-0000-0000-0000-000000000000' )
+                            <a href="{{route('user.downloadspacesfile', 'abrbk+'. $this->getAbrechnungForDownload()->id )}}" class="flex justify-start mb-2">
+                                <x-icon.fonts.pdf-download class="text-xl sm:text-xl _icon"></x-icon.fonts.pdf-download>
+                                <div class="ml-1">Betriebskostenabrechnung</div>
+                            </a>
+                        @endif
                     </div>
 
                 </div>
