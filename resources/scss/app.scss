@@ -12,7 +12,8 @@
 @include meta.load-css("realestate-dashboard");
 
 @import '@fortawesome/fontawesome-free/css/all.min.css';
-
+//@import "./fontawesome/scss/duotone.scss";
+//@import "./fontawesome/scss/_duotone-icons.scss";
 [x-cloak] {
     display: none;
 }
