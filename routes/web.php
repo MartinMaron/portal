@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\DownloadFileController;
 use App\Http\Controllers\DownloadFileSpacesController;
 use App\Http\Controllers\Web\RealestateController;
@@ -123,11 +123,11 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         });
 
         Route::get('/dashboard', function () {
-            if (auth()->user()->isUser) {
+            if (Auth::User()->isUser) {
                 return redirect('/realestates');
             } else {
-                if (auth()->user()->isMieter) {
-                    if (auth()->user()->userVerbrauchsinfoAccessControls->count() > 0) {
+                if (Auth::User()->isMieter) {
+                    if (Auth::User()->userVerbrauchsinfoAccessControls->count() > 0) {
                         return redirect('/verbrauchsinfos');
                     } else {
                         return redirect('/');
