@@ -1,3 +1,4 @@
+#!/bin/bash
 systemctl stop nginx
 systemctl stop php8.3-fpm
 php artisan config:clear

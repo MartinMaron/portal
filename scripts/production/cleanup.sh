@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 set +e
 export COMPOSER_ALLOW_SUPERUSER=1
 echo "****************************"
