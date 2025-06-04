@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Carbon\Exceptions\InvalidFormatException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Support\Facades\Validator;
 
 class Occupant extends Model
@@ -18,7 +19,7 @@ class Occupant extends Model
     protected $fillable = [
         'id', 'nekoId', 'realestate_id', 'unvid', 'budguid', 'nutzeinheitNo', 'dateFrom', 'dateTo', 'anrede', 'title', 'nachname', 'vorname', 'address',
         'street', 'postcode', 'houseNr', 'city', 'vat', 'uaw', 'qmkc', 'qmww', 'pe', 'bemerkung', 'vorauszahlung', 'lokalart', 'customEinheitNo', 'lage', 'email',
-        'telephone_number', 'eigentumer', 'date_from_editing', 'qmkc_editing', 'vorauszahlung_editing', 'vorauszahlung_editing', 'personen_zahl', 'OptimisticLockField','mobilnumber'
+        'telephone_number', 'eigentumer', 'date_from_editing', 'qmkc_editing', 'personen_zahl', 'OptimisticLockField','mobilnumber'
     ];
 
     public function user()
@@ -104,82 +105,62 @@ class Occupant extends Model
         }
     }
 
-    protected function getDateFromEditingAttribute()
+    public function dateFromEditing(): Attribute
     {
-        return Carbon::parse($this->dateFrom)->format('d.m.Y');
+        return Attribute::make(
+            get: fn () => $this->dateFrom ? Carbon::parse($this->dateFrom)->format('d.m.Y') : '',
+            set: fn ($value) => ['dateFrom' => $value ? Carbon::parse($value) : null]
+        );
     }
 
-    protected function setDateFromEditingAttribute($value)
+    public function dateToEditing(): Attribute
     {
-        try {
-            $this->dateFrom = Carbon::parse($value);
-        } catch (InvalidFormatException $e) {
-
-        }
+        return Attribute::make(
+            get: fn () => $this->dateTo ? Carbon::parse($this->dateTo)->format('d.m.Y') : '',
+            set: fn ($value) => ['dateTo' => $value ? Carbon::parse($value) : null]
+        );
     }
 
-    protected function getDateToEditingAttribute()
+    public function qmkcEditing(): Attribute
     {
-        if ($this->dateTo) {
-            return Carbon::parse($this->dateTo)->format('d.m.Y');
-        }
-
-        return '';
+        return Attribute::make(
+            get: fn () => number_format($this->qmkc, 2, ',', '.'),
+            set: fn ($value) => ['qmkc' => $this->castStringToDouble($value)]
+        );
     }
 
-    protected function setDateToEditingAttribute($value)
+    public function vorauszahlungEditing(): Attribute
     {
-        Debugbar::info('Occupant-setDateToEditingAttribute:'.$value);
-        if ($value) {
-            $this->dateTo = Carbon::parse($value);
-        }
-    }
+        return Attribute::make(
+            get: function () {
+                $q = $this->preapaids
+                    ->where('abrechnungssetting_id', '=', $this->realestate->abrechnungssetting_id)
+                    ->where('prepaidtype', '=', $this->realestate->prepaidtype);
 
-    protected function setQmkcEditingAttribute($value)
-    {
-        $this->qmkc = $this->castStringToDouble($value);
-    }
-
-    protected function getQmkcEditingAttribute()
-    {
-        return number_format($this->qmkc, 2, ',', '.');
-    }
-
-    protected function setVorauszahlungEditingAttribute($value)
-    {
-        $field = null;
-        $q = $this->preapaids
-            ->where('abrechnungssetting_id', '=', $this->realestate->abrechnungssetting_id)
-            ->where('prepaidtype', '=', $this->realestate->prepaidtype);
-
-        if ($this->realestate->eingabeCostNetto == 1) {
-            $field = 'netAmount';
-        } else {
-            $field = 'grosAmount';
-        }
-
-        $prepaid = Prepaid::updateOrCreate(
-            ['occupant_id' => $this->id, 'prepaidtype' => $this->realestate->prepaidtype, 'abrechnungssetting_id' => $this->realestate->abrechnungssetting_id],
-            [
-                $field => $this->castStringToDouble($value),
-            ]);
-    }
-
-    protected function getVorauszahlungEditingAttribute()
-    {
-        $q = $this->preapaids
-            ->where('abrechnungssetting_id', '=', $this->realestate->abrechnungssetting_id)
-            ->where('prepaidtype', '=', $this->realestate->prepaidtype);
-
-        if ($q->count() == 0) {
-            return '0,00';
-        } else {
-            if ($this->realestate->eingabeCostNetto == 1) {
-                return number_format($q->first()->netAmount, 2, ',', '.');
-            } else {
-                return number_format($q->first()->grosAmount, 2, ',', '.');
+                if ($q->count() == 0) {
+                    return '0,00';
+                } else {
+                    if ($this->realestate->eingabeCostNetto == 1) {
+                        return number_format($q->first()->netAmount, 2, ',', '.');
+                    } else {
+                        return number_format($q->first()->grosAmount, 2, ',', '.');
+                    }
+                }
+            },
+            set: function ($value) {
+                $field = $this->realestate->eingabeCostNetto == 1 ? 'netAmount' : 'grosAmount';
+                Prepaid::updateOrCreate(
+                    [
+                        'occupant_id' => $this->id,
+                        'prepaidtype' => $this->realestate->prepaidtype,
+                        'abrechnungssetting_id' => $this->realestate->abrechnungssetting_id
+                    ],
+                    [
+                        $field => $this->castStringToDouble($value),
+                    ]
+                );
             }
-        }
+        );
     }
 
     protected function getZeitraumAttribute()
