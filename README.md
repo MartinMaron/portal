@@ -20,59 +20,31 @@
 
 ### erst Installation
 
-1. Klone das Repository:
-   ```shell
-   git clone https://github.com/leartpro/WebPortal.git
-    ```
-2. Wechsel in das Projektverzeichnis:
-    ```shell
-    cd WebPortal
-    ```
-3. Installiere die Abhängigkeiten:
-    ```shell
-    composer install
-    npm install
-    ```
-4. Erstelle eine Kopie der `.env.development` Datei, oder alternativ der `.env.example`
-   (erfordert manuelle Anpassung):
-    ```shell
-    cp .env.development .env
-    ```
-   bez.
-   ```shell
-    cp .env.example .env
-    ```
-   **Hinweis:** Wichtig ist, dass gultige Datenbank-Zugangsdaten in der `.env`-Datei eingetragen werden.
-5. Erstelle den Applikations-Schlüssel:
-    ```shell
-    php artisan key:generate
-    ```
-6. Baue die Assets:
-    ```shell
-    npm run build
-    ```
-7. Starte den lokalen Datenbank-Server:
-    ```shell
-    npm run test:db:up
-    ```
-8. Führe die Tests aus:
-    ```shell
-    npm run test
-    ```
-9. Stoppe die Test-Datenbank:
-    ```shell
-    npm run test:db:down
-    ```
-10. Führe die Migration auf der Datenbank aus:
-    ```shell
-    php artisan migrate:fresh --seed
-    ```
-11. Starte den Laravel-Developments-Server:
-    ```shell
-    npm run dev
-    ```
+1. Lade das Repository von [Github](https://github.com/leartpro/WebPortal/archive/refs/heads/laravel11-migration.zip)
+herunter und extrahiere den Zip Ordner in das gewünschte Verzeichnis.
+2. Stelle sicher, dass der extrahierte Ordner "WebPortal" heißt. 
+3. Installiere [Herd](https://herd.laravel.com/download/latest/windows). Herd installiert Php und Node automatisch.
+4. Wechsel bei Herd zu "Sites" -> "Add Site" -> "Link existing Project"
+und wähle das extrahierte Repository aus. 
+Stelle sicher, dass mindestens PHP-8.4 ausgewählt ist und kein Häkchen bei HTTPS gesetzt ist.
+Sollte die Website nicht direkt unter der Adresse in Herd zu sehen sein, befolge die nächsten Schritte.
+5. Führe in der Powershell `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted` aus.
+6. Öffne `C:\Users\yourname\.config\herd\bin\php84\php.ini` und entferne das `;` in der Zeile `;extension=ftp`.
+7. Starte in Herd den PHP-Service neu.
+8. Öffne den Webportal Ordner im Terminal und führe nun `copy .\.env.development .env` gefolgt von `php artisan key:generate` aus.
+9. Führe `npm run dev:rebuild` aus.
 
-Alternativ zu 7. kann auch direkt ein Image der Test-Datenbank gebaut und gestartet werden:
+Stelle nun sicher, dass die in der `.env` eingetragenen Datenbank und Spaces Konfigurationen korrekt sind.
+Die Website sollte nun in Herd angezeigt werden.
+
+Um `npm run test` bez. `npm run dev:test` ausführen zu können müssen allerdings noch die folgenden Schritte befolgt werden.
+10. Installiere [Docker Desktop](https://docs.docker.com/desktop/setup/install/windows-install/)
+(für die Installation muss das System einmal neu gestartet werden).
+11. Starte nun die Test-Datenbank mit `npm run test:db:up`.
+12. Nun führe die Tests entweder über `npm run test` oder `npm run dev:test` aus.
+13. Stoppe anschließend die Test-Datenbank wieder mit `npm run test:db:down`.
+
+Alternativ zu 11. kann auch direkt ein Image der Test-Datenbank gebaut und gestartet werden:
 
 ```shell
   docker build -t test-mysql -f docker/local-test-database/LocalTestDatabase.Dockerfile docker/local-test-database
