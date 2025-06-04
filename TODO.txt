@@ -1,1 +1,0 @@
--verbesserte erst installations anleitung mit allen requirements installieren und z.B. ftp-extension in php-ini anpassen et.c
