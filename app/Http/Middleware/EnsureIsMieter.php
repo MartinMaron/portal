@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class EnsureIsMieter
 {
@@ -17,7 +18,7 @@ class EnsureIsMieter
      */
     public function handle(Request $request, Closure $next)
     {
-        if (! auth()->user()->isMieter) {
+        if (! Auth::user()->isMieter) {
             return redirect('/dashboard');
         }
 

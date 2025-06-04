@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class EnsureIsUser
 {
@@ -17,7 +18,7 @@ class EnsureIsUser
      */
     public function handle(Request $request, Closure $next)
     {
-        if (! auth()->user()->isUser) {
+        if (! Auth::user()->isUser) {
             return redirect('/dashboard');
         }
 

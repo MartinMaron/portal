@@ -8,7 +8,8 @@ class DownloadFileController extends Controller
 {
     public function downloadFile($file_name)
     {
-        return Storage::disk('public')->download($file_name);
+        $path = Storage::disk('public')->path($file_name);
+        return response()->download($path);
 
     }
 
