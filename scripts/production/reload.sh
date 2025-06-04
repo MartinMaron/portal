@@ -2,6 +2,8 @@
 set -e
 export COMPOSER_ALLOW_SUPERUSER=1
 export NODE_OPTIONS="--max-old-space-size=512"
+#!/bin/bash
+
 systemctl stop nginx
 systemctl stop php8.3-fpm
 echo "Verfügbarer Speicher vor dem Build:"
