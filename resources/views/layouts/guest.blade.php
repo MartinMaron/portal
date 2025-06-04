@@ -19,7 +19,7 @@
     </head>
     <body class="font-sans antialiased">
         {{-- <x-jet-banner /> --}}
-        <livewire:toasts />
+        <livewire:toasts/>
 
         <div class="bg-white">
 

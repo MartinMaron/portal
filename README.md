@@ -11,12 +11,7 @@
 
 ### Voraussetzungen
 
-- PHP 8.3
-- Composer
-- Node.js 18.x
-- npm
-- MySQL 8.x
-- Docker und Docker Compose
+- MYSQL Datenbank mit bekannten Zugangsdaten
 
 ### erst Installation
 
@@ -285,6 +280,7 @@ Diese Konfiguration ist für die Live-Umgebung optimiert:
 memory_limit = -1        # Unbegrenzt (geeignet für CLI)
 post_max_size = 8M       # Standard
 upload_max_filesize = 2M # Standard (Beachte: könnte erhöht werden)
+extension=ftp #muss in php.ini auf gültig gesetzt werden
 ```
 
 ### Webserver-Konfiguration
