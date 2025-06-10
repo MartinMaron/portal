@@ -2,11 +2,12 @@
 
 namespace App\Livewire\User\Occupant\Verbrauchsinfo;
 
-use App\Livewire\DataTable\WithCachedRows;
-use App\Livewire\DataTable\WithSorting;
-use App\Models\Occupant;
-use App\Models\UserVerbrauchsinfoAccessControl;
 use Livewire\Component;
+use App\Models\Occupant;
+use Illuminate\Support\Facades\Auth;
+use App\Livewire\DataTable\WithSorting;
+use App\Livewire\DataTable\WithCachedRows;
+use App\Models\UserVerbrauchsinfoAccessControl;
 
 class ShowVerbrauchsinfos extends Component
 {
@@ -39,7 +40,7 @@ class ShowVerbrauchsinfos extends Component
     public function getRowsQueryProperty()
     {
         $q = $this->occupant->userVerbrauchsinfoAccessControls
-            ->where('user_id', '=', auth()->user()->id)
+            ->where('user_id', '=', Auth::user()->id)
             ->map(function (UserVerbrauchsinfoAccessControl $userControl) {
                 return $userControl->jahr_monat;
             });

@@ -2,10 +2,11 @@
 
 namespace App\Livewire\User\Realestate;
 
-use App\Models\Realestate;
-use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
+use App\Models\Realestate;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Builder;
 
 class SearchList extends Component
 {
@@ -22,7 +23,7 @@ class SearchList extends Component
 
     public function render()
     {
-        if (auth()->user()->isAdmin)
+        if (Auth::user()->isAdmin)
         {
             $filtered = Realestate::query()->orderBy('street')
                 ->where('address','LIKE','%'. $this->filter['search'].'%')
@@ -30,7 +31,7 @@ class SearchList extends Component
                 ->paginate(20);
         }else{
             $filtered = Realestate::query()->orderBy('street')
-                ->where('user_id', auth()->user()->id)
+                ->where('user_id', Auth::user()->id)
                 ->where('address','LIKE','%'. $this->filter['search'].'%')
                 ->where(function (Builder $query) {$query->Visible();})
                 ->paginate(20);
