@@ -425,29 +425,62 @@ Zunächst ist ein Verzeichnis "Webhook" in /var/www/ zu erstellen.
 darin sollte dann deploy.php so eingefügt werden:
 ```php
 <?php
-$expectedSecret = getenv('SECRET');
+// Optional: Logging-Funktion
+function log_message(string $message): void {
+    file_put_contents(__DIR__ . '/deploy.log', date('[Y-m-d H:i:s] ') . $message . "\n", FILE_APPEND);
+}
+
+function getSecretFromEnv(string $filepath): string {
+    if (!file_exists($filepath)) {
+        return '';
+    }
+
+    $lines = file($filepath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    foreach ($lines as $line) {
+        if (strpos(trim($line), 'SECRET=') === 0) {
+            return trim(substr($line, strlen('SECRET=')));
+        }
+    }
+    return '';
+}
+
+// Erwartetes Secret – entweder aus Umgebungsvariable oder als Fallback hardcodiert (nicht empfohlen für Produktion!)
+$expectedSecret = getSecretFromEnv(__DIR__ . '/.env');
+
+// Gelesenes Secret aus HTTP-Header oder POST-Daten
 $receivedSecret = $_SERVER['HTTP_X_SECRET'] ?? $_POST['secret'] ?? '';
 
+// Debug-Log
+log_message("Deploy request received. Expected: $expectedSecret, Received: $receivedSecret");
+
+// Secret-Vergleich
 if ($receivedSecret !== $expectedSecret) {
     http_response_code(403);
+    log_message("Access denied: Invalid secret");
     echo "Forbidden";
     exit;
 }
 
+// GitHub/GitLab/etc. Payload lesen
 $payload = json_decode(file_get_contents('php://input'), true);
-
 $ref = $payload['ref'] ?? '';
+
+// Branch prüfen
 if ($ref !== 'refs/heads/production') {
     http_response_code(200);
+    log_message("Ignored push: not production branch ($ref)");
     echo "Push ignored (not production branch).";
     exit;
 }
 
-file_put_contents(__DIR__ . '/deploy.log', date('[Y-m-d H:i:s] ') . "Push to production\n", FILE_APPEND);
+// Deploy-Befehl ausführen
+log_message("Valid push to production branch. Starting deployment...");
 
+// Beispiel-Command (Passe an dein Projekt an!)
 exec('cd /var/www/WebPortal && npm run prod:reload >> /var/www/Webhook/deploy.log 2>&1 &');
 
 echo "Deployment triggered.";
+log_message("Deployment command dispatched.");
 ```
 
 
