@@ -364,6 +364,16 @@ bez. für HTTPs:
             expires max;
             add_header Cache-Control "public";
         }
+        
+        location ^~ /webhook/ {
+            alias /var/www/Webhook/;
+            
+            location ~ \.php$ {
+                include fastcgi_params;
+                fastcgi_pass unix:/var/run/php/php8.3-fpm.sock;
+                fastcgi_param SCRIPT_FILENAME $request_filename;
+            }
+        }
     
         location ~ \.php$ {
             fastcgi_pass unix:/var/run/php/php8.3-fpm.sock;
@@ -408,6 +418,37 @@ Die folgenden relevanten Dienste sind aktiv und laufen:
 - PHP FPM Konfiguration: `/etc/php/8.3/fpm/php.ini`
 - PHP CLI Konfiguration: `/etc/php/8.3/cli/php.ini`
 - PHP-FPM Pool Konfiguration: `/etc/php/8.3/fpm/pool.d/www.conf`
+
+### Webhook
+
+Zunächst ist ein Verzeichnis "Webhook" in /var/www/ zu erstellen.
+darin sollte dann deploy.php so eingefügt werden:
+```php
+<?php
+$expectedSecret = getenv('SECRET');
+$receivedSecret = $_SERVER['HTTP_X_SECRET'] ?? $_POST['secret'] ?? '';
+
+if ($receivedSecret !== $expectedSecret) {
+    http_response_code(403);
+    echo "Forbidden";
+    exit;
+}
+
+$payload = json_decode(file_get_contents('php://input'), true);
+
+$ref = $payload['ref'] ?? '';
+if ($ref !== 'refs/heads/production') {
+    http_response_code(200);
+    echo "Push ignored (not production branch).";
+    exit;
+}
+
+file_put_contents(__DIR__ . '/deploy.log', date('[Y-m-d H:i:s] ') . "Push to production\n", FILE_APPEND);
+
+exec('cd /var/www/WebPortal && npm run prod:reload >> /var/www/Webhook/deploy.log 2>&1 &');
+
+echo "Deployment triggered.";
+```
 
 
 
