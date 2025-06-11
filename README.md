@@ -425,7 +425,6 @@ Zunächst ist ein Verzeichnis "Webhook" in /var/www/ zu erstellen.
 darin sollte dann deploy.php so eingefügt werden:
 ```php
 <?php
-// Optional: Logging-Funktion
 function log_message(string $message): void {
     file_put_contents(__DIR__ . '/deploy.log', date('[Y-m-d H:i:s] ') . $message . "\n", FILE_APPEND);
 }
@@ -444,28 +443,35 @@ function getSecretFromEnv(string $filepath): string {
     return '';
 }
 
-// Erwartetes Secret – entweder aus Umgebungsvariable oder als Fallback hardcodiert (nicht empfohlen für Produktion!)
-$expectedSecret = getSecretFromEnv(__DIR__ . '/.env');
+// === Webhook-Verarbeitung ===
+$secret = getSecretFromEnv(__DIR__ . '/.env');
+$signature_header = $_SERVER['HTTP_X_HUB_SIGNATURE_256'] ?? '';
 
-// Gelesenes Secret aus HTTP-Header oder POST-Daten
-$receivedSecret = $_SERVER['HTTP_X_SECRET'] ?? $_POST['secret'] ?? '';
-
-// Debug-Log
-log_message("Deploy request received. Expected: $expectedSecret, Received: $receivedSecret");
-
-// Secret-Vergleich
-if ($receivedSecret !== $expectedSecret) {
+if (!$signature_header) {
     http_response_code(403);
-    log_message("Access denied: Invalid secret");
-    echo "Forbidden";
+    log_message("Missing X-Hub-Signature-256 header.");
+    echo "Forbidden: Missing signature.";
     exit;
 }
 
-// GitHub/GitLab/etc. Payload lesen
-$payload = json_decode(file_get_contents('php://input'), true);
+// Rohdaten des Requests (unverarbeitet!)
+$rawPayload = file_get_contents('php://input');
+
+// Signatur berechnen
+$expectedSignature = 'sha256=' . hash_hmac('sha256', $rawPayload, $secret);
+
+// Timing-sichere Vergleichsfunktion (vermeidet Timing-Angriffe)
+if (!hash_equals($expectedSignature, $signature_header)) {
+    http_response_code(403);
+    log_message("Signature mismatch. Expected: $expectedSignature, Received: $signature_header");
+    echo "Forbidden: Invalid signature.";
+    exit;
+}
+
+// Payload dekodieren
+$payload = json_decode($rawPayload, true);
 $ref = $payload['ref'] ?? '';
 
-// Branch prüfen
 if ($ref !== 'refs/heads/production') {
     http_response_code(200);
     log_message("Ignored push: not production branch ($ref)");
@@ -473,14 +479,16 @@ if ($ref !== 'refs/heads/production') {
     exit;
 }
 
-// Deploy-Befehl ausführen
+// Deployment starten
 log_message("Valid push to production branch. Starting deployment...");
-
-// Beispiel-Command (Passe an dein Projekt an!)
 exec('cd /var/www/WebPortal && npm run prod:reload >> /var/www/Webhook/deploy.log 2>&1 &');
-
-echo "Deployment triggered.";
 log_message("Deployment command dispatched.");
+echo "Deployment triggered.";
+```
+Anschließend sind die benötigten Lese- und Schreibrechte zu setzten.
+Da das reload Script sudo Berechtigungen benötigt muss noch "sudoers" angepasst werden:
+```shell
+www-data ALL=NOPASSWD: /bin/systemctl stop nginx.service, /bin/systemctl start nginx.service, /bin/systemctl stop php8.3-fpm.service, /bin/systemctl start php8.3-fpm.service
 ```
 
 

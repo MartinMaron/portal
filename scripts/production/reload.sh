@@ -2,12 +2,13 @@
 set -e
 export COMPOSER_ALLOW_SUPERUSER=1
 export NODE_OPTIONS="--max-old-space-size=512"
-#!/bin/bash
 
-systemctl stop nginx
-systemctl stop php8.3-fpm
+sudo systemctl stop nginx
+sudo systemctl stop php8.3-fpm
+
 echo "Verfügbarer Speicher vor dem Build:"
 free -h
+
 SWAP_FILE=/swapfile
 if [ ! -f "$SWAP_FILE" ]; then
     echo "Erstelle neue Swap-Datei..."
@@ -15,9 +16,11 @@ if [ ! -f "$SWAP_FILE" ]; then
     chmod 600 $SWAP_FILE
     mkswap $SWAP_FILE
 fi
+
 swapon $SWAP_FILE || echo "Swap konnte nicht aktiviert werden, möglicherweise bereits aktiv"
 echo "Swap aktiviert:"
 swapon --show
+
 git fetch
 git pull
 php artisan config:clear
@@ -27,5 +30,6 @@ php artisan cache:clear
 npm install
 composer install --no-interaction
 npm run build
-systemctl start php8.3-fpm
-systemctl start nginx
+
+sudo systemctl start php8.3-fpm
+sudo systemctl start nginx
