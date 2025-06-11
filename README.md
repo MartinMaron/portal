@@ -422,7 +422,7 @@ Die folgenden relevanten Dienste sind aktiv und laufen:
 ### Webhook
 
 Zunächst ist ein Verzeichnis "Webhook" in /var/www/ zu erstellen.
-darin sollte dann deploy.php so eingefügt werden:
+darin sollte dann `deploy.php` so eingefügt werden:
 ```php
 <?php
 function log_message(string $message): void {
@@ -481,15 +481,60 @@ if ($ref !== 'refs/heads/production') {
 
 // Deployment starten
 log_message("Valid push to production branch. Starting deployment...");
-exec('cd /var/www/WebPortal && npm run prod:reload >> /var/www/Webhook/deploy.log 2>&1 &');
+exec('sudo -u deploy cd /var/www/WebPortal && npm run prod:reload >> /var/www/Webhook/deploy.log 2>&1 &');
 log_message("Deployment command dispatched.");
 echo "Deployment triggered.";
 ```
-Anschließend sind die benötigten Lese- und Schreibrechte zu setzten.
-Da das reload Script sudo Berechtigungen benötigt muss noch "sudoers" angepasst werden:
+Die GitHub-Webhooks werden mit einem Secret signiert. 
+Erstelle im gleichen Verzeichnis eine `.env`-Datei und trage dort das Secret ein:
 ```shell
-www-data ALL=NOPASSWD: /bin/systemctl stop nginx.service, /bin/systemctl start nginx.service, /bin/systemctl stop php8.3-fpm.service, /bin/systemctl start php8.3-fpm.service
+echo "WEBHOOK_SECRET=DeinGeheimnisToken" | sudo tee /var/www/Webhook/.env
 ```
+Stelle sicher, dass die `.env`-Datei nur vom Webserver lesbar ist 
+(z.B. mit `sudo chown www-data:www-data /var/www/Webhook/.env` und `sudo chmod 640 /var/www/Webhook/.env`).
+Damit www-data das Webhook-Skript ausführen und Logs schreiben kann, setze den Besitzer und die Rechte:
+```shell
+sudo chown -R www-data:www-data /var/www/Webhook
+sudo find /var/www/Webhook -type f -exec chmod 640 {} \;
+sudo find /var/www/Webhook -type d -exec chmod 750 {} \;
+```
+Dadurch hat der Webserver (`www-data`) Lese-/Schreibzugriff auf die Dateien und Verzeichnisse im Webhook-Ordner.
+Richte den System-Benutzer deploy ein (falls noch nicht vorhanden):
+```shell
+sudo useradd -m -s /bin/bash deploy
+```
+Setze deploy als Eigentümer des Projektordners:
+```shell
+sudo mkdir -p /var/www/WebPortal
+sudo chown -R deploy:deploy /var/www/WebPortal
+```
+Dadurch hat deploy volle Zugriffsrechte auf das WebPortal-Verzeichnis für das Deployment.
+Ermögliche www-data, den Befehl npm run prod:reload als deploy-User ohne Passwort auszuführen. 
+Füge in `/etc/sudoers.d/deploy` (z.B. via `sudo visudo -f /etc/sudoers.d/deploy`) folgende Zeile hinzu:
+```shell
+www-data ALL=(deploy) NOPASSWD: /usr/bin/npm run prod:reload
+```
+Erzeuge (oder importiere) SSH-Schlüssel für den Benutzer deploy, 
+damit dieser per SSH auf GitHub (nur Lesezugriff) zugreifen kann:
+```shell
+sudo -u deploy mkdir -p /home/deploy/.ssh
+sudo -u deploy ssh-keygen -t ed25519 -f /home/deploy/.ssh/id_ed25519 -N "" -C "deployment-key"
+```
+Kopiere den öffentlichen Schlüssel (`/home/deploy/.ssh/id_ed25519.pub`) als Deploy-Key in dein GitHub-Repository. 
+Setze die Dateiberechtigungen korrekt:
+```shell
+sudo chown -R deploy:deploy /home/deploy/.ssh
+sudo chmod 700 /home/deploy/.ssh
+sudo chmod 600 /home/deploy/.ssh/id_ed25519
+sudo chmod 644 /home/deploy/.ssh/id_ed25519.pub
+```
+Das Skript protokolliert seine Ausgabe in `/var/www/Webhook/deploy.log`. Erstelle die Logdatei und setze die Rechte:
+```shell
+sudo touch /var/www/Webhook/deploy.log
+sudo chown www-data:www-data /var/www/Webhook/deploy.log
+sudo chmod 664 /var/www/Webhook/deploy.log
+```
+Überwache den Inhalt des Logs z.B. mit `tail -f /var/www/Webhook/deploy.log`, um den Deployment-Prozess zu verfolgen.
 
 
 
