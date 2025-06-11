@@ -2,9 +2,9 @@ name: Laravel
 
 on:
   push:
-    branches: [ "laravel11-migration" ]
+    branches: [ "develop" ]
   pull_request:
-    branches: [ "laravel11-migration" ]
+    branches: [ "develop" ]
 
 jobs:
   laravel-tests:
