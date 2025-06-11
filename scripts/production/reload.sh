@@ -3,8 +3,8 @@ set -e
 export COMPOSER_ALLOW_SUPERUSER=1
 export NODE_OPTIONS="--max-old-space-size=512"
 
-sudo systemctl stop nginx
-sudo systemctl stop php8.3-fpm
+systemctl stop nginx
+systemctl stop php8.3-fpm
 
 echo "Verfügbarer Speicher vor dem Build:"
 free -h
@@ -31,5 +31,5 @@ npm install
 composer install --no-interaction
 npm run build
 
-sudo systemctl start php8.3-fpm
-sudo systemctl start nginx
+systemctl start php8.3-fpm
+systemctl start nginx
