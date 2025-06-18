@@ -506,7 +506,8 @@ sudo useradd -m -s /bin/bash deploy
 Setze deploy als Eigentümer des Projektordners:
 ```shell
 sudo mkdir -p /var/www/WebPortal
-sudo chown -R deploy:deploy /var/www/WebPortal
+sudo chown -R deploy:www-data /var/www/WebPortal
+sudo chmod -R 775 /var/www/WebPortal
 ```
 Dadurch hat deploy volle Zugriffsrechte auf das WebPortal-Verzeichnis für das Deployment.
 Ermögliche www-data, den Befehl npm run prod:reload als deploy-User ohne Passwort auszuführen. 
