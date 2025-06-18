@@ -18,12 +18,26 @@ class Dialog extends Component
     use OccupantAdapter;
 
     public $salutations = null;
-
     public $unitUsageTypes = null;
 
     public Realestate $realestate;
 
-    public Occupant $current;
+    public ?Occupant $current;
+
+    public $dateFromEditing;
+
+    public function getDateFromEditingProperty()
+    {
+        if (!($this->current instanceof Occupant)) {
+            $this->current = $this->realestate->occupants->first() ?? new Occupant();
+        }
+        return $this->current->date_from_editing ?? '';
+    }
+
+    public function updatedDateFromEditing($value)
+    {
+        $this->current->date_from_editing = $value;
+    }
 
     public Occupant $initOccupant;
 
@@ -179,15 +193,11 @@ class Dialog extends Component
         }
     }
 
-    /* initialization */
     public function mount(Realestate $realestate, $current = null)
     {
         $this->realestate = $realestate;
-        if ($current != null) {
-            $this->current = $current;
-        } else {
-            $this->current = $this->realestate->occupants->first();
-        }
+        $this->current = $current ?? $this->realestate->occupants->first() ?? new Occupant();
+        $this->dateFromEditing = $this->current->date_from_editing;
         $this->salutations = Salutation::all();
         $this->unitUsageTypes = UnitUsageType::all();
     }

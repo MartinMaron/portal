@@ -29,6 +29,6 @@ class ListItem extends Component
 
     public function render()
     {
-        return view('livewire.user.realestate.verbrauchsinfo-user-email.listitem');
+        return view('livewire.user.realestate.verbrauchsinfo-user-email.list-item');
     }
 }

@@ -139,7 +139,7 @@
                         </x-table.th>
                         <x-table.td class="text-center occu-td" style="min-width: 14rem; max-width: 14rem">
                             <div class="flex px-2">
-                                <span>{{ $occupant->date_from_editing }}</span>
+                                <span>{{ ($occupant && is_object($occupant)) ? ($occupant->date_from_editing ?? '') : '' }}</span>
                                 <span class="w-6">-</span>
                                 @if ($occupant->dateTo)
                                     <span>{{ $occupant->date_to_editing }}</span>

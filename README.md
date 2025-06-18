@@ -481,7 +481,7 @@ if ($ref !== 'refs/heads/production') {
 
 // Deployment starten
 log_message("Valid push to production branch. Starting deployment...");
-exec('sudo -u deploy bash -c "cd /var/www/WebPortal && npm run prod:reload" >> /var/www/Webhook/deploy.log 2>&1 &');
+exec('sudo -u deploy bash -c "cd /var/www/WebPortal && npm run prod:reload" >> /var/www/Webhook/deploy.log 2>&1');
 log_message("Deployment command dispatched.");
 echo "Deployment triggered.";
 ```

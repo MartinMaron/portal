@@ -95,13 +95,19 @@
                         class="my-1" paddingLabel="" hoheLabel="h-6 sm:h-8 sm:pt-1" hohe="h-20 sm:h-10"
                         for="dateFrom" label="seit">
                             <div class="flex items-end justify-between h-10 sm:h-8">
-                                <x-input.date
-                                    wire:model.blur="current.date_from_editing"
-                                    type="text"
-                                    id="dialog.dateFrom"
-                                    disabled="{{$current->nekoId !='new'}}"
+                                @if($current && is_object($current))
+                                    <x-input.date
+                                        wire:model.blur="dateFromEditing"
+                                        type="text"
+                                        id="dialog.dateFrom"
+                                        disabled="{{$current->nekoId !='new'}}"
                                     >
-                                </x-input.date>
+                                    </x-input.date>
+                                @else
+                                    <div class="flex items-center justify-center w-full h-8 text-gray-500">
+                                        Lade Daten...
+                                    </div>
+                                @endif
                             </div>
                         </x-input.group>
 
