@@ -40,6 +40,11 @@ class Detail extends Component
         ]);
     }
 
+    public function mount()
+    {
+        $this->costAmount = $this->makeBlankObject();
+    }
+
     protected $listeners = [
         'saveCostAmountDetail' => 'save',
         'showCostAmountDetailModal' => 'showCostAmountDetailModal',

@@ -7,7 +7,7 @@
                 <div class="flex flex-row justify-between">
                     <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-sky-100">
                         {{-- <i class="text-sky-800 fa-solid fa-trash-can"></i> --}}
-                        <x-icon.fonts.pencil class="text-xs text-sky-500 hover:text-sky-800  px-2 ">                                       
+                        <x-icon.fonts.pencil class="text-xs text-sky-500 hover:text-sky-800  px-2 ">
                         </x-icon.fonts.pencil>
                     </div>
                 </div>
@@ -25,7 +25,8 @@
             <x-slot name="content">
                 <div>
                     <div
-                    > 
+                    >
+                        @if(isset($costAmount) && is_object($costAmount))
                     <x-input.group
                     class="my-1" paddingLabel="" hoheLabel="h-6 sm:h-8 sm:pt-1" hoheOnError="h-30" hohe="h-20 sm:h-10"
                     for="costAmount.datum" label="Datum" :error="$errors->first('costAmount.datum')">
@@ -33,10 +34,13 @@
                             wire:model.blur="costAmount.datum"
                             id="costamount-detailmodal-datum"
                             class="bg-sky-50 sm:h-8"
-                            
+
                         >
                         </x-input.date>
                     </x-input.group>
+                        @else
+                            <div class="text-gray-400 text-sm">Lade Eingabefeld...</div>
+                        @endif
                     <!-- Verbrauch -->
                     @if ($showConsumptionField)
                         <x-input.group
@@ -74,7 +78,7 @@
                                 for="costAmount.conetto" label="CO2-Nettobetrag" :error="$errors->first('costAmount.conetto')">
                                     <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.blur="costAmount.conetto" id="conetto" placeholder="0,00" />
                                 </x-input.group>
-                            @else                        
+                            @else
                             <!-- Brutto -->
                             <x-input.group
                                 class="my-1" paddingLabel="" hoheLabel="h-6 sm:h-8 sm:pt-1" hohe="h-20 sm:h-10"
@@ -92,7 +96,7 @@
 
 
                         @endif
-                        <!-- Bemerkung-->  
+                        <!-- Bemerkung-->
                         <x-input.group
                             hohe="h-30"
                             hoheLabel="h-30 sm:h-full sm:pt-3"

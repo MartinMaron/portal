@@ -38,22 +38,25 @@ class DetailInput extends Component
 
     public bool $editable = true;
 
-    public ?CostAmount $current;
+    public ?CostAmount $current = null;
+
     public string $inputStartField;
 
-    public $datum;
+    public $datum = '';
 
     public function getDatumProperty()
     {
-        if(!($this->current instanceof CostAmount)) {
+        if (! ($this->current instanceof CostAmount)) {
             $this->current = new CostAmount();
         }
-        return $this->current->datum;
+        return $this->current->datum ?? '';
     }
 
     public function updatedDatum($value)
     {
-        $this->current->datum = $value;
+        if($value != null) {
+            $this->current->datum = $value;
+        }
     }
 
     public function mount(Cost $cost, $netto, $inputWithDatum)
@@ -73,6 +76,15 @@ class DetailInput extends Component
         }
         // nur für Brennstoffkosten können mehrere Beträge eingegeben werden
         // für alle anderen existiert nur ein CostAmount als Singleton für Abrechnungszeitraum
+
+
+        $this->loadCurrent();
+        $this->editable = $this->cost->editable;
+        $this->datum = $this->current->datum ?? '';
+    }
+
+    public function loadCurrent(): void
+    {
         if ($this->cost->costtype_id == 'BRK') {
             $this->current = $this->makeBlankObject();
         } else {
@@ -83,8 +95,9 @@ class DetailInput extends Component
                 $this->current = $this->makeBlankObject();
             }
         }
-        $this->editable = $this->cost->editable;
-        $this->datum = $this->current->datum;
+        if (!$this->current) {
+            $this->current = new CostAmount();
+        }
     }
 
     protected $listeners = [

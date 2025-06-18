@@ -14,15 +14,20 @@
             class="detailinput flex items-center gap-1 bg-sky-200 dark:bg-slate-900 dark:text-gray-200 bg-opacity-50 p-0.5 rounded-lg">
                 <!-- Datum -->
                 <div class="basis-1/6">
-                    @if($current && is_object($current))
+                    @if(property_exists($this, 'current') && $current)
                         <x-input.date
-                            wire:model.blur="datum"
+                            wire:model.lazy="datum"
                             id="user-costamount-detailinput-datum{{ $cost->id }}"
                             type="text"
                             :error="$errors->first('datum')"
                             class="{{ $errors->first('datum') ? 'bg-red-50 focus:border-red-900 border-red-900' : '' }}"
                         />
+                    @else
+                        <div class="flex items-center justify-center w-full h-8 text-gray-500">
+                            Lade Daten...
+                        </div>
                     @endif
+
                 </div>
 
             <!-- Verbrauch -->
