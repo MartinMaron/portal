@@ -12,20 +12,19 @@
     <div class="{{ $cost->costtype->costinvoicingtype->id == 'HZ' ? 'block' : 'hidden' }}">
         <div
             class="detailinput flex items-center gap-1 bg-sky-200 dark:bg-slate-900 dark:text-gray-200 bg-opacity-50 p-0.5 rounded-lg">
-            <!-- Datum -->
-            <div class="basis-1/6">
-                <x-input.date
-                    wire:model.blur="current.datum"
-                    id="user-costamount-detailinput-datum{{ $cost->id }}"
-                    type="text"
-                    :error="$errors->first('current.datum')"
-                    style="-moz-appearance: textfield; margin: 0;"
-                    class="{{ $inputWithDate || ($cost->fueltype_id !=null && $cost->fueltype->hasTank) ? 'block' : 'hidden' }}
-                    inputDisplay
-                    {{ $errors->first('current.datum') ? 'bg-red-50 focus:border-red-900 border-red-900' : '' }}"
-                >
-                </x-input.date>
-            </div>
+                <!-- Datum -->
+                <div class="basis-1/6">
+                    @if($current && is_object($current))
+                        <x-input.date
+                            wire:model.blur="datum"
+                            id="user-costamount-detailinput-datum{{ $cost->id }}"
+                            type="text"
+                            :error="$errors->first('datum')"
+                            class="{{ $errors->first('datum') ? 'bg-red-50 focus:border-red-900 border-red-900' : '' }}"
+                        />
+                    @endif
+                </div>
+
             <!-- Verbrauch -->
             <div class="basis-1/6">
                 <input type="text"

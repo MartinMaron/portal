@@ -16,13 +16,11 @@ class DetailInput extends Component
 
     public Cost $cost;
 
-    public $datum;
+    public float $consumption;
 
-    public Double $consumption;
+    public float $amount;
 
-    public Double $amount;
-
-    public Double $amountHh;
+    public float $amountHh;
 
     public $netto;
 
@@ -40,9 +38,23 @@ class DetailInput extends Component
 
     public bool $editable = true;
 
-    public CostAmount $current;
-
+    public ?CostAmount $current;
     public string $inputStartField;
+
+    public $datum;
+
+    public function getDatumProperty()
+    {
+        if(!($this->current instanceof CostAmount)) {
+            $this->current = new CostAmount();
+        }
+        return $this->current->datum;
+    }
+
+    public function updatedDatum($value)
+    {
+        $this->current->datum = $value;
+    }
 
     public function mount(Cost $cost, $netto, $inputWithDatum)
     {
@@ -60,7 +72,7 @@ class DetailInput extends Component
             }
         }
         // nur für Brennstoffkosten können mehrere Beträge eingegeben werden
-        // für alle anderen existiert nuer ein CostAmount als Singelton für Abrechnungszeitraum
+        // für alle anderen existiert nur ein CostAmount als Singleton für Abrechnungszeitraum
         if ($this->cost->costtype_id == 'BRK') {
             $this->current = $this->makeBlankObject();
         } else {
@@ -72,6 +84,7 @@ class DetailInput extends Component
             }
         }
         $this->editable = $this->cost->editable;
+        $this->datum = $this->current->datum;
     }
 
     protected $listeners = [
@@ -96,6 +109,12 @@ class DetailInput extends Component
         if ($id == $this->cost->id) {
             $this->dispatch('$refresh');
         }
+    }
+
+    public function updating($propertyName, $value)
+    {
+        \Log::info("Updating $propertyName with value: " . json_encode($value));
+        \Log::info("Current object: " . json_encode($this->current));
     }
 
     public function updated($propertyName)
@@ -186,6 +205,5 @@ class DetailInput extends Component
                 return view('livewire.user.costamount.detail-input-hk');
             }
         }
-
     }
 }
