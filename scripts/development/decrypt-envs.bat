@@ -1,0 +1,55 @@
+@echo off
+setlocal enabledelayedexpansion
+
+if not exist ".env.key" (
+  echo ERROR: .env.key nicht gefunden.
+  exit /b 1
+)
+
+for /f "usebackq tokens=1* delims==" %%A in (" .env.key") do (
+  if /i "%%~A"=="ENCRYPTION_KEY" set "ENCRYPTION_KEY=%%~B"
+  if /i "%%~A"=="SECURED_ENV_FILES" set "SECURED_ENV_FILES=%%~B"
+)
+
+if "%ENCRYPTION_KEY%"=="" (
+  echo ERROR: ENCRYPTION_KEY nicht gesetzt in .env.key.
+  exit /b 1
+)
+
+if "%SECURED_ENV_FILES%"=="" (
+  echo ERROR: SECURED_ENV_FILES nicht gesetzt in .env.key.
+  exit /b 1
+)
+
+if exist ".env" (
+  move /Y ".env" ".env.bak" >nul
+)
+
+for %%E in (%SECURED_ENV_FILES%) do (
+  set "ENV=%%E"
+  set "FILE=.env.!ENV!.encrypted"
+  if not exist "!FILE!" (
+    echo WARN: !FILE! nicht gefunden – ueberspringe...
+    goto :continueDecrypt
+  )
+  echo Decrypting !FILE! ...
+  copy /Y "!FILE!" ".env.encrypted" >nul
+  php artisan env:decrypt --key="%ENCRYPTION_KEY%"
+  if exist ".env" (
+    move /Y ".env" ".env.!ENV!" >nul
+    echo SUCCESS: .env.!ENV! wiederhergestellt
+  ) else (
+    echo ERROR: .env nicht erstellt.
+    exit /b 1
+  )
+  del /Q ".env.encrypted"
+  del /Q "!FILE!"
+  :continueDecrypt
+)
+
+if exist ".env.bak" (
+  move /Y ".env.bak" ".env" >nul
+)
+
+endlocal
+echo Fertig.
