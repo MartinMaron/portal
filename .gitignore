@@ -8,6 +8,7 @@
 /vendor
 .env
 .env.production
+.env.development
 .phpunit.result.cache
 /.fleet
 /.idea
@@ -18,4 +19,3 @@
 composer.lock
 package-lock.json
 /.nvmrc
-

@@ -18,7 +18,10 @@
         "prod:reload": "bash scripts/run.sh production reload",
         "prod:cleanup": "bash scripts/run.sh production cleanup",
         "prod:debugbar:enable": "bash scripts/run.sh production enable_debugbar",
-        "prod:debugbar:disable": "bash scripts/run.sh production disable_debugbar"
+        "prod:debugbar:disable": "bash scripts/run.sh production disable_debugbar",
+
+        "dev:encrypt": "bash scripts/run.sh development encrypt-envs",
+        "dev:decrypt": "bash scripts/run.sh development decrypt-envs"
     },
     "devDependencies": {
         "@tailwindcss/forms": "^0.5.10",
