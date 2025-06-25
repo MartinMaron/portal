@@ -30,7 +30,6 @@ for ENV in "${SECURED_ENV_ARRAY[@]}"; do
   cp "$FILE" .env
   php artisan env:encrypt --key="$ENCRYPTION_KEY"
   mv .env.encrypted "$FILE.encrypted"
-  rm -f .env.encrypted
   rm -f .env
   rm -f "$FILE"
 done

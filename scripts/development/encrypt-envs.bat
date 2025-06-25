@@ -32,16 +32,9 @@ for %%E in (%SECURED_ENV_FILES%) do (
     echo WARN: !FILE! nicht gefunden – ueberspringe...
     goto :continueEncrypt
   )
-  echo Encrypting !FILE! ...
   copy /Y "!FILE!" ".env" >nul
   php artisan env:encrypt --key="%ENCRYPTION_KEY%"
-  if exist ".env.encrypted" (
-    move /Y ".env.encrypted" "!FILE!.encrypted" >nul
-    echo SUCCESS: !FILE!.encrypted erzeugt
-  ) else (
-    echo ERROR: .env.encrypted nicht erstellt.
-    exit /b 1
-  )
+  move /Y ".env.encrypted" "!FILE!.encrypted" >nul
   del /Q ".env"
   del /Q "!FILE!"
   :continueEncrypt
