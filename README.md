@@ -163,6 +163,9 @@ dass zweiteres zusätzliche Performance Daten ermittelt.
 
 #### NPM Scripts für die Umgebungsvariablen
 
+Um zu vermeiden, dass sensible Zugangsdaten in der Versionskontrolle landen,
+sind die entsprechenden Dateien standardmäßig verschlüsselt, oder in der .gitignore-Datei ausgeschlossen.
+
 Benötigt für diese beiden Befehle wird eine `.env.key` Datei, welche ungefähr so aussehen sollte:
 ```dotenv
 ENCRYPTION_KEY=base64:<YOUR_KEY_HERE>
@@ -175,9 +178,6 @@ Diese ist von der .gitignore ausgeschlossen und darf nur lokal erstellt werden.
 
 - `npm run prod:decrypt` - Entschlüsselt die `.env`-Datei für die Produktion
 - `npm run prod:encrypt` - Verschlüsselt die `.env`-Datei für die Produktion
-
-Um zu vermeiden, dass sensible Zugangsdaten in der Versionskontrolle landen, 
-sind die entsprechenden Dateien standardmäßig verschlüsselt, oder in der .gitignore-Datei ausgeschlossen.
 
 #### Composer-Script
 

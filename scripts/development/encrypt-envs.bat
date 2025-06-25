@@ -36,7 +36,6 @@ for %%E in (%SECURED_ENV_FILES%) do (
   php artisan env:encrypt --key="%ENCRYPTION_KEY%"
   move /Y ".env.encrypted" "!FILE!.encrypted" >nul
   del /Q ".env"
-  del /Q "!FILE!"
   :continueEncrypt
 )
 

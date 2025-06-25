@@ -31,7 +31,6 @@ for ENV in "${SECURED_ENV_ARRAY[@]}"; do
   php artisan env:encrypt --key="$ENCRYPTION_KEY"
   mv .env.encrypted "$FILE.encrypted"
   rm -f .env
-  rm -f "$FILE"
 done
 
 [ -f .env.bak ] && mv .env.bak .env
