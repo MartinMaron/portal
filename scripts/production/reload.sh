@@ -1,5 +1,4 @@
 #!/bin/bash
-set -e
 export COMPOSER_ALLOW_SUPERUSER=1
 export NODE_OPTIONS="--max-old-space-size=512"
 
@@ -30,6 +29,10 @@ php artisan cache:clear
 npm install
 composer install --no-interaction
 npm run build
+
+sudo chown -R deploy:www-data /var/www/WebPortal/public/build/
+sudo chown -R deploy:www-data /var/www/WebPortal/node_modules/
+sudo chown -R deploy:www-data /var/www/WebPortal/vendor/
 
 sudo systemctl start php8.3-fpm
 sudo systemctl start nginx

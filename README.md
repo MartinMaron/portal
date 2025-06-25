@@ -500,10 +500,33 @@ if ($ref !== 'refs/heads/production') {
 
 // Deployment starten
 log_message("Valid push to production branch. Starting deployment...");
-exec('sudo -u deploy bash -c "cd /var/www/WebPortal && npm run prod:reload" >> /var/www/Webhook/deploy.log 2>&1');
+exec('sudo systemctl start laravel-deploy.service >> /var/www/Webhook/deploy.log 2>&1 &');
 log_message("Deployment command dispatched.");
 echo "Deployment triggered.";
 ```
+
+mit der Zugehörigen Service-Datei `laravel-deploy.service`:
+```ini
+[Unit]
+Description=Laravel Deployment Service
+After=network.target
+
+[Service]
+Type=oneshot
+User=deploy
+Group=www-data
+WorkingDirectory=/var/www/WebPortal
+ExecStart=/usr/bin/npm run prod:reload
+StandardOutput=append:/var/www/Webhook/deploy.log
+StandardError=append:/var/www/Webhook/deploy.log
+Environment=COMPOSER_ALLOW_SUPERUSER=1
+Environment=NODE_OPTIONS=--max-old-space-size=512
+Environment=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+[Install]
+WantedBy=multi-user.target
+```
+
 Die GitHub-Webhooks werden mit einem Secret signiert. 
 Erstelle im gleichen Verzeichnis eine `.env`-Datei und trage dort das Secret ein:
 ```shell
@@ -524,9 +547,9 @@ sudo useradd -m -s /bin/bash deploy
 ```
 Setze deploy als Eigentümer des Projektordners:
 ```shell
-sudo mkdir -p /var/www/WebPortal
-sudo chown -R deploy:www-data /var/www/WebPortal
-sudo chmod -R 775 /var/www/WebPortal
+sudo chown -R deploy:www-data /var/www/WebPortal/public/build/
+sudo chown -R deploy:www-data /var/www/WebPortal/node_modules/
+sudo chown -R deploy:www-data /var/www/WebPortal/vendor/
 ```
 Dadurch hat deploy volle Zugriffsrechte auf das WebPortal-Verzeichnis für das Deployment.
 Ermögliche www-data, den Befehl npm run prod:reload als deploy-User ohne Passwort auszuführen. 
