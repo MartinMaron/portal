@@ -161,15 +161,34 @@ dass zweiteres zusätzliche Performance Daten ermittelt.
 - `npm run dev:test` - Führt die automatisierten Tests aus, greift dabei auf die Test-Datenbank und die `.env.testing`
   -Konfiguration zurück
 
+#### NPM Scripts für die Umgebungsvariablen
+
+Benötigt für diese beiden Befehle wird eine `.env.key` Datei, welche ungefähr so aussehen sollte:
+```dotenv
+ENCRYPTION_KEY=base64:<YOUR_KEY_HERE>
+SECURED_ENV_FILES=production,development
+```
+Diese ist von der .gitignore ausgeschlossen und darf nur lokal erstellt werden.
+
+- `npm run dev:decrypt` - Entschlüsselt die `.env`-Datei für die lokale Entwicklung
+- `npm run dev:encrypt` - Verschlüsselt die `.env`-Datei für die lokale Entwicklung
+
+- `npm run prod:decrypt` - Entschlüsselt die `.env`-Datei für die Produktion
+- `npm run prod:encrypt` - Verschlüsselt die `.env`-Datei für die Produktion
+
+Um zu vermeiden, dass sensible Zugangsdaten in der Versionskontrolle landen, 
+sind die entsprechenden Dateien standardmäßig verschlüsselt, oder in der .gitignore-Datei ausgeschlossen.
+
 #### Composer-Script
 
 - `composer dev` - Startet Laravel-Server, Queue-Worker und Vite-Server parallel
 
 #### PHP-Skripte & Artisan Commands
 
-Zusätzlich zu den NPM-Scripts bietet das Projekt auch PHP-Skripte (erreichbar über `php artisan script`):
+Zusätzlich zu den NPM-Scripts bietet das Projekt auch PHP-Skripte:
 
 - `php artisan script:hash` - Generiert einen Hash-Wert für ein gegebenes Passwort und zeigt das Ergebnis an
+- `php artisan debug:js-errors` - Prüft alle Routen auf gängige JavaScript-Fehler und gibt diese aus
 
 Alle Skripte können unabhängig vom aktuellen Verzeichnis im Projekt ausgeführt werden.
 
