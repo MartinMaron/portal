@@ -62,7 +62,7 @@
                         @foreach ($occupant->verbrauchsinfoUserEmails as $userEmail)
                             @if (!$userEmail->anonym)
                             <div>
-                                <livewire:user.realestate.verbrauchsinfo-user-email.list-item  :userEmail='$userEmail' :wire:key="'verbrauchsinfo-user-email-listitem-'.$userEmail->id"  key="{{ now() }}"/>
+                                <livewire:user.realestate.verbrauchsinfo-user-email.list-item  :userEmail='$userEmail' :wire:key="'verbrauchsinfo-user-email-list-item-'.$userEmail->id"  key="{{ now() }}"/>
                             </div>
                             @endif
                         @endforeach
