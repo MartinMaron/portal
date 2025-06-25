@@ -500,31 +500,9 @@ if ($ref !== 'refs/heads/production') {
 
 // Deployment starten
 log_message("Valid push to production branch. Starting deployment...");
-exec('sudo systemctl start laravel-deploy.service >> /var/www/Webhook/deploy.log 2>&1 &');
-log_message("Deployment command dispatched.");
+$command = 'sudo -u deploy bash -c "cd /var/www/WebPortal && npm run prod:reload"';
+$output = shell_exec($command . ' >> /var/www/Webhook/deploy.log 2>&1 &');log_message("Deployment command dispatched.");
 echo "Deployment triggered.";
-```
-
-mit der Zugehörigen Service-Datei `laravel-deploy.service`:
-```ini
-[Unit]
-Description=Laravel Deployment Service
-After=network.target
-
-[Service]
-Type=oneshot
-User=deploy
-Group=www-data
-WorkingDirectory=/var/www/WebPortal
-ExecStart=/usr/bin/npm run prod:reload
-StandardOutput=append:/var/www/Webhook/deploy.log
-StandardError=append:/var/www/Webhook/deploy.log
-Environment=COMPOSER_ALLOW_SUPERUSER=1
-Environment=NODE_OPTIONS=--max-old-space-size=512
-Environment=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-
-[Install]
-WantedBy=multi-user.target
 ```
 
 Die GitHub-Webhooks werden mit einem Secret signiert. 
@@ -541,7 +519,7 @@ sudo find /var/www/Webhook -type f -exec chmod 640 {} \;
 sudo find /var/www/Webhook -type d -exec chmod 750 {} \;
 ```
 Dadurch hat der Webserver (`www-data`) Lese-/Schreibzugriff auf die Dateien und Verzeichnisse im Webhook-Ordner.
-Richte den System-Benutzer deploy ein (falls noch nicht vorhanden):
+Richte nun den System-Benutzer deploy ein (falls noch nicht vorhanden):
 ```shell
 sudo useradd -m -s /bin/bash deploy
 ```
@@ -553,9 +531,29 @@ sudo chown -R deploy:www-data /var/www/WebPortal/vendor/
 ```
 Dadurch hat deploy volle Zugriffsrechte auf das WebPortal-Verzeichnis für das Deployment.
 Ermögliche www-data, den Befehl npm run prod:reload als deploy-User ohne Passwort auszuführen. 
-Füge in `/etc/sudoers.d/deploy` (z.B. via `sudo visudo -f /etc/sudoers.d/deploy`) folgende Zeile hinzu:
+Füge in `/etc/sudoers.d/deploy` (z.B. via `sudo visudo -f /etc/sudoers.d/deploy`) folgendes hinzu:
+```ini
+www-data ALL=(deploy) NOPASSWD: /bin/bash /var/www/WebPortal/scripts/run.sh production reload
+
+´deploy ALL=(ALL) NOPASSWD: \
+    /usr/bin/systemctl stop nginx.service, \
+    /usr/bin/systemctl start nginx.service, \
+    /usr/bin/systemctl stop php8.3-fpm.service, \
+    /usr/bin/systemctl start php8.3-fpm.service, \
+    /usr/bin/systemctl stop nginx, \
+    /usr/bin/systemctl start nginx, \
+    /usr/bin/systemctl stop php8.3-fpm, \
+    /usr/bin/systemctl start php8.3-fpm, \
+    /usr/bin/systemctl start laravel-deploy.service, \
+    /sbin/swapon, \
+    /sbin/mkswap, \
+    /usr/bin/chown, \
+    /bin/dd
+```
+Und binde dies in die sudoers-Datei ein, indem du in `sudo visudo` folgendes hinzufügst: `@includedir /etc/sudoers.d`,
+außerdem stelle sicher, dass die Datei `/etc/sudoers.d/deploy` die richtigen Berechtigungen hat:
 ```shell
-www-data ALL=(deploy) NOPASSWD: /usr/bin/npm run prod:reload
+sudo chmod 0440 /etc/sudoers.d/deploy
 ```
 Erzeuge (oder importiere) SSH-Schlüssel für den Benutzer deploy, 
 damit dieser per SSH auf GitHub (nur Lesezugriff) zugreifen kann:

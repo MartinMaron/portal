@@ -9,15 +9,22 @@ echo "Verfügbarer Speicher vor dem Build:"
 free -h
 
 SWAP_FILE=/swapfile
+SWAP_FILE=/swapfile
 if [ ! -f "$SWAP_FILE" ]; then
-    echo "Erstelle neue Swap-Datei..."
-    dd if=/dev/zero of=$SWAP_FILE bs=1M count=1024  # 1GB Swap
-    chmod 600 $SWAP_FILE
-    mkswap $SWAP_FILE
+    echo "Creating swap file..."
+    sudo dd if=/dev/zero of=$SWAP_FILE bs=1M count=1024
+    sudo chmod 600 $SWAP_FILE
+    sudo mkswap $SWAP_FILE
+fi
+if ! swapon --show | grep -q $SWAP_FILE; then
+    sudo swapon $SWAP_FILE
+    echo "Swap activated"
+else
+    echo "Swap already active"
 fi
 
-swapon $SWAP_FILE || echo "Swap konnte nicht aktiviert werden, möglicherweise bereits aktiv"
-echo "Swap aktiviert:"
+echo "=== Memory after swap ==="
+free -h
 swapon --show
 
 git fetch
@@ -27,7 +34,7 @@ php artisan route:clear
 php artisan view:clear
 php artisan cache:clear
 npm install
-composer install --no-interaction
+composer install --no-interaction --optimize-autoloader
 npm run build
 
 sudo chown -R deploy:www-data /var/www/WebPortal/public/build/
