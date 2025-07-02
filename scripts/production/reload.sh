@@ -1,13 +1,18 @@
 #!/bin/bash
+
+# Logging
+LOGFILE="/var/www/Webhook/deploy.log"
+exec > >(tee -a "$LOGFILE") 2>&1
+set -x
 export COMPOSER_ALLOW_SUPERUSER=1
 export NODE_OPTIONS="--max-old-space-size=512"
 
+# Stopping
 sudo systemctl stop nginx
 sudo systemctl stop php8.3-fpm
 
-echo "Verfügbarer Speicher vor dem Build:"
+# Swapping
 free -h
-
 SWAP_FILE=/swapfile
 SWAP_FILE=/swapfile
 if [ ! -f "$SWAP_FILE" ]; then
@@ -22,12 +27,12 @@ if ! swapon --show | grep -q $SWAP_FILE; then
 else
     echo "Swap already active"
 fi
-
-echo "=== Memory after swap ==="
 free -h
 swapon --show
 
+# Reloading
 git fetch
+git reset --hard origin/production
 git pull
 npm run prod:decrypt
 php artisan config:clear
@@ -41,5 +46,6 @@ sudo chown -R deploy:www-data /var/www/WebPortal/public/build/
 sudo chown -R deploy:www-data /var/www/WebPortal/node_modules/
 sudo chown -R deploy:www-data /var/www/WebPortal/vendor/
 
+# Starting
 sudo systemctl start php8.3-fpm
 sudo systemctl start nginx
