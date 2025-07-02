@@ -16,7 +16,7 @@
                 <div class="basis-1/6">
                     @if(property_exists($this, 'current') && $current)
                         <x-input.date
-                            wire:model.lazy="datum"
+                            wire:model.lazy="current.datum"
                             id="user-costamount-detailinput-datum{{ $cost->id }}"
                             type="text"
                             :error="$errors->first('datum')"
