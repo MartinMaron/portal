@@ -1,15 +1,29 @@
 #!/bin/bash
 
-# Logging
+# Logging mit Timestamps
 LOGFILE="/var/www/Webhook/deploy.log"
-exec > >(tee -a "$LOGFILE") 2>&1
-set -x
+exec > >(while read line; do echo "$(date '+%Y-%m-%d %H:%M:%S'): $line"; done | tee -a "$LOGFILE") 2>&1
+
+echo "=== Deploy started ==="
+set -e  # Exit on error
 export COMPOSER_ALLOW_SUPERUSER=1
 export NODE_OPTIONS="--max-old-space-size=512"
 
-# Stopping
-sudo systemctl stop nginx
-sudo systemctl stop php8.3-fpm
+# Function for error handling
+handle_error() {
+    echo "ERROR: Deploy failed at step: $1"
+    sudo systemctl start php8.3-fpm 2>/dev/null || true
+    sudo systemctl start nginx 2>/dev/null || true
+    exit 1
+}
+
+# Set trap for error handling
+trap 'handle_error "Unknown step"' ERR
+
+# Stopping services
+echo "Stopping services..."
+sudo systemctl stop nginx || handle_error "Stopping nginx"
+sudo systemctl stop php8.3-fpm || handle_error "Stopping php-fpm"
 
 # Swapping
 free -h
