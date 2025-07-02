@@ -28,8 +28,8 @@ for ENV in "${SECURED_ENV_ARRAY[@]}"; do
     continue
   fi
   if [ -f ".env.${ENV}" ]; then
-    echo ".env.${ENV} existiert bereits – überspringe..."
-    continue
+    echo ".env.${ENV} existiert bereits – überschreibe..."
+    rm -f ".env.${ENV}"
   fi
   cp "$FILE" .env.encrypted
   php artisan env:decrypt --key="$ENCRYPTION_KEY"

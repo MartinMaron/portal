@@ -572,7 +572,7 @@ sudo chmod 644 /home/deploy/.ssh/id_ed25519.pub
 Das Skript protokolliert seine Ausgabe in `/var/www/Webhook/deploy.log`. Erstelle die Logdatei und setze die Rechte:
 ```shell
 sudo touch /var/www/Webhook/deploy.log
-sudo chown www-data:www-data /var/www/Webhook/deploy.log
+sudo chown deploy:www-data /var/www/Webhook/deploy.log
 sudo chmod 664 /var/www/Webhook/deploy.log
 ```
 Überwache den Inhalt des Logs z.B. mit `tail -f /var/www/Webhook/deploy.log`, um den Deployment-Prozess zu verfolgen.
