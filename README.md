@@ -440,7 +440,7 @@ Die folgenden relevanten Dienste sind aktiv und laufen:
 
 ### Webhook
 
-Zunächst ist ein Verzeichnis "Webhook" in /var/www/ zu erstellen.
+Zunächst ist ein Verzeichnis `Webhook` in `/var/www/` zu erstellen.
 darin sollte dann `deploy.php` so eingefügt werden:
 ```php
 <?php
@@ -500,9 +500,32 @@ if ($ref !== 'refs/heads/production') {
 
 // Deployment starten
 log_message("Valid push to production branch. Starting deployment...");
-$command = 'sudo -u deploy bash -c "cd /var/www/WebPortal && npm run prod:reload"';
-$output = shell_exec($command . ' >> /var/www/Webhook/deploy.log 2>&1 &');
-log_message("Deployment command dispatched.");
+http_response_code(200);
+header('Content-Type: text/plain');
+echo "Deployment triggered successfully.";
+
+// Output an Client senden und Verbindung schließen
+if (function_exists('fastcgi_finish_request')) {
+    fastcgi_finish_request(); // PHP-FPM
+} else {
+    // Für andere SAPI
+    ob_end_flush();
+    flush();
+}
+// Systemd-Service starten
+$start_output = shell_exec('sudo systemctl start webportal-deploy.service 2>&1');
+$return_code = shell_exec('echo $?');
+
+// Service-Status prüfen
+$service_status = shell_exec('systemctl is-active webportal-deploy.service 2>/dev/null');
+
+// Logging
+error_log("Deploy service start output: " . $start_output);
+error_log("Deploy service return code: " . $return_code);
+error_log("Deploy service status: " . trim($service_status));
+
+log_message("Deployment service started. Return code: " . trim($return_code) . ", Status: " . trim($service_status));
+
 echo "Deployment triggered.";
 ```
 
@@ -513,6 +536,53 @@ echo "WEBHOOK_SECRET=DeinGeheimnisToken" | sudo tee /var/www/Webhook/.env
 ```
 Stelle sicher, dass die `.env`-Datei nur vom Webserver lesbar ist 
 (z.B. mit `sudo chown www-data:www-data /var/www/Webhook/.env` und `sudo chmod 640 /var/www/Webhook/.env`).
+
+Systemd Service erstellen mit `touch /etc/systemd/system/webportal-deploy.service` und folgendem Inhalt:
+```init
+[Unit]
+Description=WebPortal Deployment Service
+After=network.target
+
+[Service]
+Type=oneshot
+User=deploy
+Group=deploy
+WorkingDirectory=/var/www/WebPortal
+Environment=COMPOSER_ALLOW_SUPERUSER=1
+Environment=NODE_OPTIONS=--max-old-space-size=512
+Environment=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ExecStart=/usr/bin/npm run prod:reload
+StandardOutput=append:/var/www/Webhook/deploy_systemd.log
+StandardError=append:/var/www/Webhook/deploy_systemd.log
+TimeoutStartSec=600
+RemainAfterExit=no
+
+[Install]
+WantedBy=multi-user.target
+```
+Aktiviere den Service und starte ihn:
+```shell
+sudo systemctl daemon-reload
+sudo systemctl enable webportal-deploy.service
+```
+
+Anschließend log-Rotation des Deployments in `/var/www/Webhook/deploy.log`:
+```shell
+touch /etc/logrotate.d/webportal-deploy
+```
+und füge folgenden Inhalt ein:
+```logrotate
+/var/www/Webhook/deploy_systemd.log {
+    daily
+    missingok
+    rotate 7
+    compress
+    delaycompress
+    notifempty
+    create 644 deploy deploy
+}
+```
+
 Damit www-data das Webhook-Skript ausführen und Logs schreiben kann, setze den Besitzer und die Rechte:
 ```shell
 sudo chown -R www-data:www-data /var/www/Webhook
@@ -520,7 +590,7 @@ sudo find /var/www/Webhook -type f -exec chmod 640 {} \;
 sudo find /var/www/Webhook -type d -exec chmod 750 {} \;
 ```
 Dadurch hat der Webserver (`www-data`) Lese-/Schreibzugriff auf die Dateien und Verzeichnisse im Webhook-Ordner.
-Richte nun den System-Benutzer deploy ein (falls noch nicht vorhanden):
+Richte nun den System-Benutzer `deploy` ein (falls noch nicht vorhanden):
 ```shell
 sudo useradd -m -s /bin/bash deploy
 ```
@@ -532,30 +602,28 @@ sudo chown -R deploy:www-data /var/www/WebPortal/vendor/
 ```
 Dadurch hat deploy volle Zugriffsrechte auf das WebPortal-Verzeichnis für das Deployment.
 Ermögliche www-data, den Befehl npm run prod:reload als deploy-User ohne Passwort auszuführen. 
-Füge in `/etc/sudoers.d/deploy` (z.B. via `sudo visudo -f /etc/sudoers.d/deploy`) folgendes hinzu:
-```ini
-www-data ALL=(deploy) NOPASSWD: /bin/bash /var/www/WebPortal/scripts/run.sh production reload
-
-´deploy ALL=(ALL) NOPASSWD: \
-    /usr/bin/systemctl stop nginx.service, \
-    /usr/bin/systemctl start nginx.service, \
-    /usr/bin/systemctl stop php8.3-fpm.service, \
-    /usr/bin/systemctl start php8.3-fpm.service, \
-    /usr/bin/systemctl stop nginx, \
-    /usr/bin/systemctl start nginx, \
-    /usr/bin/systemctl stop php8.3-fpm, \
-    /usr/bin/systemctl start php8.3-fpm, \
-    /usr/bin/systemctl start laravel-deploy.service, \
-    /sbin/swapon, \
-    /sbin/mkswap, \
-    /usr/bin/chown, \
-    /bin/dd
-```
-Und binde dies in die sudoers-Datei ein, indem du in `sudo visudo` folgendes hinzufügst: `@includedir /etc/sudoers.d`,
-außerdem stelle sicher, dass die Datei `/etc/sudoers.d/deploy` die richtigen Berechtigungen hat:
+Füge in `/etc/sudoers.d` (z.B. via `sudo visudo`) folgendes hinzu:
 ```shell
-sudo chmod 0440 /etc/sudoers.d/deploy
+Defaults:www-data !requiretty
+
+www-data ALL=(deploy) NOPASSWD: /usr/bin/npm
+
+Defaults:deploy !requiretty
+
+deploy ALL=(root) NOPASSWD: \
+           /usr/bin/systemctl start nginx, \
+           /usr/bin/systemctl stop nginx, \
+           /usr/bin/systemctl start php8.3-fpm, \
+           /usr/bin/systemctl stop php8.3-fpm, \
+           /usr/sbin/swapon, \
+           /sbin/mkswap, \
+           /usr/bin/dd, \
+           /usr/bin/chown, \
+           /usr/bin/chmod
+
+www-data ALL=(root) NOPASSWD: /usr/bin/systemctl start webportal-deploy.service
 ```
+
 Erzeuge (oder importiere) SSH-Schlüssel für den Benutzer deploy, 
 damit dieser per SSH auf GitHub (nur Lesezugriff) zugreifen kann:
 ```shell
