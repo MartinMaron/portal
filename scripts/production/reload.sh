@@ -29,6 +29,7 @@ swapon --show
 
 git fetch
 git pull
+npm run prod:decrypt
 php artisan config:clear
 php artisan route:clear
 php artisan view:clear
@@ -36,7 +37,6 @@ php artisan cache:clear
 npm install
 composer install --no-interaction --optimize-autoloader
 npm run build
-
 sudo chown -R deploy:www-data /var/www/WebPortal/public/build/
 sudo chown -R deploy:www-data /var/www/WebPortal/node_modules/
 sudo chown -R deploy:www-data /var/www/WebPortal/vendor/
