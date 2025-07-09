@@ -61,8 +61,7 @@
         <div class="border-0 bg-slate-700">
             @forelse ($filtered as $cost)
             <div class="">
-                <livewire:user.cost-amount.detail-input :cost='$cost' :netto='false' :inputWithDatum='false' :wire:key="'list-cost-costamountinput-'.$singleCost->id" key="{{ now() }}"/>
-            </div>
+                <livewire:user.cost-amount.detail-input :cost='$cost' :netto='false' :inputWithDatum='false' :wire:key="'list-cost-costamountinput-'.$cost->id" key="{{ now() }}"/>            </div>
             @empty
                 <div class="flex justify-center items-center space-x-2 bg-sky-100">
                     <span class="font-medium py-8 text-cool-gray-400 text-xl">nichts gefunden...</span>
