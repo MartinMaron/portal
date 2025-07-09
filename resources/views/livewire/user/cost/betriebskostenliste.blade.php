@@ -67,7 +67,14 @@
                         :inputWithDatum='false'
                         :wire:key="'list-cost-costamountinput-'.$cost->id"
                         x-data="{}"
-                        x-init="$nextTick(() => { /* ensures Alpine waits for DOM */ })"
+                        x-init="$nextTick(() => {
+            if (!document.getElementById('user-costamount-listitem-datum{{ $cost->id }}')) {
+                const el = document.createElement('div');
+                el.id = 'user-costamount-listitem-datum{{ $cost->id }}';
+                el._x_model = { get: () => '', set: () => {} };
+                document.body.appendChild(el);
+            }
+        })"
                     />
                 </div>
             @empty
