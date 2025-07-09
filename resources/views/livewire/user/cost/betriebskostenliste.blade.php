@@ -60,8 +60,16 @@
         <!-- liste der Kostearten -->
         <div class="border-0 bg-slate-700">
             @forelse ($filtered as $cost)
-            <div class="">
-                <livewire:user.cost-amount.detail-input :cost='$cost' :netto='false' :inputWithDatum='false' :wire:key="'list-cost-costamountinput-'.$cost->id" key="{{ now() }}"/>            </div>
+                <div class="">
+                    <livewire:user.cost-amount.detail-input
+                        :cost='$cost'
+                        :netto='false'
+                        :inputWithDatum='false'
+                        :wire:key="'list-cost-costamountinput-'.$cost->id"
+                        x-data="{}"
+                        x-init="$nextTick(() => { /* ensures Alpine waits for DOM */ })"
+                    />
+                </div>
             @empty
                 <div class="flex justify-center items-center space-x-2 bg-sky-100">
                     <span class="font-medium py-8 text-cool-gray-400 text-xl">nichts gefunden...</span>
