@@ -12,14 +12,13 @@
         <link rel="dns-prefetch" href="//fonts.gstatic.com">
 
         <!-- Styles -->
-        @toastScripts
         @livewireStyles
         @vite(['resources/scss/app.scss', 'resources/js/app.js'])
         <script src="https://kit.fontawesome.com/fec4df1c10.js" crossorigin="anonymous"></script>
     </head>
     <body class="font-sans antialiased">
         {{-- <x-jet-banner /> --}}
-        <livewire:toasts />
+        <livewire:toasts/>
 
         <div class="bg-white">
 
