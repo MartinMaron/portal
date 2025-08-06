@@ -27,7 +27,8 @@ class CostAmountUpdatedNotification
      */
     public function handle(CostAmountUpdated $event)
     {
+        /* 
         toast()->success('Betrag '.$event->costAmount->brutto.' € geändert', 'Achtung')->push();
-
+ */
     }
 }

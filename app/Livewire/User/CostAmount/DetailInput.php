@@ -40,7 +40,7 @@ class DetailInput extends Component
 
     public bool $editable = true;
 
-    public CostAmount $current;
+    public $current;
 
     public string $inputStartField;
 
@@ -59,6 +59,7 @@ class DetailInput extends Component
                 $this->inputStartField = 'betrag';
             }
         }
+
         // nur für Brennstoffkosten können mehrere Beträge eingegeben werden
         // für alle anderen existiert nuer ein CostAmount als Singelton für Abrechnungszeitraum
         if ($this->cost->costtype_id == 'BRK') {
@@ -71,7 +72,7 @@ class DetailInput extends Component
                 $this->current = $this->makeBlankObject();
             }
         }
-        $this->editable = $this->cost->editable;
+        $this->editable =  $this->cost->editable ;
     }
 
     protected $listeners = [
@@ -113,7 +114,7 @@ class DetailInput extends Component
     public function rules()
     {
         return [
-            'current.cost_id' => 'required',
+           /*  'current.cost_id' => 'required', */
             'current.consumption_editing' => 'required_if:cost.consumption,==,1|nullable|min:0|not_in:0',
             'current.brutto' => 'nullable',
             'current.netto' => 'nullable',

@@ -5,7 +5,7 @@
         <x-slot name="title">
             <div class="flex">
                 @if ($cost->caption)
-                    <div class="text-lg font-bold text-sky-500 dark:text-slate-300">{{ $cost->caption }}</div> <x-icon.fonts.pen-line class="text-sky-500 dark:text-slate-300 pl-10 h-6 mt-1" ></x-icon.fonts.pen-line>
+                    <div class="text-lg font-bold text-sky-500 dark:text-slate-300">{{ $cost->caption }}</div> <x-icon.fonts.pen-line class="text-sky-500 dark:text-red-300 pl-10 h-6 mt-1" ></x-icon.fonts.pen-line>
                 @else
                     <div class="text-lg font-bold text-sky-500 dark:text-slate-300">Neu</div> <x-icon.fonts.pen-line class="text-sky-500 dark:text-slate-300 pl-10 h-6 mt-1" ></x-icon.fonts.pen-line>
                 @endif
@@ -16,6 +16,9 @@
             <div> 
                 @if ($onlyConsumptionEdit!=true)
                     <!-- Kostebezeichnung-->  
+                   {{ $this->cost }} 
+
+
                     <div>    
                         <x-input.group
                         class="my-1" paddingLabel="" hoheLabel="h-6 sm:h-8 sm:pt-1" hohe="h-20 sm:h-10"
@@ -24,7 +27,16 @@
                             <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.blur="cost.caption" id="cost-detail-cost.caption" placeholder="Bitte Kostenbezeichnung eintragen" />
                         </x-input.group> 
                     </div>
+
+
+
                 @endif
+
+                     <div wire:model="cost.caption" class="">
+
+                    </div>
+
+
                 @if ($onlyConsumptionEdit!=true)
                 
                 <!-- Kostenart-->  

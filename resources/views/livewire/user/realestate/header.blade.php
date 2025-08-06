@@ -63,6 +63,18 @@
                             @endif
                         </a>
                         <span class="tooltiptext">
+                            <span style="white-space: nowrap">Eingabe der Betriebskosten alt</span>
+                        </span>
+                    </div>
+                    <div class="tooltip px-2 sm:px-4">
+                        <a href="{{route('user.betriebskosteneingabe', $realestate)}}">
+                            @if ($realestate->abrechnungssetting->betreibskostenDone)
+                                <i class="fa-kit fa-solid-file-pen-circle-check text-green-500 dark:text-green-800"></i>
+                            @else
+                                <i class="fa-regular fa-file-signature _icon"></i>
+                            @endif
+                        </a>
+                        <span class="tooltiptext">
                             <span style="white-space: nowrap">Eingabe der Betriebskosten</span>
                         </span>
                     </div>

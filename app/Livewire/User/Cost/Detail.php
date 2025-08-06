@@ -111,6 +111,7 @@ class Detail extends Component
 
     public function addModalBetriebskosten(Realestate $realestate)
     {
+        
         $this->cost = $this->makeBlankObjectBetriebskosten($realestate);
         $this->costtypes = CostType::where('Costinvoicingtype_id', '=', 'BE')->get()->sortBy('sort');
         $this->onlyConsumptionEdit = false;
@@ -136,6 +137,8 @@ class Detail extends Component
 
     public function render()
     {
+        debugbar()->info('render livewire.user.cost.detail', $this->cost);
+      
         return view('livewire.user.cost.detail');
     }
 }

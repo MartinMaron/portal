@@ -51,7 +51,7 @@
                            id="user-costamount-bk-detailinput-betrag{{ $cost->id }}"
                            inputmode="numeric"
                            wire:focusout="save()"
-                           wire:model.blur="{{ $netto ? 'current.netto' : 'current.brutto' }}"
+                           wire:model="{{ $netto ? 'current.nettoBetrag' : 'current.nettoBetrag' }}"
                            style="-moz-appearance: textfield; margin: 0;"
                            class="border inputDisplayBK"
                     >

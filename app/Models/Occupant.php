@@ -2,14 +2,15 @@
 
 namespace App\Models;
 
-use App\Http\Traits\Helpers;
-use Barryvdh\Debugbar\Facades\Debugbar;
 use Carbon\Carbon;
-use Carbon\Exceptions\InvalidFormatException;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Http\Traits\Helpers;
+use Illuminate\Support\Facades\Auth;
+use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Support\Facades\Validator;
+use Carbon\Exceptions\InvalidFormatException;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Occupant extends Model
 {
@@ -238,7 +239,7 @@ class Occupant extends Model
     public function visibleVerbrauchsinfos()
     {
         $q = $this->userVerbrauchsinfoAccessControls
-            ->where('user_id', '=', auth()->user()->id)
+            ->where('user_id', '=', Auth::user()->id)
             ->map(function (UserVerbrauchsinfoAccessControl $userControl) {
                 return $userControl->jahr_monat;
             });
