@@ -13,37 +13,21 @@ class DetailInput extends Component
 {
     use WireToast;
     use Helpers;
-
     public Cost $cost;
-
     public $datum;
-
-    public Double $consumption;
-
-    public Double $amount;
-
-    public Double $amountHh;
-
+    public $consumption;
+    public $amount;
+    public $haushaltsnah;
     public $netto;
-
     public bool $inputWithDate;
-
     public bool $inputNet;
-
     public int $index;
-
     public int $editedindex = 1;
-
     public bool $hasChanges = false;
-
     public bool $saved = false;
-
     public bool $editable = true;
-
     public $current;
-
     public string $inputStartField;
-
     public function mount(Cost $cost, $netto, $inputWithDatum)
     {
         $this->cost = $cost;
@@ -71,6 +55,13 @@ class DetailInput extends Component
             } else {
                 $this->current = $this->makeBlankObject();
             }
+        }
+        $this->haushaltsnah = $this->current->haushaltsnah ?? 0;
+        $this->consumption = number_format($this->current->netAmount, 1, ',', '.') ?? '0,0';
+        if ($this->inputNet) {
+            $this->amount = $this->current->netto ?? 0;
+        } else {
+            $this->amount = $this->current->brutto ?? 0;
         }
         $this->editable =  $this->cost->editable ;
     }
@@ -101,14 +92,25 @@ class DetailInput extends Component
 
     public function updated($propertyName)
     {
+        if ($propertyName === 'consumption'){
+            $this->saveCostAmountField('consumption', $this->consumption);
+        }
+
+       
+       
         if (! $this->cost->costtype == 'BRK') {
             $this->save();
         }
+        
     }
 
     public function raise_EditCostModal(Cost $cost)
     {
-        $this->dispatch('showCostDetailModal', $cost, false, false);
+        if ($cost->costtype->costinvoicingtype_id == 'BE') {
+            $this->dispatch('showBetriebskostenCostDetailModal', $cost);
+        } else {
+            $this->dispatch('showCostDetailModal', $cost, false, false);
+        }
     }
 
     public function rules()
@@ -174,6 +176,34 @@ class DetailInput extends Component
             }
         }
     }
+
+    public function updatedNettobetraege($value, $key)
+    {
+        $this->saveAmount($key, 'netAmount', $value);
+        $this->nettobetraege[$key] = number_format(floatval(str_replace(',', '.', str_replace('.', '', $value))), 2, ',', '.');
+    }
+
+
+    private function saveCostAmountField($field, $value)
+    {
+        $costAmount = CostAmount::firstOrNew([
+            'cost_id' => $this->cost->id,
+            'abrechnungssetting_id' => $this->cost->realestate->abrechnungssetting_id,
+            'startvalue' => 0,
+            'endvalue' => 0,
+        ]);
+
+        $costAmount->{$field} = floatval(str_replace(',', '.', str_replace('.', '', $value)));
+
+        $costAmount->save();
+      
+        // Dispatching to our custom toast component.
+        $this->dispatch('show-toast-notification', message: 'Gespeichert', type: 'success');
+    }
+
+
+
+
 
     public function render()
     {

@@ -87,16 +87,23 @@ class Betriebskosteneingabe extends Component
     }
 
     public function makeBlankObject()
-        {
-            return Cost::make([
-                'nekoId' => $this->realestate->nekoId,
-                'realestate_id' => $this->realestate->id,
-                'unvid' => $this->realestate->unvid,
-                'budguid' => $this->realestate->nekoId,
-                'costtype' => CostType::find('BEK'),
-                'caption' => 'Neue Kostenposition',
-            ]);
-        }
+    {
+        return Cost::make([
+            'nekoId' => $this->realestate->nekoId,
+            'realestate_id' => $this->realestate->id,
+            'unvid' => $this->realestate->unvid,
+            'budguid' => $this->realestate->nekoId,
+            'costtype' => CostType::find('BEK'),
+            'caption' => 'Neue Kostenposition',
+        ]);
+    }
+
+    public function createBetriebskostenModal()
+    {
+        $this->current = $this->makeBlankObject();
+        $this->dispatch('createBetriebskostenModal', $this->current);
+    }
+
 
     public function render()
     {

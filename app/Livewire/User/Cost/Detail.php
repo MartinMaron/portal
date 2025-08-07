@@ -2,6 +2,7 @@
 
 namespace App\Livewire\User\Cost;
 
+use App\Http\Traits\Helper\CostHelper;
 use App\Models\Cost;
 use App\Models\CostType;
 use App\Models\FuelType;
@@ -12,23 +13,20 @@ use Usernotnull\Toast\Concerns\WireToast;
 class Detail extends Component
 {
     use WireToast;
+    use CostHelper;
 
-    public $cost = null;
-
+    public $current = null;
+    public Cost $cost;
     public $showEditModal = false;
-
+    public $dialogMode = 'init';
     public $costtypes = null;
-
     public $fueltypes = null;
-
     public $costkeys = null;
-
     public bool $netAmountInput = false;
-
     public bool $onlyConsumptionEdit = false;
 
     /* initialization */
-    public function mount(Cost $cost, bool $netAmountInput, string $costinvoicingtype)
+    public function mount($cost, bool $netAmountInput, string $costinvoicingtype)
     {
         $this->cost = $cost;
         $this->fueltypes = FuelType::all();
@@ -41,55 +39,52 @@ class Detail extends Component
         'showCostDetailModal' => 'showModal',
         'closeCostDetailModal' => 'closeModal',
         'showBetriebskostenCostDetailModal' => 'showModalBetriebskosten',
-        'addBetriebskostenCostDetailModal' => 'addModalBetriebskosten',
+        'addBetriebskostenCostDetailModal' => 'createModalBetriebskosten',
     ];
+
+// #region validation
 
     public function rules()
     {
         return [
-            'cost.caption' => 'required|min:2',
-            'cost.costtype_id' => 'required',
-            'cost.fueltype_id' => 'nullable',
-            'cost.start_value_editing' => 'nullable',
-            'cost.start_value_amount_gros_editing' => 'nullable',
-            'cost.start_value_amount_net_editing' => 'nullable',
-            'cost.end_value_editing' => 'nullable',
-            'cost.haushaltsnah' => 'nullable',
-            'cost.co2Tax' => 'required',
-            'cost.costkey_id' => 'nullable',
-            'cost.noticeForUser' => 'nullable',
-            'cost.noticeForNeko' => 'nullable',
-            'cost.consumption' => 'nullable',
-            'cost.prevyearPeriod' => 'nullable',
-            'cost.prevyearAmountnet' => 'nullable',
-            'cost.prevyearAmountgros' => 'nullable',
-            'cost.nekoId' => 'required',
-            'cost.realestate_id' => 'required',
+            'current.caption' => 'required|min:2',
+            'current.costtype_id' => 'required',
+            'current.fueltype_id' => 'nullable',
+            'current.start_value_editing' => 'nullable',
+            'current.start_value_amount_gros_editing' => 'nullable',
+            'current.start_value_amount_net_editing' => 'nullable',
+            'current.end_value_editing' => 'nullable',
+            'current.haushaltsnah' => 'nullable',
+            'current.co2Tax' => 'required',
+            'current.costkey_id' => 'nullable',
+            'current.noticeForUser' => 'nullable',
+            'current.noticeForNeko' => 'nullable',
+            'current.consumption' => 'nullable',
+            'current.prevyearPeriod' => 'nullable',
+            'current.prevyearAmountnet' => 'nullable',
+            'current.prevyearAmountgros' => 'nullable',
+            'current.nekoId' => 'required',
+            'current.realestate_id' => 'required',
         ];
     }
 
-    public function makeBlankObject(Cost $cost)
+    public function messages()
     {
-        return Cost::make([
-            'nekoId' => 0,
-            'realestate_id' => $cost->realestate->id,
-            'costtype_id' => $cost->costtype_id,
-            'consumption' => false,
-        ]);
+        return [
+            'current.caption' => ':attribute muss angegeben werden',
+        ];
     }
 
-    public function makeBlankObjectBetriebskosten(Realestate $realestate)
+    public function attributes()
     {
-        return Cost::make([
-            'nekoId' => 0,
-            'realestate_id' => $realestate->id,
-            'costtype_id' => 'BEK',
-            'consumption' => false,
-            'caption' => 'neue Kostenposition',
-        ]);
+        return [
+            'current.caption' => 'Bezeichnung',
+        ];
     }
 
-    public function showModal(Cost $cost, $add, $onlyConsumptionEdit)
+// #endregion
+    
+public function showModal(Cost $cost, $add, $onlyConsumptionEdit)
     {
         if ($add) {
             $this->cost = $this->makeBlankObject($cost);
@@ -104,32 +99,38 @@ class Detail extends Component
     public function showModalBetriebskosten(Cost $cost)
     {
         $this->cost = $cost;
+        $this->current = $this->cost->toArray();
         $this->costtypes = CostType::where('costinvoicingtype_id', '=', 'BE')->get()->sortBy('sort');
         $this->onlyConsumptionEdit = false;
+        $this->dialogMode = 'edit';
         $this->showEditModal = true;
     }
 
-    public function addModalBetriebskosten(Realestate $realestate)
+    public function createModalBetriebskosten(Realestate $realestate)
     {
-        
         $this->cost = $this->makeBlankObjectBetriebskosten($realestate);
+        $this->current = $this->cost->toArray();
         $this->costtypes = CostType::where('Costinvoicingtype_id', '=', 'BE')->get()->sortBy('sort');
         $this->onlyConsumptionEdit = false;
         $this->showEditModal = true;
+        $this->dialogMode = 'create';
     }
 
     public function closeModal($save)
     {
         if ($save) {
-            $this->cost->co2Tax = $this->cost->can_co2;
-            if ($this->cost->costtype != null && $this->cost->costtype_id == 'BRK') {
-                $this->cost->consumption = true;
+            $this->cost->co2Tax = $this->hasCo2Tax($this->cost);
+            if ($this->validate($this->rules(), $this->messages(), $this->attributes())) {
+                /* if ($this->cost->costtype != null && $this->cost->costtype_id == 'BRK') {
+                    $this->cost->consumption = true;
+                }
+                $this->cost->OptimisticLockField = $this->cost->OptimisticLockField + 1; */
+                $this->cost = $this->fill_changed_data_from($this->current, $this->cost);
+                $this->cost->save();
+                $this->showEditModal = false;
+                toast()->success('Speichervorgang erfolgreich', 'Achtung')->push();
+                $this->dispatch('refreshComponents');
             }
-            $this->cost->OptimisticLockField = $this->cost->OptimisticLockField + 1;
-            $this->validate();
-            $this->cost->save();
-            $this->showEditModal = false;
-            $this->dispatch('refreshComponents');
         } else {
             $this->showEditModal = false;
         }
@@ -137,8 +138,6 @@ class Detail extends Component
 
     public function render()
     {
-        debugbar()->info('render livewire.user.cost.detail', $this->cost);
-      
         return view('livewire.user.cost.detail');
     }
 }

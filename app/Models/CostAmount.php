@@ -60,7 +60,7 @@ class CostAmount extends Model
     public function consumptionEditing(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->consumption ? number_format($this->consumption, 1, ',', '.') : null,
+            get: fn () => $this->consumption ? number_format($this->consumption, 1, ',', '.') : '0,0',
             set: fn ($value) => ['consumption' => $this->castStringToDouble($value)]
         );
     }
@@ -127,7 +127,7 @@ class CostAmount extends Model
     public function conetto(): Attribute
     {
         return Attribute::make(
-            get: fn () => number_format($this->co2TaxAmount_net, 2, ',', '.'),
+            get: fn () => number_format($this->co2TaxAmount_net ?? 0, 2, ',', '.'),
             set: fn ($value) => ['co2TaxAmount_net' => $this->castStringToDouble($value)]
         );
     }

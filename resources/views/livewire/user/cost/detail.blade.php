@@ -4,49 +4,48 @@
         <!-- Dialog Title -->
         <x-slot name="title">
             <div class="flex">
-                @if ($cost->caption)
-                    <div class="text-lg font-bold text-sky-500 dark:text-slate-300">{{ $cost->caption }}</div> <x-icon.fonts.pen-line class="text-sky-500 dark:text-red-300 pl-10 h-6 mt-1" ></x-icon.fonts.pen-line>
-                @else
-                    <div class="text-lg font-bold text-sky-500 dark:text-slate-300">Neu</div> <x-icon.fonts.pen-line class="text-sky-500 dark:text-slate-300 pl-10 h-6 mt-1" ></x-icon.fonts.pen-line>
+                @if($dialogMode != 'init')
+                    @if (array_key_exists('caption', $current))
+                        <div class="text-lg font-bold text-sky-500 dark:text-slate-300">{{ $current['caption'] }}</div> <x-icon.fonts.pen-line class="text-sky-500 dark:text-red-300 pl-10 h-6 mt-1" ></x-icon.fonts.pen-line>
+                    @else
+                        <div class="text-lg font-bold text-sky-500 dark:text-slate-300">Kostenposition erstellen</div> <x-icon.fonts.pen-line class="text-sky-500 dark:text-slate-300 pl-10 h-6 mt-1" ></x-icon.fonts.pen-line>
+                    @endif
                 @endif
             </div>
+            @if ($errors->isNotEmpty())
+                <div class="block text-sm bg-red-100 border border-red-400 text-red-700 px-1 py-1 rounded relative mb-2" role="alert">
+                    <span class="block sm:block"><strong class="font-bold">Uups! Einige Informationen fehlen oder sind nicht korrekt. </strong>
+                        @foreach ($errors->all() as $error)
+                                <span class="block sm:block">- {{ $error  }}</span>
+                        @endforeach
+                    </span>
+                </div>
+            @endif
         </x-slot>
         <!-- Dialog Content -->
         <x-slot name="content">
+            @if($dialogMode != 'init')  
             <div> 
                 @if ($onlyConsumptionEdit!=true)
                     <!-- Kostebezeichnung-->  
-                   {{ $this->cost }} 
-
-
                     <div>    
                         <x-input.group
                         class="my-1" paddingLabel="" hoheLabel="h-6 sm:h-8 sm:pt-1" hohe="h-20 sm:h-10"
-                        for="cost.caption" label="Bezeichnung" :error="$errors->first('cost.caption')"
+                        for="current.caption" label="Bezeichnung"
                         >
-                            <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.blur="cost.caption" id="cost-detail-cost.caption" placeholder="Bitte Kostenbezeichnung eintragen" />
+                            <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.live="current.caption" id="cost-detail-cost.caption" placeholder="Bitte Kostenbezeichnung eintragen" />
                         </x-input.group> 
                     </div>
-
-
-
                 @endif
-
-                     <div wire:model="cost.caption" class="">
-
-                    </div>
-
-
                 @if ($onlyConsumptionEdit!=true)
-                
                 <!-- Kostenart-->  
                     <div>
                         <x-input.group
                         class="my-1" paddingLabel="" hoheLabel="h-6 sm:h-8 sm:pt-1" hohe="h-20 sm:h-10"
-                        for="cost.costtype_id" label="Kostenart" :error="$errors->first('cost.costtype_id')"
+                        for="current.costtype_id" label="Kostenart" :error="$errors->first('current.costtype_id')"
                         >
                         <x-input.select
-                            class="h-10 border-b bg-sky-50 sm:h-8 focus:border-0 w-full" wire:model.live="cost.costtype_id" id="cost-detail-cost.costtype_id" placeholder="Bitte auswählen" value="">
+                            class="h-10 border-b bg-sky-50 sm:h-8 focus:border-0 w-full" wire:model.live="current.costtype_id" id="cost-detail-cost.costtype_id" placeholder="Bitte auswählen" value="">
                             @foreach ($this->costtypes as $label)
                                 <option class="h-10" value="{{ $label->id }}">
                                         {{ $label->caption }}
@@ -55,11 +54,10 @@
                             </x-input.select>
                         </x-input.group>
                     </div>
-                
-                    @endif
+                @endif
                 @if ($onlyConsumptionEdit!=true)
                     <!-- Brennstoffart-->
-                    <div class="{{ $cost->costtype_id == 'BRK' ? 'block' : 'hidden' }}">
+                    <div class="{{ $cost['costtype_id'] == 'BRK' ? 'block' : 'hidden' }}">
                         <x-input.group
                         class="my-1" paddingLabel="" hoheLabel="h-6 sm:h-8 sm:pt-1" hohe="h-20 sm:h-10"
                             for="fueltype_id" label="Brennstoff" :error="$errors->first('cost.fueltype_id')"
@@ -76,7 +74,7 @@
                     </div>
                 @endif
 
-                @if ($cost->costtype_id =='BRK' && $cost->fueltype != null && $cost->fueltype->hasTank)
+                @if ($cost['costtype_id'] =='BRK' && $cost['fueltype'] != null && $cost['fueltype']->hasTank)
                     @if ($onlyConsumptionEdit!=true)
                         <!-- Anfangsstand-->  
                         <div>
@@ -107,34 +105,34 @@
                         </x-input.group>  
                     </div>
                 @endif
-               
-                @if ($cost->costtype !=null && $cost->costtype_id != 'BRK')
+                @if ($current['costtype_id'] !=null && $current['costtype_id'] != 'BRK')
                     <!-- Haushaltsnah-->  
                     <div>
                         <x-input.group
                         class="my-2 " paddingLabel="" hoheLabel="h-6 sm:h-8 sm:pt-1" hohe="h-20 sm:h-10"
-                        for="cost.haushaltsnah" label="Haushaltsnah" :error="$errors->first('cost.haushaltsnah')">
+                        for="current.haushaltsnah" label="Haushaltsnah" :error="$errors->first('current.haushaltsnah')">
                             <div class="flex items-center justify-between h-10 sm:h-8">
                                 <div class="pl-1">
-                                    <x-input.checkbox wire:model.live="cost.haushaltsnah"></x-input.checkbox>
+                                    <x-input.checkbox wire:model.live="current.haushaltsnah"></x-input.checkbox>
                                 </div>
                             </div>
                         </x-input.group>
                     </div>
                 @endif
-                
-                @if ($cost->need_costkey)
+
+                @if ($current['need_costkey'])
                 <!-- Umlageschlüssel--> 
                 <div>
                     <x-input.group
                         class="my-1" paddingLabel="" hoheLabel="h-6 sm:h-8 sm:pt-1" hohe="h-20 sm:h-10"
-                        for="costkey_id" label="Umlageschlüssel" :error="$errors->first('cost.costkey_id')"
+                        for="costkey_id" label="Umlageschlüssel" :error="$errors->first('current.costkey_id')"
                         x-data
                         x-init="$refs.inputcostkey.focus()"
                         >
                         <x-input.select
                         x-ref="inputcostkey"
-                        class="h-10 border-b bg-sky-50 sm:h-8 focus:border-0 w-full" wire:model.live="cost.costkey_id" id="cost-detail-cost.costkey_id" placeholder="Bitte auswählen" value="">
+                        class="h-10 border-b bg-sky-50 sm:h-8 focus:border-0 w-full" 
+                        wire:model.live="current.costkey_id" id="cost-detail-cost.costkey_id" placeholder="Bitte auswählen" value="">
                         @foreach ($this->costkeys as $label)
                         <option class="flex h-10" value="{{ $label->id }}">
                             <span class="">
@@ -153,12 +151,13 @@
                     <x-input.group
                     hohe="h-30"
                     hoheLabel="h-30 sm:h-full sm:pt-3"
-                    bottom=false for="noticeForNeko" label="Hinweis für Abrechner" :error="$errors->first('cost.noticeForNeko')">
-                        <x-input.textarea  wire:model.live="cost.noticeForNeko" id="cost-detail-cost.noticeForNeko" placeholder="..." />
+                    bottom=false for="noticeForNeko" label="Hinweis für Abrechner" :error="$errors->first('current.noticeForNeko')">
+                        <x-input.textarea  wire:model.live="current.noticeForNeko" id="cost-detail-cost.noticeForNeko" placeholder="..." />
                     </x-input.group>
                 </div>
                 @endif
             </div>
+            @endif
         </x-slot>
 
         <x-slot name="footer">

@@ -1,6 +1,11 @@
 <div x-data="gridNavigation()">
     <div class="flex justify-between items-center">
         <h1 class="text-2xl font-semibold text-gray-900">Betriebskosteneingabe</h1>
+        <button wire:click="createBetriebskostenModal()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+        </button>
     </div>
 
     <div class="my-4">
@@ -90,6 +95,15 @@
                     @endforeach
                 </tbody>
             </table>
+        </div>
+    </div>
+    <div class="xs:max-w-xs xs:w-xs">
+        <!-- Save Modal -->
+        <div>
+            <livewire:user.cost.betriebskostenmodal :wire:key="'modal-cost-betriebskostenadddialog'"/>
+        </div>
+        <div>
+            <livewire:user.dialog.neko-message-box :wire:key="'neko-message-box'"/>
         </div>
     </div>
 </div>

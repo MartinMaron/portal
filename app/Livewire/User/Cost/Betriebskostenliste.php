@@ -3,6 +3,7 @@
 namespace App\Livewire\User\Cost;
 
 use App\Http\Traits\Helpers;
+use App\Livewire\DataTable\WithSorting;
 use App\Models\Cost;
 use App\Models\CostType;
 use App\Models\Realestate;
@@ -13,24 +14,15 @@ use Usernotnull\Toast\Concerns\WireToast;
 class Betriebskostenliste extends Component
 {
     use Helpers;
-    use WireToast;
-
+    use WireToast, WithSorting;
     public $showEditModal = false;
-
     public $showEditFields = true;
-
     public $showFilters = false;
-
     public $nettoInputMode = false;
-
     public $dateInputMode = true;
-
     public $dateFrom = null;
-
     public Cost $current;
-
     public Realestate $realestate;
-
     public function rules()
     {
         return [
@@ -48,6 +40,7 @@ class Betriebskostenliste extends Component
         $this->nettoInputMode = $realestate->eingabeCostNetto;
         $this->dateInputMode = $realestate->eingabeCostDatum;
         $this->showEditFields = $realestate->kosteneingabe;
+        $this->sorts = ['caption' => 'asc']; 
     }
 
     public function makeBlankObject()
@@ -65,8 +58,9 @@ class Betriebskostenliste extends Component
     protected $listeners = [
         'changeProperty' => 'changeValue',
         'refreshComponents' => '$refresh',
-        'confirmNekoMessage' => 'confirmNekoMessage',
+        'confirmNekoMessage' => 'confirmNekoMessage',      
     ];
+   
 
     public function create()
     {
@@ -96,11 +90,7 @@ class Betriebskostenliste extends Component
     public function raise_EditCostModal(Cost $cost)
     {
         $this->setCurrent($cost);
-        if ($cost->costtype->costinvoicingtype_id == 'HZ') {
-            $this->dispatch('showCostDetailModal', $this->current, false, false);
-        } else {
-            $this->dispatch('showBetriebskostenCostDetailModal', $this->current);
-        }
+        $this->dispatch('showBetriebskostenCostDetailModal', $this->current);
     }
 
     public function raise_AddCostModal()
@@ -135,18 +125,29 @@ class Betriebskostenliste extends Component
         return (bool) ($ret > 0);
     }
 
+    public function getRowsProperty()
+    {
+        return $this->rowsQuery->get();
+    }
+
+    public function getRowsQueryProperty()
+    {
+        $result = Cost::where('realestate_id', '=', $this->realestate->id)
+        ->where(function (Builder $query) {
+            $query->IsBetriebskosten()
+            ->with('costAmounts');
+        });
+
+        $this->applySorting($result);
+        debuger
+        return $result;
+    }
+
+
     public function render()
     {
-        $filtered = Cost::where('realestate_id', '=', $this->realestate->id)
-            ->where(function (Builder $query) {
-                $query->IsBetriebskosten();
-            })
-            ->get()->sortBy('caption');
-
-        $filtered->fresh('costAmounts');
-
         return view('livewire.user.cost.betriebskostenliste', [
-            'filtered' => $filtered,
+            'filtered' => $this->rows,
         ]);
     }
 }

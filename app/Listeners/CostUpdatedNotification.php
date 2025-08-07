@@ -26,6 +26,6 @@ class CostUpdatedNotification
      */
     public function handle(CostUpdated $event)
     {
-        toast()->success('Speichervorgang erfolgreich', 'Achtung')->push();
+       /*  toast()->success('Speichervorgang erfolgreich', 'Achtung')->push(); */
     }
 }
