@@ -26,14 +26,15 @@
             <div class="flex flex-row columnheader items-center justify-start border-b-2 border-slate-400 ">
                 <div class="basis-2/3 flex text-center items-center font-semibold">
                     <div
-                        class="basis-1/3 text-left px-2 flex"
+                        class="basis-2/3 text-left px-2 flex"
                         wire:click="sortBy('caption')"
                         tabindex="-1">
-                        <span class="py-1 text-right line-clamp-1">Kostenbezeichnung</span>
-                    </div>
-
-                    <div class="basis-1/3 rounded-md">
-                        <span class="line-clamp-1">Bearbeitungshinweis</span>
+                        <div class="flex py-1 gap-2 items-center">
+                            <span class="line-clamp-1">
+                               Kostenbezeichnung
+                            </span>
+                            <x-icon.fonts.sorted :value='$this->sortDirection("caption")'></x-icon.fonts.sorted>
+                        </div>
                     </div>
                     <div class="basis-1/3 px-4 rounded-md ">
                         letzte Abrechnung
@@ -41,12 +42,12 @@
                 </div>
                 <div class="basis-1/3 flex gap-2 text-center font-semibold">
                     <div class="basis-1/3">
-                        @if ($this->hasConsumptionByType('BEK'))
-                        <span class="">Verbrauch</span>
+                        @if ($this->hasConsumptionByType('BEK', $this->realestate))
+                            <span class="">Verbrauch</span>
                         @endif
                     </div>
                     <div class="basis-1/3">
-                        @if ($this->hasHaushaltsnahByType('BEK'))
+                        @if ($this->hasHaushaltsnahByType('BEK', $this->realestate))
                             <div class="">
                             <span class="">§ 35c EStG</span>
                             </div>

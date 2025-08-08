@@ -21,7 +21,7 @@
                         id="user-costamount-detailinput-consumption{{ $cost->id }}"
                         inputmode="numeric"
                         placeholder="0,0"
-                        wire:model.live="consumption"
+                        wire:model.lazy="consumption"
                         style="-moz-appearance: textfield; margin: 0;"
                         class=" {{ $cost->consumption ? 'block' : 'hidden' }}
                         inputDisplayBK"
@@ -57,7 +57,7 @@
                            inputmode="numeric"
                            wire:model.blur="betrag"
                            style="-moz-appearance: textfield; margin: 0;"
-                           class="border inputDisplayBK"
+                           class="border inputDisplayBK font-semibold"
                     >
                 @else
                     <div

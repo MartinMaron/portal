@@ -2,6 +2,7 @@
 
 namespace App\Livewire\User\Cost;
 
+use App\Http\Traits\Helper\CostHelper;
 use App\Http\Traits\Helpers;
 use App\Livewire\DataTable\WithSorting;
 use App\Models\Cost;
@@ -13,7 +14,7 @@ use Usernotnull\Toast\Concerns\WireToast;
 
 class Betriebskostenliste extends Component
 {
-    use Helpers;
+    use Helpers, CostHelper;
     use WireToast, WithSorting;
     public $showEditModal = false;
     public $showEditFields = true;
@@ -98,32 +99,7 @@ class Betriebskostenliste extends Component
         $this->dispatch('addBetriebskostenCostDetailModal', $this->realestate);
     }
 
-    public function hasConsumptionByType($costtypeId)
-    {
-        $ret = Cost::where('realestate_id', '=', $this->realestate->id)
-            ->where(function (Builder $query) {
-                $query->IsBetriebskosten();
-            })
-            ->where('costtype_id', '=', $costtypeId)
-            ->where('consumption', '=', 1)
-            ->count();
-
-        return (bool) ($ret > 0);
-        // return $ret;
-    }
-
-    public function hasHaushaltsnahByType($costtypeId)
-    {
-        $ret = Cost::where('realestate_id', '=', $this->realestate->id)
-            ->where(function (Builder $query) {
-                $query->IsBetriebskosten();
-            })
-            ->where('costtype_id', '=', $costtypeId)
-            ->where('haushaltsnah', '=', 1)
-            ->count();
-
-        return (bool) ($ret > 0);
-    }
+   
 
     public function getRowsProperty()
     {
@@ -137,9 +113,7 @@ class Betriebskostenliste extends Component
             $query->IsBetriebskosten()
             ->with('costAmounts');
         });
-
         $this->applySorting($result);
-        debuger
         return $result;
     }
 

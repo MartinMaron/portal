@@ -4,6 +4,7 @@ namespace App\Http\Traits\Helper;
 use App\Models\Cost;
 use App\Models\CostAmount;
 use App\Models\Realestate;
+use Illuminate\Database\Eloquent\Builder;
 
 trait CostHelper
 {
@@ -71,5 +72,45 @@ trait CostHelper
            'endvalue' => 0,
        ]);
     }
+
+    public function hasConsumptionByType($costtypeId, Realestate $realestate)
+    {
+        $ret = Cost::where('realestate_id', '=', $realestate->id)
+            ->where(function (Builder $query) use ($costtypeId) {
+                if($costtypeId == 'BEK' || $costtypeId == 'BEH') 
+                    {
+                    $query->IsBetriebskosten();
+                }elseif($costtypeId == 'BRK') {
+                    $query->IsBrennstoffkosten();
+                }else {
+                    $query->IsHeizkosten();
+                }
+            })
+            ->where('costtype_id', '=', $costtypeId)
+            ->where('consumption', '=', 1)
+            ->count();
+        return (bool) ($ret > 0);
+    }
+
+    public function hasHaushaltsnahByType($costtypeId, Realestate $realestate)
+    {
+        $ret = Cost::where('realestate_id', '=', $realestate->id)
+            ->where(function (Builder $query) use ($costtypeId) {
+                if($costtypeId == 'BEK' || $costtypeId == 'BEH') 
+                    {
+                    $query->IsBetriebskosten();
+                }elseif($costtypeId == 'BRK') {
+                    $query->IsBrennstoffkosten();
+                }else {
+                    $query->IsHeizkosten();
+                }
+            })
+            ->where('costtype_id', '=', $costtypeId)
+            ->where('haushaltsnah', '=', 1)
+            ->count();
+
+        return (bool) ($ret > 0);
+    }
+
 
 }
