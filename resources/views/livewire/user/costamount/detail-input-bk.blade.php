@@ -3,7 +3,7 @@
         <div class="basis-2/3 flex items-center font-semibold">
             <button
                 class="basis-2/3 text-left px-2 flexhover:bg-sky-300 hover:bg-sky-300 dark:hover:bg-slate-500 rounded-md"
-                wire:click="raise_EditCostModal({{ $cost }})"
+                wire:click="EditCostModal({{ $cost }})"
                 tabindex="-1">
                 <span class="py-1 line-clamp-1">{{ $cost->caption }}</span>
             </button>

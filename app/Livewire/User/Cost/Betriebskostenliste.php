@@ -6,7 +6,6 @@ use App\Http\Traits\Helper\CostHelper;
 use App\Http\Traits\Helpers;
 use App\Livewire\DataTable\WithSorting;
 use App\Models\Cost;
-use App\Models\CostType;
 use App\Models\Realestate;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
@@ -17,13 +16,20 @@ class Betriebskostenliste extends Component
     use Helpers, CostHelper;
     use WireToast, WithSorting;
     public $showEditModal = false;
-    public $showEditFields = true;
-    public $showFilters = false;
-    public $nettoInputMode = false;
-    public $dateInputMode = true;
-    public $dateFrom = null;
-    public Cost $current;
     public Realestate $realestate;
+
+    /* initialization */
+    public function mount($realestate)
+    {
+        $this->realestate = $realestate;
+        $this->sorts = ['caption' => 'asc']; 
+    }
+
+    protected $listeners = [
+        'refreshComponents' => '$refresh',
+        'confirmNekoMessage' => 'confirmNekoMessage',      
+    ];
+
     public function rules()
     {
         return [
@@ -32,44 +38,13 @@ class Betriebskostenliste extends Component
             'current.dateCostAmount' => 'date|sometimes',
         ];
     }
-
-    /* initialization */
-    public function mount($realestate)
+ 
+    public function addCostModal()
     {
-        $this->realestate = $realestate;
-        $this->current = $this->makeBlankObject();
-        $this->nettoInputMode = $realestate->eingabeCostNetto;
-        $this->dateInputMode = $realestate->eingabeCostDatum;
-        $this->showEditFields = $realestate->kosteneingabe;
-        $this->sorts = ['caption' => 'asc']; 
+        $this->dispatch('addBetriebskostenCostDetailModal', $this->realestate);
     }
 
-    public function makeBlankObject()
-    {
-        return Cost::make([
-            'nekoId' => $this->realestate->nekoId,
-            'realestate_id' => $this->realestate->id,
-            'unvid' => $this->realestate->unvid,
-            'budguid' => $this->realestate->nekoId,
-            'costtype' => CostType::find('BEK'),
-            'caption' => 'Neue Kostenposition',
-        ]);
-    }
-
-    protected $listeners = [
-        'changeProperty' => 'changeValue',
-        'refreshComponents' => '$refresh',
-        'confirmNekoMessage' => 'confirmNekoMessage',      
-    ];
-   
-
-    public function create()
-    {
-        if ($this->current->getKey()) {
-            $this->current = $this->makeBlankTransaction();
-        }
-        $this->showEditModal = true;
-    }
+    #region übergabe an Eneko
 
     public function setDone()
     {
@@ -87,20 +62,9 @@ class Betriebskostenliste extends Component
             return redirect(request()->header('Referer'));
         }
     }
+    #endregion
 
-    public function raise_EditCostModal(Cost $cost)
-    {
-        $this->setCurrent($cost);
-        $this->dispatch('showBetriebskostenCostDetailModal', $this->current);
-    }
-
-    public function raise_AddCostModal()
-    {
-        $this->dispatch('addBetriebskostenCostDetailModal', $this->realestate);
-    }
-
-   
-
+    #region Dataselection
     public function getRowsProperty()
     {
         return $this->rowsQuery->get();
@@ -109,6 +73,17 @@ class Betriebskostenliste extends Component
     public function getRowsQueryProperty()
     {
         $result = Cost::where('realestate_id', '=', $this->realestate->id)
+         ->where(function (Builder $query) {
+                if ($this->realestate->abrechnungssetting != null) {
+                    $query->where('periodTo', '=', null)
+                        ->orWhere('periodTo', '>=', $this->realestate->abrechnungssetting->periodFrom);
+                }
+            })
+            ->where(function (Builder $query) {
+                if ($this->realestate->abrechnungssetting != null) {
+                    $query->where('periodFrom', '<=', $this->realestate->abrechnungssetting->periodTo);
+                }
+            })
         ->where(function (Builder $query) {
             $query->IsBetriebskosten()
             ->with('costAmounts');
@@ -116,7 +91,7 @@ class Betriebskostenliste extends Component
         $this->applySorting($result);
         return $result;
     }
-
+    #endregion
 
     public function render()
     {

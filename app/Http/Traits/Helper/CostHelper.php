@@ -58,10 +58,6 @@ trait CostHelper
         return $cost;
     }
 
-    public function upsertCost(Cost $cost)
-    {
-       $cost->save();
-    }
 
     public function getDefaultCostAmount(Cost $cost)
     {

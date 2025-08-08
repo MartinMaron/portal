@@ -54,7 +54,7 @@ class DetailInputBK extends Component
         }
     }
 
-    public function raise_EditCostModal(Cost $cost)
+    public function EditCostModal(Cost $cost)
     {
         $this->dispatch('showBetriebskostenCostDetailModal', $cost);
     }
@@ -86,8 +86,6 @@ class DetailInputBK extends Component
    
     private function saveCostAmountField($field, $value)
     {
-
-      
         $costAmount = $this->getDefaultCostAmount($this->cost);
         if (!$costAmount->exists) {
             $costAmount->startvalue = 0;

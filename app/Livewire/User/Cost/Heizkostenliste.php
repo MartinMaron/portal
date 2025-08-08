@@ -2,6 +2,7 @@
 
 namespace App\Livewire\User\Cost;
 
+use App\Http\Traits\Helper\CostHelper;
 use App\Http\Traits\Helpers;
 use App\Models\Cost;
 use App\Models\CostType;
@@ -12,38 +13,20 @@ use Usernotnull\Toast\Concerns\WireToast;
 
 class Heizkostenliste extends Component
 {
-    use Helpers;
+    use Helpers, CostHelper;
     use WireToast;
-
     public $showEditModal = false;
-
     public $showEditFields = true;
-
     public $showFilters = false;
-
     public $nettoInputMode = false;
-
     public $dateInputMode = true;
-
     public $dateFrom = null;
-
     public Cost $current;
-
     public Realestate $realestate;
-
-    public function rules()
-    {
-        return [
-            'current.nazwa' => 'required|min:2',
-            'current' => 'sometimes',
-            'current.dateCostAmount' => 'date|sometimes',
-        ];
-    }
 
     /* initialization */
     public function mount($realestate)
     {
-
         $this->realestate = $realestate;
         $this->current = $this->makeBlankObject();
         $this->nettoInputMode = $realestate->eingabeCostNetto;
@@ -51,6 +34,7 @@ class Heizkostenliste extends Component
         $this->showEditFields = ! $realestate->heizkostenlisteDone;
     }
 
+    #region übergabe an Eneko
     public function setDone()
     {
         $this->dispatch('showNekoMessageModal', ['title' => 'Kostenliste absenden?', 'message' => 'Dannach können keine Änderungen mehr vorgenommen werden.', 'type' => 'warning', 'action' => 'confirmEditDone']);
@@ -67,6 +51,7 @@ class Heizkostenliste extends Component
             return redirect(request()->header('Referer'));
         }
     }
+    #endregion
 
     public function makeBlankObject()
     {

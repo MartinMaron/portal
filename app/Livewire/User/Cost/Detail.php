@@ -18,7 +18,7 @@ class Detail extends Component
     public $current = null;
     public Cost $cost;
     public $showEditModal = false;
-    public $dialogMode = 'init';
+    public $dialogMode = 'init'; // Modal Dialog Mode: init, edit, create
     public $costtypes = null;
     public $fueltypes = null;
     public $costkeys = null;
@@ -26,13 +26,16 @@ class Detail extends Component
     public bool $onlyConsumptionEdit = false;
 
     /* initialization */
-    public function mount($cost, bool $netAmountInput, string $costinvoicingtype)
+    public function mount()
     {
-        $this->cost = $cost;
         $this->fueltypes = FuelType::all();
-        $this->costkeys = $cost->realestate->costsKeys;
         $this->costtypes = CostType::all();
-        $this->netAmountInput = $netAmountInput;
+    }
+
+    public function setCurrent($cost){
+        $this->current = $this->cost->toArray();
+        $this->cost = $cost;
+        $this->costkeys = $cost->realestate->costsKeys;
     }
 
     protected $listeners = [
@@ -84,22 +87,24 @@ class Detail extends Component
 
 // #endregion
     
-public function showModal(Cost $cost, $add, $onlyConsumptionEdit)
+    public function showModal(Cost $cost, $add, $onlyConsumptionEdit)
     {
         if ($add) {
             $this->cost = $this->makeBlankObject($cost);
         } else {
             $this->cost = $cost;
         }
+ 
         $this->costtypes = CostType::where('costinvoicingtype_id', '=', 'HZ')->get()->sortBy('sort');
         $this->onlyConsumptionEdit = $onlyConsumptionEdit;
         $this->showEditModal = true;
     }
 
+    #region Betriebskosten-Modal
     public function showModalBetriebskosten(Cost $cost)
     {
         $this->cost = $cost;
-        $this->current = $this->cost->toArray();
+        $this->setCurrent($this->cost);
         $this->costtypes = CostType::where('costinvoicingtype_id', '=', 'BE')->get()->sortBy('sort');
         $this->onlyConsumptionEdit = false;
         $this->dialogMode = 'edit';
@@ -109,12 +114,13 @@ public function showModal(Cost $cost, $add, $onlyConsumptionEdit)
     public function createModalBetriebskosten(Realestate $realestate)
     {
         $this->cost = $this->makeBlankObjectBetriebskosten($realestate);
-        $this->current = $this->cost->toArray();
+        $this->setCurrent($this->cost);
         $this->costtypes = CostType::where('Costinvoicingtype_id', '=', 'BE')->get()->sortBy('sort');
         $this->onlyConsumptionEdit = false;
         $this->showEditModal = true;
         $this->dialogMode = 'create';
     }
+    #endregion
 
     public function closeModal($save)
     {
