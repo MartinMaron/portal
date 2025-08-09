@@ -51,7 +51,7 @@
   }
   
   .detailinput {
-    @apply dark:border-slate-950 dark:bg-slate-700 dark:text-gray-200 dark:focus:border-slate-700 focus:border-indigo-500 border-0 text-center sm:text-sm p-1 m-0 w-full rounded-md font-thin ;
+    @apply dark:border-slate-950 dark:bg-slate-700 dark:text-gray-200 dark:focus:border-slate-700 focus:border-indigo-500 border-0 text-center sm:text-sm p-0 m-0 w-full rounded-md font-thin ;
   }
 
   .detailinput .inputDisplay {
@@ -125,7 +125,7 @@
 
 }
 .kostenliste .columnheader {
-  @apply bg-sky-50 font-extrabold text-sky-900 dark:text-slate-200 dark:bg-slate-800  
+  @apply bg-sky-50 font-semibold text-sky-900 dark:text-slate-200 dark:bg-slate-800  
 }
 
 .verbrauchsUserEmailliste {

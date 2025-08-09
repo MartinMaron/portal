@@ -57,8 +57,6 @@ class Betriebskostenliste extends Component
         if ($this->params['action'] == 'confirmEditDone') {
             $this->realestate->abrechnungssetting->betreibskostenDone = 1;
             $this->realestate->abrechnungssetting->save();
-            $this->showEditFields = ! $this->realestate->abrechnungssetting->betreibskostenDone;
-
             return redirect(request()->header('Referer'));
         }
     }

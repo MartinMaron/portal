@@ -9,7 +9,7 @@ use App\Models\CostAmount;
 use App\Http\Traits\Helpers;
 use Usernotnull\Toast\Concerns\WireToast;
 
-class DetailInputBk extends Component
+class DetailInputHk extends Component
 {
     use WireToast, Helpers, CostHelper;
 
@@ -27,7 +27,7 @@ class DetailInputBk extends Component
     function loadValues()
     {
        $costAmount = $this->getDefaultCostAmount($this->cost);
-       $this->haushaltsnah = $costAmount->haushaltsnah;
+       $this->haushaltsnah = $costAmount->haushaltsnah ?? '0,00';
        $this->consumption = $costAmount->consumption_editing ?? '0,0';
        if ($this->cost->realestate->eingabeCostNetto) {
            $this->betrag = $costAmount->netto ?? '0,00';
@@ -54,9 +54,9 @@ class DetailInputBk extends Component
         }
     }
 
-    public function EditCostModal(Cost $cost)
+    public function editCostModal(Cost $cost)
     {
-        $this->dispatch('showBetriebskostenCostDetailModal', $cost);
+        $this->dispatch('showHeizkostenCostDetailModal', $cost);
     }
 
     public function rules()
@@ -109,6 +109,6 @@ class DetailInputBk extends Component
 
     public function render()
     {
-       return view('livewire.user.costamount.detail-input-bk');
+       return view('livewire.user.costamount.detail-input-hk');
     }
 }

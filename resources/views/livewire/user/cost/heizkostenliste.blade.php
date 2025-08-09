@@ -15,9 +15,9 @@
                 @endif
             </div>
         </div>
-        <div class="space-y-1 mt-4 columnheader pb-12 mb-28">
+        <div class="space-y-1 mt-4 columnheader pb-3 mb-12 rounded-lg">
             <!-- Überschrift -->
-            <div class="flex flex-row items-center">
+            <div class="flex flex-row items-center font-semibold">
                 <div class="basis-2/3 flex text-center items-center">
                     <div
                         class="basis-2/3 text-left px-2 flex rounded-md "
@@ -31,21 +31,24 @@
                 </div>
                 <div class="basis-1/3 flex gap-2 text-center">
                     <div class="basis-1/3">
-                        @if ($this->hasConsumptionByType('BEK'))
-                        <span class="">Verbrauch</span>
+                        @if ($this->hasConsumptionByType('BEH', $this->realestate) 
+                            || $this->hasConsumptionByType('KWA', $this->realestate)
+                            || $this->hasConsumptionByType('KWK', $this->realestate)
+                            || $this->hasConsumptionByType('ZKW', $this->realestate))
+                            <span class="">Verbrauch</span>                        
                         @endif
                     </div>
                     <div class="basis-1/3">
-                        @if ($this->hasHaushaltsnahByType('BEK') || $this->hasHaushaltsnahByType('HNK')
-                            || $this->hasHaushaltsnahByType('ZUK')
-                            || $this->hasHaushaltsnahByType('ZKW')
-                            || $this->hasHaushaltsnahByType('KWK')
-                            || $this->hasHaushaltsnahByType('BEH')
-                            || $this->hasHaushaltsnahByType('KWA')
+                        @if ($this->hasHaushaltsnahByType('BEH', $this->realestate) 
+                            || $this->hasHaushaltsnahByType('DIR', $this->realestate)
+                            || $this->hasHaushaltsnahByType('HNK', $this->realestate)
+                            || $this->hasHaushaltsnahByType('KWA', $this->realestate)
+                            || $this->hasHaushaltsnahByType('KWK', $this->realestate)
+                            || $this->hasHaushaltsnahByType('ZKW', $this->realestate)
+                            || $this->hasHaushaltsnahByType('ZWA', $this->realestate)
+                            || $this->hasHaushaltsnahByType('ZUK', $this->realestate)
                             )
-                            <div class="">
                             <span class="">§ 35c EStG</span>
-                            </div>
                         @endif
                     </div>
                     <div class="basis-1/3">
@@ -60,19 +63,19 @@
             <!-- liste der Kosten -->
             @forelse ($costtypes as $costtype)
             <div class="flex justify-between columnheader">
-                <div class="flex justify-start items-center">
-                    <button wire:click="raise_AddCostModal({{ $costtype }})"
+                <div class="flex justify-start items-center mb-1 ml-2 mt-3 mr-5 gap-2">
+                    <button wire:click="addCostModal({{ $costtype }})"
                         tabindex="-1"
-                        class="fa-regular fa-circle-plus text-3xl m-3 mr-5" >
+                        class="fa-regular fa-circle-plus text-2xl " >
                     </button>
-                    <div class="text-xl pr-1 font-extrabold tracking-widest items-end">
-                        {{ $costtype->costtype->caption. ' ('. number_format($this->getCostByType($costtype->costtype_id)->pluck('gros')->sum(), 2, ',', '.') . ' €)'  }}
+                    <div class="text-lg pr-1 font-semibold tracking-wider items-end">
+                        {{ $costtype->costtype->caption. ' ('. number_format($this->getCostByType($costtype->costtype_id, $this->realestate)->pluck('gros')->sum(), 2, ',', '.') . ' €)'  }}
                     </div>
                 </div>
             </div>
-                @forelse ($this->getCostByType($costtype->costtype_id) as $cost)
+                @forelse ($this->getCostByType($costtype->costtype_id, $this->realestate) as $cost)
                     <div class="px-1">
-                        <livewire:user.cost-amount.detail-input :cost='$cost' :netto='false' :inputWithDatum='false' :wire:key="'list-cost-costamountinput-'.$cost->id" key="{{ now() }}"/>
+                        <livewire:user.cost-amount.detail-input-hk :cost='$cost' :netto='false' :inputWithDatum='false' :wire:key="'list-cost-costamountinput-'.$cost->id" key="{{ now() }}"/>
                     </div>
                 @empty
                     <div class="flex justify-center items-center space-x-2 bg-sky-100">
@@ -89,10 +92,7 @@
     <div class="xs:max-w-xs xs:w-xs">
         <!-- Save Cost Modal -->
         <div>
-            <livewire:user.cost.detail :cost='$current' :netAmountInput='$nettoInputMode' :costinvoicingtype="'HZ'" :wire:key="'modal-realestate-cost-detail'"/>
-        </div>
-        <div>
-            <livewire:user.cost-amount.detail :wire:key="'modal-realestate-costamount-detail'"/>
+            <livewire:user.cost.detail :wire:key="'modal-realestate-cost-detail'"/>
         </div>
         <div>
             <livewire:user.dialog.neko-message-box :wire:key="'neko-message-box'"/>

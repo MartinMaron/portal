@@ -3,7 +3,7 @@
     <div class="max-w-7xl w-full mx-auto sm:px-1 lg:px-1 m-0 mb-24 kostenliste">
         <div class="text-3xl pt-3 font-bold text-center w-full flex my-3 page-title ">
             <div class="basis-1/4 flex justify-start">
-                <button wire:click="AddCostModal()"
+                <button wire:click="addCostModal()"
                 tabindex="-1">
                 <i class="fa-regular fa-circle-plus text-3xl" ></i>
                 </button></div>

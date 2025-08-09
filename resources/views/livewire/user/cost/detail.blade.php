@@ -1,6 +1,6 @@
  
 <form wire:submit="closeModal(true)">
- <x-modal.dialog class="bg-sky-50" minWidth="340px" maxWidth="2xl" wire:model="showEditModal">
+    <x-modal.dialog class="bg-sky-50" minWidth="340px" maxWidth="2xl" wire:model="showEditModal">
         <!-- Dialog Title -->
         <x-slot name="title">
             <div class="flex">
@@ -113,7 +113,7 @@
                         for="current.haushaltsnah" label="Haushaltsnah" :error="$errors->first('current.haushaltsnah')">
                             <div class="flex items-center justify-between h-10 sm:h-8">
                                 <div class="pl-1">
-                                    <x-input.checkbox wire:model.live="current.haushaltsnah"></x-input.checkbox>
+                                    <x-input.checkbox wire:model.blur="current.haushaltsnah"></x-input.checkbox>
                                 </div>
                             </div>
                         </x-input.group>
@@ -132,7 +132,7 @@
                         <x-input.select
                         x-ref="inputcostkey"
                         class="h-10 border-b bg-sky-50 sm:h-8 focus:border-0 w-full" 
-                        wire:model.live="current.costkey_id" id="cost-detail-cost.costkey_id" placeholder="Bitte auswählen" value="">
+                        wire:model.blur="current.costkey_id" id="cost-detail-cost.costkey_id" placeholder="Bitte auswählen" value="">
                         @foreach ($this->costkeys as $label)
                         <option class="flex h-10" value="{{ $label->id }}">
                             <span class="">

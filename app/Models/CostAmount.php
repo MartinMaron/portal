@@ -38,7 +38,6 @@ class CostAmount extends Model
         'conetto' => 'decimal:2',
         'coconsupmtion' => 'decimal:1',
         'grosAmount_HH' => 'decimal:2',
-        'haushaltsnah' => 'decimal:2',
         'netAmount' => 'decimal:2'];
 
     protected $appends = [
@@ -84,7 +83,7 @@ class CostAmount extends Model
     public function haushaltsnah(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->grosAmount_HH ? number_format($this->grosAmount_HH, 2, ',', '.') : 0,
+            get: fn () => $this->grosAmount_HH ? number_format($this->grosAmount_HH, 2, ',', '.') : '0,00',
             set: fn ($value) => ['grosAmount_HH' => $this->castStringToDouble($value)]
         );
     }

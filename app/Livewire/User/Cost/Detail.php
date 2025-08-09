@@ -24,6 +24,7 @@ class Detail extends Component
     public $costkeys = null;
     public bool $netAmountInput = false;
     public bool $onlyConsumptionEdit = false;
+    public $haushaltsnah;
 
     /* initialization */
     public function mount()
@@ -36,13 +37,15 @@ class Detail extends Component
         $this->current = $this->cost->toArray();
         $this->cost = $cost;
         $this->costkeys = $cost->realestate->costsKeys;
+        $this->haushaltsnah = $cost->haushaltsnah;
     }
 
     protected $listeners = [
-        'showCostDetailModal' => 'showModal',
         'closeCostDetailModal' => 'closeModal',
         'showBetriebskostenCostDetailModal' => 'showModalBetriebskosten',
         'addBetriebskostenCostDetailModal' => 'createModalBetriebskosten',
+        'showHeizkostenCostDetailModal' => 'showModalHeizkosten',
+        'addHeizkostenCostDetailModal' => 'createModalHeizkosten',
     ];
 
 // #region validation
@@ -62,6 +65,8 @@ class Detail extends Component
             'current.costkey_id' => 'nullable',
             'current.noticeForUser' => 'nullable',
             'current.noticeForNeko' => 'nullable',
+            'current.periodFrom' => 'nullable',
+            'current.periodTo' => 'nullable',
             'current.consumption' => 'nullable',
             'current.prevyearPeriod' => 'nullable',
             'current.prevyearAmountnet' => 'nullable',
@@ -87,7 +92,7 @@ class Detail extends Component
 
 // #endregion
     
-    public function showModal(Cost $cost, $add, $onlyConsumptionEdit)
+    /* public function showModal(Cost $cost, $add, $onlyConsumptionEdit)
     {
         if ($add) {
             $this->cost = $this->makeBlankObject($cost);
@@ -98,7 +103,29 @@ class Detail extends Component
         $this->costtypes = CostType::where('costinvoicingtype_id', '=', 'HZ')->get()->sortBy('sort');
         $this->onlyConsumptionEdit = $onlyConsumptionEdit;
         $this->showEditModal = true;
+    } */
+
+    public function showModalHeizkosten(Cost $cost)
+    {
+        $this->cost = $cost;
+        $this->setCurrent($this->cost);
+        $this->costtypes = CostType::where('costinvoicingtype_id', '=', 'HZ')->get()->sortBy('sort');
+        $this->onlyConsumptionEdit = false;
+        $this->dialogMode = 'edit';
+        $this->showEditModal = true;
     }
+
+    public function createModalHeizkosten(Cost $cost)
+    {
+        $this->cost = $this->makeBlankObjectHeizkosten($cost);
+        $this->setCurrent($this->cost);
+        $this->costtypes = CostType::where('costinvoicingtype_id', '=', 'HZ')->get()->sortBy('sort');
+        $this->onlyConsumptionEdit = false;
+        $this->showEditModal = true;
+        $this->dialogMode = 'create';
+    }
+
+
 
     #region Betriebskosten-Modal
     public function showModalBetriebskosten(Cost $cost)

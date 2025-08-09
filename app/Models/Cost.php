@@ -22,7 +22,7 @@ class Cost extends Model
         'haushaltsnah', 'co2Tax', 'costkey_id', 'consumption', 'costkey',
         'noticeForUser', 'noticeForNeko',
         'prevyearPeriod', 'prevyearQuantity', 'prevyearAmountnet', 'prevyearAmountgros',
-        'OptimisticLockField',
+        'OptimisticLockField', 'periodFrom', 'periodTo'
     ];
 
     public function scopeIsHeizkosten($query)
@@ -90,7 +90,8 @@ class Cost extends Model
         'start_value_editing' => 'decimal:1',
         'end_value_editing' => 'decimal:1',
         'startValueAmountGros' => 'decimal:2',
-        'startValueAmountNet' => 'decimal:2'];
+        'startValueAmountNet' => 'decimal:2',
+        'haushaltsnah' => 'boolean'];
 
     public function getNeedCostkeyAttribute()
     {

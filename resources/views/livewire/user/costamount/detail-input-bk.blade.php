@@ -45,9 +45,11 @@
                         {{ $errors->first('current.haushaltsnah') ? 'inputErrorDisplay' :'' }}"
                     >
                  @else
-                    <div class="inputDisplayBK-ro font-semibold {{ $haushaltsnah ? '0' : 'hidden' }}">
-                        {{ $haushaltsnah}}
-                    </div>
+                    @if ($haushaltsnah !='0,00')
+                        <div class="inputDisplayBK-ro font-semibold {{ $haushaltsnah ? '0,00' : 'hidden' }}">
+                            {{ $haushaltsnah}}
+                        </div>
+                    @endif
                 @endif
             </div>
             <div class="basis-1/3">
