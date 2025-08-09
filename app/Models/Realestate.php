@@ -29,6 +29,11 @@ class Realestate extends Model
         'has_occupants_different_adresses',
     ];
 
+    protected $casts = [
+        'eingabeCostNetto' => 'boolean',
+        'eingabeCostDatum' => 'boolean',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);

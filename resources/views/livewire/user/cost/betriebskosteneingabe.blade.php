@@ -99,9 +99,7 @@
     </div>
     <div class="xs:max-w-xs xs:w-xs">
         <!-- Save Modal -->
-        <div>
-            <livewire:user.cost.betriebskostenmodal :wire:key="'modal-cost-betriebskostenadddialog'"/>
-        </div>
+        
         <div>
             <livewire:user.dialog.neko-message-box :wire:key="'neko-message-box'"/>
         </div>

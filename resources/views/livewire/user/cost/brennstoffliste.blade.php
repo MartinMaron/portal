@@ -22,39 +22,39 @@
             </div>
         </div>
         <!-- Einstellungen -->
-        <div class="mt-4 py-3 border-2 text-sky-800 dark:text-gray-200 border-sky-800 dark:border-gray-700 bg-sky-50 dark:bg-slate-800 rounded-md shadow">
+        <div class="mt-4 py-4 border-2 text-sky-800 dark:text-gray-200 border-sky-800 dark:border-gray-700 bg-sky-50 dark:bg-slate-800 rounded-md shadow">
             <div  x-data="{ open: false }">
-                <div class="flex justify-between">
+                <div class="flex justify-between ">
                     <button x-on:click="open = ! open"
                         class="flex items-end justify-items-end w-full font-bold text-2xl px-3 py-1"
                         >
                             <span x-show="!open" aria-hidden="true" class="mr-2 mb-1 text-xl"><i class="fa-solid fa-caret-right"></i></span>
                             <span x-show="open" aria-hidden="true" class="mr-2 mb-1 text-xl"><i class="fa-solid fa-caret-down"></i></span>
                             <div class="flex items-end content-end">
-                                <h2 class="text-xl mb-1 pr-1 font-extrabold tracking-widest">Einstellungen</h2>
+                                <h2 class="text-xl mb-1 pr-1 font-semibold tracking-wider">Einstellungen</h2>
                                 <div x-show="!open"  class ="flex-1 mb-1-2 text-gray-500 dark:text-gray-200 text-left text-sm line-clamp-1 italic font-extralight" >Kosteneingabe, Bankverbindung, Heizstromberechnung etc. </div>
                             </div>
                     </button>
                 </div>
                 <div x-show="open">
-                   <div class="mx-0">
+                   <div class="mx-1">
                         <livewire:user.realestate.abrechnung.einstellungen :baseobject='$realestate' :wire:key="'modal-realestate-abrechnung-settings-'.$realestate->id"/>
                    </div>
                 </div>
             </div>
         </div>
         <!-- Kostenliste -->
-        <div class="mt-4 kostenliste">
+        <div class="mt-2 mx-1 kostenliste rounded-xl">
             <!-- liste der Kostearten -->
             @forelse ($filtered as $cost)
                 <div
-                    class="columnheader">
+                    class="columnheader rounded-xl">
                 	<!-- liste der Kostearten. Eingabeüberschriften -->
                     <h2>
                         <!-- Überschrift Brennstoffkosten Summe u. anlage-->
-                        <div class="mt-16 py-1 sm:text-sm md:text-sm lg:text-lg">
+                        <div class="sm:text-sm md:text-sm lg:text-lg rounded-xl">
                             @if ($showEditFields || $cost->costtype_id =='BRK')
-                                <div class="flex flex-row items-center justify-start border-b border-gray-400">
+                                <div class="flex flex-row items-center justify-start border-b border-gray-400 font-semibold">
                                     <div class="basis-1/3 pl-4">
                                         <span class="">Kostenbezeichnung</span>
                                     </div>
@@ -91,7 +91,7 @@
                         </div>
                         <div class="flex justify-between m-0">
                             <div class="flex items-end content-end pl-3">
-                                <div class="text-xl mb-1 tracking-widest pr-1">{{ $cost->costtype->caption . '  ('. number_format($this->getCostByType($cost->costtype_id)->pluck('gros')->sum(), 2, ',', '.') . ' €)' }}</div>
+                                <div class="text-xl mb-1 font-semibold tracking-wider pr-1">{{ $cost->costtype->caption . '  ('. number_format($this->getCostByType($cost->costtype_id)->pluck('gros')->sum(), 2, ',', '.') . ' €)' }}</div>
                             </div>
                             <button wire:click="raise_AddCostModal({{ $cost }})"
                                 tabindex="-1">

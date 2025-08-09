@@ -1,22 +1,31 @@
 <div class="sm:grid sm:grid-cols-6 sm:gap-2">
+     @if ($errors->isNotEmpty())
+        <div class="sm:col-span-6 block text-sm bg-red-100 border border-red-400 text-red-700 px-1 py-1 rounded relative mb-2" role="alert">
+            <span class="block sm:block"><strong class="font-bold">Uups! Einige Informationen fehlen oder sind nicht korrekt. </strong>
+                @foreach ($errors->all() as $error)
+                        <span class="block sm:block">- {{ $error  }}</span>
+                @endforeach
+            </span>
+        </div>
+    @endif
     <div class="sm:col-span-6">
         <div class="flex justify-start items-center p-2 mt-4 h-8 border-black border-b-2">
-            <div class="font-bold text-xl">
+            <div class="font-semibold text-lg">
                 Allgemeine Einstellungen
             </div>
         </div>
     </div>
     <div class="block sm:col-span-3">
         <!-- eingabe netto-->
-        <x-input.group for="einstellungen-eingabeCostNetto" inputBorderless="true" labelDirection="text-left" labelsColSpan="4" slotColSpan="2"  hohe="h-10" label="Kosteneingabe als Nettobeträge" :error="$errors->first('realestate.eingabeCostNetto')">
-            <div class="flex justify-between items-center">
+        <x-input.group for="einstellungen-eingabeCostNetto" inputBorderless="true" labelDirection="text-left" labelsColSpan="4" slotColSpan="2"  hohe="h-10" label="Kosteneingabe als Nettobeträge" >
+            <div class="flex justify-between items-center ">
                 <div>
                     <x-input.toggle wire:model.live="realestate.eingabeCostNetto"  width=8 id="einstellungen-eingabeCostNetto" ></x-input.toggle>
                 </div>
             </div>
         </x-input.group>
         <!-- eingabe mit Datum-->
-        <x-input.group hohe="h-8" for="einstellungen-eingabeCostOhneDatum" inputBorderless="true" labelDirection="text-left" labelsColSpan="4" slotColSpan="2"  hohe="h-10" for="einstellungen-eingabeCostOhneDatum" label="Kosteneingabe mit Rechnungsdatum" :error="$errors->first('realestate.eingabeCostOhneDatum')">
+        <x-input.group hohe="h-8" for="einstellungen-eingabeCostOhneDatum" inputBorderless="true" labelDirection="text-left" labelsColSpan="4" slotColSpan="2"  hohe="h-10" for="einstellungen-eingabeCostOhneDatum" label="Kosteneingabe mit Rechnungsdatum" >
             <div class="flex justify-between items-center">
                 <div>
                     <x-input.toggle wire:model.live="realestate.eingabeCostDatum"  width=8 id="einstellungen-eingabeCostOhneDatum" ></x-input.toggle>
@@ -25,15 +34,15 @@
         </x-input.group>
 
         <x-input.group for="einstellungen-stromkosten" labelDirection="text-left" label="Heizstrom Pauschalbetrag aus Brennstoffkosten in [%]" labelsColSpan="4" slotColSpan="2" :error="$errors->first('realestate.stromkosten')">
-            <x-input.text class=" sm:h-8" wire:model.blur="einstellungen.stromkosten" />
+            <x-input.text class=" sm:h-8" wire:model.live="einstellungen.stromkosten" />
         </x-input.group>
     </div>
     <div class="sm:col-span-3">
-        <x-input.group for="einstellungen-nabi_nr" labelDirection="text-left" label="IBAN" :error="$errors->first('realestate.nabi_nr')">
-            <x-input.text class=" sm:h-8" wire:model.blur="einstellungen.nabi_nr" />
+        <x-input.group for="einstellungen-nabi_nr" labelDirection="text-left" label="IBAN" :error="$errors->first('einstellungen.nabi_nr')">
+            <x-input.text class=" sm:h-8" wire:model.live.debounce.1000ms="einstellungen.nabi_nr" />
         </x-input.group>
         <x-input.group for="einstellungen-nabi_inhaber" labelDirection="text-left" label="Kontoinhaber" :error="$errors->first('realestate.nabi_inhaber')">
-            <x-input.text class=" sm:h-8" wire:model.blur="einstellungen.nabi_inhaber" />
+            <x-input.text class=" sm:h-8" wire:model.live="einstellungen.nabi_inhaber" />
         </x-input.group>
     </div>
     <div class="sm:col-span-6">
@@ -84,27 +93,14 @@
         <x-input.group for="einstellungen-co2_wohngeb" labelDirection="text-left" hohe="h-10" label="Wohngeb. oder Nichtwohngeb. (Aufteilung 50% - 50%)" labelsColSpan="4" slotColSpan="2" :error="$errors->first('einstellungen.co2_wohngeb')">
             <div class="flex justify-between items-center">
                 <div>
-                    <x-input.toggle wire:model.live="einstellungen.co2_wohngeb"  width=40 id="einstellungen-co2_wohngeb" >{{ $this->einstellungen->gebart }}</x-input.toggle>
+                    <x-input.toggle wire:model.live="einstellungen.co2_wohngeb"  width=40 id="einstellungen-co2_wohngeb" >{{ $this->einstellungen['co2_wohngeb']? 'Wohngebäude':'Nichtwohngeb.' }}</x-input.toggle>
                 </div>
             </div>
         </x-input.group>
         
     </div>     
     
-    <div class="sm:col-span-6">
-        <div class="flex justify-end items-center p-2 mt-4 h-8">
-            <div class="">
-
-            </div>
-            <div wire:click="commit" >
-                @if (!$this->realestate->abrechnungssetting->brennstofflisteDone)
-                    <x-button.secondary class="flex justify-items-end">
-                        Einstellungen speichern
-                    </x-button.secondary>
-                @endif                
-            </div>
-        </div>
-    </div>
+    
       
 </div>
 
