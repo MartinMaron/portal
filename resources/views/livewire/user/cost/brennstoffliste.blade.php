@@ -93,7 +93,7 @@
                             <div class="flex items-end content-end pl-3">
                                 <div class="text-xl mb-1 font-semibold tracking-wider pr-1">{{ $cost->costtype->caption . '  ('. number_format($this->getCostByType($cost->costtype_id)->pluck('gros')->sum(), 2, ',', '.') . ' €)' }}</div>
                             </div>
-                            <button wire:click="raise_AddCostModal({{ $cost }})"
+                            <button wire:click="addCostModal({{ $cost }})"
                                 tabindex="-1">
                                 <i class="fa-regular fa-circle-plus text-3xl m-3 text-sky-600" ></i>
                             </button>
@@ -104,10 +104,10 @@
                     <div>
                         @forelse ($this->getCostByType($cost->costtype_id) as $singleCost)
                             <!-- Kosten-Eingabe Bereich -->
-                            <div key="{{ now() }}" class="{{ $this->hasManyBrennstoffkosten && $singleCost->costtype_id=='BRK' ? 'border-2 border-sky-700 rounded-md m-2': ''}}">
+                        <div key="{{ now() }}" class="{{ $this->hasManyBrennstoffkosten && $singleCost->costtype_id=='BRK' ? 'border-4 border-sky-700 rounded-md m-2 py-2': ''}}">
                             <!-- Anfangsbestand -->
                             @if ($singleCost->fueltype_id !=null && $singleCost->fueltype->hasTank)
-                                <div class="my-2 m-1 flex flex-row items-center justify-start font-normal text-lg h-10 border-b border-gray-400 text-center">
+                                <div class="my-2 m-1 flex flex-row items-center justify-start font-normal text-lg h-10 border-b border-gray-400 text-center ">
                                     <div class="basis-1/3  py-1">
                                         <div class="flex justify-start px-2 items-center ">
                                             <div class="text-lg text-center">
@@ -153,7 +153,7 @@
                             <div class="flex flex-row {{ $singleCost->costAmounts->count() > 0 && $showEditFields ? 'border-b-2' : 'border-b-0' }} items-center justify-start font-normal text-lg ">
                                 @if (!$realestate->abrechnungssetting->brennstofflisteDone || ($singleCost->fueltype_id !=null && $singleCost->fueltype->hasTank))
                                 <div class="basis-1/3 py-1 ">
-                                    <button wire:click="raise_EditCostModal({{ $singleCost }})"
+                                    <button wire:click="editCostModal({{ $singleCost }})"
                                             tabindex="-1"
                                             class="flex py-0.5 w-full rounded-sm hover:bg-sky-300 dark:hover:bg-slate-900 px-2 items-center justify-start ">
                                         <div class="text-lg">
@@ -168,7 +168,7 @@
                                 @endif
                                 @if (!$realestate->abrechnungssetting->brennstofflisteDone)
                                     <div class="basis-2/3 py-1">
-                                        <livewire:user.cost-amount.detail-input :cost='$singleCost' :netto='$nettoInputMode' :inputWithDatum='$dateInputMode' :wire:key="'list-cost-costamountinput-'.$singleCost->id" key="{{ now() }}"/>
+                                        <livewire:user.cost-amount.detail-input-br :cost='$singleCost' :netto='$nettoInputMode' :inputWithDatum='$dateInputMode' :wire:key="'list-cost-costamountinput-'.$singleCost->id" key="{{ now() }}"/>
                                     </div>
                                 @else
                                     <!-- Kosten-Ansicht -->
@@ -288,7 +288,7 @@
                                             <div class="">
                                                 Gesamtsumme
                                             </div>
-                                        @endif
+                                        @endif                                        
                                     </div>
                                     <div class="basis-2/3 text-center">
                                         <div class="flex justify-start gap-1 items-center">
@@ -319,7 +319,7 @@
 
                             <!-- Endstand -->
                             @if ($singleCost->fueltype_id !=null && $singleCost->fueltype->hasTank)
-                            <div class="border-b border-gray-400 m-2 gap-2 flex flex-row items-center justify-start font-normal text-lg h-10 ">
+                                <div class="border-b border-gray-400 m-2 gap-2 flex flex-row items-center justify-start font-normal text-lg h-10 ">
                                     <div class="basis-1/3 py-1 px-2 flex justify-start items-center text-lg text-center">
                                         <span class="">{{ 'Endbestand '. $singleCost->caption. ' ['. $singleCost->fueltype->einheit->shortname.']'  }}</span>
                                     </div>
@@ -335,7 +335,7 @@
                                                 <div class="{{ $this->hasConsumptionByType($singleCost->costtype_id) ? 'block' : 'hidden' }} w-full text-center flex items-center">
                                                     @if ($showEditFields)
                                                         <div
-                                                            wire:click="raise_EditCostConsumptionModal({{ $singleCost }})"
+                                                            wire:click="editEndstand({{ $singleCost }})"
                                                             class="{{ $singleCost->end_value_editing <= '0,0' ? 'bg-red-300 dark:bg-red-600 dark:hover:bg-red-700 md:text-md hover:bg-red-500 focus:bg-red-500' : 'bg-sky-300 dark:bg-slate-900 dark:hover:bg-slate-700 hover:bg-sky-500' }} {{ $showEditFields ? 'block' : 'hidden' }} w-full my-1 border flex justify-around {{ $singleCost->endValue <= 0 ? 'bg-red-300 md:text-md hover:bg-red-500 focus:bg-red-500' : 'hover:bg-sky-300' }} focus:ring-indigo-500 p-1 m-0 focus:border-indigo-500 block sm:text-sm border-gray-900 rounded-md"
                                                         >
                                                             <span class="md:text-md "><i class="text-left pr-1 fa-solid fa-pencil"></i></i></span>
@@ -357,8 +357,12 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="my-4 bg-red-600">
+                                    
+                                </div>
                             @endif
                         </div>
+                        
                         @empty
                             <div class="flex justify-center items-center space-x-2 bg-sky-100">
                                 <span class="font-medium py-8 text-cool-gray-400 text-xl">nichts gefunden...</span>

@@ -20,7 +20,8 @@
                     type="text"
                     :error="$errors->first('current.datum')"
                     style="-moz-appearance: textfield; margin: 0;"
-                    class="{{ $inputWithDate || ($cost->fueltype_id !=null && $cost->fueltype->hasTank) ? 'block' : 'hidden' }}
+                    x-on:focus="$el.select()"
+                    class="{{ $cost->realestate->eingabeCostDatum || ($cost->fueltype_id !=null && $cost->fueltype->hasTank) ? 'block' : 'hidden' }}
                     inputDisplay
                     {{ $errors->first('current.datum') ? 'bg-red-50 focus:border-red-900 border-red-900' : '' }}"
                 >
@@ -28,12 +29,13 @@
             </div>
             <!-- Verbrauch -->
             <div class="basis-1/6">
-                <input type="text"
+          <input type="text"
                        id="user-costamount-detailinput-consumption{{ $cost->id }}"
                        inputmode="numeric"
                        placeholder="0"
                        wire:model.blur="current.consumption_editing"
                        style="-moz-appearance: textfield; margin: 0;"
+              x-on:focus="$el.select()"
                        class="{{ $cost->consumption ? 'block' : 'hidden' }}
                     inputDisplay
                     {{ $errors->first('current.consumption') ? 'inputErrorDisplay' :'' }}"
@@ -49,6 +51,7 @@
                     type="text"
                     inputmode="numeric"
                     style="-moz-appearance: textfield; margin: 0;"
+                    x-on:focus="$el.select()"
                     class="{{ $cost->co2Tax ? 'block' : 'hidden' }}
                         inputDisplay
                         {{ $errors->first('current.coconsupmtion') ? 'inputErrorDisplay' :'' }}"
@@ -56,11 +59,12 @@
             </div>
             <!-- CO2 Betrag -->
             <div class="basis-1/6">
-                <input type="text"
+          <input type="text"
                        id="user-costamount-detailinput-co2betrag{{ $cost->id }}"
                        inputmode="numeric"
-                       wire:model.blur="{{ $netto ? 'current.conetto' : 'current.cobrutto' }}"
+                       wire:model.blur="{{ $cost->realestate->eingabeCostNetto ? 'current.conetto' : 'current.cobrutto' }}"
                        style="-moz-appearance: textfield; margin: 0;"
+              x-on:focus="$el.select()"
                        class="{{ $cost->co2Tax ? 'block' : 'hidden' }}
                     inputDisplay
                     {{ $errors->first('current.co2betrag') ? 'inputErrorDisplay' :'' }}"
@@ -68,12 +72,13 @@
             </div>
             <!-- Betrag -->
             <div class="basis-1/6">
-                <input type="text"
+          <input type="text"
                        id="user-costamount-detailinput-betrag-{{ $cost->id }}"
                        wire:keyup.enter="save()"
                        inputmode="numeric"
-                       wire:model.blur="{{ $netto ? 'current.netto' : 'current.brutto' }}"
+                       wire:model.blur="{{ $cost->realestate->eingabeCostNetto ? 'current.netto' : 'current.brutto' }}"
                        style="-moz-appearance: textfield; margin: 0;"
+              x-on:focus="$el.select()"
                        class="inputDisplay"
                 />
             </div>

@@ -3,104 +3,112 @@
 namespace App\Livewire\User\CostAmount;
 
 use App\Models\CostAmount;
+use App\Http\Traits\FormatsNumbers;
 use Livewire\Component;
 
 class Detail extends Component
 {
+    use FormatsNumbers;
     public CostAmount $costAmount;
-
-    public $showCostAmountEditModal;
-
-    public bool $showDatumField = true;
-
-    public bool $readonlyDatumField = false;
-
-    public bool $showConsumptionField = true;
-
-    public bool $readonlyConsumptionField = true;
-
-    public bool $showNetto = true;
-
-    public bool $readonlyBetragField = false;
-
-    public bool $showHaushaltsnahField = true;
-
-    public bool $readonlyHaushaltsnahField = true;
-
-    public bool $co2Tax = false;
-
-    public function makeBlankObject()
-    {
-        return CostAmount::make([
-            'bemerkung' => '',
-            'description' => '',
-            'netAmount' => 0,
-            'grosAmount' => 0,
-            'grosAmount_HH' => 0,
-        ]);
-    }
+    public $visible = false;
+    public $current = [];
+    public $dialogMode = 'init';
 
     protected $listeners = [
-        'saveCostAmountDetail' => 'save',
-        'showCostAmountDetailModal' => 'showCostAmountDetailModal',
-        'closeCostAmountDetailModal' => 'closeCostAmountDetailModal',
+        'showCostAmountDetailModal' => 'showModal',
     ];
+
+    public function updated($property)
+    {
+        $this->handleNumericFormatting($property);
+    }
+
+
+#region formatierung der Eingabefelder nach der Eingabe
+
+     /**
+     * Zu formatierende numerische Felder (property => Nachkommastellen)
+     */
+    protected array $numericFormatMap = [
+        'current.consumption_editing' => 1,
+        'current.netto' => 2,
+        'current.brutto' => 2,
+        'current.haushaltsnah' => 2,
+        'current.grosAmount_HH' => 2,
+        'current.coconsupmtion' => 0,
+        'current.conetto' => 2,
+        'current.cobrutto' => 2,
+    ];
+
+    /**
+     * Reagiert auf Feldänderungen (blur) und formatiert definierte Zahlenfelder.
+     */
+    
+
+    // normalizeNumber & formatNumber via FormatsNumbers trait
+
+#endregion
 
     public function rules()
     {
         return [
-            'costAmount.bemerkung' => 'nullable',
-            'costAmount.description' => 'nullable',
-            'costAmount.consumption_editing' => 'required_if:costAmount.cost.consumption,==,1|nullable',
-            'costAmount.netto' => 'nullable',
-            'costAmount.haushaltsnah' => 'nullable',
-            'costAmount.brutto' => 'required',
-            'costAmount.grosAmount_HH' => 'nullable',
-            'costAmount.cobrutto' => 'nullable',
-            'costAmount.conetto' => 'nullable',
-            'costAmount.coconsupmtion' => 'nullable',
-            'costAmount.datum' => 'required_if:costAmount.cost.fueltype.hasTank,==,1|date|nullable',
+            'current.bemerkung' => 'nullable',
+            'current.description' => 'nullable',
+            'current.consumption_editing' => 'required_if:current.cost.consumption,==,1|nullable',
+            'current.netto' => 'nullable',
+            'current.haushaltsnah' => 'nullable',
+            'current.brutto' => 'required',
+            'current.grosAmount_HH' => 'nullable',
+            'current.cobrutto' => 'nullable',
+            'current.conetto' => 'nullable',
+            'current.coconsupmtion' => 'nullable',
+            'current.datum' => 'required_if:current.cost.fueltype.hasTank,==,1|date|nullable',
         ];
     }
 
     public function messages()
     {
         return [
-            'costAmount.datum' => ':attribute muss angegeben werden',
-            'costAmount.consumption_editing' => ':attribute muss angegeben werden',
+            'current.datum' => ':attribute muss angegeben werden',
+            'current.consumption_editing' => ':attribute muss angegeben werden',
         ];
     }
 
     public function attributes()
     {
         return [
-            'costAmount.datum' => 'Datum',
-            'costAmount.consumption_editing' => 'Verbrauch',
+            'current.datum' => 'Datum',
+            'current.consumption_editing' => 'Verbrauch',
         ];
     }
 
-    public function showCostAmountDetailModal(CostAmount $costAmount)
+    public function showModal(CostAmount $costAmount)
     {
+        $this->resetErrorBag();
+        $this->resetValidation();
         $this->costAmount = $costAmount;
-        $this->showCostAmountEditModal = true;
-        $this->showConsumptionField = $costAmount->cost->consumption;
-        $this->showNetto = $costAmount->cost->realestate->eingabeCostNetto;
-        $this->showHaushaltsnahField = $costAmount->cost->haushaltsnah;
-        $this->co2Tax = $costAmount->cost->co2Tax;
+        $this->current = $costAmount->toArray();
+        $this->current['cost'] = $costAmount->cost;
+        $this->dialogMode = 'edit';
+        $this->visible = true;
     }
 
-    public function closeCostAmountDetailModal($save)
+    public function closeModal($save)
     {
         if ($save && $this->costAmount) {
             if ($this->validate($this->rules(), $this->messages(), $this->attributes())) {
                 $this->costAmount->save();
-                $this->showCostAmountEditModal = false;
+                $this->visible = false;
+                $this->resetErrorBag();
+                $this->resetValidation();
                 $this->dispatch('refreshComponents');
             } else {
-                $this->showCostAmountEditModal = false;
+                $this->visible = true;
             }
         } else {
-            $this->showCostAmountEditModal = false;
+            $this->visible = false;
+            $this->resetErrorBag();
+            $this->resetValidation();
         }
     }
 

@@ -8,17 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class FuelType extends Model
 {
     use HasFactory;
-
     protected $table = 'fueltypes';
-
     protected $primaryKey = 'id';
-
     protected $keyType = 'string';
-
     protected $fillable = [
-        'hasTank', 'caption',
+        'hasTank', 'caption'
     ];
-
     public function einheit()
     {
         return $this->belongsTo(Einheit::class);

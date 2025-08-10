@@ -2,12 +2,13 @@
 
 namespace App\Livewire\User\Cost;
 
-use App\Http\Traits\Helper\CostHelper;
 use App\Models\Cost;
+use Livewire\Component;
 use App\Models\CostType;
 use App\Models\FuelType;
+use App\Models\CostAmount;
 use App\Models\Realestate;
-use Livewire\Component;
+use App\Http\Traits\Helper\CostHelper;
 use Usernotnull\Toast\Concerns\WireToast;
 
 class Detail extends Component
@@ -24,7 +25,6 @@ class Detail extends Component
     public $costkeys = null;
     public bool $netAmountInput = false;
     public bool $onlyConsumptionEdit = false;
-    public $haushaltsnah;
 
     /* initialization */
     public function mount()
@@ -34,10 +34,9 @@ class Detail extends Component
     }
 
     public function setCurrent($cost){
-        $this->current = $this->cost->toArray();
         $this->cost = $cost;
+        $this->current = $this->cost->toArray();
         $this->costkeys = $cost->realestate->costsKeys;
-        $this->haushaltsnah = $cost->haushaltsnah;
     }
 
     protected $listeners = [
@@ -46,9 +45,28 @@ class Detail extends Component
         'addBetriebskostenCostDetailModal' => 'createModalBetriebskosten',
         'showHeizkostenCostDetailModal' => 'showModalHeizkosten',
         'addHeizkostenCostDetailModal' => 'createModalHeizkosten',
+        'showBrennstoffkostenCostDetailModal' => 'showModalBrennstoffkosten',
+        'addBrennstoffkostenCostDetailModal' => 'createModalBrennstoffkosten',
+        'editEndstandCostDetailModal' => 'editEndstand'
     ];
 
-// #region validation
+    public function updated($propertyName)
+    {
+        if (str_starts_with($propertyName, 'current.')) {
+            $key = str_replace('current.', '', $propertyName);
+            if ($key === 'fueltype_id') {
+                $this->current['caption'] = $this->fueltypes->find($this->current['fueltype_id'])->caption ?? '';
+                $this->cost->fueltype_id = $this->current['fueltype_id'];
+                $this->current['fueltype'] = $this->fueltypes->find($this->current['fueltype_id']);
+                $this->current['hasTank'] = $this->current['fueltype']->hasTank ?? false;
+            }
+        }
+    }
+
+
+
+
+    #region validation
 
     public function rules()
     {
@@ -90,21 +108,29 @@ class Detail extends Component
         ];
     }
 
-// #endregion
-    
-    /* public function showModal(Cost $cost, $add, $onlyConsumptionEdit)
-    {
-        if ($add) {
-            $this->cost = $this->makeBlankObject($cost);
-        } else {
-            $this->cost = $cost;
-        }
- 
-        $this->costtypes = CostType::where('costinvoicingtype_id', '=', 'HZ')->get()->sortBy('sort');
-        $this->onlyConsumptionEdit = $onlyConsumptionEdit;
-        $this->showEditModal = true;
-    } */
+    #endregion
 
+    #region Brennstoffkosten
+    public function createModalBrennstoffkosten(Cost $cost)
+    {
+        $this->cost = $this->makeBlankObjectBrennstoffkosten($cost);
+        $this->setCurrent($this->cost);
+        $this->dialogMode = 'create';
+        $this->showEditModal = true;
+    }
+
+    public function showModalBrennstoffkosten(Cost $cost)
+    {
+        $this->cost = $cost;
+        $this->setCurrent($this->cost);
+        $this->current['fueltype'] = $this->cost->fueltype;
+        $this->current['hasTank'] = $this->cost->fueltype->hasTank ?? false;
+        $this->dialogMode = 'edit';
+        $this->showEditModal = true;
+    }
+    #endregion
+
+    #region Heizkosten-Modal
     public function showModalHeizkosten(Cost $cost)
     {
         $this->cost = $cost;
@@ -125,7 +151,7 @@ class Detail extends Component
         $this->dialogMode = 'create';
     }
 
-
+#endregion
 
     #region Betriebskosten-Modal
     public function showModalBetriebskosten(Cost $cost)
@@ -149,20 +175,74 @@ class Detail extends Component
     }
     #endregion
 
+    #region endstand
+    function editEndstand(Cost $cost)
+    {
+        $this->setCurrent($cost);
+        $this->current['fueltype'] = $this->cost->fueltype;
+        $this->current['hasTank'] = $this->cost->fueltype->hasTank ?? false;
+        $this->dialogMode = 'stand';
+        $this->showEditModal = true;
+    }
+        
+
+    #endregion
+
     public function closeModal($save)
     {
         if ($save) {
             $this->cost->co2Tax = $this->hasCo2Tax($this->cost);
             if ($this->validate($this->rules(), $this->messages(), $this->attributes())) {
-                /* if ($this->cost->costtype != null && $this->cost->costtype_id == 'BRK') {
+                if ($this->cost->costtype != null && $this->cost->costtype_id == 'BRK') {
                     $this->cost->consumption = true;
                 }
-                $this->cost->OptimisticLockField = $this->cost->OptimisticLockField + 1; */
+                $this->cost->OptimisticLockField = $this->cost->OptimisticLockField + 1;
                 $this->cost = $this->fill_changed_data_from($this->current, $this->cost);
                 $this->cost->save();
+                $this->cost->refresh();
+
+                //Falls es Brennstoffkosten mit Tank gibt, dann die Tankdaten speichern
+                if ($this->cost->costtype_id == 'BRK' && $this->cost->fueltype && $this->cost->fueltype->hasTank) {
+                    if ($this->dialogMode == 'create') {
+                        
+                        $costAmount = CostAmount::firstOrNew([
+                            'cost_id' => $this->cost->id,
+                            'abrechnungssetting_id' => $this->cost->realestate->abrechnungssetting_id,
+                            'startvalue' => true,
+                        ]);
+                        $costAmount->startvalue = true;
+                        $costAmount->endvalue = false;
+                        $costAmount->abrechnungssetting_id = $this->cost->realestate->abrechnungssetting_id;
+                        $costAmount->consumption = floatval(str_replace(',', '.', str_replace('.', '', $this->current['start_value_editing'])));
+                        $costAmount->netAmount = floatval(str_replace(',', '.', str_replace('.', '', $this->current['start_value_amount_net_editing'])));
+                        $costAmount->grosAmount = floatval(str_replace(',', '.', str_replace('.', '', $this->current['start_value_amount_gros_editing'])));
+                        $costAmount->save();
+
+                        $costAmount = CostAmount::firstOrNew([
+                            'cost_id' => $this->cost->id,
+                            'abrechnungssetting_id' => $this->cost->realestate->abrechnungssetting_id,
+                            'endvalue' => true,
+                        ]);
+                        $costAmount->startvalue = false;
+                        $costAmount->endvalue = true;
+                        $costAmount->abrechnungssetting_id = $this->cost->realestate->abrechnungssetting_id;
+                        $costAmount->consumption = floatval(str_replace(',', '.', str_replace('.', '', $this->current['end_value_editing'])));
+                        $costAmount->save();
+
+                    }elseif ($this->dialogMode == 'edit') {
+                            $this->cost->end_value_editing = $this->current['end_value_editing'];
+                            $this->cost->start_value_editing = $this->current['start_value_editing'];
+                            $this->cost->start_value_amount_net_editing = $this->current['start_value_amount_net_editing'];
+                            $this->cost->start_value_amount_gros_editing = $this->current['start_value_amount_gros_editing'];
+                        }
+                    elseif ($this->dialogMode == 'stand') {
+                        $this->cost->end_value_editing = $this->current['end_value_editing'];
+                    }
+                }
+
                 $this->showEditModal = false;
                 toast()->success('Speichervorgang erfolgreich', 'Achtung')->push();
-                $this->dispatch('refreshComponents');
+                return redirect(request()->header('Referer'));
             }
         } else {
             $this->showEditModal = false;

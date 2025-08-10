@@ -156,22 +156,19 @@ class Brennstoffliste extends Component
         }
     }
 
-    public function raise_EditCostModal(Cost $cost)
+    public function editCostModal(Cost $cost)
     {
-        $this->setCurrent($cost);
-        $this->dispatch('showCostDetailModal', $this->current, false, false);
+        $this->dispatch('showBrennstoffkostenCostDetailModal', $cost);
     }
 
-    public function raise_AddCostModal(Cost $costTemplate)
+    public function addCostModal(Cost $costTemplate)
     {
-        $this->setCurrent($costTemplate);
-        $this->dispatch('showCostDetailModal', $this->current, true, false);
+        $this->dispatch('addBrennstoffkostenCostDetailModal', $costTemplate);
     }
 
-    public function raise_EditCostConsumptionModal(Cost $cost)
+    public function editEndstand(Cost $cost)
     {
-        $this->setCurrent($cost);
-        $this->dispatch('showCostDetailModal', $this->current, false, true);
+        $this->dispatch('editEndstandCostDetailModal', $cost);
     }
 
     public function editCostAmountModal(CostAmount $costAmount)
