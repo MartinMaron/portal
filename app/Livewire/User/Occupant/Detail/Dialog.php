@@ -16,40 +16,24 @@ use Livewire\Component;
 class Dialog extends Component
 {
     use OccupantAdapter;
-
     public $salutations = null;
-
     public $unitUsageTypes = null;
-
     public Realestate $realestate;
-
     public Occupant $current;
-
     public Occupant $initOccupant;
-
     // Form properties
     public $dateFromNewOccupant = null;
-
     public $hasLeerstand = false;
-
     public $mlage = '';
-
     public string $qmkc = '';
-
     public string $pe = '';
-
     public string $vorauszahlung = '';
-
     // Dialog properties
-    public string $dialogMode = '';
-
+    public string $dialogMode = 'init';
     public bool $showEditModal;
-
     // MultiViewForm properties
     public $currentPage = 1;
-
     public $success;
-
     public $pages = [
         1 => [
             'heading' => 'Persönliche Information',
@@ -180,16 +164,23 @@ class Dialog extends Component
     }
 
     /* initialization */
-    public function mount(Realestate $realestate, $current = null)
+    public function mount()
     {
-        $this->realestate = $realestate;
-        if ($current != null) {
-            $this->current = $current;
-        } else {
-            $this->current = $this->realestate->occupants->first();
-        }
         $this->salutations = Salutation::all();
         $this->unitUsageTypes = UnitUsageType::all();
+    }
+
+    public function showModal(Occupant $occupant)
+    {
+        $this->current = $occupant;
+        $this->realestate = $occupant->realestate;
+        $this->currentPage = 1;
+        $this->resetValidation();
+        $this->resetErrorBag();
+        $this->dialogMode = 'edit';
+        $this->initOccupant = $occupant;
+        $this->hasLeerstand = $occupant->leerstand;
+        $this->showEditModal = true;
     }
 
     public function lageModalChanged($value)
@@ -228,16 +219,7 @@ class Dialog extends Component
         $this->showEditModal = true;
     }
 
-    public function showModal(Occupant $current)
-    {
-        $this->currentPage = 1;
-        $this->resetValidation();
-        $this->dialogMode = 'edit';
-        $this->current = $current;
-        $this->initOccupant = $current;
-        $this->hasLeerstand = $current->leerstand;
-        $this->showEditModal = true;
-    }
+    
 
     public function closeModal($save)
     {
@@ -339,9 +321,6 @@ class Dialog extends Component
 
     public function render()
     {
-        return view('livewire.user.occupant.detail.dialog', [
-            'current' => $this->current,
-            'unitUsageTypes' => $this->unitUsageTypes,
-        ]);
+        return view('livewire.user.occupant.detail.dialog');
     }
 }

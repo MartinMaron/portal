@@ -1,14 +1,6 @@
-
-
-
-<div class="block w-full mx-auto max-w-7xl sm:mb-48" key="{{ now() }}">
-
-    <script src="https://nekowebresources.fra1.cdn.digitaloceanspaces.com/js/qrcode.js"></script>
-
-
+<div class="space-y-4" key="{{ now() }}">
     <div class="flex items-center">
         <div class="xs:none sm:basis-1/4">
-
         </div>
         <div class="basis-3/4 sm:basis-2/4 page-title">
             <div>NUTZERLISTE</div>
@@ -26,40 +18,31 @@
     </div>
     <div class="">
         <!-- Suchfeld -->
-        <x-input.search wire:model.debounce.600ms="filters.search"></x-input.search>
+        <x-input.search wire:model.live.debounce.600ms="filters.search"></x-input.search>
     </div>
     <div class="flex w-full px-5 sm:px-0 gap-2 mb-2 justify-between sm:justify-between">
-        @if ($hasAnyCustomEinheitNo)
+        @if ($this->hasAnyCustomEinheitNo($realestate))
             <x-input.radio-bool
-                wire:model="realestate.occupant_number_mode" wire:click="toggle('nummer')"
+                wire:model.live="current.occupant_number_mode" wire:change="toggle('nummer')"
                 id="user.occupant.occupant-list.show-occupant-list.occupant_nummber_mode"
                 aria_label="RadioNummer"
                 title="Nummer anzeigen" text_value0="eneko" text_value1="Verwalter"
                 >
             </x-input.radio-bool>
         @endif
-        @if ($hasAnyEigentumer)
+        @if ($this->hasAnyEigentumer($realestate))
             <x-input.radio-bool
-                    wire:model="realestate.occupant_name_mode" wire:click="toggle('eigentumer')"
+                    wire:model.live="current.occupant_name_mode" wire:change="toggle('eigentumer')"
                     id="user.occupant.occupant-list.show-occupant-list.occupant_name_mode"
                     aria_label="RadioName"
                     title="Nutzer anzeigen" text_value0="Mieter" text_value1="Eigentümer"
                     >
             </x-input.radio-bool>
-            {{-- <div wire:click="toggle('eigentumer')" class="relative inline-block w-40 pt-1 pb-2 mt-1 align-middle transition duration-200 ease-in select-none">
-                <input wire:model="showEigentumer" type="checkbox" name="" id="" class="absolute block w-6 h-6 my-1 rounded-full appearance-none cursor-pointer toggle-checkbox bg-sky-100 border-1"/>
-                <label for="toggle" class="block h-8 pl-8 overflow-hidden rounded-full cursor-pointer toggle-label">
-                    @if ($showEigentumer)
-                    <span class="font-medium text-gray-900 text-md">Eigentümer</span>
-                    @else
-                    <span class="font-medium text-gray-900 text-md">Nutzer</span>
-                    @endif
-                </label>
-            </div> --}}
+            
         @endif
         @if ($this->realestate->betriebskosten)
             <x-input.radio-bool
-                    wire:model="realestate.prepaidtype" wire:click="toggle('prepaidtype')"
+                    wire:model="current.prepaidtype" wire:change="toggle('prepaidtype')"
                     id="user.occupant.occupant-list.show-occupant-list.vorauszahlungen_mode"
                     aria_label="RadioPrepaids"
                     :width='80'
@@ -68,10 +51,9 @@
                     >
             </x-input.radio-bool>
         @endif
-        @if ($hasVat)
-
+        @if ($this->hasVat($realestate))
             <x-input.radio-bool
-                    wire:model="realestate.eingabeCostNetto" wire:click="toggle('prepaidnet')"
+                    wire:model.live="current.eingabeCostNetto" wire:change="toggle('eingabeCostNetto')"
                     id="user.occupant.occupant-list.show-occupant-list.vat_mode"
                     aria_label="RadioVat"
                     title="Vorauszahlungen bei MwSt. Pflicht" text_value0="brutto" text_value1="netto"
@@ -79,12 +61,13 @@
             </x-input.radio-bool>
         @endif
     </div>
-    <!-- Big screen Occupants List TABELLA -->
+
+<!-- Big screen Occupants List TABELLA -->
     <div class="hidden sm:block md:max-w-7xl" key="{{ now() }}">
         <x-table class="occu-table" key="{{ now() }}">
             <x-slot name="head">
                 <x-table.thead class="">
-                @if ($rows->count()!=0)
+                @if ($this->rows->count()!=0)
                     <x-table.tr class="">
                         <x-table.th class="w-20 text-left occu-thead-th">
                             Nummer
@@ -102,10 +85,6 @@
                         <x-table.th class="text-center w-50 occu-thead-th">m²</x-table.th>
                         <x-table.th class="text-center w-50 occu-thead-th">pe</x-table.th>
                         <x-table.th class="w-40 text-center occu-thead-th">Vorausz.
-                            {{-- <x-button.link wire:click="toggle('vorauszahlung')">
-                                <x-icon.fonts.editable-pencil class="hover:text-amber-200" value={{$editVorauszahlungen}}> Vorausz.
-                                </x-icon.fonts.editable-pencil>
-                                </x-button.link> --}}
                         </x-table.th>
                     </x-table.tr>
                 @endif
@@ -114,7 +93,7 @@
             </x-slot>
             <x-slot name="body" class="occu-tbl-container">
                 <x-table.tbody class="occu-tbody">
-                    @forelse ($rows as $occupant)
+                    @forelse ($this->rows as $occupant)
                     <x-table.tr wire:loading.class.delay="opacity-50" wire:key="row-{{ $occupant->id }}">
                         <x-table.th class="w-20 text-left occu-th" style="display:table-cell !important;">
                             @if ($realestate->occupant_number_mode)
@@ -126,8 +105,11 @@
                             @endif
                         </x-table.th>
                         <x-table.th class="text-left occu-th w-30">{{ $occupant->lage }}</x-table.th>
-                        <x-table.th wire:click="edit({{ $occupant->id }})" class="w-full occu-td hover:bg-sky-100 dark:hover:bg-slate-600" style="min-width: 20rem;">
-                            <button tabindex="-1" class="w-full text-left" type="button">
+                        <x-table.th class="w-full occu-td hover:bg-sky-100 dark:hover:bg-slate-600" style="min-width: 20rem;">
+                            <button tabindex="-1" 
+                                wire:click="edit({{ $occupant}})"
+                                class="w-full text-left" 
+                                type="button">
                                 @if ($this->realestate->occupant_name_mode == 1)
                                     <span class="{{ $occupant->eigentumer ? 'font-bold' : 'font-thin text-opacity-50' }}">
                                         {{ $occupant->display_eigentumer_name }}
@@ -175,14 +157,14 @@
                             <span class="">{{number_format($occupant->qmkc,  2, ',', '.') }}</span>
                         </x-table.td>
                         <x-table.td class="text-center occu-td w-50 " style="min-width: 4rem;">
-                            @if ($editVorauszahlungen)
+                            @if ($this->editable)
                                 <livewire:user.occupant.personencount-edit :occupant='$occupant' :wire:key="'user.occupant.personencount-edit-'.$occupant->id" key="{{ now() }}"/>
                             @else
                                 <span class="text-center">{{$occupant->personen_zahl}}</span>
                             @endif
                         </x-table.td>
                         <x-table.td class="w-40 p-0 text-right occu-td" style="min-width: 7rem; max-width: 7rem">
-                            @if ($editVorauszahlungen)
+                            @if ($this->editable)
                                 <livewire:user.occupant.vorauszahlung-edit :occupant='$occupant' :wire:key="'user.occupant.vorauszahlung-edit-'.$occupant->id" key="{{ now() }}"/>
                             @else
                                 <span class="pr-2 ">{{$occupant->vorauszahlung_editing }}</span>
@@ -201,11 +183,11 @@
         </x-table>
     </div>
 
-    <!-- Small Screen Occupants List -->
+<!-- Small Screen Occupants List -->
     <div class="block sm:hidden" key="{{ now() }}">
         <div class="grid w-full grid-cols-1 gap-4 mt-6 sm:grid-cols-2 lg:grid-cols-3" key="{{ now() }}">
 
-            @foreach ($rows as $occupant)
+            @foreach ($this->rows as $occupant)
                 <div wire:key="row-{{ $occupant->id }}"
                     class="my-1 mx-1 block divide-gray-200 rounded-lg shadow-md text-sky-700 dark:text-slate-200 bg-sky-50 dark:bg-slate-900" key="{{ now() }}" >
 
@@ -374,15 +356,12 @@
         @endif
     </div>
 
-    <div class="">
-        <livewire:user.occupant.detail.dialog :realestate='$realestate' key="{{ now() }}"/>
-    </div>
+    <!-- Dialoge -->
+    <livewire:user.occupant.detail.dialog :wire:key="'occupant-dialog-refactored'" />
+    <livewire:user.dialog.neko-message-box :wire:key="'neko-message-box-refactored'" />
 
-    <div>
-        <livewire:user.dialog.neko-message-box :wire:key="'neko-message-box'"/>
-    </div>
-
+    
     <div class="mt-6 my-5">
-        {{ $rows->onEachSide(2)->links() }}
+        {{ $this->rows->onEachSide(2)->links() }}
     </div>
 </div>

@@ -1,9 +1,9 @@
-<?php
+<?php   
 
 namespace App\Livewire\User\CostAmount;
 
 use App\Models\CostAmount;
-use App\Http\Traits\FormatsNumbers;
+use App\Http\Traits\Helper\FormatsNumbers;
 use Livewire\Component;
 
 class Detail extends Component

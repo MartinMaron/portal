@@ -3,7 +3,7 @@
 namespace App\Livewire\User\CostAmount;
 
 use App\Http\Traits\Helper\CostHelper;
-use App\Http\Traits\FormatsNumbers;
+use App\Http\Traits\Helper\FormatsNumbers;
 use App\Models\Cost;
 use App\Models\CostAmount;
 use Livewire\Component;

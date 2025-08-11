@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Traits;
+namespace App\Http\Traits\Helper;
 
 /**
  * Reusable number formatting helper for Livewire components.
