@@ -2,80 +2,35 @@
 
 namespace App\Livewire\User\Cost;
 
-use App\Http\Traits\Helpers;
 use App\Models\Cost;
+use Livewire\Component;
 use App\Models\CostAmount;
 use App\Models\Realestate;
+use App\Http\Traits\Helpers;
+use App\Http\Traits\Helper\CostHelper;
 use Illuminate\Database\Eloquent\Builder;
-use Livewire\Component;
 use Usernotnull\Toast\Concerns\WireToast;
 
 class Brennstoffliste extends Component
 {
-    use Helpers;
+    use Helpers, CostHelper;
     use WireToast;
-
-    public $showEditModal = false;
-
-    public $showEditFields = true;
-
-    public $showFilters = false;
-
-    public $nettoInputMode = false;
-
-    public $dateInputMode = true;
-
-    public $currentCostAmount = null;
-
-    public $dateFrom = null;
-
-    public Cost $current;
-
+    
+    public $editable = false;
     public Realestate $realestate;
-
-    public bool $hasManyBrennstoffkosten = false;
-
     public $nekoerrors = [];
-
-    public function rules()
-    {
-        return [
-            'current.nazwa' => 'required|min:2',
-            'current' => 'sometimes',
-            'current.dateCostAmount' => 'date|sometimes',
-        ];
-    }
 
     /* initialization */
     public function mount($realestate)
     {
         $this->realestate = $realestate;
-        $this->current = $this->makeBlankObject();
-        $this->nettoInputMode = $realestate->eingabeCostNetto;
-        $this->dateInputMode = $realestate->eingabeCostDatum;
-        $this->showEditFields = ! $realestate->abrechnungssetting->brennstofflisteDone;
-        $this->hasManyBrennstoffkosten = (bool) (Cost::where('realestate_id', '=', $this->realestate->id)
-            ->where(function (Builder $query) {
-                $query->IsBrennstoffkosten();
-            })
-            ->count() > 1);
+        $this->editable = ! $realestate->abrechnungssetting->brennstofflisteDone;
     }
 
-    public function makeBlankObject()
-    {
-        return Cost::make([
-            'nekoId' => $this->realestate->nekoId,
-            'realestate_id' => $this->realestate->id,
-            'unvid' => $this->realestate->unvid,
-            'budguid' => $this->realestate->nekoId,
-            'caption' => 'neu',
-        ]);
-    }
+    
 
     protected $listeners = [
-        'changeProperty' => 'changeValue',
         'refreshComponents' => '$refresh',
-        'showCostAmountDetailInListaModal' => 'raise_EditCostAmountModal',
         'confirmNekoMessage' => 'confirmNekoMessage',
     ];
 
@@ -85,19 +40,19 @@ class Brennstoffliste extends Component
         if ($this->params['action'] == 'confirmEditDone') {
             $this->realestate->abrechnungssetting->brennstofflisteDone = 1;
             $this->realestate->abrechnungssetting->save();
-            $this->showEditFields = ! $this->realestate->abrechnungssetting->nutzerlisteDone;
+            $this->editable = ! $this->realestate->abrechnungssetting->nutzerlisteDone;
 
             return redirect(request()->header('Referer'));
         }
         if ($this->params['action'] == 'deleteCostAmount') {
-            $this->currentCostAmount->delete();
+            CostAmount::find($params['object']['id'])->delete();
         }
     }
 
     public function setDone()
     {
         $this->nekoerrors = [];
-        foreach($this->getCostByType('BRK') as $item) {
+        foreach($this->getCostByType('BRK', $this->realestate) as $item) {
 
             // für Kosten ohne Tank müssen irgendwelche Kosten eingetragen werden
             if ($item->fueltype_id !=null
@@ -141,20 +96,6 @@ class Brennstoffliste extends Component
         }
     }
 
-    public function create()
-    {
-        if ($this->current->getKey()) {
-            $this->current = $this->makeBlankTransaction();
-        }
-        $this->showEditModal = true;
-    }
-
-    public function setCurrent(Cost $cost)
-    {
-        if ($this->current->isNot($cost)) {
-            $this->current = $cost;
-        }
-    }
 
     public function editCostModal(Cost $cost)
     {
@@ -178,69 +119,42 @@ class Brennstoffliste extends Component
 
     public function questionDeleteCostAmount(CostAmount $costAmount)
     {
-        $this->currentCostAmount = $costAmount;
-        $this->dispatch('showNekoMessageModal', ['title' => 'Löschen?', 'message' => 'Bitte das löschen bestätigen.', 'type' => 'delete', 'action' => 'deleteCostAmount']);
+        $this->dispatch('showNekoMessageModal', ['title' => 'Löschen?', 'message' => 'Bitte das löschen bestätigen.', 'type' => 'delete', 'action' => 'deleteCostAmount', 'object' => $costAmount]);
     }
 
-    public function getCostByType($costtypeId){
-        return Cost::where('realestate_id','=',$this->realestate->id)
-            ->where(function (Builder $query) {$query->IsBrennstoffkosten();})
-            ->where(function (Builder $query) {
-                if ($this->realestate->abrechnungssetting != null) {
-                    $query->where('periodFrom', '<=', $this->realestate->abrechnungssetting->periodTo);
-                }
-            })
-            ->where(function (Builder $query) {
+#region Dataselection
+    public function getRowsProperty()
+    {
+        return $this->rowsQuery->get()->unique('costtype_id')->sortBy('CostTypeSort');
+    }
+
+    public function getRowsQueryProperty()
+    {
+        $result = Cost::where('realestate_id', '=', $this->realestate->id)
+         ->where(function (Builder $query) {
                 if ($this->realestate->abrechnungssetting != null) {
                     $query->where('periodTo', '=', null)
                         ->orWhere('periodTo', '>=', $this->realestate->abrechnungssetting->periodFrom);
                 }
             })
-            ->where('costtype_id','=',$costtypeId)
-            ->get();
-    }
-
-    public function hasConsumptionByType($costtypeId)
-    {
-
-        $ret = Cost::where('realestate_id', '=', $this->realestate->id)
             ->where(function (Builder $query) {
-                $query->IsBrennstoffkosten();
+                if ($this->realestate->abrechnungssetting != null) {
+                    $query->where('periodFrom', '<=', $this->realestate->abrechnungssetting->periodTo);
+                }
             })
-            ->where('costtype_id', '=', $costtypeId)
-            ->where('consumption', '=', 1)
-            ->count();
-
-        return (bool) ($ret > 0);
+        ->where(function (Builder $query) {
+            $query->IsBrennstoffkosten()
+            ->with('costAmounts');
+        });
+        return $result;
     }
+    #endregion
 
-    public function hasHaushaltsnahByType($costtypeId)
-    {
-        $ret = Cost::where('realestate_id', '=', $this->realestate->id)
-            ->where(function (Builder $query) {
-                $query->IsBrennstoffkosten();
-            })
-            ->where('costtype_id', '=', $costtypeId)
-            ->where('haushaltsnah', '=', 1)
-            ->count();
-
-        return (bool) ($ret > 0);
-        // return $ret;
-    }
 
     public function render()
     {
-        $filtered = Cost::where('realestate_id', '=', $this->realestate->id)
-            ->where(function (Builder $query) {
-                $query->IsBrennstoffkosten();
-            })
-            ->get()->unique('costtype_id')
-            ->sortBy('CostTypeSort');
-
-        $filtered->fresh('costAmounts');
-
         return view('livewire.user.cost.brennstoffliste', [
-            'filtered' => $filtered,
+            'rows' => $this->rows,
         ]);
     }
 }

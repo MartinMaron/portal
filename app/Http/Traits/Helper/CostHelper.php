@@ -202,6 +202,26 @@ trait CostHelper
         return (bool) ($ret > 0);
     }
 
+    public function hasManyBrennstoffkosten(Realestate $realestate)
+    {
+        return (bool) (Cost::where('realestate_id', '=', $realestate->id)
+            ->where(function (Builder $query) {
+                $query->IsBrennstoffkosten();
+            })
+             ->where(function (Builder $query) use ($realestate) {
+                if ($realestate->abrechnungssetting != null) {
+                    $query->where('periodTo', '=', null)
+                        ->orWhere('periodTo', '>=', $realestate->abrechnungssetting->periodFrom);
+                }
+            })
+            ->where(function (Builder $query) use ($realestate) {
+                if ($realestate->abrechnungssetting != null) {
+                    $query->where('periodFrom', '<=', $realestate->abrechnungssetting->periodTo);
+                }
+            })
+            ->count() > 1);
+    }
+
     public function getCostByType($costtypeId, Realestate $realestate){
         return Cost::where('realestate_id','=', $realestate->id)
             ->where(function (Builder $query) use ($realestate) {
@@ -215,9 +235,10 @@ trait CostHelper
                     $query->where('periodFrom', '<=', $realestate->abrechnungssetting->periodTo);
                 }
             })
-            ->where(function (Builder $query) {$query->IsHeizkosten();})
             ->where('costtype_id','=',$costtypeId)
             ->get()->sortBy('caption');
     }
+
+
 
 }

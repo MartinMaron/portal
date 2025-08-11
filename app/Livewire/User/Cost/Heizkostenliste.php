@@ -38,8 +38,6 @@ class Heizkostenliste extends Component
         if ($this->params['action'] == 'confirmEditDone') {
             $this->realestate->abrechnungssetting->heizkostenlisteDone = 1;
             $this->realestate->abrechnungssetting->save();
-            $this->showEditFields = ! $this->realestate->abrechnungssetting->heizkostenlisteDone;
-
             return redirect(request()->header('Referer'));
         }
     }
