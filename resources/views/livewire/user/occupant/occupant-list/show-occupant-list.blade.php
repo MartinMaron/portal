@@ -158,15 +158,29 @@
                         </x-table.td>
                         <x-table.td class="text-center occu-td w-50 " style="min-width: 4rem;">
                             @if ($this->editable)
-                                <livewire:user.occupant.personencount-edit :occupant='$occupant' :wire:key="'user.occupant.personencount-edit-'.$occupant->id" key="{{ now() }}"/>
-                            @else
+{{--                                 <livewire:user.occupant.personencount-edit :occupant='$occupant' :wire:key="'user.occupant.personencount-edit-'.$occupant->id" key="{{ now() }}"/> --}}
+                                <input     
+                                    type="text"
+                                    inputmode="numeric" 
+                                    wire:model.blur="personCounts.{{ $occupant->id }}"
+                                    style="-moz-appearance: textfield; margin: 0;"
+                                    class="text-center border dark:text-slate-950 dark:bg-slate-400 md:text-md focus:ring-black p-1 px-2 m-0 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 dark:border-slate-800 rounded-md"   
+                                >
+                                @else
                                 <span class="text-center">{{$occupant->personen_zahl}}</span>
                             @endif
                         </x-table.td>
                         <x-table.td class="w-40 p-0 text-right occu-td" style="min-width: 7rem; max-width: 7rem">
                             @if ($this->editable)
-                                <livewire:user.occupant.vorauszahlung-edit :occupant='$occupant' :wire:key="'user.occupant.vorauszahlung-edit-'.$occupant->id" key="{{ now() }}"/>
-                            @else
+                                {{-- <livewire:user.occupant.vorauszahlung-edit :occupant='$occupant' :wire:key="'user.occupant.vorauszahlung-edit-'.$occupant->id" key="{{ now() }}"/> --}}
+                                <input     
+                                    type="text"
+                                    inputmode="numeric" 
+                                    wire:model.blur="prepaids.{{ $occupant->id }}"
+                                    style="-moz-appearance: textfield; margin: 0;"
+                                    class="text-center border dark:text-slate-950 dark:bg-slate-400 md:text-md focus:ring-black p-1 px-2 m-0 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 dark:border-slate-800 rounded-md"   
+                                >
+                                @else
                                 <span class="pr-2 ">{{$occupant->vorauszahlung_editing }}</span>
                             @endif
                         </x-table.td>

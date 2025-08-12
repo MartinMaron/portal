@@ -9,17 +9,18 @@ use App\Models\Salutation;
 use App\Models\UnitUsageType;
 use App\Rules\OcccupantDateFromGreaterPreviousRule;
 use App\Rules\OccupantDateFromLessDateToRule;
+use App\Http\Traits\Helper\FormatsNumbers;
 use Barryvdh\Debugbar\Facades\Debugbar;
 use Carbon\Carbon;
 use Livewire\Component;
 
 class Dialog extends Component
 {
-    use OccupantAdapter;
+    use OccupantAdapter, FormatsNumbers;
     public $salutations = null;
     public $unitUsageTypes = null;
     public Realestate $realestate;
-    public Occupant $current;
+    public $current;
     public Occupant $initOccupant;
     // Form properties
     public $dateFromNewOccupant = null;
@@ -34,6 +35,12 @@ class Dialog extends Component
     // MultiViewForm properties
     public $currentPage = 1;
     public $success;
+    // Nummern-Format Mapping für Trait (property => decimals)
+    protected array $numericFormatMap = [
+        'current.qmkc_editing' => 2,
+        'current.personen_zahl' => 2,
+        'current.vorauszahlung_editing' => 2,
+    ];
     public $pages = [
         1 => [
             'heading' => 'Persönliche Information',
@@ -57,7 +64,7 @@ class Dialog extends Component
         1 => [
             'dateFromNewOccupant' => ['required', 'date'],
             'hasLeerstand' => 'nullable|boolean',
-            'current.nachname' => 'required|min:2',
+            'current.nachname' => 'required_if:current.cost.consumption,==,1|nullable|min:2',
             'current.nekoId' => 'required|min:3',
             'current.nutzeinheitNo' => 'required|numeric',
             'current.realestate_id' => 'required|numeric',
@@ -172,7 +179,7 @@ class Dialog extends Component
 
     public function showModal(Occupant $occupant)
     {
-        $this->current = $occupant;
+        $this->current = $occupant->toArray();
         $this->realestate = $occupant->realestate;
         $this->currentPage = 1;
         $this->resetValidation();
@@ -205,16 +212,22 @@ class Dialog extends Component
         $myRules['dateFromNewOccupant'] = ['required', 'date', new OcccupantDateFromGreaterPreviousRule];
 
         $this->validateOnly($propertyName, $myRules, $this->messages);
+
+    // Nach Eingabe formatieren (nur bei Blur wegen wire:model.blur)
+    $this->handleNumericFormatting($propertyName);
     }
 
     public function changeModal(Occupant $current)
     {
         $this->currentPage = 1;
         $this->resetValidation();
+        $this->resetErrorBag();
         $this->dialogMode = 'change';
         $this->dateFromNewOccupant = (new Carbon)->format('d.m.Y');
         $this->hasLeerstand = false;
-        $this->current = $this->makeDefaultOccupant($current);
+        $this->current = $this->makeDefaultOccupant($current)->toArray();
+        $this->current['id'] = 0;    
+        $this->current['dateTo'] = null;    
         $this->initOccupant = $current;
         $this->showEditModal = true;
     }

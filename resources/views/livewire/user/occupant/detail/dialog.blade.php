@@ -11,10 +11,10 @@
                             @if ($this->hasLeerstand)
                                 <div class="text-lg ">Leerstand</div>
                             @else
-                                @if ($current->nachname)
-                                    <div class="">{{$current->nachname.' '.$current->vorname}}</div> <x-icon.fonts.pen-line class="h-6 pl-10 mt-1 " ></x-icon.fonts.pen-line>
+                                @if ($current['nachname'])
+                                    <div class="">{{$current['nachname'].' '.$current['vorname']}}</div> <x-icon.fonts.pen-line class="h-6 pl-10 mt-1 " ></x-icon.fonts.pen-line>
                                 @else
-                                    <div class="">{{$current->nachname }}</div> <x-icon.fonts.pen-line class="h-6 pl-10 mt-1 " ></x-icon.fonts.pen-line>
+                                    <div class="">{{$current['nachname'] }}</div> <x-icon.fonts.pen-line class="h-6 pl-10 mt-1 " ></x-icon.fonts.pen-line>
                                 @endif
                             @endif
                         </div>
@@ -98,7 +98,7 @@
                                             wire:model.blur="current.date_from_editing"
                                             type="text"
                                             id="dialog.dateFrom"
-                                            disabled="{{$current->nekoId !='new'}}"
+                                            disabled="{{$current['nekoId'] !='new'}}"
                                             >
                                         </x-input.date>
                                     </div>
@@ -129,33 +129,33 @@
                                 <x-input.group
                                 class="my-1" paddingLabel="" hoheLabel="h-6 sm:h-8 sm:pt-1" hohe="h-20 sm:h-10"
                                 for="vorname" label="Vorname" :error="$errors->first('current.vorname')">
-                                    <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.blur="current.vorname" id="vorname" placeholder="..." />
+                                    <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.blur="current.vorname" id="vorname" placeholder="..." x-on:focus="$el.select()" />
                                 </x-input.group>
                                 <!-- Nachname -->
                                 <x-input.group
                                 class="my-1" paddingLabel="" hoheLabel="h-6 sm:h-8 sm:pt-1" hohe="h-20 sm:h-10" hoheOnError="h-26 sm:h-13"
                                 for="nachname" label="Nachname" :error="$errors->first('current.nachname')">
-                                    <div class="w-full" x-data x-on:focus="$el.select()" >
-                                        <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.blur="current.nachname" id="nachname" placeholder="..." />
+                                    <div class="w-full" x-data>
+                                        <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.blur="current.nachname" id="nachname" placeholder="..." x-on:focus="$el.select()" />
                                     </div>
                                 </x-input.group>
                                 <!-- E-mail -->
                                 <x-input.group
                                     class="my-1" paddingLabel="" hoheLabel="h-6 sm:h-8 sm:pt-1" hohe="h-20 sm:h-10"
                                     for="email" label="E-mail" :error="$errors->first('current.email')">
-                                    <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.blur="current.email" id="email" placeholder="..." />
+                                    <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.blur="current.email" id="email" placeholder="..." x-on:focus="$el.select()" />
                                 </x-input.group>
                                 <!-- Telefonnummer -->
                                 <x-input.group
                                     class="my-1" paddingLabel="" hoheLabel="h-6 sm:h-8 sm:pt-1" hohe="h-20 sm:h-10"
                                     for="telephone_number" label="Telefonnummer" :error="$errors->first('current.telephone_number')">
-                                    <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.blur="current.telephone_number" id="telephone_number" placeholder="..." />
+                                    <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.blur="current.telephone_number" id="telephone_number" placeholder="..." x-on:focus="$el.select()" />
                                 </x-input.group>
                                     <!-- Mobilfunknnummer -->
                                     <x-input.group
                                         class="my-1" paddingLabel="" hoheLabel="h-6 sm:h-8 sm:pt-1" hohe="h-20 sm:h-10"
                                         for="mobilnumber" label="Mobiltelefon" :error="$errors->first('current.mobilnumber')">
-                                        <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.lazy="current.mobilnumber" id="mobilnumber" placeholder="..." />
+                                        <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.lazy="current.mobilnumber" id="mobilnumber" placeholder="..." x-on:focus="$el.select()" />
                                     </x-input.group>
                             @endif
 
@@ -166,10 +166,10 @@
                             for="street" label="Strasse / Hnr">
                                 <div class="flex w-full gap-2 h-10 sm:h-8">
                                     <div class="h-full basis-5/6">
-                                        <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.blur="current.street" id="street" placeholder="..." />
+                                        <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.blur="current.street" id="street" placeholder="..." x-on:focus="$el.select()" />
                                     </div>
                                     <div class="h-full basis-1/6">
-                                        <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.blur="current.houseNr" id="houseNr" placeholder="..." />
+                                        <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.blur="current.houseNr" id="houseNr" placeholder="..." x-on:focus="$el.select()" />
                                     </div>
                                 </div>
                             </x-input.group>
@@ -179,10 +179,10 @@
                             for="city" label="PLZ / Ort">
                                 <div class="flex w-full h-10 gap-2 sm:h-8">
                                     <div class="basis-1/5">
-                                        <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.blur="current.postcode" id="postcode" placeholder="..." />
+                                        <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.blur="current.postcode" id="postcode" placeholder="..." x-on:focus="$el.select()" />
                                     </div>
                                     <div class="basis-4/5">
-                                        <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.blur="current.city" id="city" placeholder="..." />
+                                        <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.blur="current.city" id="city" placeholder="..." x-on:focus="$el.select()" />
                                     </div>
                                 </div>
                             </x-input.group>
@@ -218,10 +218,10 @@
                                 for="qmkc_editing" label="Fläche / Personenzahl" :error="$errors->first('current.qmkc')">
                                     <div class="flex flex-row h-10 sm:h-8 w-full">
                                         <div class="basis-1/2 w-full">
-                                            <x-input.text class="h-10 rounded bg-sky-50 sm:h-8" wire:model.blur="current.qmkc_editing" id="dialog.qmkc" placeholder="Heizfläche in m²" />
+                                            <x-input.text class="h-10 rounded bg-sky-50 sm:h-8" wire:model.blur="current.qmkc_editing" id="dialog.qmkc" placeholder="Heizfläche in m²" x-on:focus="$el.select()" />
                                         </div>
                                         <div class="basis-1/2 w-full">
-                                            <x-input.text class="h-10 rounded bg-sky-50 sm:h-8" wire:model.blur="current.personen_zahl" id="dialog.pe" placeholder="Personenanzahl" />
+                                            <x-input.text class="h-10 rounded bg-sky-50 sm:h-8" wire:model.blur="current.personen_zahl" id="dialog.pe" placeholder="Personenanzahl" x-on:focus="$el.select()" />
                                         </div>
                                     </div>
                                 </x-input.group>
@@ -231,7 +231,7 @@
                                 for="lage" label="Lage u. Lokalart">
                                     <div class="flex items-center gap-1 justify-items-start h-10 sm:h-8 w-full">
                                         <div class="basis 1/2 w-full">
-                                            <livewire:lage-autocomplete :search='$current->lage'/>
+                                            <livewire:lage-autocomplete :search='$current["lage"]'/>
                                         </div>
                                         <div class="basis 1/2 w-full">
                                             <x-input.select
@@ -252,7 +252,7 @@
                                 <x-input.group
                                 class="my-1" paddingLabel="" hoheLabel="h-6 sm:h-8 sm:pt-1" hohe="h-20 sm:h-10"
                                 for="vorauszahlung" label="Vorauszahlung" :error="$errors->first('current.vorauszahlung_editing')">
-                                    <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.blur="current.vorauszahlung_editing" id="dialog.vorauszahlung" placeholder="0,00" />
+                                    <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.blur="current.vorauszahlung_editing" id="dialog.vorauszahlung" placeholder="0,00" x-on:focus="$el.select()" />
                                 </x-input.group>
                                 <!-- eigene Wohnungsbezeichnung -->
                                 <x-input.group

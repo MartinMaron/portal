@@ -69,7 +69,9 @@ class Occupant extends Model
     protected $casts = ['dateFrom' => 'date:d.m.Y',
         'dateTo' => 'date:d.m.Y',
         'qmkc' => 'decimal:2',
-        'qmww' => 'decimal:2'
+        'qmww' => 'decimal:2',
+        'vat' => 'boolean',
+        'uaw' => 'boolean',
         ];
 
     protected $appends = ['date_from_editing',
@@ -83,27 +85,34 @@ class Occupant extends Model
 
     protected function getDisplayConditionalWithAdressAttribute() {}
 
-    protected function setPersonenZahlAttribute($value)
+    public function personenZahl(): Attribute
     {
-        $q = $this->personcounts
-            ->where('abrechnungssetting_id', '=', $this->realestate->abrechnungssetting_id);
-
-        $personcount = Personcount::updateOrCreate(
-            ['occupant_id' => $this->id, 'abrechnungssetting_id' => $this->realestate->abrechnungssetting_id],
-            [
-                'countvalue' => $this->castStringToDouble($value),
-            ]);
-    }
-
-    protected function getPersonenZahlAttribute()
-    {
-        $q = $this->personcounts
-            ->where('abrechnungssetting_id', '=', $this->realestate->abrechnungssetting_id);
-        if ($q->count() == 0) {
-            return '0,00';
-        } else {
-            return number_format($q->first()->countvalue, 2, ',', '.');
-        }
+        return Attribute::make(
+            get: function () {
+                if ($this->realestate === null) {
+                    return '0,00';
+                }
+                $q = $this->personcounts
+                    ->where('abrechnungssetting_id', '=', $this->realestate->abrechnungssetting_id);
+                if ($q->count() == 0) {
+                    return '0,00';
+                }
+                return number_format($q->first()->countvalue, 2, ',', '.');
+            },
+            set: function ($value) {
+                Personcount::updateOrCreate(
+                    [
+                        'occupant_id' => $this->id,
+                        'abrechnungssetting_id' => $this->realestate->abrechnungssetting_id,
+                    ],
+                    [
+                        'countvalue' => $this->castStringToDouble($value),
+                    ]
+                );
+                // keine direkte Speicherung auf occupants Tabelle nötig
+                return [];
+            }
+        );
     }
 
     public function dateFromEditing(): Attribute
@@ -134,6 +143,10 @@ class Occupant extends Model
     {
         return Attribute::make(
             get: function () {
+                if ($this->realestate === null) {
+                    return '0,00';
+                }
+
                 $q = $this->preapaids
                     ->where('abrechnungssetting_id', '=', $this->realestate->abrechnungssetting_id)
                     ->where('prepaidtype', '=', $this->realestate->prepaidtype);

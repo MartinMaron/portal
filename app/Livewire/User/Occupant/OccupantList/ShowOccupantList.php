@@ -9,7 +9,6 @@ use App\Livewire\DataTable\WithPerPagePagination;
 use App\Livewire\DataTable\WithSorting;
 use App\Models\Occupant;
 use App\Models\Realestate;
-use App\Models\Salutation;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
 use App\Models\User;
@@ -33,6 +32,9 @@ class ShowOccupantList extends Component
     public $current;
     public $filters;
    
+    public $prepaids = [];
+    public $personCounts = [];
+
     public function rules()
     {
         return [
@@ -104,6 +106,30 @@ class ShowOccupantList extends Component
         $this->sorts = ['unvid' => 'asc'];
         $this->editable = !$this->realestate->abrechnungssetting->nutzerlisteDone;
         $this->filters = ['search' => ''];
+
+        foreach ($this->rows as $occupant) {
+            $this->personCounts[$occupant->id] = $occupant->personenZahl;
+        }
+        $this->reloadPrepaids();
+    }
+
+    protected function reloadPrepaids()
+    {
+        foreach ($this->rows as $occupant) {
+            $this->prepaids[$occupant->id] = $occupant->vorauszahlungEditing;
+        }
+    }
+
+    public function updatedPersonCounts($value, $key)
+    {
+        $this->realestate->occupants->find($key)->personenZahl = $this->castStringToDouble($value);
+        $this->personCounts[$key] = number_format(floatval(str_replace(',', '.', str_replace('.', '', $value))), 2, ',', '.');
+    }
+
+    public function updatedPrepaids($value, $key)
+    {
+        $this->realestate->occupants->find($key)->vorauszahlungEditing = $this->castStringToDouble($value);
+        $this->prepaids[$key] = number_format(floatval(str_replace(',', '.', str_replace('.', '', $value))), 2, ',', '.');
     }
 
     public function toggle($value)
@@ -113,15 +139,18 @@ class ShowOccupantList extends Component
             $this->realestate->save();
         }
         if ($value == 'eigentumer') {
+            $this->realestate->occupant_name_mode = $this->current['occupant_name_mode'];
             $this->realestate->save();
         }
         if ($value == 'prepaidtype') {
             $this->realestate->prepaidtype = $this->current['prepaidtype'];
             $this->realestate->save();
+            $this->reloadPrepaids();
         }
         if ($value == 'eingabeCostNetto') {
             $this->realestate->eingabeCostNetto = $this->current['eingabeCostNetto'];
             $this->realestate->save();
+            $this->reloadPrepaids();
         }
     }
 
