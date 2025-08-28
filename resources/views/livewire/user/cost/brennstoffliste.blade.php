@@ -339,7 +339,7 @@
                                                             wire:click="editEndstand({{ $singleCost }})"
                                                             class="{{ $singleCost->end_value_editing <= '0,0' ? 'bg-red-300 dark:bg-red-600 dark:hover:bg-red-700 md:text-md hover:bg-red-500 focus:bg-red-500' : 'bg-sky-300 dark:bg-slate-900 dark:hover:bg-slate-700 hover:bg-sky-500' }} {{ $editable ? 'block' : 'hidden' }} w-full my-1 border flex justify-around {{ $singleCost->endValue <= 0 ? 'bg-red-300 md:text-md hover:bg-red-500 focus:bg-red-500' : 'hover:bg-sky-300' }} focus:ring-indigo-500 p-1 m-0 focus:border-indigo-500 block sm:text-sm border-gray-900 rounded-md"
                                                         >
-                                                            <span class="md:text-md "><i class="text-left pr-1 fa-solid fa-pencil"></i></i></span>
+                                                            <span class="md:text-md "><i class="text-left pr-1 fa-solid fa-pencil"></i></span>
                                                             @if ($singleCost->end_value_editing <= '0,0')
                                                                 <span class="md:text-md text-right">Eingabe</span>
                                                             @else

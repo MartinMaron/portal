@@ -4,7 +4,7 @@
             <livewire:user.realestate.header :baseobject='$realestate'/>
         </x-slot>
         <div class="">
-            <livewire:user.realestate.verbrauchsinfo-user-email.search-list :realestate='$realestate' :wire:key="'realestate.verbrauchsinfo-user-email-listitem-'.$realestate->id"/>
+            <livewire:user.realestate.verbrauchsinfo-user-email.search-list :realestate='$realestate' :wire:key="'realestate.verbrauchsinfo-user-email-list-item-'.$realestate->id"/>
         </div>
     </x-slot>
 </x-app-layout>
