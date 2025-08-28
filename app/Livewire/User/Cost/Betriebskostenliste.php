@@ -62,6 +62,19 @@ class Betriebskostenliste extends Component
         ]);
     }
 
+    public function makeBlankTransaction()
+    {
+        return Cost::make([
+            'nekoId' => $this->realestate->nekoId,
+            'realestate_id' => $this->realestate->id,
+            'unvid' => $this->realestate->unvid,
+            'budguid' => $this->realestate->nekoId,
+            'costtype' => CostType::find('BEK'),
+            'caption' => 'Neue Kostenposition',
+        ]);
+    }
+
+
     protected $listeners = [
         'changeProperty' => 'changeValue',
         'refreshComponents' => '$refresh',
@@ -135,48 +148,6 @@ class Betriebskostenliste extends Component
         return (bool) ($ret > 0);
     }
 
-
-    protected function ensurePlaceholderValues($costs)
-    {
-        return $costs->map(function ($cost) {
-            // If cost doesn't have costAmounts relationship loaded, load it
-            if (!$cost->relationLoaded('costAmounts')) {
-                $cost->load('costAmounts');
-            }
-
-            // Ensure cost has default values for properties Alpine.js might access
-            if (!isset($cost->datum)) {
-                $cost->datum = '';
-            }
-
-            if (!isset($cost->brutto)) {
-                $cost->brutto = '0,00';
-            }
-
-            if (!isset($cost->netto)) {
-                $cost->netto = '0,00';
-            }
-
-            if (!isset($cost->betrag)) {
-                $cost->betrag = '0,00';
-            }
-
-            if (!isset($cost->consumption)) {
-                $cost->consumption = '0';
-            }
-
-            if (!isset($cost->haushaltsnah)) {
-                $cost->haushaltsnah = '0';
-            }
-
-            if (!isset($cost->co2TaxValue)) {
-                $cost->co2TaxValue = '0';
-            }
-
-            return $cost;
-        });
-    }
-
     public function render()
     {
         $filtered = Cost::where('realestate_id', '=', $this->realestate->id)
@@ -186,8 +157,6 @@ class Betriebskostenliste extends Component
             ->get()->sortBy('caption');
 
         $filtered->fresh('costAmounts');
-
-        $filtered = $this->ensurePlaceholderValues($filtered);
 
         return view('livewire.user.cost.betriebskostenliste', [
             'filtered' => $filtered,

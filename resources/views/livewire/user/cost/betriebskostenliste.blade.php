@@ -61,12 +61,7 @@
         <div class="border-0 bg-slate-700">
             @forelse ($filtered as $cost)
                 <div class="">
-                    <livewire:user.cost-amount.detail-input
-                        :cost='$cost'
-                        :netto='false'
-                        :inputWithDatum='false'
-                        :wire:key="'list-cost-costamountinput-'.$cost->id"
-                    />
+                    <livewire:user.cost-amount.detail-input :cost='$cost' :netto='false' :inputWithDatum='false' :wire:key="'list-cost-costamountinput-'.$cost->id" key="{{ now() }}"/>
                 </div>
             @empty
                 <div class="flex justify-center items-center space-x-2 bg-sky-100">
