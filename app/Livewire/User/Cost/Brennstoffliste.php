@@ -84,7 +84,7 @@ class Brennstoffliste extends Component
                 if ($q->sum('co2TaxValue') == 0) {
                     $this->nekoerrors[]= $item->caption. ': keine CO2-Menge angegeben.';
                 }
-                if ($q->sum('co2TaxAmount_gros') == 0) {
+                if ($q->sum('co2TaxAmount_gros') == 0 && $q->sum('co2TaxAmount_net') == 0) {
                     $this->nekoerrors[]= $item->caption. ': keine CO2-Kosten angegeben.';
                 }
 
