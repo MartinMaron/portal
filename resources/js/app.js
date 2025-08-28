@@ -1,14 +1,8 @@
-import './bootstrap';
-import Alpine from 'alpinejs';
-import mask from '@alpinejs/mask';
-import ToastComponent from '../../vendor/usernotnull/tall-toasts/resources/js/tall-toasts';
+import "./bootstrap";
 
-// Register Alpine plugins
-Alpine.plugin(mask);
-Alpine.plugin(ToastComponent);
-
-// Make Alpine available on the window object
-window.Alpine = Alpine;
-
-// Start Alpine
-Alpine.start();
+import { Livewire, Alpine } from '../../vendor/livewire/livewire/dist/livewire.esm';
+import mask from '@alpinejs/mask'
+import ToastComponent from '../../vendor/usernotnull/tall-toasts/resources/js/tall-toasts'
+Alpine.plugin(ToastComponent)
+Alpine.plugin(mask)
+Livewire.start()

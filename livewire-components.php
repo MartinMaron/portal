@@ -21,7 +21,7 @@ return [
     'user.realestate.search-list' => 'App\\Http\\Livewire\\User\\Realestate\\SearchList',
     'user.realestate.verbrauchsinfo-user-email.detail' => 'App\\Http\\Livewire\\User\\Realestate\\VerbrauchsinfoUserEmail\\Detail',
     'user.realestate.verbrauchsinfo-user-email.detail-input' => 'App\\Http\\Livewire\\User\\Realestate\\VerbrauchsinfoUserEmail\\DetailInput',
-    'user.realestate.verbrauchsinfo-user-email.listitem' => 'App\\Http\\Livewire\\User\\Realestate\\VerbrauchsinfoUserEmail\\ListItem',
+    'user.realestate.verbrauchsinfo-user-email.list-item' => 'App\\Http\\Livewire\\User\\Realestate\\VerbrauchsinfoUserEmail\\ListItem',
     'user.realestate.verbrauchsinfo-user-email.search-list' => 'App\\Http\\Livewire\\User\\Realestate\\VerbrauchsinfoUserEmail\\SearchList',
     'user.realestate.verbrauchsinfo-user-emails' => 'App\\Http\\Livewire\\User\\Realestate\\VerbrauchsinfoUserEmails',
     'user.testing' => 'App\\Http\\Livewire\\User\\Testing',
