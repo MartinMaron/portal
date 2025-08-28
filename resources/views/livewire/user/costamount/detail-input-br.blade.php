@@ -12,32 +12,30 @@
     <div class="{{ $cost->costtype->costinvoicingtype->id == 'HZ' ? 'block' : 'hidden' }}">
         <div
             class="detailinput flex items-center gap-1 bg-sky-200 dark:bg-slate-900 dark:text-gray-200 bg-opacity-50 p-0.5 rounded-lg">
-                <!-- Datum -->
-                <div class="basis-1/6">
-                    @if(property_exists($this, 'current') && $current)
-                        <x-input.date
-                            wire:model.lazy="current.datum"
-                            id="user-costamount-detailinput-datum{{ $cost->id }}"
-                            type="text"
-                            :error="$errors->first('datum')"
-                            class="{{ $errors->first('datum') ? 'bg-red-50 focus:border-red-900 border-red-900' : '' }}"
-                        />
-                    @else
-                        <div class="flex items-center justify-center w-full h-8 text-gray-500">
-                            Lade Daten...
-                        </div>
-                    @endif
-
-                </div>
-
+            <!-- Datum -->
+            <div class="basis-1/6">
+                <x-input.date
+                    wire:model.blur="current.datum"
+                    id="user-costamount-detailinput-datum{{ $cost->id }}"
+                    type="text"
+                    :error="$errors->first('current.datum')"
+                    style="-moz-appearance: textfield; margin: 0;"
+                    x-on:focus="$el.select()"
+                    class="{{ $cost->realestate->eingabeCostDatum || ($cost->fueltype_id !=null && $cost->fueltype->hasTank) ? 'block' : 'hidden' }}
+                    inputDisplay
+                    {{ $errors->first('current.datum') ? 'bg-red-50 focus:border-red-900 border-red-900' : '' }}"
+                >
+                </x-input.date>
+            </div>
             <!-- Verbrauch -->
             <div class="basis-1/6">
-                <input type="text"
+          <input type="text"
                        id="user-costamount-detailinput-consumption{{ $cost->id }}"
                        inputmode="numeric"
                        placeholder="0"
                        wire:model.blur="current.consumption_editing"
                        style="-moz-appearance: textfield; margin: 0;"
+              x-on:focus="$el.select()"
                        class="{{ $cost->consumption ? 'block' : 'hidden' }}
                     inputDisplay
                     {{ $errors->first('current.consumption') ? 'inputErrorDisplay' :'' }}"
@@ -53,6 +51,7 @@
                     type="text"
                     inputmode="numeric"
                     style="-moz-appearance: textfield; margin: 0;"
+                    x-on:focus="$el.select()"
                     class="{{ $cost->co2Tax ? 'block' : 'hidden' }}
                         inputDisplay
                         {{ $errors->first('current.coconsupmtion') ? 'inputErrorDisplay' :'' }}"
@@ -60,11 +59,12 @@
             </div>
             <!-- CO2 Betrag -->
             <div class="basis-1/6">
-                <input type="text"
+          <input type="text"
                        id="user-costamount-detailinput-co2betrag{{ $cost->id }}"
                        inputmode="numeric"
-                       wire:model.blur="{{ $netto ? 'current.conetto' : 'current.cobrutto' }}"
+                       wire:model.blur="{{ $cost->realestate->eingabeCostNetto ? 'current.conetto' : 'current.cobrutto' }}"
                        style="-moz-appearance: textfield; margin: 0;"
+              x-on:focus="$el.select()"
                        class="{{ $cost->co2Tax ? 'block' : 'hidden' }}
                     inputDisplay
                     {{ $errors->first('current.co2betrag') ? 'inputErrorDisplay' :'' }}"
@@ -72,12 +72,13 @@
             </div>
             <!-- Betrag -->
             <div class="basis-1/6">
-                <input type="text"
+          <input type="text"
                        id="user-costamount-detailinput-betrag-{{ $cost->id }}"
                        wire:keyup.enter="save()"
                        inputmode="numeric"
-                       wire:model.blur="{{ $netto ? 'current.netto' : 'current.brutto' }}"
+                       wire:model.blur="{{ $cost->realestate->eingabeCostNetto ? 'current.netto' : 'current.brutto' }}"
                        style="-moz-appearance: textfield; margin: 0;"
+              x-on:focus="$el.select()"
                        class="inputDisplay"
                 />
             </div>

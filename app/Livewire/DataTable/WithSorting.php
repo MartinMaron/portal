@@ -19,6 +19,16 @@ trait WithSorting
         unset($this->sorts[$field]);
     }
 
+    public function hasSort($field)
+    {
+        return isset($this->sorts[$field]);
+    }
+
+public function sortDirection($field)
+    {
+        return $this->sorts[$field] ?? 'null';
+    }
+
     public function applySorting($query)
     {
         foreach ($this->sorts as $field => $direction) {

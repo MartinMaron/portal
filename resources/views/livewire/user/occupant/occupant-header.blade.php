@@ -21,9 +21,9 @@
             @if ($addAction)
                 <x-icon.fonts.users-add wire:click='raise_CreateVerbrauchsinfoUserEmailModal' class="mr-3 fa-2xl text-sky-700 hover:text-sky-300"></x-icon.fonts.users-add>
             @endif
-            <div class="px-2 text-gray-900 dark:text-slate-400 truncate line-clamp-1 font-bold text-xl">{{ $occupant->lage. ' - '. $occupant->nachname. ' '}}</div>
+            <div class="px-2 text-gray-900 dark:text-slate-400 truncate line-clamp-1 font-bold text-lg">{{ $occupant->lage. ' - '. $occupant->nachname. ' '}}</div>
             @if ($hasRealestateOccupantsDifferentAdresses)
-                <div class="px-2 text-gray-900 dark:text-slate-400 truncate line-clamp-1 text-xl">{{ $occupant->street.' '. $occupant->houseNr. ', '. $occupant->postcode. ' '. $occupant->city }}</div>
+                <div class="px-2 text-gray-900 dark:text-slate-400 truncate line-clamp-1 text-lg">{{ $occupant->street.' '. $occupant->houseNr. ', '. $occupant->postcode. ' '. $occupant->city }}</div>
             @endif
             
         </div>

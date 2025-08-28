@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Usernotnull\Toast\Concerns\WireToast;
 
 class CostAmount extends Model
@@ -37,7 +38,6 @@ class CostAmount extends Model
         'conetto' => 'decimal:2',
         'coconsupmtion' => 'decimal:1',
         'grosAmount_HH' => 'decimal:2',
-        'haushaltsnah' => 'decimal:2',
         'netAmount' => 'decimal:2'];
 
     protected $appends = [
@@ -56,118 +56,79 @@ class CostAmount extends Model
         return $this->belongsTo(Cost::class);
     }
 
-    public function setConsumptionEditingAttribute($value)
+    public function consumptionEditing(): Attribute
     {
-        $this->consumption = $this->castStringToDouble($value);
+        return Attribute::make(
+            get: fn () => $this->consumption ? number_format($this->consumption, 1, ',', '.') : '0,0',
+            set: fn ($value) => ['consumption' => $this->castStringToDouble($value)]
+        );
     }
 
-    public function getConsumptionEditingAttribute()
+    public function brutto(): Attribute
     {
-        if ($this->consumption) {
-            return number_format($this->consumption, 1, ',', '.');
-        }
-
-        return null;
+        return Attribute::make(
+            get: fn () => $this->grosAmount ? number_format($this->grosAmount, 2, ',', '.') : '0,00',
+            set: fn ($value) => ['grosAmount' => $this->castStringToDouble($value)]
+        );
     }
 
-    public function setBruttoAttribute($value)
+    public function netto(): Attribute
     {
-        $this->grosAmount = $this->castStringToDouble($value);
+        return Attribute::make(
+            get: fn () => $this->netAmount ? number_format($this->netAmount, 2, ',', '.') : '0,00',
+            set: fn ($value) => ['netAmount' => $this->castStringToDouble($value)]
+        );
     }
 
-    public function getBruttoAttribute()
+    public function haushaltsnah(): Attribute
     {
-        if ($this->grosAmount) {
-            return number_format($this->grosAmount, 2, ',', '.');
-        } else {
-            return '0,00';
-        }
+        return Attribute::make(
+            get: fn () => $this->grosAmount_HH ? number_format($this->grosAmount_HH, 2, ',', '.') : '0,00',
+            set: fn ($value) => ['grosAmount_HH' => $this->castStringToDouble($value)]
+        );
     }
 
-    public function setNettoAttribute($value)
+    public function datum(): Attribute
     {
-        $this->netAmount = $this->castStringToDouble($value);
-    }
-
-    public function getNettoAttribute()
-    {
-        if ($this->netAmount) {
-            return number_format($this->netAmount, 2, ',', '.');
-        } else {
-            return '0,00';
-        }
-    }
-
-    public function setHaushaltsnahAttribute($value)
-    {
-        $this->grosAmount_HH = $this->castStringToDouble($value);
-    }
-
-    public function getHaushaltsnahAttribute()
-    {
-        if ($this->grosAmount_HH) {
-            return number_format($this->grosAmount_HH, 2, ',', '.');
-        } else {
-            return 0;
-        }
-    }
-
-    public function getDatumAttribute()
-    {
-        if ($this->dateCostAmount) {
-            return Carbon::parse($this->dateCostAmount)->format('d.m.Y');
-        }
-    }
-
-    public function setDatumAttribute($value)
-    {
-        Debugbar::info('CostAmount-setDatumAttribute:'.$value);
-        try {
-            if ($value) {
-                $this->dateCostAmount = Carbon::parse($value);
-                $value = str_replace('.', '', $value);
-                $dt = Carbon::createFromFormat('dmY', $value);
-                $this->dateCostAmount = Carbon::parse($dt);
-            } else {
-                $this->dateCostAmount = null;
+        return Attribute::make(
+            get: fn () => $this->dateCostAmount ? Carbon::parse($this->dateCostAmount)->format('d.m.Y') : null,
+            set: function ($value) {
+                if ($value) {
+                    try {
+                        $dt = str_replace('.', '', $value);
+                        $dt = Carbon::createFromFormat('dmY', $dt);
+                        return ['dateCostAmount' => Carbon::parse($dt)];
+                    } catch (\Exception $e) {
+                        return ['dateCostAmount' => null];
+                    }
+                }
+                return ['dateCostAmount' => null];
             }
-        } catch (Exception $e) {
-        }
+        );
     }
 
-    public function setCobruttoAttribute($value)
+    public function cobrutto(): Attribute
     {
-        $this->co2TaxAmount_gros = $this->castStringToDouble($value);
+        return Attribute::make(
+            get: fn () => number_format($this->co2TaxAmount_gros, 2, ',', '.'),
+            set: fn ($value) => ['co2TaxAmount_gros' => $this->castStringToDouble($value)]
+        );
     }
 
-    public function getCobruttoAttribute()
+    public function coconsupmtion(): Attribute
     {
-        return number_format($this->co2TaxAmount_gros, 2, ',', '.');
+        return Attribute::make(
+            get: fn () => $this->co2TaxValue ? number_format($this->co2TaxValue, 0, ',', '.') : 0,
+            set: fn ($value) => ['co2TaxValue' => $this->castStringToDouble($value)]
+        );
     }
 
-    public function setCoconsupmtionAttribute($value)
+    public function conetto(): Attribute
     {
-        $this->co2TaxValue = $this->castStringToDouble($value);
-    }
-
-    public function getCoconsupmtionAttribute()
-    {
-        if ($this->co2TaxValue) {
-            return number_format($this->co2TaxValue, 0, ',', '.');
-        } else {
-            return 0;
-        }
-
-    }
-
-    public function setConettoAttribute($value)
-    {
-        $this->co2TaxAmount_net = $this->castStringToDouble($value);
-    }
-
-    public function getConettoAttribute()
-    {
-        return number_format($this->co2TaxAmount_net, 2, ',', '.');
+        return Attribute::make(
+            get: fn () => number_format($this->co2TaxAmount_net ?? 0, 2, ',', '.'),
+            set: fn ($value) => ['co2TaxAmount_net' => $this->castStringToDouble($value)]
+        );
     }
 
     protected $dispatchesEvents = [

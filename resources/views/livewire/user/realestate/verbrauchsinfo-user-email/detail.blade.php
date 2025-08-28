@@ -29,7 +29,7 @@
                 hoheLabel="h-6 sm:h-8 sm:pt-1" hohe="h-20 sm:h-10">
                     <div class="flex items-center justify-between h-10 sm:h-8">
                         <div class="pl-1">
-                            <x-input.checkbox wire:model.live="userEmail.infoPerPortal"></x-input.checkbox>
+                            <x-input.checkbox wire:model.live="userEmail.infoPerPortal" id="userEmail.infoPerPortal"></x-input.checkbox>
                         </div>
                     </div>
                 </x-input.group>
@@ -38,7 +38,7 @@
                 hoheLabel="h-6 sm:h-8 sm:pt-1" hohe="h-20 sm:h-10">
                     <div class="flex items-center justify-between h-10 sm:h-8">
                         <div class="pl-1">
-                            <x-input.checkbox wire:model.live="userEmail.infoPerEmail"></x-input.checkbox>
+                            <x-input.checkbox wire:model.live="userEmail.infoPerEmail" id="userEmail.infoPerEmail"></x-input.checkbox>
                         </div>
                     </div>
                 </x-input.group>
@@ -47,7 +47,7 @@
                 hoheLabel="h-6 sm:h-8 sm:pt-1" hohe="h-20 sm:h-10">
                     <div class="flex items-center justify-between h-10 sm:h-8">
                         <div class="pl-1">
-                            <x-input.checkbox wire:model.live="userEmail.infoPerPost"></x-input.checkbox>
+                            <x-input.checkbox wire:model.live="userEmail.infoPerPost" id="userEmail.infoPerPost"></x-input.checkbox>
                         </div>
                     </div>
                 </x-input.group>

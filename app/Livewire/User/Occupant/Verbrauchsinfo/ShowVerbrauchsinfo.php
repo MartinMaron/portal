@@ -2,12 +2,14 @@
 
 namespace App\Livewire\User\Occupant\Verbrauchsinfo;
 
-use App\Livewire\DataTable\WithCachedRows;
-use App\Models\Occupant;
 use App\Models\User;
-use App\Models\UserVerbrauchsinfoAccessControl;
-use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
+use App\Models\Occupant;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Builder;
+use App\Livewire\DataTable\WithCachedRows;
+use App\Models\UserVerbrauchsinfoAccessControl;
+
 
 class ShowVerbrauchsinfo extends Component
 {
@@ -22,7 +24,7 @@ class ShowVerbrauchsinfo extends Component
     /* initialization */
     public function mount()
     {
-        $this->user = User::query()->where('email', '=', Auth()->User()->email)->get()->first();
+        $this->user = User::query()->where('email', '=', Auth::user()->email)->get()->first();
     }
 
     public function resetFilters()

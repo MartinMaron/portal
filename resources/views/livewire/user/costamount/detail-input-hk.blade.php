@@ -2,8 +2,8 @@
     <div class=" flex items-center ">
         <div class="basis-2/3 flex items-center  ">
             <button
-                class="basis-2/3  text-lg text-left px-2 flex rounded-md hover:bg-sky-300 dark:hover:bg-slate-500"
-                wire:click="raise_EditCostModal({{ $cost }})"
+                class="basis-2/3 text-lg text-left px-2 flex rounded-md hover:bg-sky-300 dark:hover:bg-slate-500"
+                wire:click="editCostModal({{ $cost }})"
                 tabindex="-1">
                 <span class="line-clamp-1">{{ $cost->caption }}</span>
             </button>
@@ -12,48 +12,58 @@
             </div>
         </div>
         <div class="basis-1/3 flex">
-            <div class="basis-1/3">
-                <input type="text"
-                    id="user-costamount-detailinput-consumption{{ $cost->id }}"
-                    inputmode="numeric"
-                    placeholder="0,0"
-                    wire:model.blur="current.consumption_editing"
-                    style="-moz-appearance: textfield; margin: 0;"
-                    class="{{ $cost->consumption ? 'block' : 'hidden' }}
-                    inputDisplayHK
-                    {{ $errors->first('current.consumption') ? 'inputErrorDisplay' :'' }}"
-                >
-            </div>
-            <div class="basis-1/3">
-                <input type="text"
-                    id="user-costamount_bk-detailinput-haushaltsnah{{ $cost->id }}"
-                    inputmode="numeric"
-                    placeholder="1"
-                    wire:model.blur="current.haushaltsnah"
-                       wire:focusout="save()"
-                    style="-moz-appearance: textfield; margin: 0;"
-                    class="{{ $cost->haushaltsnah ? 'block' : 'hidden' }}
-                    inputDisplayHK
-                    {{ $errors->first('current.haushaltsnah') ? 'inputErrorDisplay' :'' }}"
-                >
-            </div>
-            <div class="basis-1/3">
-                @if ($editable && !$this->cost->realestate->abrechnungssetting->heizkostenlisteDone)
+            <div class="basis-1/3 ">
+                @if ($this->cost->editable && !$this->cost->realestate->abrechnungssetting->heizkostenlisteDone)
                     <input type="text"
-                    id="user-costamount-bk-detailinput-betrag{{ $cost->id }}"
-                    inputmode="numeric"
-                    wire:focusout="save()"
-                    wire:model.blur= "{{ $netto ? 'current.netto' : 'current.brutto' }}"
-                    class="border inputDisplayHK"
+                        id="user-costamount-detailinput-consumption{{ $cost->id }}"
+                        inputmode="numeric"
+                        placeholder="0,0"
+                        wire:model.lazy="consumption"
+                        style="-moz-appearance: textfield; margin: 0;"
+                        class=" {{ $cost->consumption ? 'block' : 'hidden' }}
+                        inputDisplayHK"
+                    >
+                 @else
+                    <div class="inputDisplayHK-ro font-semibold {{ $cost->consumption ? '0,0' : 'hidden' }}">
+                        {{ $this->consumption }}
+                    </div>
+                @endif
+            </div>
+            <div class="basis-1/3">
+                @if ($this->cost->editable && !$this->cost->realestate->abrechnungssetting->heizkostenlisteDone)
+                    <input type="text"
+                        id="user-costamount_hk-detailinput-haushaltsnah{{ $cost->id }}"
+                        inputmode="numeric"
+                        placeholder="0,00"
+                        wire:model.blur="haushaltsnah"
+                        style="-moz-appearance: textfield; margin: 0;"
+                        class="{{ $cost->haushaltsnah ? 'block' : 'hidden' }}
+                        inputDisplayHK
+                        {{ $errors->first('current.haushaltsnah') ? 'inputErrorDisplay' :'' }}"
+                    >
+                 @else
+                    @if ($haushaltsnah !='0,00')
+                        <div class="inputDisplayHK-ro font-semibold {{ $haushaltsnah ? '0,00' : 'hidden' }}">
+                            {{ $haushaltsnah}}
+                        </div>
+                    @endif
+                @endif
+            </div>
+            <div class="basis-1/3">
+                @if ($this->cost->editable && !$this->cost->realestate->abrechnungssetting->heizkostenlisteDone)
+                    <input type="text"
+                           id="user-costamount-bk-detailinput-betrag{{ $cost->id }}"
+                           inputmode="numeric"
+                           wire:model.blur="betrag"
+                           style="-moz-appearance: textfield; margin: 0;"
+                           class="border inputDisplayHK font-semibold"
                     >
                 @else
                     <div
-                    class="border inputDisplayHK-ro text-gray-600"
-                    style="-moz-appearance: textfield; margin: 0;"
-                    >{{ $netto ? $current->netto : $current->brutto }}
+                        class="inputDisplayHK-ro font-semibold"
+                    >{{ $betrag}}
                     </div>
                 @endif
-
             </div>
         </div>
     </div>

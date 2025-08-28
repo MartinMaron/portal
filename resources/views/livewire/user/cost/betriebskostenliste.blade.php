@@ -1,14 +1,14 @@
 <div>
     <!-- Main -->
     <div class="max-w-7xl w-full mx-auto sm:px-1 lg:px-1 m-0 mb-24 kostenliste">
-        <div class="text-3xl pt-3 font-extrabold text-center w-full flex my-3 page-title ">
+        <div class="text-3xl pt-3 font-bold text-center w-full flex my-3 page-title ">
             <div class="basis-1/4 flex justify-start">
-                <button wire:click="raise_AddCostModal({{ $current }})"
+                <button wire:click="addCostModal()"
                 tabindex="-1">
                 <i class="fa-regular fa-circle-plus text-3xl" ></i>
                 </button></div>
-            <div class="basis-2/4 page-title text-3xl pt-3 font-bold  text-center w-full">
-                <div class="">BETRIEBSKOSTEN</div>
+            <div class="basis-2/4 page-title text-3xl pt-3 text-center w-full">
+                <div class="font-semibold tracking-wider">BETRIEBSKOSTEN</div>
                 @if ($this->realestate->abrechnungssetting->betreibskostenDone)
                     <div class="text-sm">Daten für ausgewählten Abrechnungszeitraum bereits an neko versendet !</div>
                 @endif
@@ -19,65 +19,67 @@
                 @endif
             </div>
         </div>
-        <!-- Überschrift -->
-        <div class="flex flex-row columnheader items-center justify-start border-b-2 border-slate-400">
-            <div class="basis-2/3 flex text-center items-center">
-                <div
-                    class="basis-1/3 text-left px-2 flex rounded-md "
-                    tabindex="-1">
-                    <span class="py-1 text-right line-clamp-1">Kostenbezeichnung</span>
-                </div>
+        <!-- Bereich mit farbigen hintergrung -->
+        <div class="rounded-md bg-sky-50 dark:bg-slate-800 dark:text-slate-200 p-1 ">
 
-                <div class="basis-1/3 rounded-md">
-                    <span class="line-clamp-1">Bearbeitungshinweis</span>
-                </div>
-                <div class="basis-1/3 px-4 rounded-md ">
-                    letzte Abrechnung
-                </div>
-            </div>
-            <div class="basis-1/3 flex gap-2 text-center">
-                <div class="basis-1/3">
-                    @if ($this->hasConsumptionByType('BEK'))
-                       <span class="">Verbrauch</span>
-                    @endif
-                </div>
-                <div class="basis-1/3">
-                    @if ($this->hasHaushaltsnahByType('BEK'))
-                        <div class="">
-                        <span class="">§ 35c EStG</span>
+            <!-- Überschrift -->
+            <div class="flex flex-row columnheader items-center justify-start border-b-2 border-slate-400 ">
+                <div class="basis-2/3 flex text-center items-center font-semibold">
+                    <div
+                        class="basis-2/3 text-left px-2 flex"
+                        wire:click="sortBy('caption')"
+                        tabindex="-1">
+                        <div class="flex py-1 gap-2 items-center">
+                            <span class="line-clamp-1">
+                               Kostenbezeichnung
+                            </span>
+                            <x-icon.fonts.sorted :value='$this->sortDirection("caption")'></x-icon.fonts.sorted>
                         </div>
-                    @endif
+                    </div>
+                    <div class="basis-1/3 px-4 rounded-md ">
+                        letzte Abrechnung
+                    </div>
                 </div>
-                <div class="basis-1/3">
-                    @if ($this->realestate->eingabeCostNetto)
-                        <span class="">Nettobetrag</span>
-                    @else
-                        <span class="">Betrag</span>
-                    @endif
+                <div class="basis-1/3 flex gap-2 text-center font-semibold">
+                    <div class="basis-1/3">
+                        @if ($this->hasConsumptionByType('BEK', $this->realestate))
+                            <span class="">Verbrauch</span>
+                        @endif
+                    </div>
+                    <div class="basis-1/3">
+                        @if ($this->hasHaushaltsnahByType('BEK', $this->realestate))
+                            <div class="">
+                            <span class="">§ 35c EStG</span>
+                            </div>
+                        @endif
+                    </div>
+                    <div class="basis-1/3">
+                        @if ($this->realestate->eingabeCostNetto)
+                            <span class="">Nettobetrag</span>
+                        @else
+                            <span class="">Betrag</span>
+                        @endif
+                    </div>
                 </div>
             </div>
-        </div>
-        <!-- liste der Kostearten -->
-        <div class="border-0 bg-slate-700">
-            @forelse ($filtered as $cost)
+            <!-- liste der Kostearten -->
+            <div class="border-0 bg-slate-700">
+                @forelse ($filtered as $cost)
                 <div class="">
-                    <livewire:user.cost-amount.detail-input :cost='$cost' :netto='false' :inputWithDatum='false' :wire:key="'list-cost-costamountinput-'.$cost->id" key="{{ now() }}"/>
+                    <livewire:user.cost-amount.detail-input-Bk :cost='$cost' :wire:key="'list-cost-costamountinput-'.$singleCost->id" key="{{ now() }}"/>
                 </div>
-            @empty
-                <div class="flex justify-center items-center space-x-2 bg-sky-100">
-                    <span class="font-medium py-8 text-cool-gray-400 text-xl">nichts gefunden...</span>
-                </div>
-            @endforelse
+                @empty
+                    <div class="flex justify-center items-center space-x-2 bg-sky-100">
+                        <span class="font-medium py-8 text-cool-gray-400 text-xl">nichts gefunden...</span>
+                    </div>
+                @endforelse
+            </div>
         </div>
-
     </div>
     <div class="xs:max-w-xs xs:w-xs">
         <!-- Save Cost Modal -->
         <div>
-            <livewire:user.cost.detail :cost='$current' :netAmountInput='$nettoInputMode' :costinvoicingtype="'HZ'" :wire:key="'modal-realestate-cost-detail'"/>
-        </div>
-        <div>
-            <livewire:user.cost-amount.detail :wire:key="'modal-realestate-costamount-detail'"/>
+            <livewire:user.cost.detail :wire:key="'modal-realestate-cost-detail'"/>
         </div>
          <!-- for Delete or Confirm -->
          <div>

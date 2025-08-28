@@ -26,6 +26,8 @@ class CostAmountAddedNotification
      */
     public function handle(CostAmountAdded $event)
     {
+      /*  
         toast()->success('Betrag '.$event->costAmount->brutto.' € hinzugefügt', 'Achtung')->push();
+     */
     }
 }

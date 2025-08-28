@@ -28,9 +28,14 @@ class Abrechnungssetting extends Model
     protected $casts = [
         'periodFrom' => 'date:d.m.Y',
         'periodTo' => 'date:d.m.Y',
+        'co2_anschluss_nach_2022' => 'boolean',
+        'co2_kennzeichen_WEG' => 'boolean',
+        'co2_wohngeb' => 'boolean',
+        'co2_kennzeichen_1_9' => 'boolean',
+        'co2_kennzeichen_2_9' => 'boolean',
     ];
 
-    public static function validateImportData($data)
+    /* public static function validateImportData($data)
     {
         return Validator::make($data, [
             'neko_id' => 'required|integer',
@@ -50,7 +55,7 @@ class Abrechnungssetting extends Model
             'co2_anschluss_nach_2022' => 'required|boolean',
         ]);
 
-    }
+    } */
 
     protected function getGebartAttribute(): string
     {

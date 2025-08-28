@@ -5,7 +5,7 @@
             <div class="basis-1/3 px-2 text-lg text-left dark:text-slate-300">
                 {{ $userEmail->email }}
             </div>
-            <div class="basis-1/3 flex justify-between">
+            <div class="basis-3/6 flex justify-between">
 
                 <div class="my-0.5 text-left dark:text-slate-800 {{ $userEmail->infoPerPortal ? 'bg-green-200 rounded-md': 'bg-red-200 rounded-md'}}">
                     <span class="px-2">Portal</span>
@@ -20,7 +20,7 @@
                     <span class="pr-1"><i class="{{ $userEmail->infoPerPost ? 'fa-solid fa-check text-green-700 font-bold': 'fa-sharp fa-solid fa-ban text-red-700 font-bold'}} "></i></span>
                 </div>
             </div>
-            <div class="basis-1/3 flex justify-end gap-5 py-1 text-center mx-1">
+            <div class="basis-1/6 flex justify-end gap-5 py-1 text-center mx-1">
                 <x-icon.fonts.pencil
                     class="px-4 py-1 text-sm border-2 rounded-lg cursor-pointer text-sky-700 border-sky-200 hover:text-sky-300"
                     wire:click="emit_EditModal()"

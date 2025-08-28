@@ -1,117 +1,125 @@
 
-    <form wire:submit="closeCostAmountDetailModal(true)">
+    <div x-data="{ open: @entangle('visible') }" x-effect="if(open){ $nextTick(()=>{ const dateEl = document.getElementById('costamount-detailmodal-datum'); const consEl = document.getElementById('current.consumption_editing'); if(dateEl && dateEl.value && dateEl.value.trim() !== ''){ dateEl.focus(); dateEl.select(); } else if(consEl){ consEl.focus(); consEl.select(); } else if(dateEl){ dateEl.focus(); dateEl.select(); } }); }">
+    <form wire:submit="closeModal(true)">
         <x-modal.dialog class="bg-sky-50" minWidth="640px" maxWidth="800px"
-               wire:model.live="showCostAmountEditModal">
+               wire:model.live="visible">
             <!-- Dialog Title -->
             <x-slot name="title">
-                <div class="flex flex-row justify-between">
-                    <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-sky-100">
-                        {{-- <i class="text-sky-800 fa-solid fa-trash-can"></i> --}}
-                        <x-icon.fonts.pencil class="text-xs text-sky-500 hover:text-sky-800  px-2 ">
-                        </x-icon.fonts.pencil>
+                @if($dialogMode != 'init')
+                    <div class="flex flex-row justify-between">
+                        <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-sky-100">
+                            {{-- <i class="text-sky-800 fa-solid fa-trash-can"></i> --}}
+                            <x-icon.fonts.pencil class="text-xs text-sky-500 hover:text-sky-800  px-2 ">                                       
+                            </x-icon.fonts.pencil>
+                        </div>
                     </div>
-                </div>
-                @if ($errors->isNotEmpty())
-                    <div class="block text-sm bg-red-100 border border-red-400 text-red-700 px-1 py-1 rounded relative mb-2" role="alert">
-                        <span class="block sm:block"><strong class="font-bold">Uups! Einige Informationen fehlen oder sind nicht korrekt. </strong>
-                            @foreach ($errors->all() as $error)
-                                    <span class="block sm:block">- {{ $error  }}</span>
-                            @endforeach
-                        </span>
-                    </div>
+                    @if ($errors->isNotEmpty())
+                        <div class="block text-sm bg-red-100 border border-red-400 text-red-700 px-1 py-1 rounded relative mb-2" role="alert">
+                            <span class="block sm:block"><strong class="font-bold">Uups! Einige Informationen fehlen oder sind nicht korrekt. </strong>
+                                @foreach ($errors->all() as $error)
+                                        <span class="block sm:block">- {{ $error  }}</span>
+                                @endforeach
+                            </span>
+                        </div>
+                    @endif
                 @endif
             </x-slot>
             <!-- Dialog Content -->
             <x-slot name="content">
-                <div>
-                    <div
-                    >
-                        @if(isset($costAmount) && is_object($costAmount))
-                    <x-input.group
-                    class="my-1" paddingLabel="" hoheLabel="h-6 sm:h-8 sm:pt-1" hoheOnError="h-30" hohe="h-20 sm:h-10"
-                    for="costAmount.datum" label="Datum" :error="$errors->first('costAmount.datum')">
-                        <x-input.date
-                            wire:model.blur="costAmount.datum"
-                            id="costamount-detailmodal-datum"
-                            class="bg-sky-50 sm:h-8"
-
-                        >
-                        </x-input.date>
-                    </x-input.group>
-                        @else
-                            <div class="text-gray-400 text-sm">Lade Eingabefeld...</div>
-                        @endif
-                    <!-- Verbrauch -->
-                    @if ($showConsumptionField)
+                @if($dialogMode != 'init')
+                    <div>
+                        <div
+                        > 
                         <x-input.group
-                        class="my-1" paddingLabel="" hoheLabel="h-6 sm:h-8 sm:pt-1" hohe="h-20 sm:h-10"
-                        for="costAmount.consumption_editing" label="Verbrauch" :error="$errors->first('costAmount.consumption_editing')">
-                            <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.blur="costAmount.consumption_editing" id="costAmount.consumption_editing" placeholder="0,000" />
+                        class="my-1" paddingLabel="" hoheLabel="h-6 sm:h-8 sm:pt-1" hoheOnError="h-30" hohe="h-20 sm:h-10"
+                        for="current.datum" label="Datum" :error="$errors->first('current.datum')">
+                            <x-input.date
+                                wire:model.blur="current.datum"
+                                id="costamount-detailmodal-datum"
+                                class="bg-sky-50 sm:h-8"
+                                x-on:focus="$el.select()"
+                            >
+                            </x-input.date>
                         </x-input.group>
-                    @endif
-
-                        @if ($showNetto)
+                        <!-- Verbrauch -->
+                        @if ($current['cost']->consumption)
                             <x-input.group
                             class="my-1" paddingLabel="" hoheLabel="h-6 sm:h-8 sm:pt-1" hohe="h-20 sm:h-10"
-                            for="costAmount.netto" label="Nettobetrag" :error="$errors->first('costAmount.netto')">
-                                <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.blur="costAmount.netto" id="netto" placeholder="0" />
-                            </x-input.group>
-                        @else
-                            <x-input.group
-                                class="my-1" paddingLabel="" hoheLabel="h-6 sm:h-8 sm:pt-1" hohe="h-20 sm:h-10"
-                                for="costAmount.brutto" label="Betrag" :error="$errors->first('costAmount.brutto')">
-                                    <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.blur="costAmount.brutto" id="brutto" placeholder="0" />
+                            for="current.consumption_editing" label="Verbrauch" :error="$errors->first('current.consumption_editing')">
+                                <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.blur="current.consumption_editing" id="current.consumption_editing" placeholder="0,000" x-on:focus="$el.select()" />
                             </x-input.group>
                         @endif
-                        @if ($co2Tax)
-                             <!-- CO2 Abgabe -->
-                            <x-input.group
-                            class="my-1" paddingLabel="" hoheLabel="h-6 sm:h-8 sm:pt-1" hohe="h-20 sm:h-10"
-                            for="costAmount.coconsupmtion" label="CO2-Abgabe [kg]" :error="$errors->first('costAmount.coconsupmtion')">
-                                <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.blur="costAmount.coconsupmtion" id="coconsupmtion" placeholder="0" />
-                            </x-input.group>
 
-                            @if ($showNetto)
-                            <!-- Netto -->
+                            @if ($current['cost']->realestate->eingabeCostNetto)
                                 <x-input.group
                                 class="my-1" paddingLabel="" hoheLabel="h-6 sm:h-8 sm:pt-1" hohe="h-20 sm:h-10"
-                                for="costAmount.conetto" label="CO2-Nettobetrag" :error="$errors->first('costAmount.conetto')">
-                                    <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.blur="costAmount.conetto" id="conetto" placeholder="0,00" />
+                                for="current.netto" label="Nettobetrag" :error="$errors->first('current.netto')">
+                                    <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.blur="current.netto" id="netto" placeholder="0" x-on:focus="$el.select()" />
                                 </x-input.group>
                             @else
-                            <!-- Brutto -->
-                            <x-input.group
-                                class="my-1" paddingLabel="" hoheLabel="h-6 sm:h-8 sm:pt-1" hohe="h-20 sm:h-10"
-                                for="costAmount.cobrutto" label="CO2-Betrag" :error="$errors->first('costAmount.cobrutto')">
-                                    <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.blur="costAmount.cobrutto" id="cobrutto" placeholder="0,00" />
+                                <x-input.group
+                                    class="my-1" paddingLabel="" hoheLabel="h-6 sm:h-8 sm:pt-1" hohe="h-20 sm:h-10"
+                                    for="current.brutto" label="Betrag" :error="$errors->first('current.brutto')">
+                                        <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.blur="current.brutto" id="brutto" placeholder="0" x-on:focus="$el.select()" />
                                 </x-input.group>
                             @endif
-                        @endif
+                            @if ($current['cost']->co2Tax)
+                                <!-- CO2 Abgabe -->
+                                <x-input.group
+                                class="my-1" paddingLabel="" hoheLabel="h-6 sm:h-8 sm:pt-1" hohe="h-20 sm:h-10"
+                                for="current.coconsupmtion" label="CO2-Abgabe [kg]" :error="$errors->first('current.coconsupmtion')">
+                                    <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.blur="current.coconsupmtion" id="coconsupmtion" placeholder="0" x-on:focus="$el.select()" />
+                                </x-input.group>
 
-                        @if ($showHaushaltsnahField)
-                            <!-- Haushaltsnah -->
-                            <x-input.group class="border-0" for="costAmount.haushaltsnah" label="Betrag nach §35a" :error="$errors->first('costAmount.haushaltsnah')">
-                            <x-input.text class="bg-sky-50 sm:h-8" wire:model.blur="costAmount.haushaltsnah" id="costAmount.haushaltsnah" placeholder="0,00" />
-                        </x-input.group>
+                                @if ($current['cost']->realestate->eingabeCostNetto)
+                                    <!-- Netto -->
+                                    <x-input.group
+                                    class="my-1" paddingLabel="" hoheLabel="h-6 sm:h-8 sm:pt-1" hohe="h-20 sm:h-10"
+                                    for="current.conetto" label="CO2-Nettobetrag" :error="$errors->first('current.conetto')">
+                                        <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.blur="current.conetto" id="conetto" placeholder="0,00" x-on:focus="$el.select()" />
+                                    </x-input.group>
+                                <!-- Netto -->
+                                    <x-input.group
+                                    class="my-1" paddingLabel="" hoheLabel="h-6 sm:h-8 sm:pt-1" hohe="h-20 sm:h-10"
+                                    for="current.conetto" label="CO2-Nettobetrag" :error="$errors->first('current.conetto')">
+                                        <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.blur="current.conetto" id="conetto" placeholder="0,00" x-on:focus="$el.select()" />
+                                    </x-input.group>
+                                @else                        
+                                <!-- Brutto -->
+                                <x-input.group
+                                    class="my-1" paddingLabel="" hoheLabel="h-6 sm:h-8 sm:pt-1" hohe="h-20 sm:h-10"
+                                    for="current.cobrutto" label="CO2-Betrag" :error="$errors->first('current.cobrutto')">
+                                        <x-input.text class="h-10 bg-sky-50 sm:h-8" wire:model.blur="current.cobrutto" id="cobrutto" placeholder="0,00" x-on:focus="$el.select()" />
+                                    </x-input.group>
+                                @endif
+                            @endif
+
+                            @if ($current['cost']->haushaltsnah)
+                                <!-- Haushaltsnah -->
+                                <x-input.group class="border-0" for="current.haushaltsnah" label="Betrag nach §35a" :error="$errors->first('current.haushaltsnah')">
+                                <x-input.text class="bg-sky-50 sm:h-8" wire:model.blur="current.haushaltsnah" id="current.haushaltsnah" placeholder="0,00" x-on:focus="$el.select()" />
+                            </x-input.group>
 
 
-                        @endif
-                        <!-- Bemerkung-->
-                        <x-input.group
-                            hohe="h-30"
-                            hoheLabel="h-30 sm:h-full sm:pt-3"
-                            bottom=false for="bemerkung" label="Bemerkung für die Abrechnung" :error="$errors->first('costAmount.bemerkung')">
-                            <x-input.textarea  wire:model.live="costAmount.bemerkung" id="bemerkung" placeholder="..." />
-                        </x-input.group>
+                            @endif
+                            <!-- Bemerkung-->  
+                            <x-input.group
+                                hohe="h-30"
+                                hoheLabel="h-30 sm:h-full sm:pt-3"
+                                bottom=false for="bemerkung" label="Bemerkung für die Abrechnung" :error="$errors->first('current.bemerkung')">
+                                <x-input.textarea  wire:model.live="current.bemerkung" id="bemerkung" placeholder="..." x-on:focus="$el.select()" />
+                            </x-input.group>
+                        </div>
                     </div>
-                </div>
-            </x-slot>
+                @endif
+                </x-slot>
             <x-slot name="footer">
-                <x-button.secondary wire:click="closeCostAmountDetailModal(false)">Abbrechen</x-button.secondary>
+                <x-button.secondary wire:click="closeModal(false)">Abbrechen</x-button.secondary>
                 <x-button.delete type="submit">Speichern</x-button.delete>
             </x-slot>
         </x-modal.dialog>
     </form>
+    </div>
 
 
 

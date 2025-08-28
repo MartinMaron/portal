@@ -39,8 +39,11 @@ trait OccupantAdapter
             'budguid' => $oldOccupant->realestate->nekoId,
             'nutzeinheitNo' => $oldOccupant->nutzeinheitNo,
             'unvid' => $this->getNextOccupantUnvid($oldOccupant->unvid),
+            'anrede' => '',
+            'title' => '',
             'nachname' => 'Neuer Nutzer',
             'vorname' => '',
+            'address' => '',
             'street' => $oldOccupant->street,
             'postcode' => $oldOccupant->postcode,
             'houseNr' => $oldOccupant->houseNr,
@@ -55,20 +58,29 @@ trait OccupantAdapter
             'lage' => $oldOccupant->lage,
             'eigentumer' => $oldOccupant->eigentumer,
             'dateFrom' => new Carbon,
+            'bemerkung' => '',
+            'email' => '',
+            'telephone_number' => '',
+            'eigentumer' => '',
+            'OptimisticLockField' => 0,
         ]);
     }
 
-    public function changeOccupant(Occupant $initOccupant, Occupant $newOccupant, bool $isEmpty, $newDate)
+    public function changeOccupant(Occupant $initOccupant, $newOccupant, bool $isEmpty, $newDate)
     {
         if ($isEmpty) {
-            $newOccupant->nachname = 'Leerstand';
-            $newOccupant->pe = 1;
-            $newOccupant->leerstand = true;
+            $newOccupant['nachname'] = 'Leerstand';
+            $newOccupant['leerstand'] = true;
+        }else{
+            $newOccupant['leerstand'] = false;
         }
-        $newOccupant->dateFrom = $newDate;
-        $newOccupant->nekoId = 'new';
+        $newOccupant['dateFrom'] = $newDate;
+        $newOccupant['nekoId'] = 'new';
         $save = $this->editOccupant($newOccupant);
         if ($save->wasRecentlyCreated) {
+            $save->refresh();
+            $save->vorauszahlung_editing=$newOccupant['vorauszahlung_editing'];
+            $save->personen_zahl=$newOccupant['personen_zahl'];
             $initOccupant->dateTo = (new carbon($newDate))->addDay(-1);
             $initOccupant->save();
 
@@ -80,9 +92,9 @@ trait OccupantAdapter
             }
 
             $nU = new User;
-            $nU->email = $newOccupant->unvid.'@e-neko.de';
-            $nU->name = $newOccupant->nachname;
-            $nU->password = Hash::make($newOccupant->unvid);
+            $nU->email = $save->unvid.'@e-neko.de';
+            $nU->name = $save->nachname;
+            $nU->password = Hash::make($save->unvid);
             $nU->createdFromWebForOccupant = $save->id;
             $nU->isMieter = true;
             $nU->isUser = false;
@@ -106,7 +118,7 @@ trait OccupantAdapter
             /* für automatischen Webuser */
             for ($i = 0; $i < 12; $i++) {
                 $jahr_monat = carbon::now()->addMonth(0 - $i)->isoFormat('YYYY-M');
-                if ($newOccupant->dateFrom < carbon::now()->addMonth(0 - $i)) {
+                if ($save->dateFrom < carbon::now()->addMonth(0 - $i)) {
                     $uVAcc = UserVerbrauchsinfoAccessControl::updateOrcreate(
                         ['jahr_monat' => $jahr_monat, 'user_id' => $nU->id, 'occupant_id' => $save->id],
                         [
@@ -117,11 +129,11 @@ trait OccupantAdapter
             }
 
             /* erstellen des WebUsers aus. Email */
-            if ($newOccupant->email) {
+            if ($save->email) {
                 $nU = new User;
-                $nU->email = $newOccupant->email;
-                $nU->name = $newOccupant->nachname;
-                $nU->password = Hash::make($newOccupant->nachname);
+                $nU->email = $save->email;
+                $nU->name = $save->nachname;
+                $nU->password = Hash::make($save->nachname);
                 $nU->createdFromWebForOccupant = $save->id;
                 $nU->isMieter = true;
                 $nU->isUser = false;
@@ -145,7 +157,7 @@ trait OccupantAdapter
                 /* für automatischen Webuser */
                 for ($i = 0; $i < 12; $i++) {
                     $jahr_monat = carbon::now()->addMonth(0 - $i)->isoFormat('YYYY-M');
-                    if ($newOccupant->dateFrom < carbon::now()->addMonth(0 - $i)) {
+                    if ($save->dateFrom < carbon::now()->addMonth(0 - $i)) {
                         $uVAcc = UserVerbrauchsinfoAccessControl::updateOrcreate(
                             ['jahr_monat' => $jahr_monat, 'user_id' => $nU->id, 'occupant_id' => $save->id],
                             [
@@ -213,7 +225,7 @@ trait OccupantAdapter
         return $save;
     }
 
-    public function editOccupant(Occupant $occupant)
+    public function editOccupant($occupant)
     {
         $ret_val = Occupant::updateOrcreate(
             ['id' => $occupant['id']],
@@ -222,7 +234,7 @@ trait OccupantAdapter
                 'unvid' => $occupant['unvid'],
                 'budguid' => $occupant['budguid'],
                 'nutzeinheitNo' => $occupant['nutzeinheitNo'],
-                'dateFrom' => $occupant['dateFrom'],
+                'dateFrom' => new Carbon($occupant['dateFrom']),
                 'dateTo' => $occupant['dateTo'],
                 'anrede' => $occupant['anrede'],
                 'title' => $occupant['title'],
@@ -237,9 +249,7 @@ trait OccupantAdapter
                 'uaw' => $occupant['uaw'],
                 'qmkc' => $occupant['qmkc'],
                 'qmww' => $occupant['qmww'],
-                'pe' => $occupant['pe'],
                 'bemerkung' => $occupant['bemerkung'],
-                'vorauszahlung' => $occupant['vorauszahlung'],
                 'lokalart' => $occupant['lokalart'],
                 'customEinheitNo' => $occupant['customEinheitNo'],
                 'lage' => $occupant['lage'],

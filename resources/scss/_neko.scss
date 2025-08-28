@@ -51,7 +51,7 @@
   }
   
   .detailinput {
-    @apply dark:border-slate-950 dark:bg-slate-700 dark:text-gray-200 dark:focus:border-slate-700 focus:border-indigo-500 border-0 text-center sm:text-sm p-1 m-0 w-full rounded-md font-thin ;
+    @apply dark:border-slate-950 dark:bg-slate-700 dark:text-gray-200 dark:focus:border-slate-700 focus:border-indigo-500 border-0 text-center sm:text-sm p-0 m-0 w-full rounded-md font-thin ;
   }
 
   .detailinput .inputDisplay {
@@ -63,15 +63,15 @@
   }
 
   .detailinputBK {
-    @apply dark:bg-slate-700 dark:text-gray-200 dark:focus:border-slate-700 focus:border-indigo-500 border-0 text-center sm:text-sm m-0 w-full rounded-md font-thin ;
+    @apply dark:bg-slate-700 dark:text-gray-200 dark:focus:border-slate-700 focus:border-indigo-500 border-0 text-center sm:text-sm m-0 w-full font-thin ;
   }
 
   .detailinputBK .inputDisplayBK {
-    @apply dark:border-slate-950 dark:bg-slate-600 dark:text-gray-200 dark:focus:border-slate-600 focus:border-indigo-500 border text-center sm:text-sm p-1 px-2 m-0 w-full rounded-md font-thin ;
+    @apply dark:border-slate-950 dark:bg-slate-600 dark:text-gray-200 dark:focus:border-slate-600 focus:border-indigo-500 border text-center sm:text-lg p-1 px-2 m-0 w-full;
   }
 
   .detailinputBK .inputDisplayBK-ro {
-    @apply dark:border-slate-950 dark:bg-slate-700 dark:text-gray-400 dark:focus:border-slate-600 focus:border-indigo-500 border text-center sm:text-sm p-1 px-2 m-0 w-full rounded-md font-thin ;
+    @apply dark:border-slate-950 dark:bg-slate-700 dark:text-gray-400 dark:focus:border-slate-600 focus:border-indigo-500 text-center sm:text-sm p-1 px-2 m-0 w-full;
   }
 
   .detailinput .inputDisplayHK-ro {
@@ -125,7 +125,7 @@
 
 }
 .kostenliste .columnheader {
-  @apply bg-sky-50 font-extrabold text-sky-900 dark:text-slate-200 dark:bg-slate-800 rounded-sm
+  @apply bg-sky-50 font-semibold text-sky-900 dark:text-slate-200 dark:bg-slate-800  
 }
 
 .verbrauchsUserEmailliste {

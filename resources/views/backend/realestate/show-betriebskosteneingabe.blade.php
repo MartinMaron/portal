@@ -3,6 +3,8 @@
         <livewire:user.realestate.header :baseobject='$realestate'/>
     </x-slot>
     <x-slot name="slot">
-        <livewire:user.occupant.occupant-list.show-occupant-list :realestate='$realestate'/>
+        <div class="max-w-7xl w-full mx-auto">
+            <livewire:user.cost.betriebskosteneingabe :realestate='$realestate'/>
+        </div>
     </x-slot>
 </x-app-layout>

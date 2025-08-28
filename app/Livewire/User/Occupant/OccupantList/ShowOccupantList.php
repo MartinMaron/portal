@@ -9,7 +9,6 @@ use App\Livewire\DataTable\WithPerPagePagination;
 use App\Livewire\DataTable\WithSorting;
 use App\Models\Occupant;
 use App\Models\Realestate;
-use App\Models\Salutation;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
 use App\Models\User;
@@ -19,50 +18,22 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 use Livewire\WithPagination;
+use App\Http\Traits\Helper\RealestateHelper;
 
 class ShowOccupantList extends Component
 {
     use Helpers;
+    use RealestateHelper;
     use WithBulkActions, WithCachedRows, WithPagination, WithPerPagePagination, WithSorting;
     use WithFileUploads;
 
-    public $hasAnyCustomEinheitNo = false;
-
-    public $nummer_display = '';
-
-    public $hasAnyEigentumer = false;
-
-    public $hasVat = false;
-
-    public $showDeleteModal = false;
-
-    public $showEditModal = false;
-
-    public $showFilters = false;
-
-    public $prepaidtype = true;
-
-    public $prepaidnet = false;
-
-    public bool $editVorauszahlungen = false;
-
-    public $currentVorauszahlung = 0;
-
-    public $salutations = null;
-
-    public $filters = [
-        'search' => '',
-    ];
-
-    public $dateFrom = null;
-
-    public Occupant $current;
-
+    public bool $editable = false;
     public Realestate $realestate;
-
-    public $occupant;
-
-    protected $queryString = ['sorts'];
+    public $current;
+    public $filters;
+   
+    public $prepaids = [];
+    public $personCounts = [];
 
     public function rules()
     {
@@ -128,52 +99,58 @@ class ShowOccupantList extends Component
     public function Salutations() {}
 
     /* initialization */
-    public function mount($baseobject)
+    public function mount($realestate)
     {
-        $this->realestate = $baseobject;
-        $this->hasAnyCustomEinheitNo = (bool) $this->realestate->occupants->where('customEinheitNo', '<>', '')->count();
-        $this->hasAnyEigentumer = (bool) $this->realestate->occupants->where('eigentumer', '<>', '')->count();
-        $this->hasVat = (bool) $this->realestate->occupants->where('vat', '=', '1')->count();
-        $this->salutations = Salutation::all();
-        $this->prepaidnet = $this->realestate->eingabeCostNetto;
-        $this->prepaidtype = $this->realestate->prepaidtype;
-        Debugbar::info($this->realestate->prepaidtype);
-        $this->sorts = [
-            'unvid' => 'asc',
-        ];
-        $this->current = $this->realestate->occupants->first();
-        $this->editVorauszahlungen = ! $this->realestate->abrechnungssetting->nutzerlisteDone;
+        $this->realestate = $realestate;
+        $this->current = $this->realestate->toArray();
+        $this->sorts = ['unvid' => 'asc'];
+        $this->editable = !$this->realestate->abrechnungssetting->nutzerlisteDone;
+        $this->filters = ['search' => ''];
+
+        foreach ($this->rows as $occupant) {
+            $this->personCounts[$occupant->id] = $occupant->personenZahl;
+        }
+        $this->reloadPrepaids();
+    }
+
+    protected function reloadPrepaids()
+    {
+        foreach ($this->rows as $occupant) {
+            $this->prepaids[$occupant->id] = $occupant->vorauszahlungEditing;
+        }
+    }
+
+    public function updatedPersonCounts($value, $key)
+    {
+        $this->realestate->occupants->find($key)->personenZahl = $this->castStringToDouble($value);
+        $this->personCounts[$key] = number_format(floatval(str_replace(',', '.', str_replace('.', '', $value))), 2, ',', '.');
+    }
+
+    public function updatedPrepaids($value, $key)
+    {
+        $this->realestate->occupants->find($key)->vorauszahlungEditing = $this->castStringToDouble($value);
+        $this->prepaids[$key] = number_format(floatval(str_replace(',', '.', str_replace('.', '', $value))), 2, ',', '.');
     }
 
     public function toggle($value)
     {
-        if ($value == 'filters') {
-            $this->useCachedRows();
-            $this->showFilters = ! $this->showFilters;
-        }
-        if ($value == 'vorauszahlung') {
-            $this->editVorauszahlungen = ! $this->editVorauszahlungen;
-        }
         if ($value == 'nummer') {
+            $this->realestate->occupant_number_mode = $this->current['occupant_number_mode'];
             $this->realestate->save();
         }
         if ($value == 'eigentumer') {
+            $this->realestate->occupant_name_mode = $this->current['occupant_name_mode'];
             $this->realestate->save();
         }
         if ($value == 'prepaidtype') {
-            Debugbar::info($this->realestate->prepaidtype);
-            $this->prepaidtype = $this->realestate->prepaidtype;
-            /*      if($this->prepaidtype){
-                     $this->realestate->prepaidtype = 'B';
-                 }else{
-                     $this->realestate->prepaidtype = 'H';
-                 } */
+            $this->realestate->prepaidtype = $this->current['prepaidtype'];
             $this->realestate->save();
+            $this->reloadPrepaids();
         }
-        if ($value == 'prepaidnet') {
-            $this->prepaidnet = ! $this->prepaidnet;
-            $this->realestate->eingabeCostNetto = $this->prepaidnet;
+        if ($value == 'eingabeCostNetto') {
+            $this->realestate->eingabeCostNetto = $this->current['eingabeCostNetto'];
             $this->realestate->save();
+            $this->reloadPrepaids();
         }
     }
 
@@ -193,8 +170,7 @@ class ShowOccupantList extends Component
         if ($this->params['action'] == 'confirmEditDone') {
             $this->realestate->abrechnungssetting->nutzerlisteDone = 1;
             $this->realestate->abrechnungssetting->save();
-            $this->editVorauszahlungen = ! $this->realestate->abrechnungssetting->nutzerlisteDone;
-
+            $this->editable = ! $this->realestate->abrechnungssetting->nutzerlisteDone;
             return redirect(request()->header('Referer'));
         }
         if ($this->params['action'] == 'deleteOccupant') {
@@ -206,32 +182,12 @@ class ShowOccupantList extends Component
 
     public function change(Occupant $occupant)
     {
-        $this->setCurrent($occupant);
         $this->dispatch('changeOccupantModal', $occupant);
-    }
-
-    public function setCurrent(Occupant $occupant)
-    {
-        $this->useCachedRows();
-        if ($this->current->isNot($occupant)) {
-            $this->current = $occupant;
-            $this->currentVorauszahlung = $occupant->vorauszahlung;
-        }
     }
 
     public function edit(Occupant $occupant)
     {
-        $this->setCurrent($occupant);
-        $this->dispatch('showOccupantModal', $this->current);
-
-    }
-
-    public function confirmPrePaid(Occupant $occupant, $value)
-    {
-        $this->useCachedRows();
-        if ($this->current->isNot($occupant)) {
-            $this->current = $occupant;
-        }
+        $this->dispatch('showOccupantModal', $occupant);
     }
 
     public function resetFilters()
@@ -239,7 +195,8 @@ class ShowOccupantList extends Component
         $this->reset('filters');
     }
 
-    public function updatingfilter()
+    // Livewire Hook: wird ausgelöst wenn irgendein Feld in $filters geändert wird
+    public function updatedFilters()
     {
         $this->resetPage();
     }
@@ -285,17 +242,13 @@ class ShowOccupantList extends Component
                     }
                 });
         }
-
         $this->applySorting($result);
-
         return $result;
     }
 
     public function getRowsProperty()
     {
-        // return $this->cache(function () {
         return $this->rowsQuery->paginate(20);
-        // });
     }
 
     public $uploadedPhotoUrl;
@@ -343,13 +296,10 @@ class ShowOccupantList extends Component
     }
 
 
+  
+  
     public function render()
     {
-
-        return view('livewire.user.occupant.occupant-list.show-occupant-list', [
-            'rows' => $this->rows,
-            'salutations' => $this->salutations(),
-            'current' => $this->current,
-        ]);
+    return view('livewire.user.occupant.occupant-list.show-occupant-list');
     }
 }
