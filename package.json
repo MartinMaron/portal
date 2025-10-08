@@ -7,16 +7,13 @@
         "backend": "php artisan serve",
         "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
         "test": "php artisan test",
-
         "test:db:up": "docker-compose -f docker/local-test-database/docker-compose.test-db.yml up -d",
         "test:db:down": "docker-compose -f docker/local-test-database/docker-compose.test-db.yml down",
-
         "dev:rebuild": "scripts\\run.bat development rebuild",
         "dev:cleanup": "scripts\\run.bat development cleanup",
         "dev:test": "scripts\\run.bat development test",
         "dev:encrypt": "scripts\\run.bat development encrypt-envs",
         "dev:decrypt": "scripts\\run.bat development decrypt-envs",
-
         "prod:reload": "bash scripts/run.sh production reload",
         "prod:cleanup": "bash scripts/run.sh production cleanup",
         "prod:debugbar:enable": "bash scripts/run.sh production enable_debugbar",
