@@ -61,5 +61,26 @@ jobs:
         run: php artisan migrate:fresh --seed --force
       - name: Build Assets
         run: npm run build
+      - name: Create minimal .env.development and .env.production for CI
+        run: |
+          cat > .env.development <<'EOL'
+          APP_ENV=development
+          APP_DEBUG=true
+          DB_DATABASE=dev_db
+          DB_HOST=127.0.0.1
+          DB_PORT=3307
+          DB_USERNAME=dev_user
+          DB_PASSWORD=dev_secret
+          EOL
+
+          cat > .env.production <<'EOL'
+          APP_ENV=production
+          APP_DEBUG=false
+          DB_DATABASE=prod_db
+          DB_HOST=prod_host
+          DB_PORT=3308
+          DB_USERNAME=prod_user
+          DB_PASSWORD=prod_secret
+          EOL
       - name: Execute tests (Unit and Feature tests) via PHPUnit/Pest
         run: php artisan test
