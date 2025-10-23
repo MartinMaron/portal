@@ -13,7 +13,7 @@ class SearchList extends Component
     use WithPagination;
 
     public $filter = [
-        'search' => null,
+        'search' => '',
     ];
 
     public function updatingfilter()
