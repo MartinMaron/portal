@@ -1,7 +1,7 @@
 <div>
     <div class="max-w-7xl w-full mx-auto py-1 px-4 sm:px-0">
         <!-- Suchfeld -->
-        <x-input.search wire:model.debounce.600ms="filter.search"></x-input.search>
+        <x-input.search wire:model.live.debounce.600ms="filter.search"></x-input.search>
 
         <!-- Realestates List -->
         <div class="mt-6 w-full grid grid-cols-1 gap-4 sm:grid-cols-2">
