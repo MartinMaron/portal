@@ -27,7 +27,7 @@ class OccupantView extends Component
 
         $result = $this->occupant->verbrauchsinfos->where('jahr_monat', '=', $res['jahr_monat']);
 
-        return view('class OccupantView', [
+        return view('livewire.user.occupant.verbrauchsinfo.occupant-view', [
             'rows' => $result,
         ]);
     }

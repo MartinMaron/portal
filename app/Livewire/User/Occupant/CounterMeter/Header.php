@@ -25,6 +25,6 @@ class Header extends Component
 
     public function render()
     {
-        return view('class Header');
+        return view('livewire.user.occupant.counter-meter.header');
     }
 }
