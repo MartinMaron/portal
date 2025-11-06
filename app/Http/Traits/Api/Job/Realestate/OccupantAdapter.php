@@ -18,7 +18,7 @@ trait OccupantAdapter
         $nr = intval(substr($unvid, 15, 3));
         $nr++;
 
-        return substr($unvid, 0, 15).str_pad($nr, 3, '0', STR_PAD_LEFT);
+        return substr($unvid, 0, 15) . str_pad($nr, 3, '0', STR_PAD_LEFT);
     }
 
     public function getPrevOccupantUnvid($unvid)
@@ -26,7 +26,7 @@ trait OccupantAdapter
         $nr = intval(substr($unvid, 15, 3));
         $nr--;
 
-        return substr($unvid, 0, 15).str_pad($nr, 3, '0', STR_PAD_LEFT);
+        return substr($unvid, 0, 15) . str_pad($nr, 3, '0', STR_PAD_LEFT);
     }
 
     private function generateNewAddress(Occupant $occupant) {}
@@ -68,31 +68,37 @@ trait OccupantAdapter
 
     public function changeOccupant(Occupant $initOccupant, $newOccupant, bool $isEmpty, $newDate)
     {
+
+
         if ($isEmpty) {
             $newOccupant['nachname'] = 'Leerstand';
             $newOccupant['leerstand'] = true;
-        }else{
+        } else {
             $newOccupant['leerstand'] = false;
         }
         $newOccupant['dateFrom'] = $newDate;
         $newOccupant['nekoId'] = 'new';
         $save = $this->editOccupant($newOccupant);
+
+        /*  dump($newOccupant);
+        dump($save); */
+
         if ($save->wasRecentlyCreated) {
             $save->refresh();
-            $save->vorauszahlung_editing=$newOccupant['vorauszahlung_editing'];
-            $save->personen_zahl=$newOccupant['personen_zahl'];
+            $save->vorauszahlung_editing = $newOccupant['vorauszahlung_editing'];
+            $save->personen_zahl = $newOccupant['personen_zahl'];
             $initOccupant->dateTo = (new carbon($newDate))->addDay(-1);
             $initOccupant->save();
 
             /* entziehen der Sicht-Berechtigungen des alten Nutzers */
             foreach ($initOccupant->userVerbrauchsinfoAccessControls()->get() as $accContr) {
-                if (carbon::parse($accContr->datum) > carbon::parse($newOccupant->dateFrom)) {
+                if (carbon::parse($accContr->datum) > carbon::parse($newOccupant['dateFrom'])) {
                     $accContr->delete();
                 }
             }
 
             $nU = new User;
-            $nU->email = $save->unvid.'@e-neko.de';
+            $nU->email = $save->unvid . '@e-neko.de';
             $nU->name = $save->nachname;
             $nU->password = Hash::make($save->unvid);
             $nU->createdFromWebForOccupant = $save->id;
@@ -104,7 +110,7 @@ trait OccupantAdapter
             /* erstellen VerbrauchinfosUserEmails */
             /* für automatischen Webuser */
             $vue = new VerbrauchsinfoUserEmail;
-            $vue->email = $save->unvid.'@e-neko.de';
+            $vue->email = $save->unvid . '@e-neko.de';
             $vue->firstinitusername = $save->nachname;
             $vue->occupant_id = $save->id;
             $vue->realestate_id = $save->realestate->id;
@@ -166,12 +172,11 @@ trait OccupantAdapter
                         );
                     }
                 }
-
             }
 
             /* kopieren der Verbrauchsinformationen und CounterMeters zu neuem Nutzer */
             foreach ($initOccupant->verbrauchsinfos as $vbi) {
-                if ($vbi->datum >= $newOccupant->dateFrom) {
+                if ($vbi->datum >= $newOccupant['dateFrom']) {
                     $vbiN = new Verbrauchsinfo;
                     $vbiN->occupant_id = $save->id;
                     $vbiN->art = $vbi->art;
@@ -193,7 +198,7 @@ trait OccupantAdapter
                 }
             }
             foreach ($initOccupant->counterMeters as $cm) {
-                if ($cm->datum >= $newOccupant->dateFrom) {
+                if ($cm->datum >= $newOccupant['dateFrom']) {
                     $cmN = new VerbrauchsinfoCounterMeter;
                     $cmN->occupant_id = $save->id;
                     $cmN->art = $cm->art;
@@ -229,7 +234,8 @@ trait OccupantAdapter
     {
         $ret_val = Occupant::updateOrcreate(
             ['id' => $occupant['id']],
-            ['nekoId' => $occupant['nekoId'],
+            [
+                'nekoId' => $occupant['nekoId'],
                 'realestate_id' => $occupant['realestate_id'],
                 'unvid' => $occupant['unvid'],
                 'budguid' => $occupant['budguid'],
@@ -269,7 +275,7 @@ trait OccupantAdapter
             // change dateTo for previous Occupant
             $qOccupants = $occupant->realestate->occupants
                 ->where('nutzeinheitNo', '=', $occupant->nutzeinheitNo)
-                ->where('dateTo', '=', $datum->toDateString().' 00:00:00');
+                ->where('dateTo', '=', $datum->toDateString() . ' 00:00:00');
 
             foreach ($qOccupants as $occupant) {
                 $occupant->dateTo = $ret_val->dateFrom->addDays(-1)->toDateString();
@@ -278,6 +284,5 @@ trait OccupantAdapter
         }
 
         return $ret_val;
-
     }
 }

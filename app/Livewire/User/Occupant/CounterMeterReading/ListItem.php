@@ -5,7 +5,7 @@ namespace App\Livewire\User\Occupant\CounterMeterReading;
 use App\Models\VerbrauchsinfoCounterMeter;
 use Livewire\Component;
 
-class ListItem extends Component
+class Listitem extends Component
 {
     public $counterMeter;
 

@@ -14,11 +14,6 @@ class Detail extends Component
     public $current = [];
     public $dialogMode = 'init';
 
-    public function mount()
-    {
-        $this->costAmount = $this->makeBlankObject();
-    }
-
     protected $listeners = [
         'showCostAmountDetailModal' => 'showModal',
     ];

@@ -5,7 +5,7 @@ namespace App\Livewire\User\Occupant\Verbrauchsinfo;
 use App\Models\Verbrauchsinfo;
 use Livewire\Component;
 
-class ListItem extends Component
+class Listitem extends Component
 {
     public $singleVerbrauchsinfo;
 

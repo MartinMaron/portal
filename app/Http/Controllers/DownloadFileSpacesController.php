@@ -77,7 +77,6 @@ class DownloadFileSpacesController extends Controller
             $parts = explode('+', $param);
             $invoice = Invoice::find($parts[1]);
             $path = 'app/realestates/'.$invoice->realestate->nekoId.'/invoices/'.$invoice->fileName;
-
             $file = Storage::disk('spaces')->get($path);
             $headers = [
                 'Content-Type' => 'application/pdf',
