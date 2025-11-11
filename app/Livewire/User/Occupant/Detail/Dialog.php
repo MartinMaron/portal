@@ -188,6 +188,7 @@ class Dialog extends Component
         $this->initOccupant = $occupant;
         $this->hasLeerstand = $occupant->leerstand;
         $this->showEditModal = true;
+        
     }
 
     public function lageModalChanged($value)
@@ -237,6 +238,8 @@ class Dialog extends Component
     public function closeModal($save)
     {
         if ($save && $this->current) {
+           
+
             if ($this->validate($this->rules(), $this->messages)) {
                 if ($this->dialogMode == 'change') {
                     $save = $this->changeOccupant($this->initOccupant, $this->current, $this->hasLeerstand, $this->dateFromNewOccupant);

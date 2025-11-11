@@ -253,7 +253,8 @@ trait OccupantAdapter
                 'city' => $occupant['city'],
                 'vat' => $occupant['vat'],
                 'uaw' => $occupant['uaw'],
-                'qmkc' => $occupant['qmkc'],
+                'personen_zahl' => $occupant['personen_zahl'],
+                'qmkc_editing' => $occupant['qmkc_editing'],
                 'qmww' => $occupant['qmww'],
                 'bemerkung' => $occupant['bemerkung'],
                 'lokalart' => $occupant['lokalart'],
@@ -266,6 +267,8 @@ trait OccupantAdapter
                 'OptimisticLockField' => $occupant['OptimisticLockField'] + 1,
             ]
         );
+
+        $ret_val->vorauszahlung_editing = $occupant['vorauszahlung_editing'];
 
         if (array_key_exists('dateFrom', $ret_val->getChanges())) {
 

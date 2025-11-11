@@ -211,7 +211,9 @@
                                         </div>
                                     </div>
                                 </x-input.group>
-
+                               {{--  <div class="" wire:model.blur="current.qmkc_editing">
+                                    {{ dump($current) }}
+                                </div> --}}
                                 <!-- Fläche und Personen -->
                                 <x-input.group
                                 class="my-1" paddingLabel="" hoheLabel="h-6 sm:h-8 sm:pt-1" hohe="h-20 sm:h-10"
