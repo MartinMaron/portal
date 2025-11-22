@@ -79,10 +79,7 @@ trait OccupantAdapter
         $newOccupant['dateFrom'] = $newDate;
         $newOccupant['nekoId'] = 'new';
         $save = $this->editOccupant($newOccupant);
-
-        /*  dump($newOccupant);
-        dump($save); */
-
+   
         if ($save->wasRecentlyCreated) {
             $save->refresh();
             $save->vorauszahlung_editing = $newOccupant['vorauszahlung_editing'];
@@ -253,7 +250,6 @@ trait OccupantAdapter
                 'city' => $occupant['city'],
                 'vat' => $occupant['vat'],
                 'uaw' => $occupant['uaw'],
-                'personen_zahl' => $occupant['personen_zahl'],
                 'qmkc_editing' => $occupant['qmkc_editing'],
                 'qmww' => $occupant['qmww'],
                 'bemerkung' => $occupant['bemerkung'],
@@ -269,7 +265,8 @@ trait OccupantAdapter
         );
 
         $ret_val->vorauszahlung_editing = $occupant['vorauszahlung_editing'];
-
+        $ret_val->personen_zahl = $occupant['personen_zahl'];
+        
         if (array_key_exists('dateFrom', $ret_val->getChanges())) {
 
             // Auszugsdatum

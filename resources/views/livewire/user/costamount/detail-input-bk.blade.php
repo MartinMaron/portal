@@ -5,8 +5,9 @@
                 class="basis-2/3 text-left px-2 flexhover:bg-sky-300 hover:bg-sky-300 dark:hover:bg-slate-500 rounded-md"
                 wire:click="EditCostModal({{ $cost }})"
                 tabindex="-1">
-                <span class="py-1 line-clamp-1">{{ $cost->caption }}</span>
+                <span class="py-1 line-clamp-1">{{ $cost->caption . ($cost->noticeForUser ? ' (' . $cost->noticeForUser . ')' : '') }} </span>
             </button>
+               
            <div class="basis-1/3 px-4 ">
                 <div class="flex justify-evenly gap-3 my-1 items-center bg-sky-100 dark:bg-slate-800 dark:text-slate-200 border border-sky-300 rounded-md font-light">
                     <span class="text-right text-sm font-semibold line-clamp-1 px-2 basis-1/2">{{ $cost->prevyear_amountgros_view. ' €'}}</span> -
