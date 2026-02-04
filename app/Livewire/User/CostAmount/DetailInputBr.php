@@ -110,21 +110,23 @@ class DetailInputBr extends Component
 
     public function save()
     {
-    debugbar()->info($this->current);
-        if ($this->validate($this->rules(), $this->messages(), $this->attributes())) {
+           
+            debugbar()->info($this->current);
+            if ($this->validate($this->rules(), $this->messages(), $this->attributes())) {
             $costAmount = $this->getNewCostAmount($this->cost);
             $costAmount->fill(collect($this->current)->toArray());
             $costAmount->endvalue = false;
             $costAmount->startvalue = false;
             $costAmount->abrechnungssetting_id = $this->cost->realestate->abrechnungssetting_id;
             $costAmount->cost_id = $this->cost->id;
-            $costAmount->netto = $this->castStringToDouble($this->current['netto'] ?? null);
-            $costAmount->brutto = $this->castStringToDouble($this->current['brutto'] ?? null);
+            $costAmount->netto = $this->current['netto'] ?? null;
+            $costAmount->brutto = $this->current['brutto'] ?? null;
             $costAmount->consumption = $this->castStringToDouble($this->current['consumption_editing'] ?? null);
             $costAmount->co2TaxValue = $this->castStringToDouble($this->current['coconsupmtion'] ?? null);
             $costAmount->co2TaxAmount_gros = $this->castStringToDouble($this->current['cobrutto'] ?? null);
             $costAmount->co2TaxAmount_net = $this->castStringToDouble($this->current['conetto'] ?? null);
             $costAmount->datum = $this->current['datum'];
+          
             if ($costAmount->save()) {
                 $costAmount = $this->makeBlankObject();
                 $this->current = $costAmount->toArray();

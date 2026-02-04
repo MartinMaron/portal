@@ -35,6 +35,7 @@ class Detail extends Component
         'current.brutto' => 2,
         'current.haushaltsnah' => 2,
         'current.grosAmount_HH' => 2,
+        'current.grosAmount' => 2,
         'current.coconsupmtion' => 0,
         'current.conetto' => 2,
         'current.cobrutto' => 2,
@@ -97,6 +98,14 @@ class Detail extends Component
     {
         if ($save && $this->costAmount) {
             if ($this->validate($this->rules(), $this->messages(), $this->attributes())) {
+                $this->costAmount->brutto = $this->current['brutto'];
+                $this->costAmount->bemerkung = $this->current['bemerkung'];
+                $this->costAmount->datum = $this->current['datum'];
+                $this->costAmount->netto = $this->current['netto'];
+                $this->costAmount->cobrutto = $this->current['cobrutto'];
+                $this->costAmount->conetto = $this->current['conetto'];
+                $this->costAmount->coconsupmtion = $this->current['coconsupmtion'];
+                $this->costAmount->consumption_editing = $this->current['consumption_editing'];
                 $this->costAmount->save();
                 $this->visible = false;
                 $this->resetErrorBag();
@@ -110,6 +119,7 @@ class Detail extends Component
             $this->resetErrorBag();
             $this->resetValidation();
         }
+
     }
 
     public function render()

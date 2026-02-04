@@ -128,7 +128,7 @@ class ShowOccupantList extends Component
 
     public function updatedPrepaids($value, $key)
     {
-        $this->realestate->occupants->find($key)->vorauszahlungEditing = $this->castStringToDouble($value);
+        $this->realestate->occupants->find($key)->vorauszahlungEditing = $value;
         $this->prepaids[$key] = number_format(floatval(str_replace(',', '.', str_replace('.', '', $value))), 2, ',', '.');
     }
 
