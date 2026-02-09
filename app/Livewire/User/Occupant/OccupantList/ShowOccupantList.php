@@ -13,7 +13,6 @@ use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 use App\Models\UserVerbrauchsinfoAccessControl;
-use Barryvdh\Debugbar\Facades\Debugbar;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
@@ -266,9 +265,6 @@ class ShowOccupantList extends Component
 
         // URL speichern und anzeigen
         $this->uploadedPhotoUrl = Storage::disk('spaces')->url('uploads/' . $filename);
-
-
-        Debugbar::info($this->uploadedPhotoUrl);
 
     }
 

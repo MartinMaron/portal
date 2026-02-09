@@ -10,7 +10,6 @@ use App\Models\UnitUsageType;
 use App\Rules\OcccupantDateFromGreaterPreviousRule;
 use App\Rules\OccupantDateFromLessDateToRule;
 use App\Http\Traits\Helper\FormatsNumbers;
-use Barryvdh\Debugbar\Facades\Debugbar;
 use Carbon\Carbon;
 use Livewire\Component;
 
@@ -193,14 +192,12 @@ class Dialog extends Component
 
     public function lageModalChanged($value)
     {
-        Debugbar::info('lageModalChanged:'.$value);
         $this->current->lage = $value;
         $this->updated('current.lage');
     }
 
     public function updated($propertyName)
     {
-        Debugbar::info('occupant.detail.dialog-updated:'.$propertyName);
         $calcRules = null;
         if ($this->dialogMode == 'change') {
             $calcRules = $this->validationRulesChange;

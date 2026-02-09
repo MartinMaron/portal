@@ -3,7 +3,6 @@
 namespace App\Livewire;
 
 use App\Models\Lage;
-use Barryvdh\Debugbar\Facades\Debugbar;
 
 class LageAutocomplete extends Autocomplete
 {
@@ -22,7 +21,6 @@ class LageAutocomplete extends Autocomplete
 
     public function updated($propertyName)
     {
-        Debugbar::info('LageAutocomplete-updated:'.$propertyName);
         if ($propertyName = 'search') {
             $this->emitUp('LageAutocompleteDisplaychanged', $this->search);
         }

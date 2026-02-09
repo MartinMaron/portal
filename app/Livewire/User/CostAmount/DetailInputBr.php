@@ -29,11 +29,11 @@ class DetailInputBr extends Component
         'current.haushaltsnah' => 2,
         'current.grosAmount_HH' => 2,
     ];
-    
+
     public function mount(Cost $cost)
     {
         $this->cost = $cost;
-        $costAmount= $this->makeBlankObject();
+        $costAmount = $this->makeBlankObject();
         $this->current = $costAmount->toArray();
     }
 
@@ -110,9 +110,8 @@ class DetailInputBr extends Component
 
     public function save()
     {
-           
-            debugbar()->info($this->current);
-            if ($this->validate($this->rules(), $this->messages(), $this->attributes())) {
+
+        if ($this->validate($this->rules(), $this->messages(), $this->attributes())) {
             $costAmount = $this->getNewCostAmount($this->cost);
             $costAmount->fill(collect($this->current)->toArray());
             $costAmount->endvalue = false;
@@ -126,7 +125,7 @@ class DetailInputBr extends Component
             $costAmount->co2TaxAmount_gros = $this->castStringToDouble($this->current['cobrutto'] ?? null);
             $costAmount->co2TaxAmount_net = $this->castStringToDouble($this->current['conetto'] ?? null);
             $costAmount->datum = $this->current['datum'];
-          
+
             if ($costAmount->save()) {
                 $costAmount = $this->makeBlankObject();
                 $this->current = $costAmount->toArray();
@@ -142,7 +141,7 @@ class DetailInputBr extends Component
     }
 
 
-    
+
 
 
 

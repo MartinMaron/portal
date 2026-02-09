@@ -6,6 +6,7 @@ trait Helpers
 {
     public $params = null;
 
+    
     public function castStringToDouble($value)
     {
         if ($value) {

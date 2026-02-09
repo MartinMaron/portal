@@ -6,7 +6,6 @@ use App\Events\CostAmountAdded;
 use App\Events\CostAmountDeleted;
 use App\Events\CostAmountUpdated;
 use App\Http\Traits\Helpers;
-use Barryvdh\Debugbar\Facades\Debugbar;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

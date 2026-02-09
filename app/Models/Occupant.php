@@ -5,7 +5,6 @@ namespace App\Models;
 use Carbon\Carbon;
 use App\Http\Traits\Helpers;
 use Illuminate\Support\Facades\Auth;
-use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
 use Carbon\Exceptions\InvalidFormatException;

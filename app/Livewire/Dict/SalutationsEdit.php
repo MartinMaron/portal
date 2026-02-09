@@ -4,7 +4,6 @@ namespace App\Livewire\Dict;
 
 use App\Livewire\DataTable\WithCachedRows;
 use App\Models\Salutation;
-use Barryvdh\Debugbar\Facades\Debugbar;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Component;
 
@@ -21,7 +20,6 @@ class SalutationsEdit extends Component
     public function mount()
     {
         $this->salutations = Salutation::all();
-        Debugbar::info($this->salutations);
     }
 
     public function getRowsQueryProperty()
