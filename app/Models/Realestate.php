@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -16,13 +17,31 @@ class Realestate extends Model
     {
         $query->where('heizkosten', 1)
             ->orWhere('miete', 1)
+            ->orWhere('betriebskosten', 1)
             ->orWhere('rauchmelder', 1);
     }
 
     protected $fillable = [
-        'nekoId', 'email', 'unvid', 'address', 'street', 'postCode', 'city', 'heizkosten', 'rauchmelder', 'miete',
-        'user_id', 'eingabeCostNetto', 'eingabeCostOhneDatum', 'occupant_name_mode', 'occupant_number_mode',
-        'abrechnungssetting_id', 'kosteneingabe', 'nutzerlisteDone', 'heizkostenlisteDone', 'betreibskostenDone',
+        'nekoId',
+        'email',
+        'unvid',
+        'address',
+        'street',
+        'postCode',
+        'city',
+        'heizkosten',
+        'rauchmelder',
+        'miete',
+        'user_id',
+        'eingabeCostNetto',
+        'eingabeCostOhneDatum',
+        'occupant_name_mode',
+        'occupant_number_mode',
+        'abrechnungssetting_id',
+        'kosteneingabe',
+        'nutzerlisteDone',
+        'heizkostenlisteDone',
+        'betreibskostenDone',
     ];
 
     protected $appends = [
@@ -90,7 +109,6 @@ class Realestate extends Model
             'rauchmelder' => 'required|boolean',
             'miete' => 'required|boolean',
         ]);
-
     }
 
     protected function getHasOccupantsDifferentAdressesAttribute()
@@ -119,4 +137,79 @@ class Realestate extends Model
 
         return false;
     }
+
+
+    public function hasAbrechnung(): bool
+    {
+        $referenceDate = Carbon::now();
+        $lastSettings = $this->abrechnungssettings()
+            ->orderByDesc('periodTo')
+            ->first();
+
+        /* es gibt keine Einstellungen --- IGNORE --- */
+        if (!$lastSettings) {return false;}
+
+     
+        if ($lastSettings->periodTo->isBefore($referenceDate)) {
+            /* keine neue Einstelleung existiert */
+            return ($lastSettings->hk_id != null && $lastSettings->hk_id != '00000000-0000-0000-0000-000000000000')   ||   ($lastSettings->bk_id != null && $lastSettings->bk_id != '00000000-0000-0000-0000-000000000000');
+        }else{
+            /* neue Einstelleung existiert */
+            $currentSettings = $lastSettings;
+            $prevSettings = $this->abrechnungssettings()
+                ->where('id', '<>', $currentSettings->id)
+                ->orderByDesc('periodTo')
+                ->first();
+            if (!$prevSettings) {return false;}
+
+            $currentSettingsDate = Carbon::parse($currentSettings->periodFrom);
+            $currentSettingsDate = $currentSettingsDate->addDays(-1); /* aktuelle Einstelleung beginnt am nächsten Tag nach der letzten Einstelleung */
+            /* letzte und aktuelle Periode hat keine zeitliche Lücke */
+            if ($currentSettingsDate == $prevSettings->periodTo) {
+                /* aktuelle Einstelleung beginnt in der Zukunft */
+                return $prevSettings->hk_id != null || $prevSettings->bk_id != null;
+            }else{
+                /* aktuelle Einstelleung beginnt in der Vergangenheit */
+                return false;   
+            }
+            
+        }
+    }
+
+    public function inWorkAbrechnung(): bool
+    {
+       
+
+        $referenceDate = Carbon::now();
+        $lastSettings = $this->abrechnungssettings()
+            ->orderByDesc('periodTo')
+            ->first();
+
+        /* es gibt keine Einstellungen --- IGNORE --- */
+        if (!$lastSettings) {
+            return false;
+        }
+
+        /* wenn noch keine neue Einstellung existiert (dann ist die abrechnung nicht fertig) */
+        if ($lastSettings->periodTo->isBefore($referenceDate)) {
+            if ($this->kosteneingabe) {
+                if ($this->heizkosten == 1 && !$lastSettings->heizkostenlisteDone) {
+                        return false;
+                    }
+
+                if ($this->heizkosten == 1 && !$lastSettings->brennstofflisteDone) {
+                        return false;
+                    }
+
+                if ($this->betriebskosten == 1 && !$lastSettings->betreibskostenDone) {
+                        return false;
+                    }
+            }
+            if ($this->nutzerlisteactive && !$lastSettings->nutzerlisteDone) {                
+                return false;                
+            }
+        }
+        return  ! $this->hasAbrechnung();
+    }
+
 }

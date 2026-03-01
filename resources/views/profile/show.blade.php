@@ -1,12 +1,12 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="font-semibold text-3xl text-gray-800 leading-tight dark:text-slate-950">
             {{ __('Kundenkonto') }}
         </h2>
     </x-slot>
 
     <div>
-        <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8 dark:bg-slate-700 dark:text-gray-200">
             @if (Laravel\Fortify\Features::canUpdateProfileInformation())
                 @livewire('profile.update-profile-information-form')
 
@@ -33,13 +33,13 @@
                 @livewire('profile.logout-other-browser-sessions-form')
             </div>
 
-            @if (Laravel\Jetstream\Jetstream::hasAccountDeletionFeatures())
+          {{--   @if (Laravel\Jetstream\Jetstream::hasAccountDeletionFeatures())
                 <x-jet-section-border />
 
                 <div class="mt-10 sm:mt-0">
                     @livewire('profile.delete-user-form')
                 </div>
-            @endif
+            @endif --}}
         </div>
     </div>
 </x-app-layout>

@@ -121,9 +121,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
                 return view('backend.realestate.show-betriebskosteneingabe', compact('realestate'));
             })->name('betriebskosteneingabe');
 
-
-
-
             Route::get('/heizkostenliste/{id}', function ($id) {
                 $realestate = Realestate::all()->find($id);
 

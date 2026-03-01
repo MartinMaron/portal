@@ -37,8 +37,7 @@
                     aria_label="RadioName"
                     title="Nutzer anzeigen" text_value0="Mieter" text_value1="Eigentümer"
                     >
-            </x-input.radio-bool>
-            
+            </x-input.radio-bool>            
         @endif
         @if ($this->realestate->betriebskosten)
             <x-input.radio-bool

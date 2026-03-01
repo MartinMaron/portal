@@ -1,63 +1,56 @@
 <x-guest-layout>
     <x-slot name="slot">
-        <div class="px-4 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <div class="pb-3 text-red-600 font-bold w-full text-center">
-                Ab dem 01.01.2025 lautet unsere neue Adresse :
-            </div>
-            <div class="py-1 w-full text-red-600 font-bold text-center">
-                Marsdorfer Str. 76
-            </div>
-            <div class="pb-4 w-full text-red-600 font-bold text-center">
-                50858 Köln – Weiden
-            </div>
-            <div class="pb-4 w-full text-red-600 font-bold text-center">
-                Büro: 0221 43000772
-            </div>
-            <div class="block sm:flex sm:justify-between">
-                <div class="pb-4 w-full text-red-600 font-bold text-center">
-                    <br>Herr Jaskula
-                    <br>0221 43000773
+        <div class="px-4 py-2 mx-auto max-w-7xl sm:px-6 lg:px-8 ">
+            <div class="text-red-600 dark:text-blue-400">
+                <div class="pb-2 w-full  font-bold text-center">
+                    Büro: 0221 43000772
                 </div>
-                <div class="pb-4 w-full text-red-600 font-bold text-center">
+                <div class="block sm:flex sm:justify-between">
+                    <div class="pb-2 w-full font-bold text-center">
+                        <br>Herr Jaskula
+                        <br>0221 43000773
+                    </div>
+                <div class="pb-2 w-full font-bold text-center">
                     <br>Frau Jaskula
                     <br>0221 31087440
                 </div>
-                <div class="pb-4 w-full text-red-600 font-bold text-center">
+                <div class="pb-2 w-full font-bold text-center">
                     <br>Frau Maron
                     <br>0221 31087441
                 </div>
-                <div class="pb-4 w-full text-red-600 font-bold text-center">
+                <div class="pb-2 w-full font-bold text-center">
                     <br>Herr Maron
                     <br>0221 80005269
                 </div>
             </div>
+        </div>
             <div class="w-full">
                 <img class="rounded-md" src="/img/home/Slieder-Mitte.jpg" alt="">
             </div>
             <div class="grid gap-6 mt-6 sm:grid-cols-1 md:grid-cols-2">
                     <div class="">
-                        <div class="invisible p-3 mx-auto text-3xl text-center text-gray-700 sm:visible">Willkommen
+                        <div class="invisible p-3 mx-auto text-3xl text-center text-gray-700 dark:text-slate-200 sm:visible">Willkommen
                         </div>
                         <div class="h-12"></div>
                     </div>
-                    <div class="pl-2 border-l-2 border-sky-700">
+                    <div class="pl-2 border-l-2 border-sky-700 dark:text-slate-200">
                             <h5 class="text-xl sm:text-md">Willkommen bei uns <span class="text-blue-600 text-bold">eneko</span></h5>
                             <p class="pt-4">Als unser Ziel verstehen wir ein speziell auf Ihre Immobilie abgestimmtes Paket vom Maßnahmen zu erstellen, die eine kostenreduzierte und präzise Erstellung von Abrechnungen ermöglichen. Dies führt vor allem zu einer Verbesserung der Beziehungen zwischen Vermieter und Mieter.</p>
                             <div class="h-12"></div>
                     </div>
-                <div class="">
-                    <div class="py-4 text-2xl text-sky-800">HEIZKOSTEN</div>
+                <div class="text-sky-800 dark:text-slate-200">
+                    <div class="py-4 text-2xl ">HEIZKOSTEN</div>
                     <img src="/img/home/heizkosten.jpg" class="object-cover w-full h-48 rounded-lg" />
                     <div class="pt-4">
                         <p>Unser Dienstleistungspaket für die Heizkosten-, Kaltwasser- und Wärmeabrechnung entspricht höchsten
                             Qualitätsansprüchen. Den Anforderungen an Transparenz und Genauigkeit entsprechen wir ebenso wie
                             dem Bedürfnis nach Schnelligkeit und Qualität in der Bearbeitung.<br>
-                            <a href="{{ route('guest.heizkostenabrechnung') }}" class="text-blue-700 underline text-bold">HIER MEHR DAZU ...</a></p>
+                            <a href="{{ route('guest.heizkostenabrechnung') }}" class="text-blue-700 dark:text-blue-300 underline text-bold">HIER MEHR DAZU ...</a></p>
                     </div>
                     <div class="h-12"></div>
                 </div>
-                <div class="Betriebkosten">
-                    <div class="py-4 text-2xl text-sky-800">BETRIEBSKOSTEN</div>
+                <div class="text-sky-800 dark:text-slate-200">
+                    <div class="py-4 text-2xl ">BETRIEBSKOSTEN</div>
                     <img class="object-cover w-full h-48 rounded-lg" src="/img/home/betriebskosten.jpg"  />
                     <div class="pt-4">
                         <p>Ersparen Sie sich Zeit, Ärger und Arbeit und legen Sie diese Aufgaben in die Hände unserer Fachleute.
@@ -66,8 +59,8 @@
                         </div>
                     <div class="h-12"></div>
                 </div>
-                <div class="Rauchmelderservice">
-                    <div class="py-4 text-2xl text-sky-800">RAUCHMELDERSERVICE</div>
+                <div class="text-sky-800 dark:text-slate-200">
+                    <div class="py-4 text-2xl ">RAUCHMELDERSERVICE</div>
                     <img src="/img/home/Rauchmelderservice2.jpg" class="object-cover w-full h-48 rounded-lg" />
                     <div class="pt-4">
                         <p>Vermieter, Mieter und selbstnutzende Eigentümer haben die Rauchwarnmelder-Pflicht zu beachten.
@@ -78,8 +71,8 @@
                     </div>
                     <div class="h-12"></div>
                 </div>
-                <div class="energieausweis">
-                    <div class="py-4 text-2xl text-sky-800">ENERGIEAUSWEIS</div>
+                <div class="text-sky-800 dark:text-slate-200">
+                    <div class="py-4 text-2xl ">ENERGIEAUSWEIS</div>
                     <img src="/img/home/energieausweis.jpg" class="object-cover w-full h-48 rounded-lg" />
                     <div class="pt-4">
                         <p>Unser Dienstleistungspaket für die Heizkosten-, Kaltwasser- und Wärmeabrechnung entspricht höchsten

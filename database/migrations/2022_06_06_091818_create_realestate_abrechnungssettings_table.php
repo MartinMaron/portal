@@ -27,6 +27,7 @@ return new class extends Migration
             $table->double('stromkosten')->default(0);
             $table->boolean('brenwert_gasabrechnug')->default(0);
             $table->boolean('eigen_energielieferung')->default(0);
+            $table->boolean('ohne_brennstoff')->default(0);
             $table->integer('OptimisticLockField')->nullable();
             $table->timestamps();
         });

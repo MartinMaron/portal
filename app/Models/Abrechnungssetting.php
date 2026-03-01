@@ -16,7 +16,8 @@ class Abrechnungssetting extends Model
         'neko_id', 'realestate_id', 'bemerkung', 'tryWebDelete', 'description', 'nabi_inhaber', 'nabi_nr',
         'stromkosten', 'brenwert_gasabrechnug', 'eigen_energielieferung', 'aktiv',
         'co2_kennzeichen_WEG', 'co2_wohngeb', 'co2_kennzeichen_1_9', 'co2_kennzeichen_2_9', 'co2_anschluss_nach_2022',
-        'periodFrom', 'periodTo', 'hk_id', 'bk_id'
+        'periodFrom', 'periodTo', 'hk_id',
+        'bk_id', 'ohne_brennstoff'
     ];
 
     protected $appends = [
@@ -33,6 +34,7 @@ class Abrechnungssetting extends Model
         'co2_wohngeb' => 'boolean',
         'co2_kennzeichen_1_9' => 'boolean',
         'co2_kennzeichen_2_9' => 'boolean',
+        'ohne_brennstoff' => 'boolean',
     ];
 
     /* public static function validateImportData($data)

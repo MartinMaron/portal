@@ -1,4 +1,4 @@
-<nav class="rounded-md shadow-md bg-sky-100 border-sky-300">
+<nav class="rounded-md shadow-md bg-sky-100 dark:bg-slate-900 border-sky-300 ">
     <div class="justify-between hidden sm:flex">
 
         <a class="m-1 ml-4" href="{{ route('guest.home')}}" :active="{{ request()->routeIs('login') ? 'true' : 'false' }}">
@@ -11,7 +11,7 @@
             <x-jet-dropdown align="left" :active="request()->routeIs('user.dashboard')" >
                 <x-slot name="trigger">
                         <x-button.navigation class="flex" >
-                            <span class = "font-semibold transition duration-150 text-md text-sky-900 opacity-90 group-hover:opacity-100 ease">
+                            <span class = "font-semibold transition duration-150 text-md opacity-90 group-hover:opacity-100 ease">
                                 {{ __('DIENSTLEISTUNGEN') }}
                             </span>
                             <i class="mt-1 ml-2 text-md fa fa-chevron-down"></i>
@@ -36,7 +36,7 @@
             <x-jet-dropdown align="left" href="{{ route('user.dashboard') }}" :active="request()->routeIs('user.dashboard')" >
                 <x-slot name="trigger">
                     <x-button.navigation class="flex">
-                        <span class = "font-semibold transition duration-150 text-md text-sky-900 opacity-90 group-hover:opacity-100 ease">
+                        <span class = "font-semibold transition duration-150 text-md opacity-90 group-hover:opacity-100 ease">
                             {{ __('GERÄTESERVICE') }}
                         </span>
                         <i class="mt-1 ml-2 text-md fa fa-chevron-down"></i>
@@ -60,14 +60,14 @@
             </x-jet-dropdown>
             <x-button.navigation class="flex" :active="request()->routeIs('guest.messdienstwechsel')">
                 <a href="{{route('guest.messdienstwechsel')}}">
-                    <span class = "font-semibold transition duration-150 text-md text-sky-900 opacity-90 group-hover:opacity-100 ease">
+                    <span class = "font-semibold transition duration-150 text-md  opacity-90 group-hover:opacity-100 ease">
                         {{ __('MESSDIENSTWECHSEL') }}
                     </span>
                 </a>
             </x-button.navigation>
             <x-button.navigation class="flex" :active="request()->routeIs('guest.kontakt')">
                 <a href="{{route('guest.kontakt')}}">
-                    <span class = "font-semibold transition duration-150 text-md text-sky-900 opacity-90 group-hover:opacity-100 ease">
+                    <span class = "font-semibold transition duration-150 text-md  opacity-90 group-hover:opacity-100 ease">
                         {{ __('KONTAKT') }}
                     </span>
                 </a>
@@ -76,7 +76,7 @@
         <div class="items-center justify-end px-3 my-1 sm:flex sm:flex-wrap max-w-7xl">
             <x-button.navigation>
                 <a href="{{route('login')}}">
-                    <span class = "font-semibold transition duration-150 text-md text-sky-900 opacity-90 group-hover:opacity-100 ease">
+                    <span class = "font-semibold transition duration-150 text-md  opacity-90 group-hover:opacity-100 ease">
                         {{ __('NUTZERBEREICH') }}
                     </span>
                 </a>

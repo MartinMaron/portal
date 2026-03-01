@@ -20,7 +20,7 @@
         {{-- <x-jet-banner /> --}}
         <livewire:toasts/>
 
-        <div class="bg-white">
+        <div class="bg-white dark:bg-slate-800 dark:text-gray-200">
 
             <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                 <livewire:guest.navigation-top />
@@ -50,8 +50,7 @@
                             <br>Ansprechpartner: Christof Jaskula
                             <br>Marsdorfer Str. 76
                             <br>50858 Köln
-                            <br>Tel.: +49 (0)221 4300073
-                            <br>Fax: +49 (0)2234 9444321
+                            <br>Tel.: +49 (0)221 43000733
                             <br>info@e-neko.de
                         </div>
                     </div>

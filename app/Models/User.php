@@ -24,6 +24,8 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name', 'email', 'password', 'isUser', 'isAdmin','isMieter', 'kundennummer', 'apiToken',
+        'realestate_show_mode',
+        'send_info_email'        
     ];
 
     /**
