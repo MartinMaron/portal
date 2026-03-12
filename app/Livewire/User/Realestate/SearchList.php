@@ -14,6 +14,7 @@ class SearchList extends Component
 
     public $filter = [
         'search' => null,
+        'status' => 'all', // all, has_abrechnung, in_work, other
     ];
 
     public function updatingfilter()
@@ -21,21 +22,70 @@ class SearchList extends Component
         $this->resetPage();
     }
 
+    public function realestatesCount()
+    {
+        $query = Realestate::query()->where('user_id', Auth::user()->id);
+        return $query->count();
+    }
+
+
     public function render()
     {
-        if (Auth::user()->isAdmin)
-        {
-            $filtered = Realestate::query()->orderBy('street')
-                ->where('address','LIKE','%'. $this->filter['search'].'%')
-                ->where(function (Builder $query) {$query->Visible();})
-                ->paginate(20);
-        }else{
-            $filtered = Realestate::query()->orderBy('street')
-                ->where('user_id', Auth::user()->id)
-                ->where('address','LIKE','%'. $this->filter['search'].'%')
-                ->where(function (Builder $query) {$query->Visible();})
-                ->paginate(20);
+        $query = Realestate::query()->orderBy('street');
+
+        if (!Auth::user()->isAdmin) {
+            $query->where('user_id', Auth::user()->id);
         }
+
+        $query->where(function ($q) {
+            $q->where('address', 'LIKE', '%' . $this->filter['search'] . '%')
+                ->orWhere('street', 'LIKE', '%' . $this->filter['search'] . '%')
+                ->orWhere('city', 'LIKE', '%' . $this->filter['search'] . '%');
+        });
+
+        $query->where(function (Builder $query) {
+            $query->Visible();
+        });
+
+        // 1. Get all candidates that match the basic search & permissions
+        $allCandidates = $query->get();
+
+        // 2. Filter in Memory using the Model functions
+        $filteredCollection = $allCandidates->filter(function ($realestate) {
+            $statusFilter = $this->filter['status'] ?? 'all';
+
+            if ($statusFilter === 'all') {
+                return true;
+            }
+
+            if ($statusFilter === 'has_abrechnung') {
+                return $realestate->hasAbrechnung() === true;
+            }
+
+            if ($statusFilter === 'in_work') {
+                return $realestate->inWorkAbrechnung() === true && ($realestate->noAbrechnung() === false);
+            }
+
+            if ($statusFilter === 'other') {
+                return ($realestate->hasAbrechnung() === false && $realestate->inWorkAbrechnung() === false) && ($realestate->noAbrechnung() === false);
+            }
+
+            return true;
+        });
+
+        // 3. Manual Pagination
+        $perPage = 20;
+        $currentPage = \Illuminate\Pagination\Paginator::resolveCurrentPage();
+        $currentPageItems = $filteredCollection->slice(($currentPage - 1) * $perPage, $perPage)->values();
+
+        $filtered = new \Illuminate\Pagination\LengthAwarePaginator(
+            $currentPageItems,
+            $filteredCollection->count(),
+            $perPage,
+            $currentPage,
+            ['path' => \Illuminate\Pagination\Paginator::resolveCurrentPath(), 'pageName' => 'page']
+        );
+
         return view('livewire.user.realestate.search-list', compact('filtered'));
     }
 }

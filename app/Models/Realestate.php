@@ -209,7 +209,15 @@ class Realestate extends Model
                 return false;                
             }
         }
-        return  ! $this->hasAbrechnung();
+        return  ! $this->hasAbrechnung() && ($this->noAbrechnung() === false);
+    }
+    public function noAbrechnung(): bool
+    {
+        if ($this->betriebskosten || $this->heizkosten) {
+            return false;
+        }else{
+            return true;    
+        }
     }
 
 }
