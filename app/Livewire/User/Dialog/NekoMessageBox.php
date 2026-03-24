@@ -8,18 +8,14 @@ use Livewire\Component;
 class NekoMessageBox extends Component
 {
     use Helpers;
-
     public $showNekoMessageMutex = false;
-
     public $title = 'Title';
-
     public $message = 'Message?';
-
+    public $usermail = '';
     public $boxType = 'info';
-
     public $submitText = 'OK';
-
     public $cancelText = 'Abbrechen';
+    public $showEmailinfo = false;
 
     protected $listeners = [
         'showNekoMessageModal' => 'showNekoMessage',
@@ -30,7 +26,7 @@ class NekoMessageBox extends Component
         $this->params = $params;
         $this->title = $this->getParam('title', $this->title);
         $this->message = $this->getParam('message', $this->message);
-    $this->boxType = $this->getParam('type', $this->boxType);
+        $this->boxType = $this->getParam('type', $this->boxType);
         $this->showNekoMessageMutex = true;
     }
 

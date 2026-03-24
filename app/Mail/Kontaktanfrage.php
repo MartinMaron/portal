@@ -41,7 +41,7 @@ class Kontaktanfrage extends Mailable
      */
     public function build()
     {
-        return $this->from('nekoerror@e-neko.de', 'Kontaktanfrage von e-neko.de')
+        return $this->from('noreply@e-neko.de', 'Kontaktanfrage von e-neko.de')
             ->view('emails.kontaktanfrage')
             ->with([
                 'nachname' => $this->nachname,

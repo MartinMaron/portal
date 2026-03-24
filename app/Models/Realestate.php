@@ -148,7 +148,7 @@ class Realestate extends Model
 
         /* es gibt keine Einstellungen --- IGNORE --- */
         if (!$lastSettings) {return false;}
-
+        if (!$lastSettings->periodTo) {return false;}
      
         if ($lastSettings->periodTo->isBefore($referenceDate)) {
             /* keine neue Einstelleung existiert */
@@ -186,9 +186,8 @@ class Realestate extends Model
             ->first();
 
         /* es gibt keine Einstellungen --- IGNORE --- */
-        if (!$lastSettings) {
-            return false;
-        }
+        if (!$lastSettings) {return false;}
+        if (!$lastSettings->periodTo) {return false;}
 
         /* wenn noch keine neue Einstellung existiert (dann ist die abrechnung nicht fertig) */
         if ($lastSettings->periodTo->isBefore($referenceDate)) {

@@ -5,10 +5,13 @@ namespace App\Livewire\User\Cost;
 use App\Http\Traits\Helper\CostHelper;
 use App\Http\Traits\Helpers;
 use App\Livewire\DataTable\WithSorting;
+use App\Mail\Abrversenden;
 use App\Models\Cost;
 use App\Models\CostType;
 use App\Models\Realestate;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 use Usernotnull\Toast\Concerns\WireToast;
 
@@ -38,7 +41,22 @@ class Heizkostenliste extends Component
         if ($this->params['action'] == 'confirmEditDone') {
             $this->realestate->abrechnungssetting->heizkostenlisteDone = 1;
             $this->realestate->abrechnungssetting->save();
+            if ($this->realestate->inWorkAbrechnung()) {
+                $this->sendEmail();
+            }
             return redirect(request()->header('Referer'));
+        }
+    }
+
+    public function sendEmail()
+    {
+        try {
+            toast()->success('Ihr Anliegen wurde gesendet', 'Achtung')->push();
+            Mail::to('info@e-neko.de')
+                ->cc(Auth::user()->send_info_email ? Auth::user()->send_info_email : '')
+                ->send(new Abrversenden($this->realestate));
+        } catch (\Exception $e) {
+            toast()->danger('Fehler beim Senden der Email: ' . $e->getMessage())->push();
         }
     }
     #endregion

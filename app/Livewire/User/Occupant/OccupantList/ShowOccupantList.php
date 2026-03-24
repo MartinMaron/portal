@@ -2,22 +2,25 @@
 
 namespace App\Livewire\User\Occupant\OccupantList;
 
+use App\Http\Traits\Helper\RealestateHelper;
 use App\Http\Traits\Helpers;
 use App\Livewire\DataTable\WithBulkActions;
 use App\Livewire\DataTable\WithCachedRows;
 use App\Livewire\DataTable\WithPerPagePagination;
 use App\Livewire\DataTable\WithSorting;
+use App\Mail\Abrversenden;
 use App\Models\Occupant;
 use App\Models\Realestate;
-use Livewire\WithFileUploads;
-use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 use App\Models\UserVerbrauchsinfoAccessControl;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 use Livewire\WithPagination;
-use App\Http\Traits\Helper\RealestateHelper;
 
 class ShowOccupantList extends Component
 {
@@ -170,12 +173,27 @@ class ShowOccupantList extends Component
             $this->realestate->abrechnungssetting->nutzerlisteDone = 1;
             $this->realestate->abrechnungssetting->save();
             $this->editable = ! $this->realestate->abrechnungssetting->nutzerlisteDone;
+            if ($this->realestate->inWorkAbrechnung()) {
+                $this->sendEmail();
+            }
             return redirect(request()->header('Referer'));
         }
         if ($this->params['action'] == 'deleteOccupant') {
             $this->deleteOccupant($this->params['id']);
 
             return redirect(request()->header('Referer'));
+        }
+    }
+
+    public function sendEmail()
+    {
+        try {
+            toast()->success('Ihr Anliegen wurde gesendet', 'Achtung')->push();
+            Mail::to('info@e-neko.de')
+                ->cc(Auth::user()->send_info_email ? Auth::user()->send_info_email : '')
+                ->send(new Abrversenden($this->realestate));
+        } catch (\Exception $e) {
+            toast()->danger('Fehler beim Senden der Email: ' . $e->getMessage())->push();
         }
     }
 
@@ -250,50 +268,6 @@ class ShowOccupantList extends Component
         return $this->rowsQuery->paginate(20);
     }
 
-    public $uploadedPhotoUrl;
-
-    public function uploadPhoto($imageData)
-    {
-        // Base64-Daten verarbeiten
-        $imageData = explode(',', $imageData)[1];
-        $image = base64_decode($imageData);
-
-        // Speichern in DigitalOcean Spaces
-        $filename = 'photo_' . time() . '.png';
-        $this->uploadedPhotoUrl = Storage::disk('spaces')->put('uploads/' . $filename, $image, 'public');
-
-
-        // URL speichern und anzeigen
-        $this->uploadedPhotoUrl = Storage::disk('spaces')->url('uploads/' . $filename);
-
-    }
-
-
-
-    public $photo; // Hochgeladene Datei
-
-    public function uploadPhotoDisc()
-    {
-
-        // Überprüfe, ob eine Datei hochgeladen wurde
-        $this->validate([
-            'photo' => 'image|max:1024', // Maximalgröße: 1MB
-        ]);
-
-        // Speichern der Datei auf DigitalOcean Spaces
-        // $path = $this->photo->store('uploads', 'spaces');
-
-        $path = Storage::disk('spaces')->put('uploads_1', $this->photo, 'public');
-
-
-
-        // URL der hochgeladenen Datei speichern
-        //$this->uploadedPhotoUrl = Storage::disk('spaces')->url($path);
-    }
-
-
-  
-  
     public function render()
     {
     return view('livewire.user.occupant.occupant-list.show-occupant-list');
