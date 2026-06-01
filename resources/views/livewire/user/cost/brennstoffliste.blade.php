@@ -16,10 +16,6 @@
                 @endif
             </div>
             <div class="basis-1/4 flex justify-end items-center gap-2">
-               {{--  <x-button.primary wire:click="sendEmail">
-                    Email senden
-                </x-button.primary> --}}
-
                 @if (!$this->realestate->abrechnungssetting->brennstofflisteDone)
                     <div wire:click="setDone()" class="cursor-pointer">
                         <x-button.complete-abr></x-button.complete-abr>
