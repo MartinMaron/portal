@@ -17,7 +17,7 @@
                             <x-icon.fonts.users-add class="fa-md sm:fa-2xl _icon"></x-icon.fonts.users-add>
                             <span class="_title">Neue Emailadresse hinzufügen</span>
                         </div>
-                        <div class="_text">über diesen Button können Sie neue Email eintragen an welche die Verbraucherinformationen übermittelt werden</div>
+                        <div class="_text">über diesen Button können Sie neue Email eintragen mit welcher sich ein Benutzer einloggen kann. Das Passwort kann über die Funktion 'Passwort vergessen' zurückgesetzt werden.</div>
                     </div>
                 </div>
                 <div class="block my-1 sm:basis-1/3 _hinweisheader">

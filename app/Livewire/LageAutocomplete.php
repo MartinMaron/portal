@@ -22,13 +22,13 @@ class LageAutocomplete extends Autocomplete
     public function updated($propertyName)
     {
         if ($propertyName = 'search') {
-            $this->emitUp('LageAutocompleteDisplaychanged', $this->search);
+            $this->dispatch('LageAutocompleteDisplaychanged', $this->search);
         }
     }
 
     public function valueSelected(Lage $lage)
     {
-        $this->emitUp('lageautocomplete_selected', $lage);
+        $this->dispatch('lageautocomplete_selected', $lage);
     }
 
     public function query()

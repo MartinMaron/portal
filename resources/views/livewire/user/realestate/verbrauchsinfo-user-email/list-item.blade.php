@@ -7,7 +7,7 @@
             </div>
             <div class="basis-3/6 flex justify-between">
 
-                <div class="my-0.5 text-left dark:text-slate-800 {{ $userEmail->infoPerPortal ? 'bg-green-200 rounded-md': 'bg-red-200 rounded-md'}}">
+                {{-- <div class="my-0.5 text-left dark:text-slate-800 {{ $userEmail->infoPerPortal ? 'bg-green-200 rounded-md': 'bg-red-200 rounded-md'}}">
                     <span class="px-2">Portal</span>
                     <span class="pr-1"><i class="{{ $userEmail->infoPerPortal ? 'fa-solid fa-check text-green-700 font-bold': 'fa-sharp fa-solid fa-ban text-red-700 font-bold'}} "></i></span>
                 </div>
@@ -18,7 +18,7 @@
                 <div class="my-0.5 text-left dark:text-slate-800  {{ $userEmail->infoPerPost ? 'bg-green-200 rounded-md': 'bg-red-200 rounded-md'}}">
                     <span class="px-2">Postbrief</span>
                     <span class="pr-1"><i class="{{ $userEmail->infoPerPost ? 'fa-solid fa-check text-green-700 font-bold': 'fa-sharp fa-solid fa-ban text-red-700 font-bold'}} "></i></span>
-                </div>
+                </div> --}}
             </div>
             <div class="basis-1/6 flex justify-end gap-5 py-1 text-center mx-1">
                 <x-icon.fonts.pencil
@@ -62,10 +62,10 @@
         </div>
         
         <div class="flex justify-start items-center gap-3 ">
-            <div class="{{ $userEmail->infoPerPortal ? 'bg-green-200 rounded-md': 'bg-red-200 rounded-md'}} text-xs py-0.5 px-2">Portal</div>
+         {{--    <div class="{{ $userEmail->infoPerPortal ? 'bg-green-200 rounded-md': 'bg-red-200 rounded-md'}} text-xs py-0.5 px-2">Portal</div>
             <div class="{{ $userEmail->infoPerEmail ? 'bg-green-200 rounded-md': 'bg-red-200 rounded-md'}} text-xs py-0.5 px-2">Email</div>
             <div class="{{ $userEmail->infoPerPost ? 'bg-green-200 rounded-md': 'bg-red-200 rounded-md'}} text-xs py-0.5 px-2">Brief</div>
-           
+            --}}
         </div>
     </div>
 </div>

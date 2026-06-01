@@ -192,7 +192,7 @@ class Dialog extends Component
 
     public function lageModalChanged($value)
     {
-        $this->current->lage = $value;
+        $this->current['lage'] = $value;
         $this->updated('current.lage');
     }
 

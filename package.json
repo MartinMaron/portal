@@ -35,7 +35,10 @@
         "postcss-import": "^16.1.0",
         "sass": "^1.86.3",
         "tailwindcss": "^3.4.17",
-        "vite": "6.3.6"
+        "vite": "^6.4.2"
+    },
+    "overrides": {
+        "qs": "^6.15.1"
     },
     "dependencies": {
         "@alpinejs/mask": "^3.14.8",
@@ -43,7 +46,6 @@
         "@themesberg/tailwind-datepicker": "^1.1.0",
         "bootstrap": "^5.3.3",
         "flowbite": "^3.1.2",
-        "livewire": "^0.6.1",
         "pikaday": "^1.8.2"
     }
 }
